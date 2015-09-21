@@ -7,12 +7,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.util.HibernateUtil;
 
 public class Application {
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
-		/* Configuration */
+		 Configuration 
 		Configuration configuration = new Configuration();
 		
 		//configuration.addAnnotatedClass(Product.class);
@@ -27,12 +28,12 @@ public class Application {
 			
 		});
 		
-		/* Building SessionFactory */
+		 Building SessionFactory 
 		SessionFactory sessionFactory = configuration
 				.buildSessionFactory(new StandardServiceRegistryBuilder(
 						).applySettings(configuration.getProperties()).build());
 		
-		/* Obtain Session and call Persistence Methods */
+		 Obtain Session and call Persistence Methods 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
@@ -47,6 +48,12 @@ public class Application {
 		
 		session.save(product);
 		session.getTransaction().commit();
+		session.close();
+	}*/
+	
+	public static void main(String[] args) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		session.close();
 	}
 }

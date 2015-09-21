@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -111,17 +112,19 @@
 
                                              
                                                     <tbody>
+                                                    	<c:forEach items="${products}" var="product">
                                                         <tr>
-                                                        	<td>1</td>
-                                                            <td>Milk</td>
-                                                            <td style="text-align:right;">100</td>
-                                                            <td style="text-align:right;">1500</td>
-                                                            <td style="text-align:right;">1300</td>
-                                                            <td style="text-align:right;">1500</td>
-                                                            <td>Soft Drink</td>
-                                                            <td></td>
+                                                        	<td>${product.productId }</td>
+                                                            <td>${product.productName}</td>
+                                                            <td style="text-align:right;">${product.quantity}</td>
+                                                            <td style="text-align:right;">${product.unitPrice}</td>
+                                                            <td style="text-align:right;">${product.costPrice}</td>
+                                                            <td style="text-align:right;">${product.salePrice}</td>
+                                                            <td>${product.categoryId}</td>
+                                                            <td>${product.image}</td>
                                                         </tr>
-                                                        <tr>
+														</c:forEach>
+                                                        <!-- <tr>
                                                         	<td>1</td>
                                                             <td>Coca Cola</td>
                                                             <td style="text-align:right;">100</td>
@@ -130,11 +133,9 @@
                                                             <td style="text-align:right;">1500</td>
                                                             <td>Soft Drink</td>
                                                             <td></td>
-                                                        </tr>
-                                                        
+                                                        </tr> -->
                                                     </tbody>
                                                 </table>
-
                                             </div>
                                         </div>
                                     </div>
