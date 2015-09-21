@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -117,23 +119,13 @@
                                                         	<td>${product.productId }</td>
                                                             <td>${product.productName}</td>
                                                             <td style="text-align:right;">${product.quantity}</td>
-                                                            <td style="text-align:right;">${product.unitPrice}</td>
-                                                            <td style="text-align:right;">${product.costPrice}</td>
-                                                            <td style="text-align:right;">${product.salePrice}</td>
+                                                            <td style="text-align:right;">${product.unitPrice} <span style="font-weight:bold;">Riel</span></td>
+                                                            <td style="text-align:right;">${product.costPrice} <span style="font-weight:bold;">Riel</span>​</td>
+                                                            <td style="text-align:right;">${product.salePrice} <span style="font-weight:bold;">Riel</span></td>
                                                             <td>${product.categoryId}</td>
                                                             <td>${product.image}</td>
                                                         </tr>
 														</c:forEach>
-                                                        <!-- <tr>
-                                                        	<td>1</td>
-                                                            <td>Coca Cola</td>
-                                                            <td style="text-align:right;">100</td>
-                                                            <td style="text-align:right;">1500</td>
-                                                            <td style="text-align:right;">1300</td>
-                                                            <td style="text-align:right;">1500</td>
-                                                            <td>Soft Drink</td>
-                                                            <td></td>
-                                                        </tr> -->
                                                     </tbody>
                                                 </table>
                                             </div>
