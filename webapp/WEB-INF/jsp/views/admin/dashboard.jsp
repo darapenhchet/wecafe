@@ -441,9 +441,7 @@
                                
                 </div> <!-- content -->
 
-                <footer class="footer text-right">
-                    2015 © Moltran.
-                </footer>
+                <%@ include file="footer.jsp" %>
 
             </div>
             <!-- ============================================================== -->
