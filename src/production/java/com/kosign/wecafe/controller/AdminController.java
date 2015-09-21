@@ -27,7 +27,7 @@ public class AdminController {
 		return "admin/categorylist";
 	}
 	
-	@RequestMapping(value="/cagetoryadd")
+	@RequestMapping(value="/categoryadd")
 	public String categoryadd(){
 		return "admin/categoryadd";
 	}
