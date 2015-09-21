@@ -62,4 +62,14 @@ public class AdminController {
 		return "admin/supplieradd";
 	}
 	
+	@RequestMapping(value="/userlist")
+	public String userlist(){
+		return "admin/userlist";
+	}
+	
+	@RequestMapping(value="/useradd")
+	public String useradd(){
+		return "admin/useradd";
+	}
+	
 }

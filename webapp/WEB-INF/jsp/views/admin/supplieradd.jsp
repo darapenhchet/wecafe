@@ -71,7 +71,7 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Add Product</h4>
+                                <h4 class="pull-left page-title">Add New Supplier</h4>
                             </div>
                         </div>
                         <!-- Form-validation -->
@@ -84,36 +84,27 @@
                                         <div class=" form">
                                             <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="#" novalidate="novalidate">
                                                 <div class="form-group ">
-                                                    <label for="productname" class="control-label col-lg-2">Product Name *</label>
+                                                    <label for="productname" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productname" name="productname" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="category" class="control-label col-lg-2">Category *</label>
+                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
                                                     <div class="col-lg-10">
-                                                       	<select>
-                                                       		<option>Soft drink</option>
-                                                       		<option>Hard drink</option>
-                                                       	</select>
+                                                        <input class="form-control " id="phonenumber" name=""phonenumber"" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="quantity" class="control-label col-lg-2">Quantity *</label>
+                                                    <label for="price" class="control-label col-lg-2">Address *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="quantity" name="quantity" type="text">
+                                                        <input class="form-control " id="address" name="address" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="price" class="control-label col-lg-2">Price *</label>
+                                                    <label for="costprice" class="control-label col-lg-2">Email *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="price" name="prin" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Cost Price *</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="costprice" name="costprice" type="text">
+                                                        <input class="form-control " id="email" name="email" type="email">
                                                     </div>
                                                 </div>
                                                 

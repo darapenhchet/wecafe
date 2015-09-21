@@ -56,7 +56,7 @@
 
             <!-- ========== Left Sidebar Start ========== -->
             <%@ include file="left_sidebar.jsp" %>
-            <!-- Left Sidebar End --> 
+            <!-- Left Sidebar End -->
 
 
 
@@ -71,7 +71,7 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Add New Category</h4>
+                                <h4 class="pull-left page-title">Add New User</h4>
                             </div>
                         </div>
                         <!-- Form-validation -->
@@ -84,17 +84,49 @@
                                         <div class=" form">
                                             <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="#" novalidate="novalidate">
                                                 <div class="form-group ">
-                                                    <label for="productname" class="control-label col-lg-2">Category Name *</label>
+                                                    <label for="productname" class="control-label col-lg-2">User Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="categoryname" name=""categoryname"" type="text">
+                                                        <input class=" form-control" id="productname" name="productname" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="productname" class="control-label col-lg-2">Image *</label>
+                                                    <label for="category" class="control-label col-lg-2">Gender *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="image" name="image" type="file">
+                                                       	<select class="form-control">
+                                                       		<option value="M">Male</option>
+                                                       		<option value="F">Female</option>
+                                                       	</select>
                                                     </div>
                                                 </div>
+                                                <div class="form-group ">
+                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="phonenumber" name=""phonenumber"" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="price" class="control-label col-lg-2">Address *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="address" name="address" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="costprice" class="control-label col-lg-2">Email *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="email" name="email" type="email">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="category" class="control-label col-lg-2">User Type *</label>
+                                                    <div class="col-lg-10">
+                                                       	<select class="form-control" id="USER_TYPE" name="user_type">
+                                                       		<option value="0">Administrator</option>
+                                                       		<option value="1">Seller</option>
+                                                       	</select>
+                                                    </div>
+                                                </div>
+                                                
+                                                
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">

@@ -71,7 +71,7 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Add Product</h4>
+                                <h4 class="pull-left page-title">Add New Product</h4>
                             </div>
                         </div>
                         <!-- Form-validation -->
