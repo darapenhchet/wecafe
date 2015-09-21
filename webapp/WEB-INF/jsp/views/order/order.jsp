@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
   <style>
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
@@ -23,60 +24,61 @@
   	width: 80px;
   	height: 100px;
   }
+  #addtocart{
+  	width: 80%;
+  }
+  .modal-content{
+  	border-radius: 0;
+  }
   </style>
 </head>
-<body>
-  	 
+<body>  	 
 	<div>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
-    </ol>
-
+  		<div id="mySlideShow" class="carousel slide" data-ride="carousel">  	
+		    <ol class="carousel-indicators">
+		      <li data-target="#mySlideShow" data-slide-to="0" class="active"></li>
+		      <li data-target="#mySlideShow" data-slide-to="1"></li>
+		      <li data-target="#mySlideShow" data-slide-to="2"></li>
+		      <li data-target="#mySlideShow" data-slide-to="3"></li>
+		    </ol>
     <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 915px;">
-      </div>
-
-      <div class="item">
-        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 915px;">
-      </div>
-    
-      <div class="item">
-        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 915px;">
-      </div>
-
-      <div class="item">
-        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 915px;">
-      </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>
-		<div>
+	    <div class="carousel-inner" role="listbox">
+	      <div class="item active">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
+	      </div>
+	      <div class="item">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
+	      </div>    
+	      <div class="item">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
+	      </div>
+	      <div class="item">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
+	      </div>
+	    </div>
+	    <!-- Left and right controls -->
+	    <a class="left carousel-control" href="#mySlideShow" role="button" data-slide="prev">
+	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	      <span class="sr-only">Previous</span>
+	    </a>
+	    <a class="right carousel-control" href="#mySlideShow" role="button" data-slide="next">
+	      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	      <span class="sr-only">Next</span>
+	    </a>
+	  </div>
+</div>		
 			<div align="right">
-				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="170px" height="40px">
+				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="60px" height="40px">
+				<button type="button" id="btnCart" class="btn btn-primary">Add to Cart</button>
 			</div>
 			<div>
 				<div>	 
-					<div id="myCarousel1" class="carousel slide" data-ride="carousel"> 
+					<div id="myCarousel1" class="carousel slide"> 
 					    <!-- Wrapper for slides -->
-					    <div class="carousel-inner container" role="listbox" style="height: 500px; ">
+					    <div class="carousel-inner container" role="listbox" style="height: 888px;  ">
+					    	
 					    		<div class="item active" style="width : 70%; margin: 0 auto;">
+					    		<div style="margin-top: 17%">
 					    			<div class="col-sm-6">
 						    			<div class="panel panel-default form-group">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
@@ -148,8 +150,9 @@
 									  	</div>
 									</div> 
 							    </div>
-
+</div>
 							    <div class="item" style="border 1px solid; width : 70%; margin: 0 auto;">
+							    <div style="margin-top: 17%">
 					    			<div class="col-sm-6">
 						    			<div class="panel panel-default form-group">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
@@ -221,6 +224,7 @@
 									  	</div>
 									</div>
 							    </div>
+							   </div>
 					    </div>
 					    <!-- Left and right controls -->
 					    <a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
@@ -277,12 +281,85 @@
                 </div>
                 <div class="modal-footer" style="height: 80px;">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Add to cart</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="bt_add">Buy</button>
+                    <button type="button" class="btn btn-primary" id="bt_add" data-dismiss="modal">Buy</button>
                 </div>
             </div>
         </div>
     </div>
 <!-- ############################################################# -->
+ 
+  
+  <div id="addtocart" style="display: none;" style="width: 80%;">       
+  	<div class="modal-content"> 
+  	 <div class="modal-header">                     
+                    <h4 class="modal-title">Cart</h4>
+                </div>
+                <div class="modal-body" style="height: 290px;">
+								  <table class="table table-hover">
+								    <thead>
+								      <tr>
+								        <th>Customer Name</th>
+								        <th>Produce Name</th>
+								        <th>Price</th>
+								        <th>Qty</th>
+								        <th>Total Amount</th>
+								        <th>Comment</th>
+								        <th></th>
+								      </tr>
+								    </thead>
+								    <tbody>
+								      <tr>
+								        <td>PenhChet</td>
+								        <td>Milk</td>
+								        <td>1500</td>
+								        <td>1</td>
+								        <td>1500</td>
+								        <td>No ice</td>
+								        <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+								      </tr>
+								      <tr>
+								        <td>Daravuth</td>
+								        <td>Coffee</td>
+								        <td>2000</td>
+								        <td>1</td>
+								        <td>2000</td>
+								        <td></td>
+								        <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+								      </tr>
+								    </tbody>
+								  </table>
+						 
+							<div class="form-horizontal">
+								<div class="form-group">
+								      	<label class="control-label col-sm-10" for="txtName">Total Amount :</label>
+								      	<div class="col-sm-2">
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
+								    	</div>
+		    					</div>
+		    					<div class="form-group">
+								      	<label class="control-label col-sm-10" for="txtName">Money In :</label>
+								      	<div class="col-sm-2">
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
+								    	</div>
+		    					</div>
+		    					<div class="form-group">
+								      	<label class="control-label col-sm-10" for="txtName">Money Out :</label>
+								      	<div class="col-sm-2">
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
+								    	</div>
+		    					</div>						 
+					   </div>
+				</div>
+				<div class="modal-footer" style="height: 80px;">
+					<div align="right">
+						<button type="button" class="btn btn-default">Confirm</button>
+						<button type="button" class="btn btn-default"><span class="button b-close"><span>Cancel</span></span></button>		
+					</div>
+				</div>
+		</div>
+	</div>
+ 
+<!-- ################################################################## -->
 <div style="width: 100%; height: 30px; background-color: #E0E0E0;" align="center">
 	Copyright&#64; 2015 kosign
 </div>
@@ -290,9 +367,9 @@
 </body>
 	<script type="text/javascript">
 		$(document).ready(function(){
-		    $(".panel-body").click(function(){
-		        
-		    });
+			$("#bt_add, #btnCart").click(function(){
+				$("#addtocart").bPopup();
+			});
 		});
 	</script>
 </html>
