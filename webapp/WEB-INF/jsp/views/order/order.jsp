@@ -69,7 +69,7 @@
 </div>
 		<div>
 			<div align="right">
-				<img src="../img/add_to_cart.png" width="170px" height="40px">
+				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="170px" height="40px">
 			</div>
 			<div>
 				<div>	 
@@ -81,7 +81,7 @@
 						    			<div class="panel panel-default form-group">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -92,7 +92,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -103,7 +103,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -116,7 +116,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -127,7 +127,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -138,7 +138,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -154,7 +154,7 @@
 						    			<div class="panel panel-default form-group">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -165,7 +165,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -176,7 +176,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -189,7 +189,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -200,7 +200,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
@@ -211,7 +211,7 @@
 									  	<div class="panel panel-default">
 									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
 									    		<div style="float: left;">
-										    		<img src="../img/drink.jpg">	
+										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
 										    	</div>
 										    	<div style="text-align: right;">
