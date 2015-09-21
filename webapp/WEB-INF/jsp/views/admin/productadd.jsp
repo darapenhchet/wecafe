@@ -92,7 +92,7 @@
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
-                                                       	<select>
+                                                       	<select class="form-control">
                                                        		<option>Soft drink</option>
                                                        		<option>Hard drink</option>
                                                        	</select>
@@ -105,19 +105,29 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="price" class="control-label col-lg-2">Price *</label>
+                                                    <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="price" name="prin" type="text">
+                                                        <input class="form-control " id="unitprice" name="prin" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Cost Price *</label>
+                                                    <label for="costprice" class="control-label col-lg-2">Cost Price</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="costprice" name="costprice" type="text">
                                                     </div>
                                                 </div>
-                                                
-                                                
+                                                <div class="form-group ">
+                                                    <label for="costprice" class="control-label col-lg-2">Sale Price</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="saleprice" name="saleprice" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="costprice" class="control-label col-lg-2">Image</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="image" name="image" type="file">
+                                                    </div>
+                                                </div>                                                                                            
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
