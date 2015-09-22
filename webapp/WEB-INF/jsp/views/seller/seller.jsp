@@ -33,10 +33,17 @@
   </style>
 </head>
 <body>  	
-			<div align="right">
-				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="60px" height="40px">
+<div>
+			<div style="width: 50%; float: left; margin-left: 3%;">		
+				<img src="${pageContext.request.contextPath}/resources/images/img/user.png" width="35px" height="35px"> 
+				<label class="control-label" style="color: blue; margin-right: 1%;"> Daravuth </label>
+				<button type="button" id="btnCart" class="btn btn-warning">Sign Out</button>				
+			</div>
+			<div style="text-align: right;">						
+				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="60px" height="35px">
 				<button type="button" id="btnCart" class="btn btn-primary">Add to Cart</button>
 			</div>
+</div>		
 			<div>
 				<div>	 
 					<div id="myCarousel1" class="carousel slide"> 
