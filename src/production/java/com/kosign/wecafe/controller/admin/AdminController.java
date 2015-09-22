@@ -16,7 +16,7 @@ import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
 
 @Controller
-/*@RequestMapping(value="/admin")*/
+@RequestMapping(value="/admin")
 public class AdminController {
 
 	@RequestMapping(value={"/dashboard","/","/home"})
