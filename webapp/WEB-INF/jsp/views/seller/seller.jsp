@@ -32,42 +32,7 @@
   }
   </style>
 </head>
-<body>  	 
-	<div>
-  		<div id="mySlideShow" class="carousel slide" data-ride="carousel">  	
-		    <ol class="carousel-indicators">
-		      <li data-target="#mySlideShow" data-slide-to="0" class="active"></li>
-		      <li data-target="#mySlideShow" data-slide-to="1"></li>
-		      <li data-target="#mySlideShow" data-slide-to="2"></li>
-		      <li data-target="#mySlideShow" data-slide-to="3"></li>
-		    </ol>
-    <!-- Wrapper for slides -->
-	    <div class="carousel-inner" role="listbox">
-	      <div class="item active">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
-	      </div>
-	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
-	      </div>    
-	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
-	      </div>
-	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
-	      </div>
-	    </div>
-	    <!-- Left and right controls -->
-	    <a class="left carousel-control" href="#mySlideShow" role="button" data-slide="prev">
-	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-	      <span class="sr-only">Previous</span>
-	    </a>
-	    <a class="right carousel-control" href="#mySlideShow" role="button" data-slide="next">
-	      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	      <span class="sr-only">Next</span>
-	      
-	    </a>
-	  </div>
-</div>		
+<body>  	
 			<div align="right">
 				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="60px" height="40px">
 				<button type="button" id="btnCart" class="btn btn-primary">Add to Cart</button>
@@ -229,11 +194,11 @@
 					    </div>
 					    <!-- Left and right controls -->
 					    <a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
-					      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					      <span class="glyphicon glyphicon-chevron-left"></span>
 					      <span class="sr-only">Previous</span>
 					    </a>
 					    <a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next">
-					      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					      <span class="glyphicon glyphicon-chevron-right"></span>
 					      <span class="sr-only">Next</span>
 					    </a>
 					</div>
@@ -267,17 +232,11 @@
 					    	</div>
     					</div>	
     					<div class="form-group">
-					      	<label class="control-label col-sm-3" for="txtName">Time :</label>
+					      	<label class="control-label col-sm-3" for="txtName">Total :</label>
 					      	<div class="col-sm-9">
 					         <input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
 					    	</div>
-    					</div>
-    					<div class="form-group">
-					      	<label class="control-label col-sm-3" for="txtName">Comment:</label>
-					      	<div class="col-sm-9">
-					         <textarea cols="33" rows="4" style="resize: none;"></textarea> 
-					    	</div>
-    					</div>
+    					</div>    					
 					</div>
                 </div>
                 <div class="modal-footer" style="height: 80px;">
