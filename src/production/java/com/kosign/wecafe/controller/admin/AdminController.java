@@ -23,6 +23,11 @@ public class AdminController {
 	public String dashboard(){
 		return "admin/dashboard";
 	}
+	
+	@RequestMapping(value="/productlist")
+	public String productlist(){
+		return "admin/productlist";
+	}
 		
 	@RequestMapping(value="/productadd")
 	public String productadd(){

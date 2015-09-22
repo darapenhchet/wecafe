@@ -15,7 +15,7 @@ public class ProductController {
 	@Inject
 	ProductService productService;
 	
-	@RequestMapping(value="/admin/productlist")
+	@RequestMapping(value="/admin/products")
 	public String listAllProducts(Map<String, Object> model){
 		model.put("products", productService.getAllProducts());
 		return "admin/productlist";

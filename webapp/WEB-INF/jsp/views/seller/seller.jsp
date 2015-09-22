@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
- 
 <html lang="en">
 <head>
   <title>Order Produce</title>
@@ -52,18 +52,23 @@
 					    	
 					    		<div class="item active" style="width : 70%; margin: 0 auto;">
 					    		<div style="margin-top: 17%">
-					    			<div class="col-sm-6">
-						    			<div class="panel panel-default form-group">
-									    	<div class="panel-body" >
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
+
+
+							<c:forEach items="${products}" var="product">
+								<div class="col-sm-6">
+									<div class="panel panel-default form-group">
+										<div class="panel-body">
+											<div style="float: left;">
+												<img
+													src="${pageContext.request.contextPath}/resources/images/img/${product.image}">
+												${product.productName}
+											</div>
+											<div style="text-align: right;">0.5$</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+							<%-- 
 									  	<div class="panel panel-default">
 									    	<div class="panel-body">
 									    		<div style="float: left;">
@@ -183,8 +188,10 @@
 										    		0.5$
 										    	</div>
 									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
+									  	</div> --%>
+									  	
+									  	
+									  	<%-- <div class="panel panel-default">
 									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
@@ -194,7 +201,7 @@
 										    		0.5$
 										    	</div>
 									    	</div>
-									  	</div>
+									  	</div> --%>
 									</div>
 							    </div>
 							   </div>
