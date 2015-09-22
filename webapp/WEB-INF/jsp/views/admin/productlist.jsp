@@ -122,7 +122,7 @@
                                                             <td style="text-align:right;">${product.unitPrice} <span style="font-weight:bold;">Riel</span></td>
                                                             <td style="text-align:right;">${product.costPrice} <span style="font-weight:bold;">Riel</span>​</td>
                                                             <td style="text-align:right;">${product.salePrice} <span style="font-weight:bold;">Riel</span></td>
-                                                            <td>${product.categoryId}</td>
+                                                            <td>${product.category.catName}</td>
                                                             <td>${product.image}</td>
                                                         </tr>
 														</c:forEach>

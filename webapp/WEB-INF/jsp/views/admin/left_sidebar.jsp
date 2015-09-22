@@ -7,11 +7,11 @@
                         </div>
                         <div class="user-info">
                             <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">John Doe <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Administrator <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
                                     <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li>
-                                    <li><a href="javascript:void(0)"><i class="md md-lock"></i> Lock screen</a></li>
+                                    <!-- <li><a href="javascript:void(0)"><i class="md md-lock"></i> Lock screen</a></li> -->
                                     <li><a href="javascript:void(0)"><i class="md md-settings-power"></i> Logout</a></li>
                                 </ul>
                             </div>
@@ -43,10 +43,10 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="md md-palette"></i> <span> Order </span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="md md-palette"></i> <span> Import </span> <span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/orderlist">Order List</a></li>
-                                    <%-- <li><a href="${pageContext.request.contextPath}/admin/orderadd">Add Order</a></li> --%>
+                                    <li><a href="${pageContext.request.contextPath}/admin/orderlist">Import List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/orderadd">Add Import</a></li>
                                 </ul>
                             </li>
 

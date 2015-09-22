@@ -246,8 +246,8 @@
                         </div> <!-- End row -->
 
 
-                        <div class="row">
-                            <!-- INBOX -->
+                        <!-- <div class="row">
+                            INBOX
                             <div class="col-lg-4">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -322,9 +322,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> <!-- end col -->
+                            </div> end col
 
-                            <!-- CHAT -->
+                            CHAT
                             <div class="col-lg-4">
                                 <div class="panel panel-default">
                                     <div class="panel-heading"> 
@@ -401,10 +401,10 @@
                                         </div>
                                     </div> 
                                 </div>
-                            </div> <!-- end col-->
+                            </div> end col
 
 
-                            <!-- TODO -->
+                            TODO
                             <div class="col-lg-4">
                                 <div class="panel panel-default">
                                     <div class="panel-heading"> 
@@ -434,8 +434,8 @@
                                         </form> 
                                     </div> 
                                 </div>
-                            </div> <!-- end col -->
-                        </div> <!-- end row -->
+                            </div> end col
+                        </div> end row -->
 
                     </div>
                                

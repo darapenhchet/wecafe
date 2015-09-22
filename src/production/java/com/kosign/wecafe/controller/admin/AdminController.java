@@ -1,4 +1,4 @@
-package com.kosign.wecafe.controller;
+package com.kosign.wecafe.controller.admin;
 
 import java.util.List;
 import java.util.Map;
@@ -12,69 +12,18 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
 
 @Controller
-@RequestMapping(value="/admin")
+/*@RequestMapping(value="/admin")*/
 public class AdminController {
 
 	@RequestMapping(value={"/dashboard","/","/home"})
 	public String dashboard(){
 		return "admin/dashboard";
 	}
-	
-	@RequestMapping(value="/productlist")
-	public String productlist(Map<String, Object> model){
-		/* Configuration */
-		Configuration configuration = new Configuration();
 		
-		configuration.addAnnotatedClass(Product.class);
-		
-		configuration.setProperties(new Properties(){
-			{
-				put("hibernate.connection.username","postgres");
-				put("hibernate.connection.password","postgres");
-				put("hibernate.connection.driver_class","org.postgresql.Driver");
-				put("hibernate.connection.url","jdbc:postgresql://192.168.178.72:5432/WeCafe");
-			}
-			
-		});
-		
-		/* Building SessionFactory */
-		SessionFactory sessionFactory = configuration
-				.buildSessionFactory(new StandardServiceRegistryBuilder(
-						).applySettings(configuration.getProperties()).build());
-		
-		/* Obtain Session and call Persistence Methods */
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		
-		/*
-		Product product = new Product();
-		product.setProductName("Pepsi NEW");
-		product.setQuantity(10L);
-		product.setUnitPrice(new BigDecimal(1500));
-		product.setCostPrice(new BigDecimal(1300));
-		product.setSalePrice(new BigDecimal(1500));
-		product.setCategoryId(1L);
-		product.setImage("");		
-		
-		session.save(product);
-		*/
-		Query query = session.createQuery("FROM Product");
-					
-		List<Product> products = query.list();
-		
-		session.getTransaction().commit();
-		session.close();
-		
-		for(Product product : products){
-			System.out.println(product.getProductName());
-		}
-		model.put("products", products);
-		return "admin/productlist";
-	}
-	
 	@RequestMapping(value="/productadd")
 	public String productadd(){
 		return "admin/productadd";

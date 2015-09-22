@@ -19,6 +19,7 @@
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- <property name="packagesToScan">com.kosign.wecafe.entities</property> -->
 		<mapping class="com.kosign.wecafe.entities"/>
 		
