@@ -4,6 +4,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import com.kosign.wecafe.entities.Category;
+import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Supplier;
+
 public class HibernateUtil {
 	
 	private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -26,6 +30,9 @@ public class HibernateUtil {
 	private static SessionFactory buildSessionFactory(){
 		try{
 			Configuration configuration = new Configuration();
+			configuration.addAnnotatedClass(Product.class);
+			configuration.addAnnotatedClass(Category.class);
+			configuration.addAnnotatedClass(Supplier.class);
 			return configuration.buildSessionFactory(new StandardServiceRegistryBuilder().build());
 		}catch(Exception ex){
 			ex.printStackTrace();

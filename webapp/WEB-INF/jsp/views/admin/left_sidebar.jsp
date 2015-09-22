@@ -43,10 +43,10 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="md md-palette"></i> <span> Order </span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="md md-palette"></i> <span> Import </span> <span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/orderlist">Order List</a></li>
-                                    <%-- <li><a href="${pageContext.request.contextPath}/admin/orderadd">Add Order</a></li> --%>
+                                    <li><a href="${pageContext.request.contextPath}/admin/orderlist">Import List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/orderadd">Add Import</a></li>
                                 </ul>
                             </li>
 
