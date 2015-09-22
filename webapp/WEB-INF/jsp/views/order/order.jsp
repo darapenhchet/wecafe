@@ -64,6 +64,7 @@
 	    <a class="right carousel-control" href="#mySlideShow" role="button" data-slide="next">
 	      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 	      <span class="sr-only">Next</span>
+	      
 	    </a>
 	  </div>
 </div>		
@@ -81,7 +82,7 @@
 					    		<div style="margin-top: 17%">
 					    			<div class="col-sm-6">
 						    			<div class="panel panel-default form-group">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body" >
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -92,7 +93,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -103,7 +104,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body"">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -116,7 +117,7 @@
 									</div>
 									<div class="col-sm-6">
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -127,7 +128,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -138,7 +139,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -155,7 +156,7 @@
 							    <div style="margin-top: 17%">
 					    			<div class="col-sm-6">
 						    			<div class="panel panel-default form-group">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -166,7 +167,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -177,7 +178,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
 										    		Coca Cola
@@ -190,7 +191,7 @@
 									</div>
 									<div class="col-sm-6">
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -201,7 +202,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
 										    		Coca Cola
@@ -212,7 +213,7 @@
 									    	</div>
 									  	</div>
 									  	<div class="panel panel-default">
-									    	<div class="panel-body" data-toggle="modal" data-target="#myModal">
+									    	<div class="panel-body">
 									    		<div style="float: left;">
 										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
 										    		Coca Cola
@@ -241,11 +242,11 @@
  
 <!-- ############################################################# -->
 	<!-- Modal HTML -->
-    <div id="myModal" class="modal fade" >
+    <div id="myModal" style="display: none;" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
                     <h4 class="modal-title">Coca Cola</h4>
                 </div>
                 <div class="modal-body form-horizontal" style="height: 290px;">
@@ -280,8 +281,8 @@
 					</div>
                 </div>
                 <div class="modal-footer" style="height: 80px;">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Add to cart</button>
-                    <button type="button" class="btn btn-primary" id="bt_add" data-dismiss="modal">Buy</button>
+                    <button type="button" class="btn btn-default" ><span class="button b-close"><span>Add to cart</span></span></button>
+                    <button type="button" class="btn btn-primary" id="bt_add"> <span class="button b-close"><span>Buy</span></span></button>
                 </div>
             </div>
         </div>
@@ -370,6 +371,9 @@
 			$("#bt_add, #btnCart").click(function(){
 				$("#addtocart").bPopup();
 			});
+		});
+		$(".panel-body").click(function() {
+			$("#myModal").bPopup();
 		});
 	</script>
 </html>
