@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
 
 @Controller
@@ -29,6 +30,7 @@ public class AdminController {
 		Configuration configuration = new Configuration();
 		
 		configuration.addAnnotatedClass(Product.class);
+		configuration.addAnnotatedClass(Category.class);
 		
 		configuration.setProperties(new Properties(){
 			{
@@ -36,6 +38,7 @@ public class AdminController {
 				put("hibernate.connection.password","postgres");
 				put("hibernate.connection.driver_class","org.postgresql.Driver");
 				put("hibernate.connection.url","jdbc:postgresql://192.168.178.72:5432/WeCafe");
+				put("hibernate.hbm2ddl.auto","update");
 			}
 			
 		});
