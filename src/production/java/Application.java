@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Properties;
 
 import org.hibernate.Session;
@@ -23,9 +24,9 @@ public class Application {
 		configuration.setProperties(new Properties(){
 			{
 				put("hibernate.connection.username","postgres");
-				put("hibernate.connection.password","postgres");
+				put("hibernate.connection.password","123456");
 				put("hibernate.connection.driver_class","org.postgresql.Driver");
-				put("hibernate.connection.url","jdbc:postgresql://192.168.178.72:5432/WeCafe");
+				put("hibernate.connection.url","jdbc:postgresql://localhost:5432/WeCafe");
 			}
 			
 		});
@@ -48,11 +49,18 @@ public class Application {
 		//product.setCategoryId(1L);
 		product.setImage("BIG COCA COLA");		
 		
-		Category category = (Category)session.get(Category.class, 1L);	
+		Category category = new Category();
+		category.setCatName("Drink");
+		category.setCreatedDate(new Date());
+		category.setLastUpdatedDate(new Date());
+		//Category category = (Category)session.get(Category.class, 1L);	
 		
-		product.setCategory(category);
+		//product.setCategory(category);
+		category.getProducts().add(product);
 		
-		session.save(product);
+		session.save(category);
+		//session.save(product);
+		
 		session.getTransaction().commit();
 		session.close();
 	}

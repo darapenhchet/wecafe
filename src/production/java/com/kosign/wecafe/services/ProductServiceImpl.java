@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService{
 			session.getTransaction().rollback();
 		}finally{
 			session.close();
-			HibernateUtil.getSessionFactory().close();
+			//HibernateUtil.getSessionFactory().close();
 		}
 		return null;
 	}
