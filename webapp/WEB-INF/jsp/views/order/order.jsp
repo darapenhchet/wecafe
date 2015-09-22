@@ -352,7 +352,7 @@
 				</div>
 				<div class="modal-footer" style="height: 80px;">
 					<div align="right">
-						<button type="button" class="btn btn-default">Confirm</button>
+						<button type="button" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
 						<button type="button" class="btn btn-default"><span class="button b-close"><span>Cancel</span></span></button>		
 					</div>
 				</div>
