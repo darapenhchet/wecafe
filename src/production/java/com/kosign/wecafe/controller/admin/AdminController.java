@@ -29,10 +29,10 @@ public class AdminController {
 		return "admin/productlist";
 	}
 		
-	@RequestMapping(value="/productadd")
+/*	@RequestMapping(value="/productadd")
 	public String productadd(){
 		return "admin/productadd";
-	}
+	}*/
 	
 	@RequestMapping(value="/categorylist")
 	public String categorylist(){

@@ -29,7 +29,7 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Product </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/productlist">Product List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/products">Product List</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/productadd">Add Product</a></li>
                                 </ul>
                             </li>

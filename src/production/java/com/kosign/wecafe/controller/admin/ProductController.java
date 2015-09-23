@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,11 +25,16 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@RequestMapping(value="/admin/products")
+	@RequestMapping(value="/admin/products", method=RequestMethod.GET)
 	public String listAllProducts(Map<String, Object> model){
 		model.put("products", productService.getAllProducts());
 		return "admin/productlist";
 	}
+	
+	@RequestMapping(value="/admin/productadd", method=RequestMethod.GET)
+	public String productadd(){
+		return "admin/productadd";
+	}	
 	
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody boolean addNewProduct(@RequestBody Product product){
@@ -42,6 +48,21 @@ public class ProductController {
 		return productService.addNewProduct(product);
 		//return ((Product)session.getAttribute("product")).getProductName();
 		
+	}
+	
+	@RequestMapping(value="/admin/product/{id}", method=RequestMethod.GET)
+	public String updateProduct(){
+		return "";
+	}
+		
+	@RequestMapping(value="/admin/product/update", method=RequestMethod.POST)
+	public boolean updateProduct(Product product){
+		return false;
+	}
+	
+	@RequestMapping(value="/admin/product/delete/{id}", method=RequestMethod.POST)
+	public boolean deleteProduct(@PathVariable("id") Long id){
+		return false;
 	}
 
 }

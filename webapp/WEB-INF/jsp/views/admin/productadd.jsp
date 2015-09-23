@@ -365,7 +365,9 @@
     	                },
     				    success: function(data) { 
     				        if(data){
-    				        	Notification.notify('success','TOP-RIGHT','ADD NEW PRODUCT','')
+    				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+    				        }else{
+    				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
     				        }
     				    },
     				    error:function(data,status,er) { 
