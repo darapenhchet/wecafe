@@ -245,7 +245,10 @@
 							    </div>
 							   </div>
 					    </div>
-					 
+					    <!--  -->
+				 
+					    
+					    <!-- Left and right controls -->
 					    <a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
 					      <span class="glyphicon glyphicon-chevron-left"></span>
 					      <span class="sr-only">Previous</span>
