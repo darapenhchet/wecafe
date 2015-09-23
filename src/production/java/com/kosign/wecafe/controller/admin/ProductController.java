@@ -1,6 +1,11 @@
 package com.kosign.wecafe.controller.admin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -27,8 +32,16 @@ public class ProductController {
 	
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody boolean addNewProduct(@RequestBody Product product){
+		/*List<Product> products = new ArrayList<>();
+		if(session.getAttribute("products")!=null){
+			products = (ArrayList<Product>)session.getAttribute("products");
+		}
+		products.add(product);*/		
+		
 		System.out.println(product.getProductName());
-		return productService.addNewProduct(product);		
+		return productService.addNewProduct(product);
+		//return ((Product)session.getAttribute("product")).getProductName();
+		
 	}
 
 }

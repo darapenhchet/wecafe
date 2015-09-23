@@ -324,6 +324,10 @@
 
         <!-- Todo -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+        
+        <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
 
         <script type="text/javascript">
             /* ==============================================
@@ -360,7 +364,9 @@
     	                    xhr.setRequestHeader("Content-Type", "application/json");
     	                },
     				    success: function(data) { 
-    				        console.log(data);
+    				        if(data){
+    				        	Notification.notify('success','TOP-RIGHT','ADD NEW PRODUCT','')
+    				        }
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
