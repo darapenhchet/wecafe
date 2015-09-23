@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="supplier")
-public class Supplier {
+public class Supplier implements java.io.Serializable{
 	@Id
 	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="supplier_sup_id_seq", name="supplier_id")
 	@GeneratedValue(generator="supplier_id", strategy=GenerationType.SEQUENCE)

@@ -2,15 +2,19 @@ package com.kosign.wecafe.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,7 +22,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="product")
-public class Product {
+public class Product implements java.io.Serializable{
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +30,12 @@ public class Product {
 	@GeneratedValue(generator="product_id", strategy=GenerationType.SEQUENCE)
 	@Column(name="pro_id")
 	private Long productId;
+	
+	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product",cascade=CascadeType.ALL)
+	//@Column(name = "pro_id")
+	//@ElementCollection(targetClass=OrderDetail.class)
+	@ManyToMany(mappedBy="product")
+	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
 	@Column(name="pro_name")
 	private String productName;
@@ -157,5 +167,13 @@ public class Product {
 
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
+	}
+
+	public Set<OrderDetail> getOrderDetail() {
+		return orderDetail;
+	}
+
+	public void setOrderDetail(Set<OrderDetail> orderDetail) {
+		this.orderDetail = orderDetail;
 	}
 }

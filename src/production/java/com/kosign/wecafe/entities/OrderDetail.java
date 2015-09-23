@@ -1,40 +1,45 @@
 package com.kosign.wecafe.entities;
 
+import java.math.BigDecimal;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="order_detail")
-public class OrderDetail {
+/*@AssociationOverrides({
+	@AssociationOverride(name = "pk.order", 
+		joinColumns = @JoinColumn(name = "order_id")),
+	@AssociationOverride(name = "pk.product", 
+		joinColumns = @JoinColumn(name = "pro_id")) })*/
+public class OrderDetail implements java.io.Serializable{
 
-	@Column(name="pro_id")
-	private long proId;
+	/*@EmbeddedId
+	private OrderDetailsPK pk = new OrderDetailsPK();*/
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="pro_id")
+	private Product product;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="order_id")
+	private Order order;
 	
 	@Column(name="pro_qty")
 	private long proQty;
 	
-	@Column(name="pro_unti_price")
-	private long proUtiPrice;
+	@Column(name="pro_unit_price")
+	private BigDecimal proUnitPrice;
 	
 	@Column(name="pro_comment")
 	private String proComment;
 	
 	@Column(name="pro_status")
 	private String proStatus;
-	
-	@Column(name="order_id")
-	private long order_id;
-
-	public long getProId() {
-		return proId;
-	}
-
-	public void setProId(long proId) {
-		this.proId = proId;
-	}
 
 	public long getProQty() {
 		return proQty;
@@ -44,12 +49,12 @@ public class OrderDetail {
 		this.proQty = proQty;
 	}
 
-	public long getProUtiPrice() {
-		return proUtiPrice;
+	public BigDecimal getProUnitPrice() {
+		return proUnitPrice;
 	}
 
-	public void setProUtiPrice(long proUtiPrice) {
-		this.proUtiPrice = proUtiPrice;
+	public void setProUnitPrice(BigDecimal proUnitPrice) {
+		this.proUnitPrice = proUnitPrice;
 	}
 
 	public String getProComment() {
@@ -68,14 +73,20 @@ public class OrderDetail {
 		this.proStatus = proStatus;
 	}
 
-	public long getOrder_id() {
-		return order_id;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setOrder_id(long order_id) {
-		this.order_id = order_id;
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 	
-	
-
 }
