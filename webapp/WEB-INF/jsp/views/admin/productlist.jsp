@@ -108,7 +108,7 @@
                                                             <th style="text-align:right;">Cost Price</th>
                                                             <th style="text-align:right;">Sale Price</th>
                                                             <th>Category</th>
-                                                            <th>Image</th>
+                                                            <th style="text-align:center;">Image</th>
                                                         </tr>
                                                     </thead>
 
@@ -123,7 +123,7 @@
                                                             <td style="text-align:right;">${product.costPrice} <span style="font-weight:bold;">Riel</span>​</td>
                                                             <td style="text-align:right;">${product.salePrice} <span style="font-weight:bold;">Riel</span></td>
                                                             <td>${product.category.catName}</td>
-                                                            <td>${product.image}</td>
+                                                            <td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/img/${product.image}" class="img-thumbnail" alt="${product.productName}" width="30px" height="30px"/></td>
                                                         </tr>
 														</c:forEach>
                                                     </tbody>
