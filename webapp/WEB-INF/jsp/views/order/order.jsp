@@ -1,3 +1,5 @@
+<%@page import="com.kosign.wecafe.entities.Product"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -73,182 +75,55 @@
 				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="60px" height="40px">
 				<button type="button" id="btnCart" class="btn btn-primary">Add to Cart</button>
 			</div> 
-			<div>
-				<div>	 
+			 
+				  
 					<div id="myCarousel1" class="carousel slide"> 
 					    <!-- Wrapper for slides -->
-					    <div class="carousel-inner container" role="listbox" style="height: 888px;  ">
-					    	
-					    		<div class="item active" style="width : 70%; margin: 0 auto;">
-					    		<div style="margin-top: 17%">
-					    		
-					    		<c:forEach items="${products}" var="product">
-								<div class="col-sm-6">
-									<div class="panel panel-default form-group">
-										<div class="panel-body">
-											<div style="float: left;">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/img/${product.image}">
-												${product.productName}
-											</div>
-											<div style="text-align: right;">0.5$</div>
+					    <div class="carousel-inner container" role="listbox" style="height: 888px; overflow: hidden; ">
+					    	 <% 
+					    	 List<Product> products = (List<Product>)request.getAttribute("products");
+					    	 	int  A =  products.size(); 
+					    	 	int i;
+					    	 	boolean T = true;
+						    	 do{
+						    		 
+						    		 if(T){ T=false;%>						    	 
+						    			<div class="item active" style="width : 70%; margin: 0 auto;">
+						    		<%}else {%>
+						    			<div class="item" style="width : 70%; margin: 0 auto;">
+						    		<%}%>	
+							    		<div style="margin-top: 17%">	 
+							    		<% 
+							    		
+							    		for(i = A-1; i>=A- 6 && i >=0; i--) 							    			
+							    		{ %>	
+							    									    									    	 
+												<div class="col-sm-6">
+													<div class="panel panel-default form-group">
+														<div class="panel-body">
+															<div style="float: left;">
+<img src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>">
+																 <%=products.get(i).getProductName()%>
+															</div>
+															<div style="text-align: right;">0.5$</div>
+														</div>
+													</div>
+												</div>										 
+							    		<% }%>
 										</div>
-									</div>
-								</div>
-							</c:forEach>
-					    		
-					    		<%-- 
-					    			<div class="col-sm-6">
-						    			  <div class="panel panel-default form-group">
-									    	<div class="panel-body" >
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body"">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									</div>
-									<div class="col-sm-6">
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									</div>   
-							    </div>
-</div>
-							    <div class="item" style="border 1px solid; width : 70%; margin: 0 auto;">
-							    <div style="margin-top: 17%">
-					    			<div class="col-sm-6">
-						    			<div class="panel panel-default form-group">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									</div>
-									<div class="col-sm-6">
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div> --%>
-									</div>
-							    </div>
-							   </div>
-					    </div>
-					    <!--  -->
-				 
-					    
-					    <!-- Left and right controls -->
+								    </div>
+								    
+								  <%
+								 if(A/6>=1)
+								 {
+									 A = A - 6; 
+								 }
+								 else 
+									 A = 0; 
+						    	 }while(A >=1 );  
+						    	 %>
+							 </div>
+							 <!-- Left and right controls -->
 					    <a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
 					      <span class="glyphicon glyphicon-chevron-left"></span>
 					      <span class="sr-only">Previous</span>
@@ -257,8 +132,9 @@
 					      <span class="glyphicon glyphicon-chevron-right"></span>
 					      <span class="sr-only">Next</span>
 					    </a>
+					    </div> 
 					</div>
- </div>
+ 
  
 <!-- ############################################################# -->
 	<!-- Modal HTML -->
