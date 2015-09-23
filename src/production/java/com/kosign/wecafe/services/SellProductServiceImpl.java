@@ -10,6 +10,7 @@ import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
+@SuppressWarnings("unchecked")
 public class SellProductServiceImpl implements SellProductsService {
 
 	@Override
