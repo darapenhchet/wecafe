@@ -82,7 +82,7 @@
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
                                     <div class="panel-body">
                                         <div class=" form">
-                                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="#" novalidate="novalidate">
+                                            <form class="cmxform form-horizontal tasi-form" id="frmProductAdd" method="POST" action="/admin/product/add" novalidate="novalidate">
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
@@ -92,9 +92,9 @@
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control">
-                                                       		<option>Soft drink</option>
-                                                       		<option>Hard drink</option>
+                                                       	<select class="form-control" id="optCategory">
+                                                       		<option value="1">Soft drink</option>
+                                                       		<option value="2">Hard drink</option>
                                                        	</select>
                                                     </div>
                                                 </div>
@@ -336,6 +336,38 @@
                 });
             });
         </script>
-    
+    	<script type="text/javascript">
+    		$(function(){
+    			$("#frmProductAdd").submit(function(e){
+    				e.preventDefault();    				
+    				json = {
+    					"productName" : $("#productname").val(),
+    					"category"    : {
+    										"catId"	: $("#optCategory").val()
+    					},
+    					"quantity"    : $("#quantity").val(),
+    					"unitPrice"   : $("#unitprice").val(),
+    					"costPrice"	  : $("#costprice").val(),
+    					"salePrice"   : $("#saleprice").val()
+    				};
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/admin/product/add", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    data: JSON.stringify(json), 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				        console.log(data);
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
+    			});
+    		});
+    	</script>
     </body>
 </html>

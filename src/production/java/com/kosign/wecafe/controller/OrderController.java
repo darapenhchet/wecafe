@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.services.OrderProductService;
+import com.kosign.wecafe.services.ProductService;
 
 @Controller
 @RequestMapping(value="/order")
@@ -17,6 +18,9 @@ public class OrderController {
 
 	@Inject 
 	OrderProductService orderProductService ;
+	
+	@Inject
+	ProductService productService;
 	
 	@RequestMapping(value={"/"})
 	public String index(Map<String ,Object> model){
@@ -27,6 +31,7 @@ public class OrderController {
 			System.out.println(product.getProductName());
 		}
 		return "order/order";
+		
 	}
  
 }
