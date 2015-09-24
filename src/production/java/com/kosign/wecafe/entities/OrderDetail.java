@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,6 +22,11 @@ public class OrderDetail implements java.io.Serializable{
 
 	/*@EmbeddedId
 	private OrderDetailsPK pk = new OrderDetailsPK();*/
+	
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private Long OrderDetailId;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pro_id")

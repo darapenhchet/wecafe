@@ -5,6 +5,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import com.kosign.wecafe.entities.Category;
+import com.kosign.wecafe.entities.Order;
+import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
 
@@ -33,6 +35,11 @@ public class HibernateUtil {
 			configuration.addAnnotatedClass(Product.class);
 			configuration.addAnnotatedClass(Category.class);
 			configuration.addAnnotatedClass(Supplier.class);
+			configuration.addAnnotatedClass(Order.class);
+			configuration.addAnnotatedClass(OrderDetail.class);
+					
+			
+			//configuration.addPackage("com.kosign.wecafe.entities");
 			return configuration.buildSessionFactory(new StandardServiceRegistryBuilder().build());
 		}catch(Exception ex){
 			ex.printStackTrace();

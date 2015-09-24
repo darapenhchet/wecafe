@@ -44,7 +44,7 @@ public class ProductController {
 		}
 		products.add(product);*/		
 		
-		System.out.println(product.getProductName());
+		//System.out.println(product.getProductName());
 		return productService.addNewProduct(product);
 		//return ((Product)session.getAttribute("product")).getProductName();
 		

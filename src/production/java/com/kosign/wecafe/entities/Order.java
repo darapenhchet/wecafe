@@ -16,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="order")
+@Table(name="wecafe_order")
 public class Order implements java.io.Serializable {
 	
 	/**
@@ -30,7 +30,6 @@ public class Order implements java.io.Serializable {
 	@Column(name="order_id")
 	private long orderId;
 		
-	//@ElementCollection(targetClass=OrderDetail.class)
 	@ManyToMany(mappedBy="order")
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
