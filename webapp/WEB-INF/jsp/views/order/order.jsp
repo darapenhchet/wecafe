@@ -245,6 +245,12 @@
 				clear();
 			});
 			
+			$(document).on('click',"#btndelete",function(){
+				alert(1);
+				$(this).parents("tr").remove();
+			});
+			
+			
 			$(".panel-body").click(function() {
 				$("#MOD_PRICE").html($(this).find("#PRICE").html());
 				$("#protitle").html($(this).find("#Proname").html());
@@ -273,7 +279,7 @@
 				    	  	st += "<td>" + data[i].totalAmount + "</td>";
 				    	  	st += "<td>" + data[i].time + "</td>";
 				    	  	st += "<td>" + data[i].comment +"</td>";
-				    	  	st += "<td><a href= 'javascrip:' id='btnedit'>Edit</a> <a href='javascrip:' id='btndelete'>Delete</a></td></tr>";
+				    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
 				    	  	amount += data[i].totalAmount;
 				    	}
 				      	 $("#totalamount").val(amount);
