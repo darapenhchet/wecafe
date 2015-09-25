@@ -1,5 +1,6 @@
 package com.kosign.wecafe.entities;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name="wecafe_order")
@@ -44,6 +47,9 @@ public class Order implements java.io.Serializable {
 	
 	@Column(name="cus_id")
 	private long cusId;
+	
+/*	@Formula("SELECT SUM(ORDER_DETAIL.amount) FROM OrderDetail ORDER_DETAIL WHERE ORDER_DETAIL.order.orderId= orderId")
+	private BigDecimal orderAmount;*/
 
 	public long getOrderId() {
 		return orderId;

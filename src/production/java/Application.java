@@ -90,18 +90,6 @@ public class Application {
 		
 		order.getOrderDetail().add(orderDetail);
 		
-		Product product2 = session.get(Product.class, new Long(2));
-		
-		OrderDetail orderDetail2 = new OrderDetail();
-		orderDetail2.setProduct(product2);
-		orderDetail2.setOrder(order);
-		orderDetail2.setProComment("I want to add the more sugar...");
-		orderDetail2.setProQty(new Long(1));
-		orderDetail2.setProStatus(0);
-		orderDetail2.setProUnitPrice(product2.getSalePrice());
-		
-		order.getOrderDetail().add(orderDetail2);
-		
 		session.save(order);
 		//session.save(orderDetail);
 		

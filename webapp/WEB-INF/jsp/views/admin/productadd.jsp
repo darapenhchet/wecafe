@@ -76,7 +76,6 @@
                         </div>
                         <!-- Form-validation -->
                         <div class="row">
-                        
                             <div class="col-sm-12">
                                 <div class="panel panel-default">
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
