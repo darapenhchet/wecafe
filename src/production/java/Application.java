@@ -29,10 +29,10 @@ public class Application {
 		configuration.setProperties(new Properties(){
 			{
 				put("hibernate.connection.username","postgres");
-				put("hibernate.connection.password","123456");
+				put("hibernate.connection.password","postgres");
 				put("hibernate.connection.driver_class","org.postgresql.Driver");
-				put("hibernate.connection.url","jdbc:postgresql://localhost:5432/WeCafe");
-				put("hibernate.hbm2ddl.auto","create-drop");
+				put("hibernate.connection.url","jdbc:postgresql://192.168.178.72:5432/WeCafe");
+				put("hibernate.hbm2ddl.auto","update");
 			}
 			
 		});
@@ -46,29 +46,29 @@ public class Application {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		Product product = new Product();
+		/*Product product = new Product();
 		product.setProductName("BIG COCA COLA");
 		product.setQuantity(10L);
 		product.setUnitPrice(new BigDecimal(1500));
 		product.setCostPrice(new BigDecimal(1300));
-		product.setSalePrice(new BigDecimal(1500));
+		product.setSalePrice(new BigDecimal(1500));*/
 		//product.setCategoryId(1L);
-		product.setImage("BIG COCA COLA");		
+		/*product.setImage("BIG COCA COLA");		
 		
 		Category category = new Category();
 		category.setCatName("Drink");
 		category.setCreatedDate(new Date());
-		category.setLastUpdatedDate(new Date());
+		category.setLastUpdatedDate(new Date());*/
 		//Category category = (Category)session.get(Category.class, 1L);	
 		
-		product.setCategory(category);
+		/*product.setCategory(category);
 		category.getProducts().add(product);
 		
 		session.save(category);
-		session.save(product);
+		session.save(product);*/
 		
-		Query query = session.createQuery("FROM Order");
-		List<Order> orders = query.list();
+		/*Query query = session.createQuery("FROM Order");
+		List<Order> orders = query.list();*/
 		
 		
 		
@@ -76,20 +76,20 @@ public class Application {
 		order.setOrderDate(new Date());
 		order.setCusId(1L);
 		
-		Product productSave = session.get(Product.class, new Long(1));
+		Product product = session.get(Product.class, new Long(1));
 				
 		OrderDetail orderDetail = new OrderDetail();
-		orderDetail.setProduct(productSave);
+		orderDetail.setProduct(product);
 		orderDetail.setOrder(order);
 		orderDetail.setProComment("I want to add the more sugar...");
 		orderDetail.setProQty(new Long(1));
-		orderDetail.setProStatus("0");
+		orderDetail.setProStatus(0);
 		orderDetail.setProUnitPrice(product.getSalePrice());
 		
 		order.getOrderDetail().add(orderDetail);
 		
-		//session.save(order);
-		session.save(orderDetail);
+		session.save(order);
+		//session.save(orderDetail);
 		
 		session.getTransaction().commit();
 		session.close();

@@ -1,10 +1,17 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class OrderDetailsPK {
+public class OrderDetailsPK implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	private Product product;

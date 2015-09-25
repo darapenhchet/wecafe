@@ -1,9 +1,13 @@
 package com.kosign.wecafe.entities;
 
+import java.beans.Transient;
 import java.math.BigDecimal;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,28 +17,33 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="order_detail")
-/*@AssociationOverrides({
+@AssociationOverrides({
 	@AssociationOverride(name = "pk.order", 
 		joinColumns = @JoinColumn(name = "order_id")),
 	@AssociationOverride(name = "pk.product", 
-		joinColumns = @JoinColumn(name = "pro_id")) })*/
+		joinColumns = @JoinColumn(name = "pro_id")) })
 public class OrderDetail implements java.io.Serializable{
 
-	/*@EmbeddedId
-	private OrderDetailsPK pk = new OrderDetailsPK();*/
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private OrderDetailsPK pk = new OrderDetailsPK();
 	
-	@Id
+	/*@Id
 	@GeneratedValue
 	@Column(name="id")
-	private Long OrderDetailId;
+	private Long OrderDetailId;*/
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+/*	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pro_id")
 	private Product product;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="order_id")
-	private Order order;
+	private Order order;*/
 	
 	@Column(name="pro_qty")
 	private long proQty;
@@ -46,7 +55,7 @@ public class OrderDetail implements java.io.Serializable{
 	private String proComment;
 	
 	@Column(name="pro_status")
-	private String proStatus;
+	private Integer proStatus;
 
 	public long getProQty() {
 		return proQty;
@@ -72,28 +81,30 @@ public class OrderDetail implements java.io.Serializable{
 		this.proComment = proComment;
 	}
 
-	public String getProStatus() {
+	public Integer getProStatus() {
 		return proStatus;
 	}
 
-	public void setProStatus(String proStatus) {
+	public void setProStatus(Integer proStatus) {
 		this.proStatus = proStatus;
 	}
 
+	@Transient
 	public Product getProduct() {
-		return product;
+		return pk.getProduct();
 	}
 
 	public void setProduct(Product product) {
-		this.product = product;
+		this.pk.setProduct(product);
 	}
 
+	@Transient
 	public Order getOrder() {
-		return order;
+		return pk.getOrder();
 	}
 
 	public void setOrder(Order order) {
-		this.order = order;
+		this.pk.setOrder(order);
 	}
 	
 }

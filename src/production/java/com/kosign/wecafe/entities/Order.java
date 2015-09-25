@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +32,10 @@ public class Order implements java.io.Serializable {
 	@Column(name="order_id")
 	private long orderId;
 		
-	@ManyToMany(mappedBy="order")
+	/*@ManyToMany(mappedBy="order")
+	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();*/
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.order", cascade=CascadeType.ALL)
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
 	
@@ -63,8 +68,7 @@ public class Order implements java.io.Serializable {
 	public void setCusId(long cusId) {
 		this.cusId = cusId;
 	}
-
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.order",cascade=CascadeType.ALL)*/
+	
 	public Set<OrderDetail> getOrderDetail() {
 		return orderDetail;
 	}

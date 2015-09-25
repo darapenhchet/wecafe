@@ -5,14 +5,17 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -37,7 +40,10 @@ public class Product implements java.io.Serializable{
 	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product",cascade=CascadeType.ALL)
 	//@Column(name = "pro_id")
 	//@ElementCollection(targetClass=OrderDetail.class)
-	@ManyToMany(mappedBy="product")
+	/*@ManyToMany(mappedBy="product")
+	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();*/
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.order", cascade=CascadeType.ALL)
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
 	@Column(name="pro_name")
