@@ -77,6 +77,7 @@ public class ProductServiceImpl implements ProductService{
 			Category category = session.get(Category.class, product.getCategory().getCatId());
 			product.setCategory(category);
 			product.setLastUpdatedDate(new Date());
+			product.setStatus(true);
 			product.setImage("drink.jpg");
 			session.update(product);
 			
