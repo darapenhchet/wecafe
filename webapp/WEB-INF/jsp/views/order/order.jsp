@@ -281,7 +281,7 @@
 	</script>
 	<script type="text/javascript">
     		$(function(){
-    			$("#btnAddToCart").click(function(){ alert($("#proid").html());	
+    			$("#btnAddToCart").click(function(){  
     				json = {
     					"productId"   : $("#proid").html(),
     					"productName" : $("#protitle").html(),
