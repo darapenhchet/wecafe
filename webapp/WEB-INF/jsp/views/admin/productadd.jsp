@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kosign.wecafe.entities.Category"%>
+<%@page import="java.util.List"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -92,8 +95,14 @@
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
                                                        	<select class="form-control" id="optCategory">
-                                                       		<option value="1">Soft drink</option>
-                                                       		<option value="2">Hard drink</option>
+                                                       		<option>Please choose your category</option>
+                                                       	<%
+                                                       		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
+                                                    		for(Category category : categories){
+                                                    			out.println("<option value="+category.getCatId()+">"+category.getCatName()+"</option>");
+                                                    		}
+                                                       	%>
+                                       
                                                        	</select>
                                                     </div>
                                                 </div>
@@ -151,9 +160,7 @@
                                
                 </div> <!-- content -->
 
-                <footer class="footer text-right">
-                    2015 © Moltran.
-                </footer>
+                <%@ include file="footer.jsp" %>
 
             </div>
             <!-- ============================================================== -->
@@ -365,6 +372,7 @@
     				    success: function(data) { 
     				        if(data){
     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+    				        	location.href="${pageContext.request.contextPath}/admin/products";
     				        }else{
     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
     				        }

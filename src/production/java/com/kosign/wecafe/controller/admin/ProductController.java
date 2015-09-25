@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.services.CategoryService;
 import com.kosign.wecafe.services.ProductService;
 
 @Controller
 public class ProductController {
 	
-	@Autowired
-	ProductService productService;
+	@Inject
+	private ProductService productService;
+	
+	@Inject
+	private CategoryService categoryService;
+	
 	
 	@RequestMapping(value="/admin/products", method=RequestMethod.GET)
 	public String listAllProducts(Map<String, Object> model){
@@ -32,7 +38,8 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/admin/productadd", method=RequestMethod.GET)
-	public String productadd(){
+	public String productadd(Map<String, Object> model){
+		model.put("categories", categoryService.getAllCategories());
 		return "admin/productadd";
 	}	
 	

@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			
-			Query query = session.createQuery("FROM Product");
+			Query query = session.createQuery("FROM Product ORDER BY createdDate DESC");
 			
 			List<Product> products = query.list();
 			
