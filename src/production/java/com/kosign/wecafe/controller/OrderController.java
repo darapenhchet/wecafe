@@ -42,7 +42,7 @@ public class OrderController {
 		
 	}
 	
-	@RequestMapping(value="/addtocart", method=RequestMethod.GET, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/addtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody List<Cart> addNewProduct(HttpSession session, @RequestBody Cart cart){
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){

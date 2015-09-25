@@ -1,8 +1,9 @@
 package com.kosign.wecafe.forms;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Cart {
+public class Cart implements Serializable{
 
 	private Long productId;
 	

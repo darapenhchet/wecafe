@@ -177,7 +177,7 @@
 					</div>
                 </div>
                 <div class="modal-footer" style="height: 80px;">
-                    <button type="button" class="btn btn-default" ><span class="button b-close"><span>Add to cart</span></span></button>
+                    <button type="button" class="btn btn-default" id="btnAddToCart"><span class="button b-close"><span>Add to cart</span></span></button>
                     <button type="button" class="btn btn-primary" id="bt_add"> <span class="button b-close"><span>Buy</span></span></button>
                 </div>
             </div>
@@ -273,4 +273,33 @@
 			$("#myModal").bPopup();
 		});
 	</script>
+	<script type="text/javascript">
+    		$(function(){
+    			$("#btnAddToCart").click(function(){	
+    				json = {
+    					"productId"   : 1,
+    					"productName" : "AAA",
+    					"quantity"    : 1,
+    					"totalAmount" : 1500,
+    					"comment"	  : "I DON'T WANT TO GET IT"
+    				};
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/order/addtocart", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    data: JSON.stringify(json), 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				       console.log(data);
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
+    			});
+    		});
+    	</script>
 </html>
