@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Formula;
-
 @Entity
 @Table(name="order_detail")
 @AssociationOverrides({
@@ -58,9 +56,6 @@ public class OrderDetail implements java.io.Serializable{
 	
 	@Column(name="pro_status")
 	private Integer proStatus;
-	
-	@Formula("pro_unit_price*pro_qty")
-	private BigDecimal amount;
 
 	public long getProQty() {
 		return proQty;
@@ -110,14 +105,6 @@ public class OrderDetail implements java.io.Serializable{
 
 	public void setOrder(Order order) {
 		this.pk.setOrder(order);
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
 	}
 	
 }
