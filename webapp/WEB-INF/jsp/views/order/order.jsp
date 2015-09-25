@@ -105,7 +105,7 @@
 <img src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>">
 																 <%=products.get(i).getProductName()%>
 															</div>
-															<div style="text-align: right;">0.5$</div>
+															<div style="text-align: right;"><span id="PRICE"><%=products.get(i).getSalePrice()%></span><span>&nbsp; Riels</span></div>
 														</div>
 													</div>
 												</div>										 
@@ -153,7 +153,7 @@
 						<div class="form-group">
 						    <label class="control-label col-sm-3">Price :</label>
 						      <div class="col-sm-9">
-						        	<label class="control-label col-sm-3">0.5$</label>
+						        	<label class="control-label col-sm-3" id="MOD_PRICE">0.5$</label>
 						      </div>
 					    </div>   	
 					    <div class="form-group">
@@ -269,6 +269,7 @@
 			});
 		});
 		$(".panel-body").click(function() {
+			$("#MOD_PRICE").html($(this).find("#PRICE").html());
 			$("#myModal").bPopup();
 		});
 	</script>
