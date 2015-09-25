@@ -48,8 +48,8 @@ public class Order implements java.io.Serializable {
 	@Column(name="cus_id")
 	private long cusId;
 	
-/*	@Formula("SELECT SUM(ORDER_DETAIL.amount) FROM OrderDetail ORDER_DETAIL WHERE ORDER_DETAIL.order.orderId= orderId")
-	private BigDecimal orderAmount;*/
+	@Formula("SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=orderId")
+	private BigDecimal orderAmount;
 
 	public long getOrderId() {
 		return orderId;
@@ -83,4 +83,11 @@ public class Order implements java.io.Serializable {
 		this.orderDetail = orderDetail;
 	}
 	
+	public BigDecimal getOrderAmount() {
+		return orderAmount;
+	}
+	
+	public void setOrderAmount(BigDecimal orderAmount) {
+		this.orderAmount = orderAmount;
+	}
 }

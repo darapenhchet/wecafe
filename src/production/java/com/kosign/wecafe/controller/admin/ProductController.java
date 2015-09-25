@@ -51,7 +51,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/admin/product/{id}", method=RequestMethod.GET)
-	public String updateProduct(){
+	public String updateProduct(@PathVariable("id") Integer id){
 		return "";
 	}
 		

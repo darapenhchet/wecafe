@@ -90,10 +90,31 @@ public class Application {
 		
 		order.getOrderDetail().add(orderDetail);
 		
+		Product product1 = session.get(Product.class, new Long(2));
+		
+		OrderDetail orderDetail1 = new OrderDetail();
+		orderDetail1.setProduct(product1);
+		orderDetail1.setOrder(order);
+		orderDetail1.setProComment("I don't want to get the ice...");
+		orderDetail1.setProQty(new Long(1));
+		orderDetail1.setProStatus(0);
+		orderDetail1.setProUnitPrice(product1.getSalePrice());
+		
+		order.getOrderDetail().add(orderDetail1);
+		
 		session.save(order);
 		//session.save(orderDetail);
 		
 		session.getTransaction().commit();
+		
+		Query query = session.createQuery("SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=?");
+		
+		query.setParameter(0, order.getOrderId());
+		
+		BigDecimal amount = (BigDecimal) query.uniqueResult();
+		
+		System.out.println("ORDER AMOUNT="+ amount);
+		
 		session.close();
 	}
 	
