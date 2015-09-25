@@ -109,6 +109,7 @@
                                                             <th style="text-align:right;">Sale Price</th>
                                                             <th>Category</th>
                                                             <th style="text-align:center;">Image</th>
+                                                            <th style="text-align:center;">Status</th>
                                                             <th style="text-align:center;">Action</th>
                                                         </tr>
                                                     </thead>
@@ -125,8 +126,9 @@
                                                             <td style="text-align:right;">${product.salePrice} <span style="font-weight:bold;">Riel</span></td>
                                                             <td>${product.category.catName}</td>
                                                             <td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/img/${product.image}" class="img-thumbnail" alt="${product.productName}" width="30px" height="30px"/></td>
+                                                            <td style="text-align:center;">${product.status }</td>
                                                             <td class="actions" style="text-align:center;">
-				                                                <a class="on-default edit-row" href="#"><i class="fa fa-pencil"></i></a>
+				                                                <a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i class="fa fa-pencil"></i></a>
 				                                                <a class="on-default remove-row" href="#"><i class="fa fa-trash-o"></i></a>
 				                                            </td>
                                                         </tr>

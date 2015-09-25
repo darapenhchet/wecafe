@@ -81,7 +81,10 @@ public class Product implements java.io.Serializable{
 	
 	@Column(name="LAST_UPDATED_BY")
 	private String lastUpdatedBy;
-
+	
+	@Column(name="status")
+	private Boolean status;
+		
 	public Long getProductId() {
 		return productId;
 	}
@@ -177,6 +180,15 @@ public class Product implements java.io.Serializable{
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
+	
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
 
 	public Set<OrderDetail> getOrderDetail() {
 		return orderDetail;
@@ -184,5 +196,9 @@ public class Product implements java.io.Serializable{
 
 	public void setOrderDetail(Set<OrderDetail> orderDetail) {
 		this.orderDetail = orderDetail;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 }

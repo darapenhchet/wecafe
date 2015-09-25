@@ -95,7 +95,7 @@
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
                                                        	<select class="form-control" id="optCategory">
-                                                       		<option>Please choose your category</option>
+                                                       		<option value="">Please choose your category</option>
                                                        	<%
                                                        		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
                                                     		for(Category category : categories){
@@ -115,7 +115,7 @@
                                                 <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="unitprice" name="prin" type="text">
+                                                        <input class="form-control " id="unitprice" name="unitprice" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -350,6 +350,10 @@
     		$(function(){
     			$("#frmProductAdd").submit(function(e){
     				e.preventDefault();    				
+    				if($("#optCategory").val()==""){
+    					alert("PLEASE CHOOSE THE CATEGORY");
+    					return;
+    				}
     				json = {
     					"productName" : $("#productname").val(),
     					"category"    : {

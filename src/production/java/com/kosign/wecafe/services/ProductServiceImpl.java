@@ -47,6 +47,7 @@ public class ProductServiceImpl implements ProductService{
 			product.setCategory(category);
 			product.setCreatedDate(new Date());
 			product.setLastUpdatedDate(new Date());
+			product.setImage("drink.jpg");
 			session.save(product);
 			
 			session.getTransaction().commit();
@@ -69,7 +70,45 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public boolean updateProduct(Product product) {
-		// TODO Auto-generated method stub
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			Category category = session.get(Category.class, product.getCategory().getCatId());
+			product.setCategory(category);
+			product.setLastUpdatedDate(new Date());
+			product.setImage("drink.jpg");
+			session.update(product);
+			
+			session.getTransaction().commit();
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}finally{
+			session.close();
+			//HibernateUtil.getSessionFactory().close();
+		}
 		return false;
+	}
+	
+	@Override
+	public Product findProductById(Long id) {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			
+			Product product = session.get(Product.class, id);
+			
+			session.getTransaction().commit();
+			return product;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}finally{
+			session.close();
+		}
+		return null;
 	}
 }

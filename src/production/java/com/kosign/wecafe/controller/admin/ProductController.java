@@ -58,13 +58,16 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/admin/product/{id}", method=RequestMethod.GET)
-	public String updateProduct(@PathVariable("id") Integer id){
-		return "";
+	public String updateProduct(@PathVariable("id") Long id, Map<String, Object> model){
+		Product product = productService.findProductById(id);
+		model.put("product", product);
+		model.put("categories", categoryService.getAllCategories());
+		return "admin/productupdate";
 	}
 		
-	@RequestMapping(value="/admin/product/update", method=RequestMethod.POST)
-	public boolean updateProduct(Product product){
-		return false;
+	@RequestMapping(value="/admin/product/update", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody boolean updateProduct(@RequestBody Product product){
+		return productService.updateProduct(product);
 	}
 	
 	@RequestMapping(value="/admin/product/delete/{id}", method=RequestMethod.POST)
