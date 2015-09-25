@@ -43,7 +43,7 @@ public class Product implements java.io.Serializable{
 	/*@ManyToMany(mappedBy="product")
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();*/
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.order", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product", cascade=CascadeType.ALL)
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
 	@Column(name="pro_name")

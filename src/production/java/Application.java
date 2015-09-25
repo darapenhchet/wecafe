@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
+import com.kosign.wecafe.entities.OrderDetailsPK;
 import com.kosign.wecafe.entities.Product;	
 
 public class Application {
@@ -25,6 +26,7 @@ public class Application {
 		configuration.addAnnotatedClass(Category.class);
 		configuration.addAnnotatedClass(Order.class);
 		configuration.addAnnotatedClass(OrderDetail.class);
+		configuration.addAnnotatedClass(OrderDetailsPK.class);
 		
 		configuration.setProperties(new Properties(){
 			{
