@@ -54,5 +54,16 @@ public class OrderController {
 		
 		return carts;
 	}
+	
+	@RequestMapping(value="/listcart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Cart> listAllProductsInCart(HttpSession session/*, @RequestBody Cart cart*/){
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+		}
+		return carts;
+	}
+	
+	
  
 }

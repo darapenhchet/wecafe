@@ -149,32 +149,32 @@
                 <div class="modal-body form-horizontal" style="height: 290px;">
                
                     <div class="col-sm-4">
-						  <img id="imgpath" src="${pageContext.request.contextPath}/resources/images/img/drink.jpg" style="width 200px; height: 250px; ">  			
+						  <img id="imgpath" style="width 200px; height: 250px; ">  			
 					</div>
 					<div class="col-sm-8 container">
 						<div class="form-group">
 						    <label class="control-label col-sm-3">Price :</label>
 						      <div class="col-sm-9">
-						        	<label class="control-label col-sm-3" id="MOD_PRICE">0.5$</label>
+						        	<label class="control-label col-sm-3" id="MOD_PRICE"></label>
 						      </div>
 						       <div style="display: none;" id="proid"></div>
 					    </div>   	
 					    <div class="form-group">
 					      	<label class="control-label col-sm-3" for="proqty">Qty :</label>
 					      	<div class="col-sm-9">
-					         <input type="text" class="form-control" maxlength="30" name="txtName" id="proqty"> 
+					         <input type="text" class="form-control" maxlength="30" id="proqty"> 
 					    	</div>
     					</div>	
     					<div class="form-group">
-					      	<label class="control-label col-sm-3" for="txtName">Time :</label>
+					      	<label class="control-label col-sm-3" >Time :</label>
 					      	<div class="col-sm-9">
-					         <input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
+					         <input type="text" class="form-control" maxlength="30"  id="protime"> 
 					    	</div>
     					</div>
     					<div class="form-group">
 					      	<label class="control-label col-sm-3" for="txtcomment">Comment:</label>
 					      	<div class="col-sm-9">
-					         <textarea cols="33" rows="4" style="resize: none;"></textarea> 
+					         <textarea id="procomment" cols="33" rows="4" style="resize: none;"></textarea> 
 					    	</div>
     					</div>
 					</div>
@@ -197,35 +197,18 @@
                 <div class="modal-body" style="height: 290px;">
 								  <table class="table table-hover">
 								    <thead>
-								      <tr>
-								        <th>Customer Name</th>
+								      <tr> 
 								        <th>Produce Name</th>
 								        <th>Price</th>
 								        <th>Qty</th>
 								        <th>Total Amount</th>
+								        <th>Time</th>
 								        <th>Comment</th>
 								        <th></th>
 								      </tr>
 								    </thead>
-								    <tbody>
-								      <tr>
-								        <td>PenhChet</td>
-								        <td>Milk</td>
-								        <td>1500</td>
-								        <td>1</td>
-								        <td>1500</td>
-								        <td>No ice</td>
-								        <td><a href="#">Edit</a> <a href="#">Delete</a></td>
-								      </tr>
-								      <tr>
-								        <td>Daravuth</td>
-								        <td>Coffee</td>
-								        <td>2000</td>
-								        <td>1</td>
-								        <td>2000</td>
-								        <td></td>
-								        <td><a href="#">Edit</a> <a href="#">Delete</a></td>
-								      </tr>
+								    <tbody id="orderdetail">
+								      
 								    </tbody>
 								  </table>
 						 
@@ -233,21 +216,10 @@
 								<div class="form-group">
 								      	<label class="control-label col-sm-10" for="txtName">Total Amount :</label>
 								      	<div class="col-sm-2">
-								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="totalamount" style="margin-bottom: 2px;"> 
 								    	</div>
 		    					</div>
-		    					<div class="form-group">
-								      	<label class="control-label col-sm-10" for="txtName">Money In :</label>
-								      	<div class="col-sm-2">
-								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
-								    	</div>
-		    					</div>
-		    					<div class="form-group">
-								      	<label class="control-label col-sm-10" for="txtName">Money Out :</label>
-								      	<div class="col-sm-2">
-								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
-								    	</div>
-		    					</div>						 
+		    				 						 
 					   </div>
 				</div>
 				<div class="modal-footer" style="height: 80px;">
@@ -267,27 +239,67 @@
 </body>
 	<script type="text/javascript">
 		$(document).ready(function(){
+		
 			$("#bt_add, #btnCart").click(function(){
 				$("#addtocart").bPopup();
+				clear();
 			});
-		});
-		$(".panel-body").click(function() {
-			$("#MOD_PRICE").html($(this).find("#PRICE").html());
-			$("#protitle").html($(this).find("#Proname").html());
-			$("#proid").html($(this).find("#idpro").html());
-			$("#imgpath").attr('src',$(this).find("#imgpro").attr('src'));
-			$("#myModal").bPopup();
-		});
-	</script>
-	<script type="text/javascript">
+			
+			$(".panel-body").click(function() {
+				$("#MOD_PRICE").html($(this).find("#PRICE").html());
+				$("#protitle").html($(this).find("#Proname").html());
+				$("#proid").html($(this).find("#idpro").html());
+				$("#imgpath").attr('src',$(this).find("#imgpro").attr('src'));
+				$("#myModal").bPopup();
+			});
+			
+			$("#bt_add, #btnCart").click(function(){
+				 var st=""; var amount=0;
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/order/listcart", 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    /* data: JSON.stringify(json), */ 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) {  
+				      	for(i=0; i<data.length; i++)				    	  
+				      	{
+				    	  	st += "<tr><td>" + data[i].productName + "</td>";
+				    	  	st += "<td>" + data[i].price + "</td>";
+				    	  	st += "<td>" + data[i].quantity + "</td>";
+				    	  	st += "<td>" + data[i].totalAmount + "</td>";
+				    	  	st += "<td>" + data[i].time + "</td>";
+				    	  	st += "<td>" + data[i].comment +"</td>";
+				    	  	st += "<td><a href= 'javascrip:' id='btnedit'>Edit</a> <a href='javascrip:' id='btndelete'>Delete</a></td></tr>";
+				    	  	amount += data[i].totalAmount;
+				    	}
+				      	 $("#totalamount").val(amount);
+				      	$("#orderdetail").html(st);
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+				
+			});
+			function clear(){
+				$("#proqty").val("");
+				$("#protime").val("");
+				$("#procomment").val("");
+			}
     		$(function(){
-    			$("#btnAddToCart").click(function(){  
-    				json = {
+    			$("#btnAddToCart").click(function(){
+    					json = {
     					"productId"   : $("#proid").html(),
-    					"productName" : $("#protitle").html(),
-    					"quantity"    : $("#proqty").html(),
-    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").html(),
-    					"comment"	  : $("txtcomment").html()
+    					"productName" : $("#protitle").html().trim(),
+    					"quantity"    : $("#proqty").val(),
+    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").val(),
+    					"time"    		: $("#protime").val(),
+    					"price"    		: $("#MOD_PRICE").html(),
+    					"comment"	  : $("#procomment").val()
     				};
     				$.ajax({ 
     				    url: "${pageContext.request.contextPath}/order/addtocart", 
@@ -305,7 +317,10 @@
     				        console.log("error: "+data+" status: "+status+" er:"+er);
     				    }
     				});
+    				clear();
     			});
     		});
+
+		}); 
     	</script>
 </html>
