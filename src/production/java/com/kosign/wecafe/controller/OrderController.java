@@ -48,7 +48,9 @@ public class OrderController {
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
 		}
-		carts.add(cart); 
+		if(cart.getProductId()!=null){
+			carts.add(cart);
+		}
 		
 		session.setAttribute("CARTS", carts);
 		
