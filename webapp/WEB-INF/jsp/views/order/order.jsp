@@ -97,13 +97,14 @@
 							    		
 							    		for(i = A-1; i>=A- 6 && i >=0; i--) 							    			
 							    		{ %>	
-							    									    									    	 
+					    									    									    	 
 												<div class="col-sm-6">
 													<div class="panel panel-default form-group">
 														<div class="panel-body">
 															<div style="float: left;">
-<img src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>">
-																 <%=products.get(i).getProductName()%>
+<div id="idpro" style="display: none;"><%=products.get(i).getProductId()%></div>	
+<img id="imgpro" src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>"> 
+															<span id="Proname">	 <%=products.get(i).getProductName()%></span>
 															</div>
 															<div style="text-align: right;"><span id="PRICE"><%=products.get(i).getSalePrice()%></span><span>&nbsp; Riels</span></div>
 														</div>
@@ -143,11 +144,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
-                    <h4 class="modal-title">Coca Cola</h4>
+                    <h4 class="modal-title" id="protitle"></h4>
                 </div>
                 <div class="modal-body form-horizontal" style="height: 290px;">
+               
                     <div class="col-sm-4">
-						  <img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg" style="width 200px; height: 250px; ">  			
+						  <img id="imgpath" src="${pageContext.request.contextPath}/resources/images/img/drink.jpg" style="width 200px; height: 250px; ">  			
 					</div>
 					<div class="col-sm-8 container">
 						<div class="form-group">
@@ -155,11 +157,12 @@
 						      <div class="col-sm-9">
 						        	<label class="control-label col-sm-3" id="MOD_PRICE">0.5$</label>
 						      </div>
+						       <div style="display: none;" id="proid"></div>
 					    </div>   	
 					    <div class="form-group">
-					      	<label class="control-label col-sm-3" for="txtName">Qty :</label>
+					      	<label class="control-label col-sm-3" for="proqty">Qty :</label>
 					      	<div class="col-sm-9">
-					         <input type="text" class="form-control" maxlength="30" name="txtName" id="txtName"> 
+					         <input type="text" class="form-control" maxlength="30" name="txtName" id="proqty"> 
 					    	</div>
     					</div>	
     					<div class="form-group">
@@ -169,7 +172,7 @@
 					    	</div>
     					</div>
     					<div class="form-group">
-					      	<label class="control-label col-sm-3" for="txtName">Comment:</label>
+					      	<label class="control-label col-sm-3" for="txtcomment">Comment:</label>
 					      	<div class="col-sm-9">
 					         <textarea cols="33" rows="4" style="resize: none;"></textarea> 
 					    	</div>
@@ -270,18 +273,21 @@
 		});
 		$(".panel-body").click(function() {
 			$("#MOD_PRICE").html($(this).find("#PRICE").html());
+			$("#protitle").html($(this).find("#Proname").html());
+			$("#proid").html($(this).find("#idpro").html());
+			$("#imgpath").attr('src',$(this).find("#imgpro").attr('src'));
 			$("#myModal").bPopup();
 		});
 	</script>
 	<script type="text/javascript">
     		$(function(){
-    			$("#btnAddToCart").click(function(){	
+    			$("#btnAddToCart").click(function(){ alert($("#proid").html());	
     				json = {
-    					"productId"   : 1,
-    					"productName" : "AAA",
-    					"quantity"    : 1,
-    					"totalAmount" : 1500,
-    					"comment"	  : "I DON'T WANT TO GET IT"
+    					"productId"   : $("#proid").html(),
+    					"productName" : $("#protitle").html(),
+    					"quantity"    : $("#proqty").html(),
+    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").html(),
+    					"comment"	  : $("txtcomment").html()
     				};
     				$.ajax({ 
     				    url: "${pageContext.request.contextPath}/order/addtocart", 
