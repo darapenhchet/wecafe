@@ -63,8 +63,22 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public boolean deleteProduct(Product product) {
-		// TODO Auto-generated method stub
+	public boolean deleteProduct(Long id) {
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			Product product = session.get(Product.class, id);
+			product.setStatus(false);
+			session.update(product);
+			session.getTransaction().commit();
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}finally{
+			session.close();
+		}
 		return false;
 	}
 	

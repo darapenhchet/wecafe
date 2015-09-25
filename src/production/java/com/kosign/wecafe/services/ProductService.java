@@ -9,5 +9,5 @@ public interface ProductService {
 	public Product findProductById(Long id);
 	public boolean addNewProduct(Product product);
 	public boolean updateProduct(Product product);
-	public boolean deleteProduct(Product product);
+	public boolean deleteProduct(Long id);
 }

@@ -118,7 +118,7 @@
                                                     <tbody>
                                                     	<c:forEach items="${products}" var="product">
                                                         <tr>
-                                                        	<td>${product.productId }</td>
+                                                        	<td id="PRODUCT_ID">${product.productId }</td>
                                                             <td>${product.productName}</td>
                                                             <td style="text-align:right;">${product.quantity}</td>
                                                             <td style="text-align:right;">${product.unitPrice} <span style="font-weight:bold;">Riel</span></td>
@@ -129,7 +129,7 @@
                                                             <td style="text-align:center;">${product.status }</td>
                                                             <td class="actions" style="text-align:center;">
 				                                                <a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i class="fa fa-pencil"></i></a>
-				                                                <a class="on-default remove-row" href="#"><i class="fa fa-trash-o"></i></a>
+				                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
 				                                            </td>
                                                         </tr>
 														</c:forEach>
@@ -298,6 +298,39 @@
             $(document).ready(function() {
                 $('#datatable').dataTable();
             } );
+        </script>
+        
+        <script>
+        	$(function(){
+        		$(document).on('click','#btnRemove',function(){
+        			alert($(this).parents("tr").find("#PRODUCT_ID").html());
+        			var id = $(this).parents("tr").find("#PRODUCT_ID").html();
+        			if(confirm("Do you want to delete that product?")){
+        				$.ajax({ 
+        				    url: "${pageContext.request.contextPath}/admin/product/delete/"+id, 
+        				    type: 'POST', 
+        				    dataType: 'JSON', 
+        				    //data: JSON.stringify(json), 
+        				    beforeSend: function(xhr) {
+        	                    xhr.setRequestHeader("Accept", "application/json");
+        	                    xhr.setRequestHeader("Content-Type", "application/json");
+        	                },
+        				    success: function(data) { 
+        				        if(data){
+        				        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
+        				        	location.href="${pageContext.request.contextPath}/admin/products";
+        				        }else{
+        				        	alert('YOU HAVE ERRORS WHEN DELETE NEW PRODUCT.');
+        				        }
+        				    },
+        				    error:function(data,status,er) { 
+        				        console.log("error: "+data+" status: "+status+" er:"+er);
+        				    }
+        				});
+        				
+        			}
+        		});
+        	});
         </script>
 
 	</body>

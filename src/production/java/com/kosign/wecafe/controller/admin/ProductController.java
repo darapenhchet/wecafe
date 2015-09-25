@@ -70,9 +70,10 @@ public class ProductController {
 		return productService.updateProduct(product);
 	}
 	
-	@RequestMapping(value="/admin/product/delete/{id}", method=RequestMethod.POST)
-	public boolean deleteProduct(@PathVariable("id") Long id){
-		return false;
+	@RequestMapping(value="/admin/product/delete/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody boolean deleteProduct(@RequestBody @PathVariable("id") Long id){
+		System.out.println("DELETE ID="+ id);
+		return productService.deleteProduct(id);
 	}
 
 }
