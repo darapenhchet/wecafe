@@ -3,7 +3,7 @@
                 <div class="sidebar-inner slimscrollleft">
                     <div class="user-details">
                         <div class="pull-left">
-                            <img src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle">
+                            <img src="${pageContext.request.contextPath}/resources/images/img/Coke.jpg" alt="" class="thumb-md img-circle">
                         </div>
                         <div class="user-info">
                             <div class="dropdown">
@@ -27,7 +27,7 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Product </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="ion-ios7-cart"></i><span> Product </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/products">Product List</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/productadd">Add Product</a></li>
@@ -51,7 +51,7 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="md md-invert-colors-on"></i><span> Sale </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="ion-social-usd"></i><span> Sale </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/salelist">Sale List</a></li>
                                     <%-- <li><a href="${pageContext.request.contextPath}/admin/saleadd">Add Sale</a></li> --%>

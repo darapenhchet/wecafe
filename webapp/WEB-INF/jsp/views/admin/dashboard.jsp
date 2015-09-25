@@ -71,7 +71,7 @@
                             <div class="col-sm-12">
                                 <h4 class="pull-left page-title">Welcome !</h4>
                                 <ol class="breadcrumb pull-right">
-                                    <li><a href="#">Moltran</a></li>
+                                    <li><a href="#">KOSIGN WECAFE</a></li>
                                     <li class="active">Dashboard</li>
                                 </ol>
                             </div>
@@ -161,9 +161,9 @@
                         <!-- End row-->
 
 
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="portlet"><!-- /portlet heading -->
+                        <!-- <div class="row"> -->
+                            <!-- <div class="col-lg-8">
+                                <div class="portlet">/portlet heading
                                     <div class="portlet-heading">
                                         <h3 class="portlet-title text-dark text-uppercase">
                                             Website Stats
@@ -200,11 +200,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> <!-- /Portlet -->
-                            </div> <!-- end col -->
+                                </div> /Portlet
+                            </div> end col
 
                             <div class="col-lg-4">
-                                <div class="portlet"><!-- /portlet heading -->
+                                <div class="portlet">/portlet heading
                                     <div class="portlet-heading">
                                         <h3 class="portlet-title text-dark text-uppercase">
                                             Website Stats
@@ -241,8 +241,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> <!-- /Portlet -->
-                            </div> <!-- end col -->
+                                </div> /Portlet
+                            </div> end col -->
                         </div> <!-- End row -->
 
 
