@@ -144,7 +144,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
-                    <h4 class="modal-title" id="proname"></h4>
+                    <h4 class="modal-title" id="protitle"></h4>
                 </div>
                 <div class="modal-body form-horizontal" style="height: 290px;">
                
@@ -194,7 +194,7 @@
   	 <div class="modal-header">                     
                      
                     <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
-                    <h4 class="modal-title" id="protitle">Cart</h4>
+                    <h4 class="modal-title"  >Cart</h4>
                 
                 </div>
                 <div class="modal-body" style="height: 290px;">
