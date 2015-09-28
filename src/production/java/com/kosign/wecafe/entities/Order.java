@@ -50,6 +50,9 @@ public class Order implements java.io.Serializable {
 	
 	@Formula("SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=orderId")
 	private BigDecimal orderAmount;
+	
+	@Column(name="status")
+	private Integer status;
 
 	public long getOrderId() {
 		return orderId;
@@ -90,4 +93,17 @@ public class Order implements java.io.Serializable {
 	public void setOrderAmount(BigDecimal orderAmount) {
 		this.orderAmount = orderAmount;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

@@ -144,7 +144,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
-                    <h4 class="modal-title" id="protitle"></h4>
+                    <h4 class="modal-title" id="proname"></h4>
                 </div>
                 <div class="modal-body form-horizontal" style="height: 290px;">
                
@@ -192,7 +192,10 @@
   <div id="addtocart" style="display: none;" style="width: 80%;">       
   	<div class="modal-content"> 
   	 <div class="modal-header">                     
-                    <h4 class="modal-title">Cart</h4>
+                     
+                    <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
+                    <h4 class="modal-title" id="protitle">Cart</h4>
+                
                 </div>
                 <div class="modal-body" style="height: 290px;">
 								  <table class="table table-hover">
@@ -224,8 +227,9 @@
 				</div>
 				<div class="modal-footer" style="height: 80px;">
 					<div align="right">
-						<button type="button" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
-						<button type="button" class="btn btn-default"><span class="button b-close"><span>Cancel</span></span></button>		
+						<button type="button" id="btnbuymore" class="btn btn-default"><span class="button b-close"><span>Buy more</span></span></button>
+						<button type="button" id="btnconfirm" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
+						<button type="button" id="btncancel" class="btn btn-default"><span class="button b-close"><span>Cancel Order</span></span></button>		
 					</div>
 				</div>
 		</div>
@@ -239,6 +243,42 @@
 </body>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$("#btnconfirm").click(function(){
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/order/insertcartorder/", 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				       console.log(data);
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+				
+			});
+			$("#btncancel").click(function(){
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/order/removeAllFromCart/", 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				       console.log(data);
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+				
+			});
 		
 			$("#bt_add, #btnCart").click(function(){
 				$("#addtocart").bPopup();
@@ -246,7 +286,24 @@
 			});
 			
 			$(document).on('click',"#btndelete",function(){
-				alert(1);
+				 
+				$("#totalamount").val($("#totalamount").val() - ($(this).parent().parent().children().eq(4).html()));
+				
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/order/removetocart/"+$(this).parent().parent().children().html(), 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				       console.log(data);
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
 				$(this).parents("tr").remove();
 			});
 			
@@ -273,7 +330,8 @@
 				    success: function(data) {  
 				      	for(i=0; i<data.length; i++)				    	  
 				      	{
-				    	  	st += "<tr><td>" + data[i].productName + "</td>";
+				    	  	st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"
+				    	  	st += "<td>" + data[i].productName + "</td>";
 				    	  	st += "<td>" + data[i].price + "</td>";
 				    	  	st += "<td>" + data[i].quantity + "</td>";
 				    	  	st += "<td>" + data[i].totalAmount + "</td>";

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +44,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/addtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public  @ResponseBody List<Cart> addNewProduct(HttpSession session, @RequestBody Cart cart){
+	public  @ResponseBody List<Cart> addProductToCart(HttpSession session, @RequestBody Cart cart){
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
@@ -55,6 +56,39 @@ public class OrderController {
 		return carts;
 	}
 	
+	@RequestMapping(value="/removetocart/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Cart> removeProductFromCart(HttpSession session, @PathVariable("id") Long productId){
+		
+		System.out.println("PRODUCT ID="+ productId);
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+		}
+		
+		for(Cart cart : carts){
+			if(cart.getProductId().equals(productId)){
+				carts.remove(cart);
+				System.out.println("TRUE");
+				break;
+			}
+			System.out.println("FALSE");
+		}
+		
+		session.setAttribute("CARTS", carts);
+		
+		return carts;
+	}
+	
+	@RequestMapping(value="/removeAllFromCart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Boolean removeAllFromCart(HttpSession session){
+		
+		if(session.getAttribute("CARTS")!=null){
+			session.setAttribute("CARTS", null);
+			return true;
+		}
+		return false;	
+	}
+	
 	@RequestMapping(value="/listcart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody List<Cart> listAllProductsInCart(HttpSession session/*, @RequestBody Cart cart*/){
 		List<Cart> carts = new ArrayList<Cart>();
@@ -64,6 +98,16 @@ public class OrderController {
 		return carts;
 	}
 	
-	
+	@RequestMapping(value="/insertcartorder", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Cart> insertProductFromCart(HttpSession session){
+		
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+			orderProductService.addNewOrder(carts);
+		}
+				
+		return carts;
+	}
  
 }
