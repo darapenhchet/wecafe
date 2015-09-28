@@ -61,7 +61,6 @@
 				to Cart</button>
 		</div>
 	</div>
-	<div>
 		<div>
 			<div id="myCarousel1" class="carousel slide">
 				<!-- Wrapper for slides -->
@@ -135,146 +134,10 @@
 									</div>
 								</div>
 							</c:forEach> --%>
-					<%-- 
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body"">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									</div>
-									<div class="col-sm-6">
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									</div> 
-							    </div>
-</div>
-							    <div class="item" style="border 1px solid; width : 70%; margin: 0 auto;">
-							    <div style="margin-top: 17%">
-					    			<div class="col-sm-6">
-						    			<div class="panel panel-default form-group">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									</div>
-									<div class="col-sm-6">
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div>
-									  	<div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">		
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div> --%>
-
-
-					<%-- <div class="panel panel-default">
-									    	<div class="panel-body">
-									    		<div style="float: left;">
-										    		<img src="${pageContext.request.contextPath}/resources/images/img/drink.jpg">	
-										    		Coca Cola
-										    	</div>
-										    	<div style="text-align: right;">
-										    		0.5$
-										    	</div>
-									    	</div>
-									  	</div> --%>
-				</div>
+					
 			</div>
 		</div>
-	</div>
-	<!-- Left and right controls -->
-	<a class="left carousel-control" href="#myCarousel1" role="button"
+		<a class="left carousel-control" href="#myCarousel1" role="button"
 		data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span>
 		<span class="sr-only">Previous</span>
 	</a>
@@ -283,9 +146,10 @@
 		<span class="sr-only">Next</span>
 	</a>
 	</div>
+	<!-- Left and right controls -->
+	
 	</div>
-	</div>
-
+	
 	<!-- ############################################################# -->
 	<!-- Modal HTML -->
 	<div id="myModal" style="display: none;">
