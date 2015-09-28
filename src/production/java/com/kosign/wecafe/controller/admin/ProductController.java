@@ -45,6 +45,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody boolean addNewProduct(@RequestBody Product product){
+		
 		/*List<Product> products = new ArrayList<>();
 		if(session.getAttribute("products")!=null){
 			products = (ArrayList<Product>)session.getAttribute("products");

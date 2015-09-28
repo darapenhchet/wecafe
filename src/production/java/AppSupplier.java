@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 import com.kosign.wecafe.entities.Supplier;
 public class AppSupplier {
 
+	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 		Configuration configuration = new Configuration();
 		configuration.addAnnotatedClass(Supplier.class);

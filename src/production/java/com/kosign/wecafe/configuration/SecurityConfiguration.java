@@ -27,11 +27,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/","/home","/admin/logout").permitAll()
+				.antMatchers("/","/home","/admin/logout","/admin/login").permitAll()
 				.antMatchers("/admin/**").access("hasRole('ADMIN')")
 				.antMatchers("/seller/**").access("hasRole('SELLER')")
-				.and().formLogin()
-				.and().exceptionHandling().accessDeniedPage("/admin/access_denied")
-				.and().csrf().disable();
+				.and().formLogin().loginPage("/admin/login").permitAll()
+				.defaultSuccessUrl("/admin/")
+				//.and().formLogin().permitAll()
+				.usernameParameter("username").passwordParameter("password")
+				.and().exceptionHandling().accessDeniedPage("/admin/access_denied");
+				//.and().csrf().disable();
+				//.and().csrf();
+		http.logout().permitAll();
 	}
 }
