@@ -54,8 +54,7 @@ public class OrderDetail implements java.io.Serializable{
 	@Column(name="pro_comment")
 	private String proComment;
 	
-	@Column(name="pro_status")
-	private Integer proStatus;
+ 
 
 	public long getProQty() {
 		return proQty;
@@ -80,15 +79,7 @@ public class OrderDetail implements java.io.Serializable{
 	public void setProComment(String proComment) {
 		this.proComment = proComment;
 	}
-
-	public Integer getProStatus() {
-		return proStatus;
-	}
-
-	public void setProStatus(Integer proStatus) {
-		this.proStatus = proStatus;
-	}
-
+ 
 	@Transient
 	public Product getProduct() {
 		return pk.getProduct();

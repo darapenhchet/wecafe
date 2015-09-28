@@ -35,7 +35,6 @@ public class OrderProductServiceImpl implements OrderProductService{
 				orderDetail.setProduct(product);
 				orderDetail.setProComment(cart.getComment());
 				orderDetail.setProQty(cart.getQuantity());
-				//orderDetail.setProStatus(0);
 				orderDetail.setProUnitPrice(product.getSalePrice());
 				order.getOrderDetail().add(orderDetail);
 			} 

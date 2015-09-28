@@ -68,8 +68,6 @@ public class SellProductServiceImpl implements SellProductsService {
 				orderDetaill.setOrder(order);
 				orderDetaill.setProComment("comment");
 				orderDetaill.setProQty(new Long(1));
-				orderDetaill.setProStatus(0);
-				orderDetaill.setProStatus(0);
 				orderDetaill.setProUnitPrice(product.getSalePrice());
 
 				order.getOrderDetail().add(orderDetaill);

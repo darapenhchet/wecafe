@@ -85,7 +85,6 @@ public class Application {
 		orderDetail.setOrder(order);
 		orderDetail.setProComment("I want to add the more sugar...");
 		orderDetail.setProQty(new Long(1));
-		orderDetail.setProStatus(0);
 		orderDetail.setProUnitPrice(product.getSalePrice());
 		
 		order.getOrderDetail().add(orderDetail);
@@ -97,7 +96,6 @@ public class Application {
 		orderDetail1.setOrder(order);
 		orderDetail1.setProComment("I don't want to get the ice...");
 		orderDetail1.setProQty(new Long(1));
-		orderDetail1.setProStatus(0);
 		orderDetail1.setProUnitPrice(product1.getSalePrice());
 		
 		order.getOrderDetail().add(orderDetail1);
