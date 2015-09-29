@@ -268,7 +268,13 @@
 			});
 		
 			 
-				
+			$(document).on('click','#btnedit',function(){
+				/* $("#MOD_PRICE").html($(this).find("#PRICE").html());
+				$("#protitle").html($(this).find("#Proname").html());
+				$("#proid").html($(this).find("#idpro").html());
+				$("#imgpath").attr('src',$(this).find("#imgpro").attr('src')); */
+				$("#myModal").bPopup();
+			});
 		 
 			
 			$(document).on('click',"#btndelete",function(){

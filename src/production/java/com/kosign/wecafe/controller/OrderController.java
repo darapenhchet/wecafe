@@ -52,20 +52,21 @@ public class OrderController {
 			for(int i=0; i <carts.size();i++){
 				
 				if(carts.get(i).getProductId().equals(cart.getProductId())){
-					
-					carts.get(i).setQuantity(carts.get(i).getQuantity()+ cart.getQuantity());
-					BigDecimal bd =  new BigDecimal(carts.get(i).getQuantity());
+					carts.get(i).setQuantity(cart.getQuantity());
+					carts.get(i).setComment(cart.getComment());
+					carts.get(i).setTime(cart.getTime());
 					carts.get(i).setTotalAmount(cart.getPrice().multiply(new BigDecimal(carts.get(i).getQuantity())));
 					session.setAttribute("Carts", carts);
-					return carts;
-				}
+					return carts; 
+					 
+					}
 			}
 			
 		}
 		carts.add(cart); 
 		
 		session.setAttribute("CARTS", carts);
-		
+		System.out.println("size after add: " + carts.size());
 		return carts;
 	}
 	
