@@ -1,5 +1,6 @@
 package com.kosign.wecafe.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,18 @@ public class OrderController {
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+			for(int i=0; i <carts.size();i++){
+				
+				if(carts.get(i).getProductId().equals(cart.getProductId())){
+					
+					carts.get(i).setQuantity(carts.get(i).getQuantity()+ cart.getQuantity());
+					BigDecimal bd =  new BigDecimal(carts.get(i).getQuantity());
+					carts.get(i).setTotalAmount(cart.getPrice().multiply(new BigDecimal(carts.get(i).getQuantity())));
+					session.setAttribute("Carts", carts);
+					return carts;
+				}
+			}
+			
 		}
 		carts.add(cart); 
 		
