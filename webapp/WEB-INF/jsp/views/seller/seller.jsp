@@ -202,7 +202,7 @@
 	<!-- ############################################################# -->
 
 
-	<div id="addtocart" style="display: none;" style="width: 80%;">
+	<!-- <div id="addtocart" style="display: none;" style="width: 80%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Cart</h4>
@@ -281,6 +281,61 @@
 			</div>
 		</div>
 	</div>
+ -->
+
+
+
+
+
+
+	<div id="addtocart" style="display: none;" style="width: 80%;">       
+  	<div class="modal-content"> 
+  	 <div class="modal-header">                     
+                     
+                    <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
+                    <h4 class="modal-title"  >Cart</h4>
+                
+                </div>
+                <div class="modal-body" style="height: 290px;">
+								  <table class="table table-hover">
+								    <thead>
+								      <tr> 
+								        <th>Produce Name</th>
+								        <th>Price</th>
+								        <th>Qty</th>
+								        <th>Total Amount</th>
+								        <th></th>
+								      </tr>
+								    </thead>
+								    <tbody id="orderdetail">
+								      
+								    </tbody>
+								  </table>
+						 
+							<div class="form-horizontal">
+								<div class="form-group">
+								      	<label class="control-label col-sm-10" for="txtName">Total Amount :</label>
+								      	<div class="col-sm-2">
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="totalamount" style="margin-bottom: 2px;"> 
+								    	</div>
+		    					</div>
+		    				 						 
+					   </div>
+				</div>
+				<div class="modal-footer" style="height: 80px;">
+					<div align="right">
+						<button type="button" id="btnbuymore" class="btn btn-default"><span class="button b-close"><span>Buy more</span></span></button>
+						<button type="button" id="btnconfirm" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
+						<button type="button" id="btncancel" class="btn btn-default"><span class="button b-close"><span>Cancel Order</span></span></button>		
+					</div>
+				</div>
+		</div>
+	</div>
+
+
+
+
+
 
 	<!-- ################################################################## -->
 	<div style="width: 100%; height: 30px; background-color: #E0E0E0;"
@@ -290,20 +345,57 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 			$("#bt_add, #btnCart").click(function(){
+				 var st=""; var amount=0;
 				$("#addtocart").bPopup();
+				$.ajax({
+					url: "${pageContext.request.contextPath}/seller/listtocart",
+					type: 'POST',
+					dataType: 'JSON',
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Content-Type", "application/json");
+					},
+					success: function(data){
+						console.log(data.length);
+						for(i=0; i<data.length; i++)
+						{
+						
+							st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"
+				    	  	st += "<td>" + data[i].productName + "</td>";
+				    	  	st += "<td>" + data[i].price + "</td>";
+				    	  	st += "<td>" + data[i].quantity + "</td>";
+				    	  	st += "<td>" + data[i].totalAmount + "</td>";
+				    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+				    	  	amount += data[i].totalAmount;
+						}	
+						 $("#totalamount").val(amount);
+					     $("#orderdetail").html(st);
+							
+					},
+					error:function(data,stutus,er){
+						console.log("error:  "+data+" status: "+status+" er:" + er)
+					}
+					
+				});
+		
 			});
 			$(".panel-body").click(function() {
 				//$("#myModal").bPopup();
 // 	 			console.log($(this).parents(".panel-body").find("#pro_id").val());
 	 			alert($(this).find("#pro_nm").val());
-	 			var proNm = $(this).find("#pro_nm").val();
-	 			var proId = $(this).find("#pro_id").val();
-	 			var price = $(this).find("#PRICE").html();
-	 			
+	 			var proNm 		= $(this).find("#pro_nm").val();
+	 			var proId 		= $(this).find("#pro_id").val();
+	 			var price 		= $(this).find("#PRICE").html();
+	 			var price		= $(this).find("#PRICE").html();
+	 			var proqty		= 1;
+	 			var totalAmount = proqty * price ;
+	 			console.log (totalAmount);
 	 			json = {
 	 						"productId"   : proId,
 	 						"productName" : proNm,
-	 						"price"		  : price
+	 						"price"		  : price,
+	 						"quantity"	  : proqty,
+	 						"totalAmount" : totalAmount
 	 			};
 	 			$.ajax({
 	 				 url: "${pageContext.request.contextPath}/seller/addtocart", 

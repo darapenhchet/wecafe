@@ -32,24 +32,67 @@ public class SellController {
 	}
 	
 	@RequestMapping(value="/seller/addtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Cart> addNewProduct(HttpSession session, @RequestBody Cart cart){
+	public  @ResponseBody List<Cart> addProductToCart(HttpSession session, @RequestBody Cart cart){
 		List<Cart> carts = new ArrayList<Cart>();
-		if(session.getAttribute("carts")!=null){
-			carts = (ArrayList<Cart>)session.getAttribute("carts");
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+			
+			for(int i=0; i <carts.size();i++){
+				
+				System.out.println("cart.getProductName" + cart.getProductName());
+				System.out.println("carts.get(i).getProductName()" + carts.get(i).getProductName());
+				if(carts.get(i).getProductId().equals(cart.getProductId())){
+					carts.get(i).setQuantity(carts.get(i).getQuantity()+cart.getQuantity());
+					carts.get(i).setTotalAmount(carts.get(i).getTotalAmount() * cart.getTotalAmount());
+					session.setAttribute("Carts", carts);
+					return carts;
+				}
+			}
 		}
-		carts.add(cart);
-		session.setAttribute("Carts", carts);
+		carts.add(cart); 
+		
+		session.setAttribute("CARTS", carts);
+		
 		return carts;
 	}
 	
-	@RequestMapping(value="/seller/listtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE )
-	public @ResponseBody List<Cart> listtocart (HttpSession session){
+//	@RequestMapping(value="/seller/addtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+//	public @ResponseBody List<Cart> addNewProduct(HttpSession session, @RequestBody Cart cart){
+//		List<Cart> carts = new ArrayList<Cart>();
+//		if(session.getAttribute("carts")!=null){
+//			carts = (ArrayList<Cart>)session.getAttribute("carts");
+//			/*for(int i=0; i<carts.size();i++){
+//				if(carts.get(i).getProductId().equals(cart.getProductId())){
+//					carts.get(i).setQuantity(carts.get(i).getQuantity()+cart.getQuantity());
+//					session.setAttribute("Carts", carts);
+//					return carts;
+//				}
+//			}*/
+//		}
+//		carts.add(cart);
+//		session.setAttribute("Carts", carts);
+//		System.out.println(session.getAttribute("carts"));
+//		System.out.println(carts);
+//		return carts;
+//	}
+	@RequestMapping(value="/seller/listtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Cart> listAllProductsInCart(HttpSession session/*, @RequestBody Cart cart*/){
 		List<Cart> carts = new ArrayList<Cart>();
-		if(session.getAttribute("carts")!=null){
-			carts = (ArrayList<Cart>) session.getAttribute("carts");
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
 		}
 		return carts;
+	}
+
+	@RequestMapping(value="/insertcartsell", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Cart> insertProductFromCart(HttpSession session){
 		
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+//			sellProductService.addNewOrder(carts);
+		}
+		return carts;
 	}
 	
 }
