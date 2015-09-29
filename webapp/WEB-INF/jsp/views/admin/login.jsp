@@ -56,7 +56,7 @@
 
 
                 <div class="panel-body">
-                <form class="form-horizontal m-t-20" action="admin/login" method="POST">
+                <form class="form-horizontal m-t-20" action="login" method="POST">
 	                <input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}" />
                     <c:if test="${param.error != null}">
                         <div class="alert alert-danger">
@@ -70,13 +70,13 @@
                     </c:if>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control input-lg " type="text" required="" placeholder="Username" name="username">
+                            <input class="form-control input-lg " type="text"  placeholder="Username" id="username" name="username">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control input-lg" type="password" required="" placeholder="Password" name="passoword">
+                            <input class="form-control input-lg" type="password" id="password" name="password" placeholder="Password">
                         </div>
                     </div>
 

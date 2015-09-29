@@ -4,4 +4,9 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 
 public class WeCafeSecurityBootstrap extends AbstractSecurityWebApplicationInitializer{
 
+	@Override
+	protected boolean enableHttpSessionEventPublisher() {
+		System.out.println("Executing security bootstrap.");
+		return true;
+	}
 }
