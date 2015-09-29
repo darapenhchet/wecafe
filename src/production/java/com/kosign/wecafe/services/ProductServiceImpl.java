@@ -115,7 +115,7 @@ public class ProductServiceImpl implements ProductService{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			
-			Product product = session.get(Product.class, id);
+			Product product = session.load(Product.class, id);
 			
 			session.getTransaction().commit();
 			return product;

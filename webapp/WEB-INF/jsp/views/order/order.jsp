@@ -269,10 +269,26 @@
 		
 			 
 			$(document).on('click','#btnedit',function(){
-				/* $("#MOD_PRICE").html($(this).find("#PRICE").html());
-				$("#protitle").html($(this).find("#Proname").html());
-				$("#proid").html($(this).find("#idpro").html());
-				$("#imgpath").attr('src',$(this).find("#imgpro").attr('src')); */
+				
+				
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/order/editproduct/"+$(this).parent().parent().children().html(), 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				    	alert(data.lenght);
+				       console.log(data);
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				}); 
+		 
+			
 				$("#myModal").bPopup();
 			});
 		 

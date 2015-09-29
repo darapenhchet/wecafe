@@ -123,5 +123,10 @@ public class OrderController {
 				
 		return carts;
 	}
+	
+	@RequestMapping(value="/editproduct/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Product findProductById(@PathVariable("id") Long id){
+		return productService.findProductById(id);
+	}
  
 }
