@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +45,6 @@ public class SellController {
 				System.out.println("carts.get(i).getProductName()" + carts.get(i).getProductName());
 				if(carts.get(i).getProductId().equals(cart.getProductId())){
 					carts.get(i).setQuantity(carts.get(i).getQuantity()+ cart.getQuantity());
-					BigDecimal bd =  new BigDecimal(carts.get(i).getQuantity());
 					carts.get(i).setTotalAmount(cart.getPrice().multiply(new BigDecimal(carts.get(i).getQuantity())));
 					session.setAttribute("Carts", carts);
 					return carts;
@@ -58,25 +58,16 @@ public class SellController {
 		return carts;
 	}
 	
-//	@RequestMapping(value="/seller/addtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-//	public @ResponseBody List<Cart> addNewProduct(HttpSession session, @RequestBody Cart cart){
-//		List<Cart> carts = new ArrayList<Cart>();
-//		if(session.getAttribute("carts")!=null){
-//			carts = (ArrayList<Cart>)session.getAttribute("carts");
-//			/*for(int i=0; i<carts.size();i++){
-//				if(carts.get(i).getProductId().equals(cart.getProductId())){
-//					carts.get(i).setQuantity(carts.get(i).getQuantity()+cart.getQuantity());
-//					session.setAttribute("Carts", carts);
-//					return carts;
-//				}
-//			}*/
-//		}
-//		carts.add(cart);
-//		session.setAttribute("Carts", carts);
-//		System.out.println(session.getAttribute("carts"));
-//		System.out.println(carts);
-//		return carts;
-//	}
+	@RequestMapping(value="/seller/removeallfromcart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Boolean removeProductInCart(HttpSession session){
+		if(session.getAttribute("CARTS") != null){
+			session.setAttribute("CARTS", null);
+			return true;
+		}
+		return false;
+		
+		
+	}
 	@RequestMapping(value="/seller/listtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody List<Cart> listAllProductsInCart(HttpSession session/*, @RequestBody Cart cart*/){
 		List<Cart> carts = new ArrayList<Cart>();
@@ -86,15 +77,45 @@ public class SellController {
 		return carts;
 	}
 
-	@RequestMapping(value="/insertcartsell", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public  @ResponseBody List<Cart> insertProductFromCart(HttpSession session){
+	@RequestMapping(value="/seller/removetocart/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Cart> removeproductfromcart(HttpSession session, @PathVariable("id") Long productId){
+		System.out.println("Product ID = " + productId);
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS") != null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+		}
+			
+		for(Cart cart: carts){
+			if(cart.getProductId().equals(productId)){
+				long bb = cart.getQuantity();
+				long aa = 1L;
+				if( bb > aa){
+					cart.setQuantity(cart.getQuantity() - 1);
+					System.out.println("cart.getQuantity()" + cart.getQuantity());
+				}
+				else{
+					System.out.println("cart.getQuantity()" + cart.getQuantity());
+					carts.remove(cart);
+					System.out.println("TRUE");
+					break;
+				}
+				
+			}
+			System.err.println("FALSE");
+		}
+		session.setAttribute("CARTS", carts);
+		return carts;
+	}
+	
+	@RequestMapping(value="/seller/insertcartsell", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Boolean insertProductFromCart(HttpSession session){
 		
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
-//			sellProductService.addNewOrder(carts);
+			return sellProductService.addNewSaleProducts(carts);
 		}
-		return carts;
+		return false;
 	}
-	
+
 }

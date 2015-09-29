@@ -379,6 +379,45 @@
 				});
 		
 			});
+			
+			$(document).on('click',"#btndelete",function(){
+				 var st=""; var amount=0;
+				alert($(this).parent().parent().children().html());
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/seller/removetocart/"+$(this).parent().parent().children().html(), 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+						for(i=0; i<data.length; i++)
+						{
+							if(data[i].quantity >= 1){
+								st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"
+					    	  	st += "<td>" + data[i].productName + "</td>";
+					    	  	st += "<td>" + data[i].price + "</td>";
+					    	  	st += "<td>" + data[i].quantity + "</td>";
+					    	  	st += "<td>" + data[i].totalAmount + "</td>";
+					    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+					    	  	amount += data[i].totalAmount;
+								
+							}else{
+								$(this).parents("tr").remove();
+							}
+						}	
+						 $("#totalamount").val(amount);
+					     $("#orderdetail").html(st);
+						
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+				
+			});
+			
 			$(".panel-body").click(function() {
 				//$("#myModal").bPopup();
 // 	 			console.log($(this).parents(".panel-body").find("#pro_id").val());
@@ -400,6 +439,25 @@
 	 			$.ajax({
 	 				 url: "${pageContext.request.contextPath}/seller/addtocart", 
  				    type: 'POST',
+	 				datatype: 'JSON',
+	 				data: JSON.stringify(json), 
+	 				beforeSend: function(xhr) {
+	 		            xhr.setRequestHeader("Accept", "application/json");
+	 		            xhr.setRequestHeader("Content-Type", "application/json");
+	 		        },
+	 				success: function(data){
+	 					console.log(data);
+	 				},
+	 				error:function(data, status,er){
+	 					console.log("error: " + data + "status: " + status + "er: ");
+	 				}
+	 			});
+			});
+			
+			$("#btnconfirm").click(function(){
+				$.ajax({
+	 				 url: "${pageContext.request.contextPath}/seller/insertcartsell", 
+				    type: 'POST',
 	 				datatype: 'JSON',
 	 				data: JSON.stringify(json), 
 	 				beforeSend: function(xhr) {

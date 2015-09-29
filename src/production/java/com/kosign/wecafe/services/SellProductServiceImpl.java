@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Sale;
+import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
@@ -45,11 +48,18 @@ public class SellProductServiceImpl implements SellProductsService {
 	}
 
 	@Override
-	public Boolean addNewOrderProducts(Product product, Order order, OrderDetail orderDetil,  HttpSession sessions) {
+	public Boolean addNewSaleProducts(List<Cart> carts) {
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
+			
+			Sale sale = new Sale();
+			sale.setSaleDatetime(new Date());
+			sale.setMoneyIn(new BigDecimal("2000"));
+			sale.setUserId(1L);
+			
+/*			Order order = new Order();
 			order.setOrderDate(new Date());
 			order.setCusId(1L);
 			
@@ -72,8 +82,30 @@ public class SellProductServiceImpl implements SellProductsService {
 
 				order.getOrderDetail().add(orderDetaill);
 			}
+			*/
+			
+			Order order = new Order();
+			order.setOrderDate(new Date());
+			order.setCusId(1L);
+			order.setStatus(1);
+			
+			for(Cart cart : carts){
+				Product product = session.get(Product.class, new Long(cart.getProductId()));	
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setOrder(order);
+				orderDetail.setProduct(product);
+				orderDetail.setProComment("");
+				orderDetail.setProQty(cart.getQuantity());
+				orderDetail.setProUnitPrice(product.getSalePrice());
+				order.getOrderDetail().add(orderDetail);
+			} 
+			
+			sale.setOrder(order);
+			order.setSale(sale);
 			
 			session.save(order);
+			session.save(sale);
+			
 			
 			session.getTransaction().commit();
 			session.close();
