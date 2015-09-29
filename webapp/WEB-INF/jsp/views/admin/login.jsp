@@ -49,9 +49,9 @@
 
         <div class="wrapper-page">
             <div class="panel panel-color panel-primary panel-pages">
-                <div class="panel-heading bg-img"> 
+                <div class="panel-heading"><!-- bg-img  -->
                     <div class="bg-overlay"></div>
-                    <h3 class="text-center m-t-10 text-white"><strong>KOSIGN WECAFE ADMINISTRATOR</strong> </h3>
+                    <h3 class="text-center m-t-10 text-white"><strong>KOSIGN WECAFE</strong> </h3>
                 </div> 
 
 
