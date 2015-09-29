@@ -13,7 +13,7 @@ public class Cart implements Serializable{
 	
 	private Long quantity;
 	
-	private Long totalAmount;
+	private BigDecimal totalAmount;
 	
 	private String comment;
 
@@ -58,11 +58,11 @@ public class Cart implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public Long getTotalAmount() {
+	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(Long totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
