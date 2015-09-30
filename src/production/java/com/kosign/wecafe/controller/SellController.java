@@ -113,6 +113,7 @@ public class SellController {
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+			System.out.println("CARTS SIZE:"+ carts.size());
 			return sellProductService.addNewSaleProducts(carts);
 		}
 		return false;

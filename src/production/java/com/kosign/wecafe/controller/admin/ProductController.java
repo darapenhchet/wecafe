@@ -1,14 +1,10 @@
 package com.kosign.wecafe.controller.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +31,11 @@ public class ProductController {
 	public String listAllProducts(Map<String, Object> model){
 		model.put("products", productService.getAllProducts());
 		return "admin/productlist";
+	}
+	
+	@RequestMapping(value="/admin/products/rest", method=RequestMethod.GET, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Product> getAllProducts(){
+		return productService.getAllProducts();
 	}
 	
 	@RequestMapping(value="/admin/productadd", method=RequestMethod.GET)

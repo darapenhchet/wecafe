@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService{
 			
 			Query query = session.createQuery("FROM Product ORDER BY createdDate DESC");
 			
-			List<Product> products = query.list();
+			List<Product> products = (List<Product>)query.list();
 			
 			session.getTransaction().commit();
 			return products;

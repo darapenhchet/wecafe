@@ -59,6 +59,8 @@ public class SellProductServiceImpl implements SellProductsService {
 			sale.setMoneyIn(new BigDecimal("2000"));
 			sale.setUserId(1L);
 			
+			System.out.println("SALE DATE="+ sale.getSaleDatetime());
+			
 /*			Order order = new Order();
 			order.setOrderDate(new Date());
 			order.setCusId(1L);
@@ -97,25 +99,29 @@ public class SellProductServiceImpl implements SellProductsService {
 				orderDetail.setProComment("");
 				orderDetail.setProQty(cart.getQuantity());
 				orderDetail.setProUnitPrice(product.getSalePrice());
+				sale.setTotalAmount(sale.getTotalAmount().add((product.getSalePrice().multiply(new BigDecimal(cart.getQuantity())))));
+				
+				product.setQuantity(product.getQuantity()-cart.getQuantity());
+				
+				session.update(product);
+				
 				order.getOrderDetail().add(orderDetail);
 			} 
-			
+
 			sale.setOrder(order);
-			order.setSale(sale);
-			
-			session.save(order);
+
+		
 			session.save(sale);
 			
-			
 			session.getTransaction().commit();
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}finally{
 			session.close();
-			
-		} finally {
-			
 		}
-
-		return null;
+		return false;
 	}
-
 	
 }

@@ -25,7 +25,7 @@ public class Sale {
 	private long saleId;
 	
 	@Column(name="total_amount")
-	private BigDecimal totalAmount;
+	private BigDecimal totalAmount= new BigDecimal("0");
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="ord_id")
