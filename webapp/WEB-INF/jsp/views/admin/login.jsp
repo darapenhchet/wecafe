@@ -58,12 +58,14 @@
                 <div class="panel-body">
                 <form class="form-horizontal m-t-20" action="login" method="POST">
 	                <input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}" />
-                    <c:if test="${param.error != null}">
+	                <%-- <c:if test="${not empty error}"><div>${error}</div></c:if>
+    				<c:if test="${not empty logout}"><div>${logout}</div></c:if> --%>
+                    <c:if test="${error != null}">
                         <div class="alert alert-danger">
                             <p>Invalid username and password.</p>
                         </div>
                     </c:if>
-                    <c:if test="${param.logout != null}">
+                    <c:if test="${logout != null}">
                         <div class="alert alert-success">
                             <p>You have been logged out successfully.</p>
                         </div>
@@ -83,7 +85,7 @@
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <div class="checkbox checkbox-primary">
-                                <input id="checkbox-signup" type="checkbox">
+                                <input id="checkbox-signup" type="checkbox" name="remember-me">
                                 <label for="checkbox-signup">
                                     Remember me
                                 </label>

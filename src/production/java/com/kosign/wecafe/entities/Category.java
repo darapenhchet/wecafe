@@ -2,7 +2,9 @@ package com.kosign.wecafe.entities;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +46,7 @@ public class Category implements java.io.Serializable{
 	private String lastUpdatedBy;
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="category")
-	private List<Product> products = new ArrayList<>();
+	private Set<Product> products = new HashSet<Product>();
 	
 	public long getCatId() {
 		return catId;
@@ -70,11 +72,11 @@ public class Category implements java.io.Serializable{
 		this.img = img;
 	}
 	
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 	
-	public void setProducts(List<Product> products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 	

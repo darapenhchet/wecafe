@@ -38,9 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/","/home","/admin/logout","/admin/login").permitAll()
+				.antMatchers("/","/home").permitAll()
 				.antMatchers("/admin/**").access("hasRole('ADMIN')")
 				.antMatchers("/seller/**").access("hasRole('SELLER')")
+				.anyRequest().authenticated()
 				.and()
 					.formLogin()
 					.loginPage("/admin/login")
@@ -55,7 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.and()					
 					.sessionManagement()
 					.sessionAuthenticationErrorUrl("/admin/login")
-					.invalidSessionUrl("/admin/login")
+					//.invalidSessionUrl("/admin/session_expired")
 					.sessionFixation()
 					.changeSessionId()
 					.maximumSessions(1)
@@ -66,7 +67,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.rememberMe().key("SpringSecurityAppName");
 		
 		http.logout()
-			.invalidateHttpSession(true).deleteCookies("JSESSIONID")
+			/*.logoutUrl("/admin/logout")*/
+			.logoutSuccessUrl("/admin/login?logout")
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID")
 			.permitAll();
 	}
 	

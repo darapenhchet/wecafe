@@ -35,9 +35,31 @@ public class AdminController {
 		return "admin/access_denied";
 	}
 	
+	@RequestMapping(value="/admin/session_expired")
+	public String sessionExpired(ModelMap model, Principal principal){
+		model.addAttribute("user", principal.getName());
+		return "admin/session_expired";
+	}
+	
 	@RequestMapping(value="/admin/login", method = RequestMethod.GET)
-    public String login(){
-		return "admin/login";
+    public ModelAndView login(
+    		@RequestParam(value = "error",required = false) String error,
+    	    @RequestParam(value = "logout", required = false) String logout
+    	    ){
+		System.out.println("LOGGING");
+		ModelAndView model = new ModelAndView();
+		if (error != null) {
+			System.out.println("INVALID Credentials provoide");
+            model.addObject("error", "Invalid username and password!");
+        }
+ 
+        if (logout != null) {
+        	System.out.println("Logged Out");
+        	model.addObject("logout", "You have been logged out successfully.");
+        }
+        model.setViewName("admin/login");
+
+		return model;
     }
 	
 	@RequestMapping(value="/admin/logout", method = RequestMethod.GET)
