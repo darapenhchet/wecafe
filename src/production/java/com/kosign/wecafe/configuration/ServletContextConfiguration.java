@@ -90,7 +90,7 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	@Bean
 	public ObjectMapper objectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
-		//mapper.findAndRegisterModules();
+		mapper.findAndRegisterModules();
 		mapper.registerModule(new Hibernate4Module());
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		mapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);

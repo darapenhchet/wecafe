@@ -2,6 +2,7 @@ package com.kosign.wecafe.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.services.OrderProductService;
@@ -58,8 +58,7 @@ public class OrderController {
 					carts.get(i).setTotalAmount(cart.getPrice().multiply(new BigDecimal(carts.get(i).getQuantity())));
 					session.setAttribute("Carts", carts);
 					return carts; 
-					 
-					}
+				}
 			}
 			
 		}
@@ -123,6 +122,17 @@ public class OrderController {
 				
 		return carts;
 	}
+	
+/*	@RequestMapping(value="/editproduct/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Map<String, Object> findProductById(@PathVariable("id") Long id){
+		Map<String, Object> model = new HashMap<String, Object>();
+		try{
+			model.put("PRODUCT", productService.findProductById(id));
+		}catch(Exception ex){
+			model.put("ERRORS", ex.getMessage());
+		}
+		return model;
+	}*/
 	
 	@RequestMapping(value="/editproduct/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody Product findProductById(@PathVariable("id") Long id){

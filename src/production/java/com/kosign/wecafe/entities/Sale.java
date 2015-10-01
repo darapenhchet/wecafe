@@ -88,6 +88,4 @@ public class Sale {
 		this.saleDatetime = saleDatetime;
 	}
 
-	
-	
 }

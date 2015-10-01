@@ -56,22 +56,17 @@ public class OrderProductServiceImpl implements OrderProductService{
 		Session session = null;
 		try{
 			session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
 			
 			Query query = session.createQuery("FROM Product");
 			
 			List<Product> products = query.list();
 			
-			session.getTransaction().commit();
 			return products;
 		}catch(Exception ex){
 			ex.printStackTrace();
-			session.getTransaction().rollback();
 		}finally{
 			session.close();
-			 //HibernateUtil.getSessionFactory().close();*/
 		}
 		return null;		
-			 
 	}
 }

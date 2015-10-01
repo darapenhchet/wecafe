@@ -21,6 +21,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Formula;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="wecafe_order")
 public class Order implements java.io.Serializable {

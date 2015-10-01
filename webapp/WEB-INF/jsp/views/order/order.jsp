@@ -33,6 +33,9 @@
   .modal-content{
   	border-radius: 0;
   }
+  .hidebtn{
+  	display : none;
+  }
   </style>
 </head>
 <body>  	 
@@ -180,8 +183,10 @@
 					</div>
                 </div>
                 <div class="modal-footer" style="height: 80px;">
-                    <button type="button" class="btn btn-default" id="btnAddToCart"><span class="button b-close"><span>Add to cart</span></span></button>
-                    <button type="button" class="btn btn-primary" id="bt_add"> <span class="button b-close"><span>Buy</span></span></button>
+                    <button type="button" class="btn btn-default hidebtn" id="btnAddToCart"><span class="button b-close"><span>Add to cart</span></span></button>
+                    <button type="button" class="btn btn-default hidebtn" id="btnok"><span class="button b-close"><span>Ok</span></span></button>
+                    <button type="button" class="btn btn-primary hidebtn" id="btn_buy"> <span class="button b-close"><span>Buy</span></span></button>
+                    <button type="button" class="btn btn-default hidebtn" id="btncancelup"><span class="button b-close"><span>Cancel</span></span></button>
                 </div>
             </div>
         </div>
@@ -269,9 +274,14 @@
 		
 			 
 			$(document).on('click','#btnedit',function(){
+				$("#btnok").removeClass("hidebtn");
+				$("#btncancelup").removeClass("hidebtn");
+				$("#btnAddToCart").addClass("hidebtn");
+				$("#btn_buy").addClass("hidebtn");
 				
 				
-				$.ajax({ 
+				var _this = $(this);
+			  	$.ajax({ 
 				    url: "${pageContext.request.contextPath}/order/editproduct/"+$(this).parent().parent().children().html(), 
 				    type: 'POST', 
 				    dataType: 'JSON', 
@@ -280,16 +290,20 @@
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
 				    success: function(data) { 
-				    	alert(data.lenght);
-				       console.log(data);
+				    	$("#MOD_PRICE").html(data.unitPrice);
+		      			$("#proqty").val(_this.parent().parent().children().eq(3).html());
+		      			$("#protime").val(_this.parent().parent().children().eq(5).html());
+		      			$("#procomment").val(_this.parent().parent().children().eq(6).html());
+		      			$("#protitle").html(data.productName);
+		      			$("#proid").html(data.productId);
+		      			$("#imgpath").attr('src','${pageContext.request.contextPath}/resources/images/img/' + data.image);
+		      			$("#myModal").bPopup();
+				       
 				    },
 				    error:function(data,status,er) { 
-				        console.log("error: "+data+" status: "+status+" er:"+er);
+				       console.log("error: "+data+" status: "+status+" er:"+er);
 				    }
-				}); 
-		 
-			
-				$("#myModal").bPopup();
+				});   
 			});
 		 
 			
@@ -317,6 +331,12 @@
 			
 			
 			$(".panel-body").click(function() {
+				
+				$("#btnAddToCart").removeClass("hidebtn");
+				$("#btn_buy").removeClass("hidebtn");
+				$("#btnok").addClass("hidebtn");
+				$("#btncancelup").addClass("hidebtn");
+				
 				var produecID = ($(this).find("#idpro").html());
 				clear();
 				$.ajax({ 
@@ -362,7 +382,7 @@
 				listorderproduce();
 			});
 			
-			$("#bt_add").click(function(){
+			$("#btn_buy , #btnok").click(function(){
 				
 				json = {
     					"productId"   : $("#proid").html(),
@@ -384,13 +404,13 @@
     	                },
     				    success: function(data) { 
     				       console.log(data);
+    						listorderproduce();
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
     				    }
     				});
     				clear();
-    				listorderproduce();
 			});
 			function listorderproduce(){
 				$("#addtocart").bPopup();				
@@ -469,6 +489,7 @@
     	                },
     				    success: function(data) { 
     				       console.log(data);
+    				  
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
