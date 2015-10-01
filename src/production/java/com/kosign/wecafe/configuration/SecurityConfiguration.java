@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +35,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		webSecurity.ignoring().antMatchers("/resources/**");
 	}
 	
-	
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }	
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -64,7 +69,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.expiredUrl("/admin/login?maxSessions")
 					.sessionRegistry(sessionRegistryImpl())
 				.and().and().csrf().disable()
-					.rememberMe().key("SpringSecurityAppName");
+					.rememberMe()
+					.rememberMeParameter("remember-me")
+					.key("SpringSecurityWeCafe");
 		
 		http.logout()
 			/*.logoutUrl("/admin/logout")*/
