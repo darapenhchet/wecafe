@@ -7,9 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.kosign.wecafe.enums.Status;
@@ -41,7 +45,11 @@ public class User {
 	@Column(name="STATUS", nullable=false)
 	private Status status = Status.ACTIVE;
 	
-	private Set<UserRole> userProfile = new HashSet<UserRole>();
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_USER_ROLE", 
+             joinColumns = { @JoinColumn(name = "USER_ID") }, 
+             inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
+	private Set<UserRole> userProfiles = new HashSet<UserRole>();
 
 	public Long getId() {
 		return id;
@@ -100,11 +108,11 @@ public class User {
 	}
 
 	public Set<UserRole> getUserProfile() {
-		return userProfile;
+		return userProfiles;
 	}
 
-	public void setUserProfile(Set<UserRole> userProfile) {
-		this.userProfile = userProfile;
+	public void setUserProfile(Set<UserRole> userProfiles) {
+		this.userProfiles = userProfiles;
 	}
 	
 }

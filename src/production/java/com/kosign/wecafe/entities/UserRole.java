@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.kosign.wecafe.enums.UserRoleType;
 
 @Entity
-@Table(name="USER_PROFILES")
+@Table(name="USER_ROLES")
 public class UserRole {
 
 	@Id
