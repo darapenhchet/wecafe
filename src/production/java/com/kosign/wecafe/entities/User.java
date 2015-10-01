@@ -49,7 +49,7 @@ public class User {
     @JoinTable(name = "USER_USER_ROLE", 
              joinColumns = { @JoinColumn(name = "USER_ID") }, 
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
-	private Set<UserRole> userProfiles = new HashSet<UserRole>();
+	private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 	public Long getId() {
 		return id;
@@ -107,12 +107,12 @@ public class User {
 		this.status = status;
 	}
 
-	public Set<UserRole> getUserProfile() {
-		return userProfiles;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setUserProfile(Set<UserRole> userProfiles) {
-		this.userProfiles = userProfiles;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 	
 }

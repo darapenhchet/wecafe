@@ -1,6 +1,7 @@
 package com.kosign.wecafe.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,8 +19,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
+	
+	@Autowired
+	@Qualifier("customerUserDetailsService")
+	UserDetailsService userDetailsService;
+	
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception{
+		
+		/*
 		auth.inMemoryAuthentication().withUser("customer")
 									 .password("customer")
 									 .roles("CUSTOMER");
@@ -28,6 +37,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		auth.inMemoryAuthentication().withUser("admin")
 		                             .password("admin")
 		                             .roles("SELLER" ,"ADMIN");
+		*/
+		
+		auth.userDetailsService(userDetailsService);
+		
+		
 	}
 	
 	@Override
