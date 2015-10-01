@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,8 +46,8 @@ public class Category implements java.io.Serializable{
 	@Column(name="LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="category")
-	private Set<Product> products = new HashSet<Product>();
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL,mappedBy="category")
+	private Set<Product> products ;//= new HashSet<Product>();
 	
 	public long getCatId() {
 		return catId;

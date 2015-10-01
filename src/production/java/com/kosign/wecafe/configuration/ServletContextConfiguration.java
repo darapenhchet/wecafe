@@ -1,22 +1,51 @@
 package com.kosign.wecafe.configuration;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.http.converter.xml.SourceHttpMessageConverter;
+import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.Unmarshaller;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.kosign.wecafe.controller")
-public class ServletContextConfiguration extends WebMvcConfigurerAdapter{
+public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
+
+	@Inject
+	ObjectMapper objectMapper;
+	@Inject
+	Marshaller marshaller;
+	@Inject
+	Unmarshaller unmarshaller;
+
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -30,19 +59,12 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter{
 	public RequestToViewNameTranslator viewNameTranslator() {
 		return new DefaultRequestToViewNameTranslator();
 	}
-	
-	public MessageSource messageSource(){
+
+	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		return messageSource;
 	}
-
-	/*@Inject
-	ObjectMapper objectMapper;
-	@Inject
-	Marshaller marshaller;
-	@Inject
-	Unmarshaller unmarshaller;
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -60,15 +82,33 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter{
 		converters.add(jsonConverter);
 	}
 
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.favorPathExtension(false).favorParameter(false).ignoreAcceptHeader(false)
-				.defaultContentType(MediaType.APPLICATION_JSON);
-	}
-
 	@Bean
 	public LocaleResolver localeResolver() {
 		return new AcceptHeaderLocaleResolver();
 	}
-*/
+
+	@Bean
+	public ObjectMapper objectMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+		//mapper.findAndRegisterModules();
+		mapper.registerModule(new Hibernate4Module());
+		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		mapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
+		return mapper;
+	}
+
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+		configurer.favorPathExtension(true).favorParameter(false).parameterName("mediaType").ignoreAcceptHeader(false)
+				.useJaf(false).defaultContentType(MediaType.APPLICATION_XML).mediaType("xml", MediaType.APPLICATION_XML)
+				.mediaType("json", MediaType.APPLICATION_JSON);
+	}
+
+	@Bean
+	public Jaxb2Marshaller jaxb2Marshaller() {
+		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+		marshaller.setPackagesToScan(new String[] { "com.kosign.wecafe.entities" });
+		return marshaller;
+	}
+
 }

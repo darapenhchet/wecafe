@@ -1,5 +1,6 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -13,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="product")
-public class Product implements java.io.Serializable{
+public class Product implements Serializable{
 
 	/**
 	 * 

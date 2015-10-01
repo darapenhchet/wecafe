@@ -1,23 +1,24 @@
 package com.kosign.wecafe.controller.admin;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.services.CategoryService;
 import com.kosign.wecafe.services.ProductService;
 
-@Controller
+@RestController
 public class ProductController {
 	
 	@Inject
@@ -43,6 +44,24 @@ public class ProductController {
 		model.put("categories", categoryService.getAllCategories());
 		return "admin/productadd";
 	}	
+	
+	/*@RequestMapping(value="/admin/productlists", method=RequestMethod.GET)
+	public  @ResponseBody List<Product> getAllProductsJSON(){
+		return productService.getAllProducts();
+	}*/
+
+	@RequestMapping(value="/admin/productlists", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getAllProduct(){
+		Map<String, Object> m = new HashMap<>();
+		try{
+			m.put("item", productService.getAllProducts());
+			return m;
+		}catch(Exception ex){
+			m.put("error", ex.getMessage());
+			return m;
+		}
+	}
 	
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody boolean addNewProduct(@RequestBody Product product){
