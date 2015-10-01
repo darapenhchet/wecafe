@@ -74,7 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.key("SpringSecurityWeCafe");
 		
 		http.logout()
-			/*.logoutUrl("/admin/logout")*/
+			.logoutUrl("/admin/logout")
 			.logoutSuccessUrl("/admin/login?logout")
 			.invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID")

@@ -1,4 +1,4 @@
-            <c:url value="/logout" var="logoutUrl" />
+            <c:url value="/admin/logout" var="logoutUrl" />
 			<form id="logout" action="${logoutUrl}" method="post" >
 			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
@@ -97,9 +97,8 @@
                                         <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile</a></li>
                                         <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li>
                                         <!-- <li><a href="javascript:void(0)"><i class="md md-lock"></i> Lock screen</a></li> -->
-                                        <li>
                                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                                        	<a href="javascript:document.getElementById('logout').submit()"><i class="md md-settings-power"></i> Logout</a></li>
+                                        	 <li><a href="javascript:document.getElementById('logout').submit()"><i class="md md-settings-power"></i> Logout</a></li>
 										</c:if>
                                     </ul>
                                 </li>
