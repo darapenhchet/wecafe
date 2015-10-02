@@ -41,7 +41,6 @@ public class User {
 	@Column(name="EMAIL", nullable=false, unique=true)
 	private String email;
 	
-	@Enumerated(EnumType.STRING)
 	@Column(name="STATUS", nullable=false)
 	private Status status = Status.ACTIVE;
 	

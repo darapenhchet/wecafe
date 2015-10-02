@@ -74,7 +74,7 @@ public class Application {
 		
 		
 		
-		Order order = new Order();
+/*		Order order = new Order();
 		order.setOrderDate(new Date());
 		order.setCusId(1L);
 		
@@ -111,7 +111,7 @@ public class Application {
 		
 		BigDecimal amount = (BigDecimal) query.uniqueResult();
 		
-		System.out.println("ORDER AMOUNT="+ amount);
+		System.out.println("ORDER AMOUNT="+ amount);*/
 		
 		session.close();
 	}

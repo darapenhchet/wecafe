@@ -2,8 +2,8 @@ package com.kosign.wecafe.enums;
 
 public enum Status {
 
-	ACTIVE,
 	INACTIVE,
+	ACTIVE,
 	DELETED,
 	LOCKED;
 	

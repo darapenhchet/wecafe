@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.entities.UserRole;
+import com.kosign.wecafe.enums.Status;
 
 @Service("customUserDetailsService")
 public class CustomerUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserService userService;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.findUserByUsername(username);
@@ -29,7 +30,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Username not found");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				user.getStatus().equals("ACTIVE"), true, true, true, getGrantedAuthorities(user));
+				user.getStatus().equals(Status.ACTIVE), true, true, true, getGrantedAuthorities(user));
 	}
 
 	private List<GrantedAuthority> getGrantedAuthorities(User user) {

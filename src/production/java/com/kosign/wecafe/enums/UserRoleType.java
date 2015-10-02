@@ -2,7 +2,7 @@ package com.kosign.wecafe.enums;
 
 public enum UserRoleType {
 
-	USER,
+	CUSTOMER,
 	SELLER,
 	ADMIN;
 	
