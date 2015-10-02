@@ -11,6 +11,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
@@ -20,7 +21,7 @@
       width: 70%;
       margin: auto;
   }
-  .panel-body:hover{
+ #btnCart, .panel-body:hover{
   		cursor: pointer;
   }
   .panel-body img{
@@ -75,8 +76,11 @@
 	  </div>
 </div>		
 			<div align="right">
-				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png" width="60px" height="40px">
-				<button type="button" id="btnCart" class="btn btn-primary">Add to Cart</button>
+				<!-- <label style="color: red; margin-right: -20px;"><b>(5)</b></label> -->
+				 <img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.jpg" width="55px"  height="34px">
+				<button type="button" id="btnCart" class="btn btn-primary"><span id="totalproduce" class="badge">0 </span> produce</button>
+				<!-- <button type="button" id="btnCart" class="btn btn-primary">Add to Cart</button> -->
+				<!-- <i class="fa fa-shopping-cart fa-3x"><span class="badge" style="background:red;">7</span> </i> -->
 			</div> 
 			 
 				  
@@ -248,6 +252,7 @@
 </body>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			getsizeSession();
 			$("#btnconfirm").click(function(){
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/order/insertcartorder/", 
@@ -259,6 +264,7 @@
 	                },
 				    success: function(data) { 
 				       console.log(data);
+				       getsizeSession();
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -269,7 +275,7 @@
 			});
 			$("#btncancel").click(function(){
 			clearallsession();
-				
+		//	getsizeSession();	
 			});
 		
 			 
@@ -321,6 +327,7 @@
     	                },
     				    success: function(data) { 
     				       console.log(data);
+    				       getsizeSession();
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -403,8 +410,9 @@
     	                    xhr.setRequestHeader("Content-Type", "application/json");
     	                },
     				    success: function(data) { 
-    				       console.log(data);
+    				        console.log(data);
     						listorderproduce();
+    						getsizeSession();
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -412,9 +420,9 @@
     				});
     				clear();
 			});
+			 
 			function getsizeSession(){
-				var sizeSession = 0;
-				sizeSession = $.ajax({ 
+				    $.ajax({ 
 				    url: "${pageContext.request.contextPath}/order/listcart", 
 				    type: 'POST', 
 				    dataType: 'JSON', 
@@ -423,18 +431,13 @@
 	                    xhr.setRequestHeader("Accept", "application/json");
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
-				    success: function(data) { 
-				    	console.log(sizeSession);
-				    	return data.length;
-				    	
+				    success: function(data) {   
+				    	$("#totalproduce").html(data.length);			    	
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
 				    }
-				});	
-				//alert (sizeSession);
-				console.log(sizeSession);
-				return sizeSession;
+				});	 
 				
 			}
 			
@@ -488,16 +491,17 @@
 	                },
 				    success: function(data) { 
 				       console.log(data);
+				       getsizeSession();
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
 				    }
 				});
+				return ;
 			}
     		$(function(){
     			$("#btnAddToCart").click(function(){
-    				var test = getsizeSession();
-    				alert(test + "adj");
+    				    
     					json = {
     					"productId"   : $("#proid").html(),
     					"productName" : $("#protitle").html().trim(),
@@ -518,7 +522,7 @@
     	                },
     				    success: function(data) { 
     				       console.log(data);
-    				  
+    				       getsizeSession(); 
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
