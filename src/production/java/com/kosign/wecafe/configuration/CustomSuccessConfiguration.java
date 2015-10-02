@@ -33,8 +33,6 @@ public class CustomSuccessConfiguration extends SimpleUrlAuthenticationSuccessHa
 	}
 	
 	protected String determineTargetURL(Authentication authentication){
-		String url = "";
-		
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		
 		List<String> roles = new ArrayList<String>();
@@ -44,15 +42,15 @@ public class CustomSuccessConfiguration extends SimpleUrlAuthenticationSuccessHa
 			roles.add(authority.getAuthority());
 		}
 		if(roles.contains("ROLE_CUSTOMER")){
-			url = "/order/";
+			return "/order/";
 		}else if(roles.contains("ROLE_SELLER")){
-			url = "/seller/";
+			return "/seller/";
 		}else if(roles.contains("ROLE_ADMIN")){
-			url = "/admin/";
+			return "/admin/";
 		}else{
-			url ="/admin/access_denied";
+			return "/admin/access_denied";
 		}
-		return url;
+		
 	}
 
 	public RedirectStrategy getRedirectStrategy() {
@@ -62,6 +60,5 @@ public class CustomSuccessConfiguration extends SimpleUrlAuthenticationSuccessHa
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 		this.redirectStrategy = redirectStrategy;
 	}
-	
 	
 }
