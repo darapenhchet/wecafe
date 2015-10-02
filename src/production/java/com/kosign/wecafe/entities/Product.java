@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -72,18 +74,25 @@ public class Product implements Serializable{
 	@Column(name="CREATED_DATE")
 	private Date createdDate;
 	
-	@Column(name="CREATED_BY")
-	private String createdBy;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="CREATED_BY")
+	private User createdBy;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="LAST_UPDATED_DATE")
 	private Date lastUpdatedDate;
 	
-	@Column(name="LAST_UPDATED_BY")
-	private String lastUpdatedBy;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="LAST_UPDATED_BY")
+	private User lastUpdatedBy;
 	
 	@Column(name="status")
 	private Boolean status;
+	
+  /*  @Lob 
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name="image", nullable=false)
+    private byte[] image;*/
 		
 	public Long getProductId() {
 		return productId;
@@ -133,14 +142,6 @@ public class Product implements Serializable{
 		this.salePrice = salePrice;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -157,11 +158,11 @@ public class Product implements Serializable{
 		this.createdDate = createdDate;
 	}
 
-	public String getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -173,11 +174,11 @@ public class Product implements Serializable{
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
-	public String getLastUpdatedBy() {
+	public User getLastUpdatedBy() {
 		return lastUpdatedBy;
 	}
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
+	public void setLastUpdatedBy(User lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 	
@@ -201,4 +202,20 @@ public class Product implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+/*	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}*/
 }

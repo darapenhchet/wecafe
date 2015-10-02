@@ -94,8 +94,7 @@ public class ProductServiceImpl implements ProductService{
 			product.setLastUpdatedDate(new Date());
 			product.setStatus(true);
 			product.setImage("drink.jpg");
-			session.update(product);
-			
+			session.update(product);		
 			session.getTransaction().commit();
 			return true;
 		}catch(Exception ex){

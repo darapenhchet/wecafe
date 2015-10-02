@@ -6,7 +6,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.services.CategoryService;
 import com.kosign.wecafe.services.ProductService;
+import com.kosign.wecafe.services.UserService;
 
 @Controller
 public class ProductController {
@@ -26,6 +31,9 @@ public class ProductController {
 	
 	@Inject
 	private CategoryService categoryService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	@RequestMapping(value="/admin/products", method=RequestMethod.GET)
@@ -70,6 +78,10 @@ public class ProductController {
 		products.add(product);*/		
 		
 		//System.out.println(product.getProductName());
+		User user = userService.findUserByUsername(getPrincipal());
+		System.out.println(user.getUsername());
+		product.setCreatedBy(user);
+		product.setLastUpdatedBy(user);
 		return productService.addNewProduct(product);
 		//return ((Product)session.getAttribute("product")).getProductName();
 		
@@ -93,5 +105,17 @@ public class ProductController {
 		System.out.println("DELETE ID="+ id);
 		return productService.deleteProduct(id);
 	}
+	
+	private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
 
 }

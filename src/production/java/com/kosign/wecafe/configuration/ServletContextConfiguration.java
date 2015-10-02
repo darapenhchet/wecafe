@@ -18,6 +18,8 @@ import org.springframework.http.converter.xml.SourceHttpMessageConverter;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
@@ -45,7 +47,7 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	Marshaller marshaller;
 	@Inject
 	Unmarshaller unmarshaller;
-
+	
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -110,5 +112,10 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 		marshaller.setPackagesToScan(new String[] { "com.kosign.wecafe.entities" });
 		return marshaller;
 	}
+	
+	@Bean(name="multipartResolver")
+    public MultipartResolver resolver(){
+        return new StandardServletMultipartResolver();
+    }
 
 }

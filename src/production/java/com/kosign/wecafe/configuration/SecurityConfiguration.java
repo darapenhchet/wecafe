@@ -109,6 +109,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.maxSessionsPreventsLogin(true)
 					.expiredUrl("/admin/login?maxSessions")
 					.sessionRegistry(sessionRegistryImpl())
+				
 				.and().and().csrf().disable()
 					.rememberMe()
 					.rememberMeParameter("remember-me")
