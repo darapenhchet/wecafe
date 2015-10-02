@@ -85,7 +85,7 @@
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <div class="checkbox checkbox-primary">
-                                <input id="checkbox-signup" type="checkbox" name="remember-me">
+                                <input id="rememberMe" type="checkbox" name="remember-me">
                                 <label for="checkbox-signup">
                                     Remember me
                                 </label>

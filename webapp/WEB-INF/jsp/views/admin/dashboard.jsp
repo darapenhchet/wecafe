@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,6 +49,14 @@
 
 
     <body class="fixed-left">
+    	Dear <strong>${user}</strong>, Welcome to Admin Page.
+     
+	    <sec:authorize access="isFullyAuthenticated()">
+	        <label><a href="#">Create New User</a> | <a href="#">View existing Users</a></label>
+	    </sec:authorize>
+	    <sec:authorize access="isRememberMe()">
+	        <label><a href="#">View existing Users</a></label>
+	    </sec:authorize>
         
         <!-- Begin page -->
         <div id="wrapper">
