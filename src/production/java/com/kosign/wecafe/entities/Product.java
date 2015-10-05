@@ -70,6 +70,11 @@ public class Product implements Serializable{
 	@Column(name="img_url")
 	private String image;
 	
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name="image")
+	private byte[] images;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
 	private Date createdDate;
@@ -211,11 +216,11 @@ public class Product implements Serializable{
 		this.image = image;
 	}
 
-/*	public byte[] getImage() {
-		return image;
+	public byte[] getImages() {
+		return images;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}*/
+	public void setImage(byte[] images) {
+		this.images = images;
+	}
 }

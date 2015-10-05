@@ -87,7 +87,7 @@
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
                                     <div class="panel-body">
                                         <div class=" form">
-                                            <form class="cmxform form-horizontal tasi-form" id="frmProductAdd" method="POST" action="/admin/product/add" novalidate="novalidate">
+                                            <form class="cmxform form-horizontal tasi-form" id="frmProductAdd" enctype="multipart/form-data" method="POST" action="/admin/product/add" novalidate="novalidate">
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
@@ -136,7 +136,7 @@
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Image</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="image" name="image" type="file">
+                                                        <input class="form-control " id="images" name="images" type="file">
                                                     </div>
                                                 </div>                                                                                            
 
@@ -337,6 +337,10 @@
         <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
+        
+       <!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
+       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 
         <script type="text/javascript">
             /* ==============================================
@@ -357,6 +361,9 @@
     					alert("PLEASE CHOOSE THE CATEGORY");
     					return;
     				}
+    				//var form = new FormData(document.getElementById('frmProductAdd'));
+    				//var image = new FormData();
+    				//image.append("images", $("#image").files[0]);
     				json = {
     					"productName" : $("#productname").val(),
     					"category"    : {
@@ -365,9 +372,12 @@
     					"quantity"    : $("#quantity").val(),
     					"unitPrice"   : $("#unitprice").val(),
     					"costPrice"	  : $("#costprice").val(),
-    					"salePrice"   : $("#saleprice").val()
+    					"salePrice"   : $("#saleprice").val(),
+    					//"images"	  : $("#image").files[0]
     				};
-    				$.ajax({ 
+    				//console.log(form);
+    				//return;
+    				/* $.ajax({ 
     				    url: "${pageContext.request.contextPath}/admin/product/add", 
     				    type: 'POST', 
     				    dataType: 'JSON', 
@@ -387,7 +397,26 @@
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
     				    }
+    				}); */
+    				
+    				$("#frmProductAdd").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/product/add",
+    					dataType: 'JSON', 
+    					type: 'POST',
+    					success: function(data) { 
+    						console.log(data);
+     				        if(data){
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	//location.href="${pageContext.request.contextPath}/admin/products";
+     				        }else{
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
     				});
+    				
     			});
     		});
     	</script>

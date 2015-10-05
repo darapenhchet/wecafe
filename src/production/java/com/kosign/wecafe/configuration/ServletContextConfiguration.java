@@ -1,5 +1,6 @@
 package com.kosign.wecafe.configuration;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
@@ -34,7 +36,7 @@ import org.springframework.web.servlet.view.JstlView;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
 @Configuration
 @EnableWebMvc
@@ -47,7 +49,7 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	Marshaller marshaller;
 	@Inject
 	Unmarshaller unmarshaller;
-	
+
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -82,6 +84,9 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 				Arrays.asList(new MediaType("application", "json"), new MediaType("text", "json")));
 		jsonConverter.setObjectMapper(this.objectMapper);
 		converters.add(jsonConverter);
+		FormHttpMessageConverter formConverter = new FormHttpMessageConverter();
+		formConverter.setCharset(Charset.forName("UTF8"));
+		converters.add(formConverter);
 	}
 
 	@Bean
@@ -93,7 +98,7 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	public ObjectMapper objectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.findAndRegisterModules();
-		mapper.registerModule(new Hibernate4Module());
+		mapper.registerModule(new Hibernate5Module());
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		mapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
 		return mapper;
@@ -112,10 +117,10 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 		marshaller.setPackagesToScan(new String[] { "com.kosign.wecafe.entities" });
 		return marshaller;
 	}
-	
-	@Bean(name="multipartResolver")
-    public MultipartResolver resolver(){
-        return new StandardServletMultipartResolver();
-    }
+
+	@Bean(name = "multipartResolver")
+	public MultipartResolver resolver() {
+		return new StandardServletMultipartResolver();
+	}
 
 }
