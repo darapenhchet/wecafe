@@ -52,7 +52,7 @@ public class Order implements java.io.Serializable {
 	@Column(name="cus_id")
 	private long cusId;
 	
-	@Formula("SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=orderId")
+	//@Formula("(SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=orderId)")
 	private BigDecimal orderAmount;
 	
 	@Column(name="status")
