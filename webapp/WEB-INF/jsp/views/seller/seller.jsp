@@ -50,16 +50,20 @@
 				src="${pageContext.request.contextPath}/resources/images/img/user.png"
 				width="35px" height="35px"> <label class="control-label"
 				style="color: blue; margin-right: 1%;"> Daravuth </label>
-			<button type="button" id="btnCart" class="btn btn-warning">Sign
+			<button type="button" id="btnSignout" class="btn btn-warning">Sign
 				Out</button>
 		</div>
-		<div style="text-align: right;">
-			<img
-				src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.png"
-				width="60px" height="35px">
-			<button type="button" id="btnCart" class="btn btn-primary">Add
-				to Cart</button>
-		</div>
+		 <div align="right">
+			<div  style="float: right; margin-left: 10px;">
+				<img src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.jpg" width="55px"  height="34px">
+				<button type="button" id="btnCart" class="btn btn-primary"><span id="totalproduce" class="badge">0 </span> produce</button>
+			</div>	
+			<div>
+				<img src="${pageContext.request.contextPath}/resources/images/img/order.png" width="55px"  height="34px">
+				<button type="button" id="btnlistorder" class="btn btn-primary"><span id="totalorder" class="badge">0 </span> Order</button>
+			</div> 
+			
+		</div>   
 	</div>
  
 			<div id="myCarousel1" class="carousel slide">
@@ -201,93 +205,6 @@
 	</div>
 	<!-- ############################################################# -->
 
-
-	<!-- <div id="addtocart" style="display: none;" style="width: 80%;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Cart</h4>
-			</div>
-			<div class="modal-body" style="height: 290px;">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Customer Name</th>
-							<th>Produce Name</th>
-							<th>Price</th>
-							<th>Qty</th>
-							<th>Total Amount</th>
-							<th>Comment</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>PenhChet</td>
-							<td>Milk</td>
-							<td>1500</td>
-							<td>1</td>
-							<td>1500</td>
-							<td>No ice</td>
-							<td><a href="#">Edit</a> <a href="#">Delete</a></td>
-						</tr>
-						<tr>
-							<td>Daravuth</td>
-							<td>Coffee</td>
-							<td>2000</td>
-							<td>1</td>
-							<td>2000</td>
-							<td></td>
-							<td><a href="#">Edit</a> <a href="#">Delete</a></td>
-						</tr>
-					</tbody>
-				</table>
-
-				<div class="form-horizontal">
-					<div class="form-group">
-						<label class="control-label col-sm-10" for="txtName">Total
-							Amount :</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" maxlength="30"
-								name="txtName" id="txtName">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-10" for="txtName">Money
-							In :</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" maxlength="30"
-								name="txtName" id="txtName">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-10" for="txtName">Money
-							Out :</label>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" maxlength="30"
-								name="txtName" id="txtName">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer" style="height: 80px;">
-				<div align="right">
-					<button type="button" class="btn btn-default">
-						<span class="button b-close"><span>Confirm</span></span>
-					</button>
-					<button type="button" class="btn btn-default">
-						<span class="button b-close"><span>Cancel</span></span>
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
- -->
-
-
-
-
-
-
 	<div id="addtocart" style="display: none;" style="width: 80%;">       
   	<div class="modal-content"> 
   	 <div class="modal-header">                     
@@ -344,6 +261,13 @@
 </body>
 <script type="text/javascript">
 		$(document).ready(function(){
+			getsizeSession();
+			
+			$("#btnlistorder").click(function(){
+				
+			});
+			
+			
 			$("#bt_add, #btnCart").click(function(){
 				 var st=""; var amount=0;
 				$("#addtocart").bPopup();
@@ -382,7 +306,7 @@
 			
 			$(document).on('click',"#btndelete",function(){
 				 var st=""; var amount=0;
-				alert($(this).parent().parent().children().html());
+				/* alert($(this).parent().parent().children().html()); */
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/seller/removetocart/"+$(this).parent().parent().children().html(), 
 				    type: 'POST', 
@@ -409,7 +333,7 @@
 						}	
 						 $("#totalamount").val(amount);
 					     $("#orderdetail").html(st);
-						
+					     getsizeSession();
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -419,9 +343,7 @@
 			});
 			
 			$(".panel-body").click(function() {
-				//$("#myModal").bPopup();
-// 	 			console.log($(this).parents(".panel-body").find("#pro_id").val());
-	 			alert($(this).find("#pro_nm").val());
+		 
 	 			var proNm 		= $(this).find("#pro_nm").val();
 	 			var proId 		= $(this).find("#pro_id").val();
 	 			var price 		= $(this).find("#PRICE").html();
@@ -446,7 +368,7 @@
 	 		            xhr.setRequestHeader("Content-Type", "application/json");
 	 		        },
 	 				success: function(data){
-	 					console.log(data);
+	 					getsizeSession();
 	 				},
 	 				error:function(data, status,er){
 	 					console.log("error: " + data + "status: " + status + "er: ");
@@ -473,6 +395,25 @@
 	 			});
 			});
 			
+			function getsizeSession(){
+			    $.ajax({ 
+			    url: "${pageContext.request.contextPath}/order/listcart", 
+			    type: 'POST', 
+			    dataType: 'JSON', 
+			    /* data: JSON.stringify(json), */ 
+			    beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+			    success: function(data) {   
+			    	$("#totalproduce").html(data.length);			    	
+			    },
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			});	 
+			
+		}	
 			
 		});
 	</script>
