@@ -45,10 +45,6 @@ public class ProductServiceImpl implements ProductService{
 			session.beginTransaction();
 			Category category = session.get(Category.class, product.getCategory().getCatId());
 			product.setCategory(category);
-			product.setCreatedDate(new Date());
-			product.setLastUpdatedDate(new Date());
-			product.setImage("drink.jpg");
-			product.setStatus(true);
 			session.save(product);
 			
 			session.getTransaction().commit();
@@ -93,7 +89,6 @@ public class ProductServiceImpl implements ProductService{
 			product.setCategory(category);
 			product.setLastUpdatedDate(new Date());
 			product.setStatus(true);
-			product.setImage("drink.jpg");
 			session.update(product);		
 			session.getTransaction().commit();
 			return true;

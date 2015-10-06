@@ -249,7 +249,7 @@ public class Product implements Serializable{
 		return images;
 	}
 
-	public void setImage(byte[] images) {
+	public void setImages(byte[] images) {
 		this.images = images;
 	}
 }

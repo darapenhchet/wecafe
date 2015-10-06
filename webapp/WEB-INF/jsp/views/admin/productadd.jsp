@@ -91,13 +91,13 @@
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productname" name="productname" type="text">
+                                                        <input class=" form-control" id="productName" name="productName" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control" id="optCategory">
+                                                       	<select class="form-control" id="optCategory" name="categoryId">
                                                        		<option value="">Please choose your category</option>
                                                        	<%
                                                        		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
@@ -118,19 +118,19 @@
                                                 <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="unitprice" name="unitprice" type="text">
+                                                        <input class="form-control " id="unitPrice" name="unitPrice" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Cost Price</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="costprice" name="costprice" type="text">
+                                                        <input class="form-control " id="costPrice" name="costPrice" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Sale Price</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="saleprice" name="saleprice" type="text">
+                                                        <input class="form-control " id="salePrice" name="salePrice" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -365,14 +365,12 @@
     				//var image = new FormData();
     				//image.append("images", $("#image").files[0]);
     				json = {
-    					"productName" : $("#productname").val(),
-    					"category"    : {
-    										"catId"	: $("#optCategory").val()
-    					},
+    					"productName" : $("#productName").val(),
+    					"categoryId"	: $("#optCategory").val(),
     					"quantity"    : $("#quantity").val(),
-    					"unitPrice"   : $("#unitprice").val(),
-    					"costPrice"	  : $("#costprice").val(),
-    					"salePrice"   : $("#saleprice").val(),
+    					"unitPrice"   : $("#unitPrice").val(),
+    					"costPrice"	  : $("#costPrice").val(),
+    					"salePrice"   : $("#salePrice").val(),
     					//"images"	  : $("#image").files[0]
     				};
     				//console.log(form);
@@ -407,7 +405,7 @@
     						console.log(data);
      				        if(data){
      				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
-     				        	//location.href="${pageContext.request.contextPath}/admin/products";
+     				        	location.href="${pageContext.request.contextPath}/admin/products";
      				        }else{
      				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
      				        }

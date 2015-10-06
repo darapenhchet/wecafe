@@ -144,7 +144,7 @@
                                                     <label for="costprice" class="control-label col-lg-2">Image</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="image" name="image" type="file" value="${product.image }">
-                                                        <img src="${pageContext.request.contextPath}/resources/images/img/${product.image}" width="200px" height="200px" class="img-thumbnail"/>
+                                                        <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}" width="200px" height="200px" class="img-thumbnail"/>
                                                     </div>
                                                 </div>                                                                                            
 
