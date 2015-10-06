@@ -98,11 +98,40 @@ public class Product implements Serializable{
     @Basic(fetch = FetchType.LAZY)
     @Column(name="image", nullable=false)
     private byte[] image;*/
+	
+	
 		
 	public Long getProductId() {
 		return productId;
 	}
+	
+	
 
+	public Product() {
+		
+	}
+
+	public Product(Long productId, Set<OrderDetail> orderDetail, String productName, Long quantity,
+			BigDecimal unitPrice, BigDecimal costPrice, BigDecimal salePrice, Category category, String image,
+			byte[] images, Date createdDate, User createdBy, Date lastUpdatedDate, User lastUpdatedBy, Boolean status) {
+		super();
+		this.productId = productId;
+		this.orderDetail = orderDetail;
+		this.productName = productName;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.costPrice = costPrice;
+		this.salePrice = salePrice;
+		this.category = category;
+		this.image = image;
+		this.images = images;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.lastUpdatedDate = lastUpdatedDate;
+		this.lastUpdatedBy = lastUpdatedBy;
+		this.status = status;
+	}
+	
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
