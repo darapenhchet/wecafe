@@ -1,5 +1,7 @@
 package com.kosign.wecafe.services;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +72,16 @@ public class UserServiceImpl implements UserService{
 		return false;
 	}
 
+	
+	@Override
+	@Transactional
+	public List<User> getAllUsers(){
+		try{
+			return (List<User>)sessionFactory.getCurrentSession().createCriteria(User.class).list();
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return null;
+	}
 }

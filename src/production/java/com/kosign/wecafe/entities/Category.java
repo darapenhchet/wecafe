@@ -13,6 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,14 +39,16 @@ public class Category implements java.io.Serializable{
 	@Column(name="CREATED_DATE")
 	private Date createdDate;
 	
-	@Column(name="CREATED_BY")
-	private String createdBy;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="CREATED_BY")
+	private User createdBy;
 	
 	@Column(name="LAST_UPDATED_DATE")
 	private Date lastUpdatedDate;
 	
-	@Column(name="LAST_UPDATED_BY")
-	private String lastUpdatedBy;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="LAST_UPDATED_BY")
+	private User lastUpdatedBy;
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL,mappedBy="category")
 	private Set<Product> products ;//= new HashSet<Product>();
@@ -89,14 +93,6 @@ public class Category implements java.io.Serializable{
 		this.createdDate = createdDate;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 	public Date getLastUpdatedDate() {
 		return lastUpdatedDate;
 	}
@@ -105,11 +101,20 @@ public class Category implements java.io.Serializable{
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
-	public String getLastUpdatedBy() {
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public User getLastUpdatedBy() {
 		return lastUpdatedBy;
 	}
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
+	public void setLastUpdatedBy(User lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
+
 }

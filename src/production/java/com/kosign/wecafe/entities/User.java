@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,19 +55,19 @@ public class User {
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
 	private Date createdDate;
 	
-	@Column(name="CREATED_BY")
-	private String createdBy;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="CREATED_BY")
+	private User createdBy;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="LAST_UPDATED_DATE")
 	private Date lastUpdatedDate;
 	
-	@Column(name="LAST_UPDATED_BY")
-	private String lastUpdatedBy;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="LAST_UPDATED_BY")
+	private User lastUpdatedBy;
 
 	public Long getId() {
 		return id;
@@ -139,11 +141,11 @@ public class User {
 		this.createdDate = createdDate;
 	}
 
-	public String getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -155,11 +157,11 @@ public class User {
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
-	public String getLastUpdatedBy() {
+	public User getLastUpdatedBy() {
 		return lastUpdatedBy;
 	}
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
+	public void setLastUpdatedBy(User lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 	

@@ -86,10 +86,10 @@ public class AdminController {
 		return "admin/productadd";
 	}*/
 	
-	@RequestMapping(value="/admin/categorylist")
+	/*@RequestMapping(value="/admin/categorylist")
 	public String categorylist(){
 		return "admin/categorylist";
-	}
+	}*/
 	
 	@RequestMapping(value="/admin/categoryadd")
 	public String categoryadd(){
@@ -125,15 +125,5 @@ public class AdminController {
 	public String supplieradd(){
 		return "admin/supplieradd";
 	}
-	
-	@RequestMapping(value="/admin/userlist")
-	public String userlist(){
-		return "admin/userlist";
-	}
-	
-	@RequestMapping(value="/admin/useradd")
-	public String useradd(){
-		return "admin/useradd";
-	}
-	
+			
 }

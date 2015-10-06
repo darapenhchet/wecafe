@@ -2,37 +2,29 @@ package com.kosign.wecafe.services;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Category;
-import com.kosign.wecafe.entities.Product;
-import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Override
+	@Transactional
 	public List<Category> getAllCategories() {
-		Session session = null;
 		try{
-			session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
-			
-			Query query = session.createQuery("FROM Category");
-			
-			List<Category> categories = query.list();
-			
-			session.getTransaction().commit();
-			return categories;
+			return (List<Category>)sessionFactory.getCurrentSession().createCriteria(Category.class).list();
 		}catch(Exception ex){
+			System.out.println(ex.getMessage());
 			ex.printStackTrace();
-			session.getTransaction().rollback();
-		}finally{
-			session.close();
 		}
-		return null;	
+		return null;
 	}
 
 }
