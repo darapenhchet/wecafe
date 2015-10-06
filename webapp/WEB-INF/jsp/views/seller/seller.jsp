@@ -90,11 +90,14 @@
 										<div class="panel-body">
 											<div style="float: left;">
 												<div id="idpro" style="display: none;"><%=products.get(i).getProductId()%></div>
-												<img id="imgpro"
-													src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>">
-												<span id="Proname"> <%=products.get(i).getProductName()%></span>
-												<input type="text" class="form-control" maxlength="30" value="<%=products.get(i).getProductId()%>"  id="pro_id" style="display:none;">
-												<input type="text" class="form-control" maxlength="30"  value="<%=products.get(i).getProductName()%>" id="pro_nm" style="display:none;">
+													<div style="width: 300px;">
+														<img id="imgpro"
+															src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>">
+														<span id="Proname"> <%=products.get(i).getProductName()%></span>
+													</div> 
+													  
+												<input type="text" class="form-control"  value="<%=products.get(i).getProductId()%>"  id="pro_id" style="display:none;">
+												<input type="text" class="form-control"  value="<%=products.get(i).getProductName()%>" id="pro_nm" style="display:none;">
 											</div>
 											<div style="text-align: right;">
 												<span id="PRICE"><%=products.get(i).getSalePrice()%></span><span>&nbsp;
@@ -376,6 +379,10 @@
 	 			});
 			});
 			
+			$("#btncancel").click(function(){
+				clearallsession(); 
+				});
+			
 			$("#btnconfirm").click(function(){
 				$.ajax({
 	 				 url: "${pageContext.request.contextPath}/seller/insertcartsell", 
@@ -387,6 +394,7 @@
 	 		            xhr.setRequestHeader("Content-Type", "application/json");
 	 		        },
 	 				success: function(data){
+	 					clearallsession();
 	 					console.log(data);
 	 				},
 	 				error:function(data, status,er){
@@ -414,7 +422,25 @@
 			});	 
 			
 		}	
-			
+			function clearallsession(){
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/order/removeAllFromCart/", 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				       console.log(data);
+				       getsizeSession();
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+				return ;
+			}	
 		});
 	</script>
 </html>
