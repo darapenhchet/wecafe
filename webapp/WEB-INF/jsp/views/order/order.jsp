@@ -50,16 +50,16 @@
     <!-- Wrapper for slides -->
 	    <div class="carousel-inner" role="listbox">
 	      <div class="item active">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
 	      </div>
 	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
 	      </div>    
 	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
 	      </div>
 	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
 	      </div>
 	    </div>
 	    <!-- Left and right controls -->
@@ -109,7 +109,7 @@
 														<div class="panel-body">
 															<div style="float: left;">
 <div id="idpro" style="display: none;"><%=products.get(i).getProductId()%></div>	
-<img id="imgpro" src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>"> 
+<img id="imgpro" src="${pageContext.request.contextPath}/resources/images/products/<%=products.get(i).getImage()%>"> 
 															<span id="Proname">	 <%=products.get(i).getProductName()%></span>
 															</div>
 															<div style="text-align: right;"><span id="PRICE"><%=products.get(i).getSalePrice()%></span><span>&nbsp; Riels</span></div>
@@ -185,7 +185,7 @@
     					</div>
 					</div>
                 </div>
-                <div class="modal-footer" style="height: 80px;">
+                <div class="modal-footer" style="height: 80px; overflow: auto;">
                     <button type="button" class="btn btn-default hidebtn" id="btnAddToCart"><span class="button b-close"><span>Add to cart</span></span></button>
                     <button type="button" class="btn btn-default hidebtn" id="btnok"><span class="button b-close"><span>Ok</span></span></button>
                     <button type="button" class="btn btn-primary hidebtn" id="btn_buy"> <span class="button b-close"><span>Buy</span></span></button>
@@ -301,7 +301,7 @@
 		      			$("#procomment").val(_this.parent().parent().children().eq(6).html());
 		      			$("#protitle").html(data.productName);
 		      			$("#proid").html(data.productId);
-		      			$("#imgpath").attr('src','${pageContext.request.contextPath}/resources/images/img/' + data.image);
+		      			$("#imgpath").attr('src','${pageContext.request.contextPath}/resources/images/products/' + data.image);
 		      			$("#myModal").bPopup();
 				       
 				    },

@@ -92,16 +92,23 @@
 												<div id="idpro" style="display: none;"><%=products.get(i).getProductId()%></div>
 													<div style="width: 300px;">
 														<img id="imgpro"
-															src="${pageContext.request.contextPath}/resources/images/img/<%=products.get(i).getImage()%>">
-														<span id="Proname"> <%=products.get(i).getProductName()%></span>
+															src="${pageContext.request.contextPath}/resources/images/products/<%=products.get(i).getImage()%>">
+														<span id="Proname"> <%=products.get(i).getProductName()%></span> 
 													</div> 
-													  
+		
 												<input type="text" class="form-control"  value="<%=products.get(i).getProductId()%>"  id="pro_id" style="display:none;">
 												<input type="text" class="form-control"  value="<%=products.get(i).getProductName()%>" id="pro_nm" style="display:none;">
 											</div>
 											<div style="text-align: right;">
-												<span id="PRICE"><%=products.get(i).getSalePrice()%></span><span>&nbsp;
-													Riels</span>
+												<span id="PRICE"><%=products.get(i).getSalePrice()%></span><span>&nbsp;	Riels</span> 
+												<div><br>
+												  	<a href="#">
+										          		<span id="btnminus" class="glyphicon glyphicon-minus"></span>
+										        	</a><input id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="0">
+										        	<a href="#">
+											          <span id="btnplus" class="glyphicon glyphicon-plus"></span>
+											        </a>
+											    </div>
 											</div>
 										</div>
 									</div>
@@ -130,7 +137,7 @@
 											<div style="float: left;">
 												<img id="img"
 												
-													src="${pageContext.request.contextPath}/resources/images/img/${product.image}">
+													src="${pageContext.request.contextPath}/resources/images/products/${product.image}">
 													<input type="text" name="" value="${product.productName}" id="pro_nm" style="display: none;">
 												<input type="text" name="" value="${product.productId}" id="pro_id" style="display: none;">
 												${product.productName}
@@ -168,7 +175,7 @@
 				<div class="modal-body form-horizontal" style="height: 290px;">
 					<div class="col-sm-4">
 						<img
-							src="${pageContext.request.contextPath}/resources/images/img/drink.jpg"
+							src="${pageContext.request.contextPath}/resources/images/products/drink.jpg"
 							style="height: 250px;">
 					</div>
 					<div class="col-sm-8 container">
@@ -195,7 +202,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer" style="height: 80px;">
+				<div class="modal-footer" style="height: 80px; overflow: auto;">
 					<button type="button" class="btn btn-default">
 						<span class="button b-close"><span>Add to cart</span></span>
 					</button>
@@ -345,13 +352,14 @@
 				
 			});
 			
-			$(".panel-body").click(function() {
-		 
-	 			var proNm 		= $(this).find("#pro_nm").val();
-	 			var proId 		= $(this).find("#pro_id").val();
-	 			var price 		= $(this).find("#PRICE").html();
-	 			var price		= $(this).find("#PRICE").html();
+			$(document).on('click','#btnplus',function() {
+		  
+	 			var proNm 		= $(this).parents(".panel-body").find("#pro_nm").val();
+	 			var proId 		= $(this).parents(".panel-body").find("#pro_id").val();
+	 			var price 		= $(this).parents(".panel-body").find("#PRICE").html();
+	 			var price		= $(this).parents(".panel-body").find("#PRICE").html();
 	 			var proqty		= 1;
+	 			var _this = $(this);
 	 			var totalAmount = proqty * price ;
 	 			console.log (totalAmount);
 	 			json = {
@@ -372,11 +380,17 @@
 	 		        },
 	 				success: function(data){
 	 					getsizeSession();
+	 					for(i=0; i<data.length; i++){
+	 						if(data[i].productId == proId){
+	 							_this.parents(".panel-body").find("#txtqty").val(data[i].quantity);
+	 							break;
+	 						}
+	 					}
 	 				},
 	 				error:function(data, status,er){
 	 					console.log("error: " + data + "status: " + status + "er: ");
 	 				}
-	 			});
+	 			}); 
 			});
 			
 			$("#btncancel").click(function(){
