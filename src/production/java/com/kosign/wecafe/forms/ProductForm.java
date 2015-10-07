@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ProductForm {
 	
+	private Long productId;
 	private String productName;
 	private BigDecimal unitPrice;
 	private BigDecimal costPrice;
@@ -13,6 +14,7 @@ public class ProductForm {
 	private Long quantity;
 	private Long categoryId;
 	private MultipartFile images;
+	private String imgURL;
 
 	public void setProductName(String productName) {
 		this.productName = productName;
@@ -69,4 +71,21 @@ public class ProductForm {
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+	
 }

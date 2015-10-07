@@ -137,7 +137,7 @@
                                                     <label for="costprice" class="control-label col-lg-2">Image</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="images" name="images" type="file">
-                                                        <img src="" id="images_sample" name="images_sample"/>
+                                                        <img src="" id="images_sample" name="images_sample" class="img-thumbnail" style="display:none;">
                                                     </div>
                                                 </div>                                                                                            
 
@@ -357,6 +357,7 @@
     	<script type="text/javascript">
     		$(function(){
     			$('input[type=file]').change(function() { 
+    				$("#images_sample").show();
     			    $("#images_sample").attr('src',($(this).val()));
     			});
     			$("#frmProductAdd").submit(function(e){

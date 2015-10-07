@@ -22,6 +22,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="product")
@@ -93,6 +96,9 @@ public class Product implements Serializable{
 	
 	@Column(name="status")
 	private Boolean status;
+	
+	@Transient
+	private MultipartFile file;
 	
   /*  @Lob 
     @Basic(fetch = FetchType.LAZY)
@@ -251,5 +257,17 @@ public class Product implements Serializable{
 
 	public void setImages(byte[] images) {
 		this.images = images;
+	}
+
+
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 }

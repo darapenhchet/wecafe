@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.forms.ProductForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
@@ -81,16 +82,23 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public boolean updateProduct(Product product) {
+	public boolean updateProduct(ProductForm newProduct) {
 		Session session = null;
 		try{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Category category = session.get(Category.class, product.getCategory().getCatId());
+			Category category = session.get(Category.class, newProduct.getCategoryId());
+			Product product = session.get(Product.class, newProduct.getProductId());
+			System.out.println("PRODUCT QUANTITY="+ newProduct.getQuantity());
+			product.setQuantity(newProduct.getQuantity());
+			product.setCostPrice(newProduct.getCostPrice());
+			product.setUnitPrice(newProduct.getUnitPrice());
+			product.setSalePrice(newProduct.getSalePrice());
 			product.setCategory(category);
 			product.setLastUpdatedDate(new Date());
-			product.setStatus(true);
-			session.update(product);		
+			product.setImage(newProduct.getImgURL());
+			//product.setLastUpdatedBy(newProduct.getLastUpdatedBy());
+			session.saveOrUpdate(product);	
 			session.getTransaction().commit();
 			return true;
 		}catch(Exception ex){
@@ -98,7 +106,6 @@ public class ProductServiceImpl implements ProductService{
 			session.getTransaction().rollback();
 		}finally{
 			session.close();
-			//HibernateUtil.getSessionFactory().close();
 		}
 		return false;
 	}

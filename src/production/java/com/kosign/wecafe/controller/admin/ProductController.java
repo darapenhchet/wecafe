@@ -163,9 +163,44 @@ public class ProductController {
 		return "admin/productupdate";
 	}
 
-	@RequestMapping(value = "/admin/product/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody boolean updateProduct(@RequestBody Product product) {
-		return productService.updateProduct(product);
+	@RequestMapping(value = "/admin/product/update", method = RequestMethod.POST)
+	public @ResponseBody boolean updateProduct(ProductForm product) {
+		//User user = userService.findUserByUsername(getPrincipal());
+		//product.setLastUpdatedBy(user);
+		//System.out.println()
+		
+		System.out.println("UPDATING CONTROLLER...");
+		String name = product.getImages().getOriginalFilename();
+		System.out.println("name="+product.getProductName());
+		if (!product.getImages().isEmpty()) {
+            try {
+                byte[] bytes = product.getImages().getBytes();
+                UUID uuid = UUID.randomUUID();
+                String randomUUIDFileName = uuid.toString();
+                
+                String extension = name.substring(name.lastIndexOf(".")+1);
+                String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+                String fileName = File.separator +"resources"
+                        		+ File.separator + "images" + File.separator + "products" + File.separator
+                        		+ randomUUIDFileName+"."+extension;
+                
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(webappRoot+fileName));
+                stream.write(bytes);
+                stream.close();
+                System.out.println( "You successfully uploaded " + name + "!");
+                product.setImgURL(randomUUIDFileName+"."+extension);                
+                return productService.updateProduct(product);
+            } catch (Exception e) {
+            	System.out.println(e.getMessage());
+                System.out.println("You failed to upload " + name + " => " + e.getMessage());
+                return false;
+            }
+        } else {
+            System.out.println("You failed to upload " + name + " because the file was empty.");
+            return false;
+        }
+		
 	}
 
 	@RequestMapping(value = "/admin/product/delete/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

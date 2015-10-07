@@ -93,13 +93,13 @@
                                                 	<input type="hidden" id="productId" name="productId" type="text" value="${product.productId }"/>
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productname" name="productname" type="text" value="${product.productName }">
+                                                        <input class=" form-control" id="productName" name=""productName"" type="text" value="${product.productName }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control" id="optCategory">
+                                                       	<select class="form-control" id="optCategory" name="categoryId">
                                                        		<option value="">Please choose your category</option>
                                                        	<%
                                                        		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
@@ -125,26 +125,26 @@
                                                 <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="unitprice" name="unitprice" type="text" value="${product.unitPrice }">
+                                                        <input class="form-control " id="unitPrice" name="unitPrice" type="text" value="${product.unitPrice }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Cost Price</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="costprice" name="costprice" type="text" value="${product.costPrice }">
+                                                        <input class="form-control " id="costPrice" name="costPrice" type="text" value="${product.costPrice }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Sale Price</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="saleprice" name="saleprice" type="text" value="${product.salePrice }">
+                                                        <input class="form-control " id="salePrice" name="salePrice" type="text" value="${product.salePrice }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Image</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="image" name="image" type="file" value="${product.image }">
-                                                        <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}" width="200px" height="200px" class="img-thumbnail"/>
+                                                        <input class="form-control " id="images" name="images" type="file" value="${product.image }">
+                                                        <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}" width="400px" height="400px" class="img-thumbnail"/>
                                                     </div>
                                                 </div>                                                                                            
 
@@ -346,6 +346,8 @@
         <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+		
         <script type="text/javascript">
             /* ==============================================
             Counter Up
@@ -365,7 +367,7 @@
     					alert("PLEASE CHOOSE THE CATEGORY");
     					return;
     				}
-    				json = {
+    				/* json = {
     					"productId"   : $("#productId").val(),
     					"productName" : $("#productname").val(),
     					"category"    : {
@@ -396,6 +398,24 @@
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
     				    }
+    				}); */
+    				
+    				$("#frmProductAdd").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/product/update",
+    					dataType: 'JSON', 
+    					type: 'POST',
+    					success: function(data) { 
+    						console.log(data);
+     				        if(data){
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	location.href="${pageContext.request.contextPath}/admin/products";
+     				        }else{
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
     				});
     			});
     		});

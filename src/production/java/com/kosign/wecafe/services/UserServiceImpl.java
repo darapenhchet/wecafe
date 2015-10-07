@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public User findUserById(Long id) {
 		try{
-			return sessionFactory.getCurrentSession().get(User.class, id);
+			return sessionFactory.getCurrentSession().load(User.class, id);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
