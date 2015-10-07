@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService{
 	public Boolean updateCategory(Category category) {
 		try{
 			category.setLastUpdatedDate(new Date());
-			sessionFactory.getCurrentSession().saveOrUpdate(category);
+			sessionFactory.openSession().saveOrUpdate(category);
 			return true;
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
