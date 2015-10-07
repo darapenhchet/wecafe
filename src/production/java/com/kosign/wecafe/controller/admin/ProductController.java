@@ -115,8 +115,8 @@ public class ProductController {
         		product.setSalePrice(form.getSalePrice());
         		product.setUnitPrice(form.getUnitPrice());
         		product.setCategory(category);
-        		product.setCreatedBy(user);
-        		product.setLastUpdatedBy(user);
+        		//product.setCreatedBy(user);
+        		//product.setLastUpdatedBy(user);
         		product.setImage(randomUUIDFileName+"."+extension);
         		product.setImages(bytes);
         		product.setCreatedDate(new Date());

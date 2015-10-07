@@ -51,7 +51,7 @@
 
 
 
-    <body class="fixed-left">
+    <body class="fixed-left-void">
         
         <!-- Begin page -->
         <div id="wrapper">

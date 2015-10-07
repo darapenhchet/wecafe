@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +27,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
 	private Long id;
 	
 	@Column(name="USERNAME", unique=true, nullable=false)
@@ -55,15 +54,17 @@ public class User {
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
-	private Date createdDate;
+	private Date createdDate = new Date();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CREATED_BY")
 	private User createdBy;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="LAST_UPDATED_DATE")
-	private Date lastUpdatedDate;
+	private Date lastUpdatedDate = new Date();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="LAST_UPDATED_BY")

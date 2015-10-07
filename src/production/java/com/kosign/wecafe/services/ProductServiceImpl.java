@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
@@ -13,6 +16,9 @@ import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
 public class ProductServiceImpl implements ProductService{
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Override
 	public List<Product> getAllProducts() {
@@ -37,24 +43,19 @@ public class ProductServiceImpl implements ProductService{
 		return null;
 	}
 	
+	@Transactional
 	@Override
 	public boolean addNewProduct(Product product) {
 		Session session = null;
 		try{
-			session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			Category category = session.get(Category.class, product.getCategory().getCatId());
 			product.setCategory(category);
 			session.save(product);
-			
-			session.getTransaction().commit();
 			return true;
 		}catch(Exception ex){
 			ex.printStackTrace();
-			session.getTransaction().rollback();
-		}finally{
-			session.close();
-			//HibernateUtil.getSessionFactory().close();
+			System.out.println(ex.getMessage());
 		}
 		return false;
 	}
