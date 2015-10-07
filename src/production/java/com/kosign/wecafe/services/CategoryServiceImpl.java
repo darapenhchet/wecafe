@@ -42,6 +42,7 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
+	@Transactional
 	public Boolean updateCategory(Category category) {
 		try{
 			category.setLastUpdatedDate(new Date());
@@ -61,8 +62,14 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
+	@Transactional
 	public Category findCategoryById(Long id) {
-		// TODO Auto-generated method stub
+		try{
+			return sessionFactory.getCurrentSession().get(Category.class, id);
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
 		return null;
 	}
 	
