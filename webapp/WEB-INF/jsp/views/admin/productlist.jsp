@@ -1,3 +1,4 @@
+<%@page import="com.kosign.wecafe.entities.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -126,7 +127,15 @@
                                                             <td style="text-align:right;">${product.salePrice} <span style="font-weight:bold;">Riel</span></td>
                                                             <td>${product.category.catName}</td>
                                                             <td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/${product.image}" class="img-thumbnail" alt="${product.productName}" width="30px" height="30px"/></td>
-                                                            <td style="text-align:center;">${product.status }</td>
+                                                            <td style="text-align:center;">
+                                                            	<c:choose>
+																  <c:when test="${product.status}">
+																  	<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a></td>
+																  </c:when>
+															      <c:when test="${!product.status}">
+															      	<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Inactive</a></td>
+																  </c:when>
+																</c:choose>
                                                             <td class="actions" style="text-align:center;">
 				                                                <a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i class="fa fa-pencil"></i></a>
 				                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
@@ -151,122 +160,6 @@
                 <%@ include file="footer.jsp" %>
 
             </div>
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
-
-
-<!--             Right Sidebar
-            <div class="side-bar right-bar nicescroll">
-                <h4 class="text-center">Chat</h4>
-                <div class="contact-list nicescroll">
-                    <ul class="list-group contacts-list">
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-1.jpg" alt="">
-                                </div>
-                                <span class="name">Chadengle</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-2.jpg" alt="">
-                                </div>
-                                <span class="name">Tomaslau</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-3.jpg" alt="">
-                                </div>
-                                <span class="name">Stillnotdavid</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-4.jpg" alt="">
-                                </div>
-                                <span class="name">Kurafire</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-5.jpg" alt="">
-                                </div>
-                                <span class="name">Shahedk</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-6.jpg" alt="">
-                                </div>
-                                <span class="name">Adhamdannaway</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-7.jpg" alt="">
-                                </div>
-                                <span class="name">Ok</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-8.jpg" alt="">
-                                </div>
-                                <span class="name">Arashasghari</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-9.jpg" alt="">
-                                </div>
-                                <span class="name">Joshaustin</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="images/users/avatar-10.jpg" alt="">
-                                </div>
-                                <span class="name">Sortino</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                    </ul>  
-                </div>
-            </div>
-            /Right-bar -->
-
-
         </div>
         <!-- END wrapper -->
     
@@ -303,7 +196,6 @@
         <script>
         	$(function(){
         		$(document).on('click','#btnRemove',function(){
-        			alert($(this).parents("tr").find("#PRODUCT_ID").html());
         			var id = $(this).parents("tr").find("#PRODUCT_ID").html();
         			if(confirm("Do you want to delete that product?")){
         				$.ajax({ 
@@ -329,6 +221,39 @@
         				});
         				
         			}
+        		});
+        		
+        		$(document).on('click','#btnStatus',function(){
+        			var id = $(this).parents("tr").find("#PRODUCT_ID").html();
+        			var _this = $(this);
+       				$.ajax({ 
+       				    url: "${pageContext.request.contextPath}/admin/product/status/"+id, 
+       				    type: 'POST', 
+       				    dataType: 'JSON', 
+       				    //data: JSON.stringify(json), 
+       				    beforeSend: function(xhr) {
+       	                    xhr.setRequestHeader("Accept", "application/json");
+       	                    xhr.setRequestHeader("Content-Type", "application/json");
+       	                },
+       				    success: function(data) { 
+       				        if(data){
+       				        	if(_this.hasClass('btn-success')){
+       				        		_this.removeClass('btn-success');
+       				        		_this.addClass('btn-danger');
+       				        		_this.html('Inactive');
+       				        	}else if(_this.hasClass('btn-danger')){
+       				        		_this.removeClass('btn-danger');
+       				        		_this.addClass('btn-success');
+       				        		_this.html('Active');
+       				        	}
+       				        }else{
+       				        	alert('YOU HAVE ERRORS WHEN CHANGING THE STATUS.');
+       				        }
+       				    },
+       				    error:function(data,status,er) { 
+       				        console.log("error: "+data+" status: "+status+" er:"+er);
+       				    }
+       				});
         		});
         	});
         </script>

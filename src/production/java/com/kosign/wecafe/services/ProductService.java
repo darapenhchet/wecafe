@@ -11,4 +11,5 @@ public interface ProductService {
 	public boolean addNewProduct(Product product);
 	public boolean updateProduct(ProductForm product);
 	public boolean deleteProduct(Long id);
+	public boolean updateProductStatus(Long id);
 }

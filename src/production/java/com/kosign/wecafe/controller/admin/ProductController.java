@@ -208,6 +208,14 @@ public class ProductController {
 		System.out.println("DELETE ID=" + id);
 		return productService.deleteProduct(id);
 	}
+	
+	@RequestMapping(value = "/admin/product/status/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody boolean changeProductStatus(@RequestBody @PathVariable("id") Long id) {
+		System.out.println("ID=" + id);
+		return productService.updateProductStatus(id);
+	}
+	
+	
 
 	private String getPrincipal() {
 		String userName = null;

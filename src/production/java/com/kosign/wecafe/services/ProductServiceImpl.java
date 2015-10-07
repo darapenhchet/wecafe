@@ -3,6 +3,7 @@ package com.kosign.wecafe.services;
 import java.util.Date;
 import java.util.List;
 
+import org.h2.store.Data;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -128,5 +129,21 @@ public class ProductServiceImpl implements ProductService{
 			session.close();
 		}
 		return null;
+	}
+	
+	@Override
+	@Transactional
+	public boolean updateProductStatus(Long id) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Product product = session.load(Product.class, id);
+			product.setStatus(!product.getStatus());
+			product.setLastUpdatedDate(new Date());
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return false;
 	}
 }
