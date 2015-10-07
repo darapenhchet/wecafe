@@ -407,10 +407,10 @@
     					success: function(data) { 
     						console.log(data);
      				        if(data){
-     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
      				        	location.href="${pageContext.request.contextPath}/admin/products";
      				        }else{
-     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+     				        	alert('YOU HAVE ERRORS WHEN UPDATED EXISING PRODUCT.');
      				        }
      				    },
      				    error:function(data,status,er) { 
