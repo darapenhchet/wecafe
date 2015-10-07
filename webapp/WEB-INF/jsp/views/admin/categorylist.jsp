@@ -107,7 +107,7 @@
                                         <tr class="gradeX">
                                             <td>${category.catId}</td>
                                             <td>${category.catName }</td>
-                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/products/${category.img }" class="img-thumbnail" alt="${category.catName}" width="30px" height="30px" /></td>
+                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/${category.img }" class="img-thumbnail" alt="${category.catName}" width="30px" height="30px" /></td>
                                             <td>${category.createdBy.lastName } ${category.createdBy.firstName }</td>
                                             <td>${category.createdDate}</td>
                                             <td>${category.lastUpdatedBy.lastName } ${category.lastUpdatedBy.firstName }</td>

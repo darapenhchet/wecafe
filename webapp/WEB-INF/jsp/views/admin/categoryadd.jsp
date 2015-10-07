@@ -85,11 +85,11 @@
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
                                     <div class="panel-body">
                                         <div class=" form">
-                                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="#" novalidate="novalidate">
+                                            <form class="cmxform form-horizontal tasi-form" id="frmAddCategory" method="POST" action="#">
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Category Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="categoryname" name=""categoryname"" type="text">
+                                                        <input class=" form-control" id="categoryName" name="categoryName" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -101,7 +101,7 @@
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button class="btn btn-success waves-effect waves-light" type="submit">Save</button>
+                                                        <button class="btn btn-success waves-effect waves-light" type="button" id="btnSubmit">Save</button>
                                                         <button class="btn btn-default waves-effect" type="button">Cancel</button>
                                                     </div>
                                                 </div>
@@ -125,121 +125,6 @@
                 <%@ include file="footer.jsp" %>
 
             </div>
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
-
-
-            <!-- Right Sidebar -->
-            <div class="side-bar right-bar nicescroll">
-                <h4 class="text-center">Chat</h4>
-                <div class="contact-list nicescroll">
-                    <ul class="list-group contacts-list">
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg" alt="">
-                                </div>
-                                <span class="name">Chadengle</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg" alt="">
-                                </div>
-                                <span class="name">Tomaslau</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg" alt="">
-                                </div>
-                                <span class="name">Stillnotdavid</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg" alt="">
-                                </div>
-                                <span class="name">Kurafire</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg" alt="">
-                                </div>
-                                <span class="name">Shahedk</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg" alt="">
-                                </div>
-                                <span class="name">Adhamdannaway</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg" alt="">
-                                </div>
-                                <span class="name">Ok</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg" alt="">
-                                </div>
-                                <span class="name">Arashasghari</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg" alt="">
-                                </div>
-                                <span class="name">Joshaustin</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg" alt="">
-                                </div>
-                                <span class="name">Sortino</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                    </ul>  
-                </div>
-            </div>
-            <!-- /Right-bar -->
-
         </div>
         <!-- END wrapper -->
 
@@ -293,6 +178,8 @@
         <!-- Todo -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+		
         <script type="text/javascript">
             /* ==============================================
             Counter Up
@@ -304,6 +191,37 @@
                 });
             });
         </script>
-    
+    	<script type="text/javascript">
+    		$(function(){
+    			$('input[type=file]').change(function() { 
+    				$("#images_sample").show();
+    			    $("#images_sample").attr('src',($(this).val()));
+    			});
+    			$("#btnSubmit").click(function(e){
+    				e.preventDefault();    				
+    				if($("#optCategory").val()==""){
+    					alert("PLEASE CHOOSE THE CATEGORY");
+    					return;
+    				}
+    				$("#frmAddCategory").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/category/add",
+    					dataType: 'JSON', 
+    					type: 'POST',
+    					success: function(data) { 
+    						console.log(data);
+     				        if(data){
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	location.href="${pageContext.request.contextPath}/admin/categorylist";
+     				        }else{
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
+    				});
+    			});
+    		});
+    	</script>
     </body>
 </html>

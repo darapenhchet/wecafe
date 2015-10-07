@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -26,5 +27,45 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		return null;
 	}
+
+	@Override
+	@Transactional
+	public Boolean addNewCategory(Category category) {
+		try{
+			sessionFactory.getCurrentSession().save(category);
+			return true;
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Boolean updateCategory(Category category) {
+		try{
+			category.setLastUpdatedDate(new Date());
+			sessionFactory.getCurrentSession().saveOrUpdate(category);
+			return true;
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Boolean deleteCategory(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Category findCategoryById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }
