@@ -50,16 +50,16 @@
     <!-- Wrapper for slides -->
 	    <div class="carousel-inner" role="listbox">
 	      <div class="item active">
-	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
 	      </div>
 	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
 	      </div>    
 	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
 	      </div>
 	      <div class="item">
-	        <img src="${pageContext.request.contextPath}/resources/images/products/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
+	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
 	      </div>
 	    </div>
 	    <!-- Left and right controls -->

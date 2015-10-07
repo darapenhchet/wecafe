@@ -1,3 +1,4 @@
+<%@page import="com.kosign.wecafe.forms.Cart"%>
 <%@page import="com.kosign.wecafe.entities.Product"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -104,7 +105,23 @@
 												<div><br>
 												  	<a href="#">
 										          		<span id="btnminus" class="glyphicon glyphicon-minus"></span>
-										        	</a><input id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="0">
+										          	</a>
+										          		<%
+										          			List<Cart> carts = (List<Cart>)request.getAttribute("carts");
+										          			boolean exist = false;
+										          			for(Cart cart: carts){
+										          				if(cart.getProductId().equals(products.get(i).getProductId())){
+										          					exist = true;
+										          					%>
+										          					<input id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="<%=cart.getQuantity()%>">
+										          		<%		}
+										          			}
+										          			if(!exist){%>
+										          				<input id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="<%=0%>">
+										          			<%		
+										          			}
+										          		%>
+										        	
 										        	<a href="#">
 											          <span id="btnplus" class="glyphicon glyphicon-plus"></span>
 											        </a>
@@ -272,15 +289,12 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 			getsizeSession();
-			
+			listqtyorder();
 			$("#btnlistorder").click(function(){
 				
 			});
 			
-			
-			$("#bt_add, #btnCart").click(function(){
-				 var st=""; var amount=0;
-				$("#addtocart").bPopup();
+			function listqtyorder(){
 				$.ajax({
 					url: "${pageContext.request.contextPath}/seller/listtocart",
 					type: 'POST',
@@ -290,45 +304,31 @@
 						xhr.setRequestHeader("Content-Type", "application/json");
 					},
 					success: function(data){
-						console.log(data.length);
-						for(i=0; i<data.length; i++)
-						{
-						
-							st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"
-				    	  	st += "<td>" + data[i].productName + "</td>";
-				    	  	st += "<td>" + data[i].price + "</td>";
-				    	  	st += "<td>" + data[i].quantity + "</td>";
-				    	  	st += "<td>" + data[i].totalAmount + "</td>";
-				    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
-				    	  	amount += data[i].totalAmount;
-						}	
-						 $("#totalamount").val(amount);
-					     $("#orderdetail").html(st);
-							
+							for(i=0;i<data.length;i++) { 
+								
+								_this.parents(".panel-body").find("#txtqty").val(data[i].quantity); 
+							}  
 					},
 					error:function(data,stutus,er){
 						console.log("error:  "+data+" status: "+status+" er:" + er)
-					}
-					
+					} 
 				});
-		
-			});
+			}
 			
-			$(document).on('click',"#btndelete",function(){
+			function listproductorder(){
 				 var st=""; var amount=0;
-				/* alert($(this).parent().parent().children().html()); */
-				$.ajax({ 
-				    url: "${pageContext.request.contextPath}/seller/removetocart/"+$(this).parent().parent().children().html(), 
-				    type: 'POST', 
-				    dataType: 'JSON', 
-				    beforeSend: function(xhr) {
-	                    xhr.setRequestHeader("Accept", "application/json");
-	                    xhr.setRequestHeader("Content-Type", "application/json");
-	                },
-				    success: function(data) { 
-						for(i=0; i<data.length; i++)
-						{
-							if(data[i].quantity >= 1){
+				 $.ajax({
+						url: "${pageContext.request.contextPath}/seller/listtocart",
+						type: 'POST',
+						dataType: 'JSON',
+						beforeSend: function(xhr){
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Content-Type", "application/json");
+						},
+						success: function(data){
+							console.log(data.length);
+							for(i=0; i<data.length; i++)
+							{ 
 								st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"
 					    	  	st += "<td>" + data[i].productName + "</td>";
 					    	  	st += "<td>" + data[i].price + "</td>";
@@ -336,13 +336,64 @@
 					    	  	st += "<td>" + data[i].totalAmount + "</td>";
 					    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
 					    	  	amount += data[i].totalAmount;
-								
-							}else{
-								$(this).parents("tr").remove();
-							}
-						}	
-						 $("#totalamount").val(amount);
-					     $("#orderdetail").html(st);
+							}	
+							 $("#totalamount").val(amount);
+						     $("#orderdetail").html(st); 
+						},
+						error:function(data,stutus,er){
+							console.log("error:  "+data+" status: "+status+" er:" + er)
+						} 
+					});
+			}
+			
+			$("#bt_add, #btnCart").click(function(){
+				
+				$("#addtocart").bPopup();
+				listproductorder();
+		
+			});
+			
+			$(document).on('click',"#btndelete, #btnminus",function(){
+				 var st=""; var amount=0;
+				 _this = $(this);
+				 if(_this.html()!="Delete")
+					 var proId 		= $(this).parents(".panel-body").find("#pro_id").val();
+				 else
+					 var proId =$(this).parent().parent().children().html();
+				  
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/seller/removetocart/"+proId, 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+							for(i=0; i<data.length; i++)
+								{
+									if(data[i].quantity >= 1){
+										st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"
+							    	  	st += "<td>" + data[i].productName + "</td>";
+							    	  	st += "<td>" + data[i].price + "</td>";
+							    	  	st += "<td>" + data[i].quantity + "</td>";
+							    	  	st += "<td>" + data[i].totalAmount + "</td>";
+							    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+							    	  	amount += data[i].totalAmount;
+										
+									}
+									if(data[i].productId == proId){  
+		 								_this.parents(".panel-body").find("#txtqty").val(data[i].quantity); 
+		 							}
+								}
+							if(data.length == 0) 
+								_this.parents(".panel-body").find("#txtqty").val("0"); 
+		 					 
+								 $("#totalamount").val(amount);
+							     $("#orderdetail").html(st);
+						 
+	               
+					     
 					     getsizeSession();
 				    },
 				    error:function(data,status,er) { 
@@ -351,6 +402,8 @@
 				});
 				
 			});
+			
+			
 			
 			$(document).on('click','#btnplus',function() {
 		  
