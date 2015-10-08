@@ -31,7 +31,6 @@ public class Sale {
 	
 	@OneToOne(cascade = {CascadeType.ALL}, fetch= FetchType.LAZY)
 	@JoinColumn(name="ord_id")
-	@PrimaryKeyJoinColumn
 	private Order order;
 	
 	public Order getOrder() {

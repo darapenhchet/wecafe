@@ -96,16 +96,6 @@ public class AdminController {
 		return "admin/orderadd";
 	}
 	
-	@RequestMapping(value="/admin/salelist")
-	public String salelist(){
-		return "admin/salelist";
-	}
-	
-	@RequestMapping(value="/admin/saleadd")
-	public String saleadd(){
-		return "admin/saleadd";
-	}
-	
 	@RequestMapping(value="/admin/supplierlist")
 	public String supplierlist(){
 		return "admin/supplierlist";
