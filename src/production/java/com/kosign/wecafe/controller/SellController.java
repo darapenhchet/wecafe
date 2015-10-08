@@ -2,6 +2,7 @@ package com.kosign.wecafe.controller;
 
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,21 +22,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.services.SellProductsService;
+import com.kosign.wecafe.services.UserService;
 
 @Controller
 public class SellController {
 	
 	@Inject SellProductsService sellProductService;
 	
+	@Autowired
+	UserService userService;
+	
 	@RequestMapping(value="/seller")
-	public String listAllProducts(HttpSession session, Map<String, Object> model){
+	public String listAllProducts(HttpSession session, Map<String, Object> model, Principal principal){
+		
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (List<Cart>)session.getAttribute("CARTS");
 		}
 		model.put("carts", carts);
 		model.put("products", sellProductService.getAllProducts());
-		model.put("orders", sellProductService.getOrdered());
+		model.put("user", userService.findUserByUsername(principal.getName()));
 		return "seller/seller";
 	}
 	
