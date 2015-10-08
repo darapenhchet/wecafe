@@ -39,13 +39,13 @@ public class ApplicationSecurity {
 			user.setPassword(passwordEncoder.encode("customer"));
 
 			UserRole userRole = new UserRole();
-			//userRole = (UserRole) session.get(UserRole.class, 1L);
+			userRole = (UserRole) session.get(UserRole.class, 3L);
 			//userRole.setId(1L);
-			userRole.setType(UserRoleType.CUSTOMER);
+			//userRole.setType(UserRoleType.CUSTOMER);
 			
 			user.getUserRoles().add(userRole);
 
-			session.save(userRole);
+			//session.save(userRole);
 			session.save(user);
 			
 			//userService.saveUser(user);

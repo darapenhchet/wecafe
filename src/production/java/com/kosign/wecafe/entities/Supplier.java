@@ -16,16 +16,24 @@ import javax.persistence.TemporalType;
 @Table(name="supplier")
 public class Supplier implements java.io.Serializable{
 	@Id
-	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="supplier_sup_id_seq", name="supplier_id")
-	@GeneratedValue(generator="supplier_id", strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="supplier_sup_id_seq", name="sup_id")
+	@GeneratedValue(generator="sup_id", strategy=GenerationType.SEQUENCE)
 	@Column(name="sup_id")
 	private Long supId;
+
+	@Column(name="CREATED_BY")
+	private String createdBy;
 	
-	@Column(name="sup_name")
-	private String supplierName;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="CREATED_DATE")
+	private Date createdDate;
 	
-	@Column(name="sup_phone_number")
-	private String supplierNumber;
+	@Column(name="LAST_UPDATED_BY")
+	private String lastUpdatedBy;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="LAST_UPDATED_DATE")
+	private Date lastUpdatedDate;
 	
 	@Column(name="sup_address")
 	private String supplierAddress;
@@ -33,19 +41,11 @@ public class Supplier implements java.io.Serializable{
 	@Column(name="sup_email")
 	private String supplierEmail;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="CREATED_DATE")
-	private Date createdDate;
+	@Column(name="sup_name")
+	private String supplierName;
 	
-	@Column(name="CREATED_BY")
-	private String createdBy;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="LAST_UPDATED_DATE")
-	private Date lastUpdatedDate;
-	
-	@Column(name="LAST_UPDATED_BY")
-	private String lastUpdatedBy;
+	@Column(name="sup_phone_number")
+	private String supplierNumber;
 
 	public Long getSupId() {
 		return supId;
@@ -55,20 +55,36 @@ public class Supplier implements java.io.Serializable{
 		this.supId = supId;
 	}
 
-	public String getSupplierName() {
-		return supplierName;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
-	public String getSupplierNumber() {
-		return supplierNumber;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setSupplierNumber(String supplierNumber) {
-		this.supplierNumber = supplierNumber;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
+
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
+	}
+
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
 	public String getSupplierAddress() {
@@ -86,38 +102,21 @@ public class Supplier implements java.io.Serializable{
 	public void setSupplierEmail(String supplierEmail) {
 		this.supplierEmail = supplierEmail;
 	}
-	
-	public Date getCreatedDate() {
-		return createdDate;
+
+	public String getSupplierName() {
+		return supplierName;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
+	public String getSupplierNumber() {
+		return supplierNumber;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public void setSupplierNumber(String supplierNumber) {
+		this.supplierNumber = supplierNumber;
 	}
-
-	public Date getLastUpdatedDate() {
-		return lastUpdatedDate;
-	}
-
-	public void setLastUpdatedDate(Date lastUpdatedDate) {
-		this.lastUpdatedDate = lastUpdatedDate;
-	}
-
-	public String getLastUpdatedBy() {
-		return lastUpdatedBy;
-	}
-
-	public void setLastUpdatedBy(String lastUpdatedBy) {
-		this.lastUpdatedBy = lastUpdatedBy;
-	}
-	
-	
+		
 }

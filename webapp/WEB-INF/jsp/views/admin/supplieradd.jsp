@@ -47,7 +47,7 @@
 
 
 
-    <body class="fixed-left-void">
+    <body class="fixed-left">
         
         <!-- Begin page -->
         <div id="wrapper">
@@ -89,13 +89,13 @@
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productname" name="productname" type="text">
+                                                        <input class=" form-control" id="supplierName" name="supplierName" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="phonenumber" name=""phonenumber"" type="text">
+                                                        <input class="form-control " id="phoneNumber" name="phoneNumber" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -115,7 +115,7 @@
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
-                                                        <button class="btn btn-success waves-effect waves-light" type="submit">Save</button>
+                                                        <button class="btn btn-success waves-effect waves-light" id="save" type="button">Save</button>
                                                         <button class="btn btn-default waves-effect" type="button">Cancel</button>
                                                     </div>
                                                 </div>
@@ -315,6 +315,36 @@
                 $('.counter').counterUp({
                     delay: 100,
                     time: 1200
+                });
+                
+                $("#save").click(function(){
+                	var supName 		= $("#supplierName").val();
+    	 			var phoneNm 		= $("#phoneNumber").val();
+    	 			var address 		= $("#address").val();
+    	 			var email 			= $("#email").val();
+    	 			json = {
+    	 						"supplierName"   		  : supName,
+    	 						"supplierNumber" 		  : phoneNm,
+    	 						"supplierAddress"		  : address,
+    	 						"supplierEmail"	 		  : email
+    	 			};
+    	 			console.log(JSON.stringify(json));
+    	 			$.ajax({
+    	 				 url: "${pageContext.request.contextPath}/admin/addSupplier", 
+     				    type: 'POST',
+    	 				datatype: 'JSON',
+    	 				data: JSON.stringify(json), 
+    	 				beforeSend: function(xhr) {
+    	 		            xhr.setRequestHeader("Accept", "application/json");
+    	 		            xhr.setRequestHeader("Content-Type", "application/json");
+    	 		        },
+    	 				success: function(data){
+    	 					
+    	 				},
+    	 				error:function(data, status,er){
+    	 					console.log("error: " + data + "status: " + status + "er: ");
+    	 				}
+    	 			}); 
                 });
             });
         </script>
