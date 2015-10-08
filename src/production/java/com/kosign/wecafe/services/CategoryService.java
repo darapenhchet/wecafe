@@ -9,6 +9,6 @@ public interface CategoryService {
 	public List<Category> getAllCategories();
 	public Boolean addNewCategory(Category category);
 	public Boolean updateCategory(Category category);
-	public Boolean deleteCategory(Long id);
+	public Boolean deleteCategory(Category id);
 	public Category findCategoryById(Long id);
 }

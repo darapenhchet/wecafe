@@ -118,7 +118,6 @@ public class ProductController {
         		//product.setCreatedBy(user);
         		//product.setLastUpdatedBy(user);
         		product.setImage(randomUUIDFileName+"."+extension);
-        		product.setImages(bytes);
         		product.setCreatedDate(new Date());
     			product.setLastUpdatedDate(new Date());
     			product.setStatus(true);

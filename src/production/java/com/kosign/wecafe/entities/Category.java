@@ -47,6 +47,9 @@ public class Category implements java.io.Serializable{
 	@JoinColumn(name="LAST_UPDATED_BY")
 	private User lastUpdatedBy;
 	
+	@Column(name="status")
+	private Boolean status;
+	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL,mappedBy="category")
 	private Set<Product> products ;//= new HashSet<Product>();
 	
@@ -112,6 +115,14 @@ public class Category implements java.io.Serializable{
 
 	public void setLastUpdatedBy(User lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 }

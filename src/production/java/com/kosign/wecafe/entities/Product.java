@@ -73,11 +73,6 @@ public class Product implements Serializable{
 	@Column(name="img_url")
 	private String image;
 	
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name="image")
-	private byte[] images;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
 	private Date createdDate;
@@ -96,16 +91,6 @@ public class Product implements Serializable{
 	
 	@Column(name="status")
 	private Boolean status;
-	
-	@Transient
-	private MultipartFile file;
-	
-  /*  @Lob 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name="image", nullable=false)
-    private byte[] image;*/
-	
-	
 		
 	public Long getProductId() {
 		return productId;
@@ -130,7 +115,6 @@ public class Product implements Serializable{
 		this.salePrice = salePrice;
 		this.category = category;
 		this.image = image;
-		this.images = images;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.lastUpdatedDate = lastUpdatedDate;
@@ -251,23 +235,4 @@ public class Product implements Serializable{
 		this.image = image;
 	}
 
-	public byte[] getImages() {
-		return images;
-	}
-
-	public void setImages(byte[] images) {
-		this.images = images;
-	}
-
-
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 }

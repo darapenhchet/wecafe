@@ -81,16 +81,6 @@ public class AdminController {
 		return "admin/productlist";
 	}
 		
-/*	@RequestMapping(value="/productadd")
-	public String productadd(){
-		return "admin/productadd";
-	}*/
-	
-	/*@RequestMapping(value="/admin/categorylist")
-	public String categorylist(){
-		return "admin/categorylist";
-	}*/
-	
 	@RequestMapping(value="/admin/categoryadd")
 	public String categoryadd(){
 		return "admin/categoryadd";

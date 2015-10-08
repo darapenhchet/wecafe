@@ -105,7 +105,7 @@
                                     <tbody>
                                     <c:forEach items="${categories}" var="category">
                                         <tr class="gradeX">
-                                            <td>${category.catId}</td>
+                                            <td id="CATEGORY_ID">${category.catId}</td>
                                             <td>${category.catName }</td>
                                             <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/${category.img }" class="img-thumbnail" alt="${category.catName}" width="30px" height="30px" /></td>
                                             <td>${category.createdBy.lastName } ${category.createdBy.firstName }</td>
@@ -116,7 +116,7 @@
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
                                                 <a href="${pageContext.request.contextPath}/admin/category/update/${category.catId}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -276,49 +276,39 @@
         <script src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 
-        <!-- flot Chart -->
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
-
-        <!-- Counter-up -->
-        <script src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js" type="text/javascript"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js" type="text/javascript"></script>
-        
         <!-- CUSTOM JS -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 
-        <!-- Dashboard -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
-
-        <!-- Chat -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
-
-        <!-- Todo -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
-
-        <script type="text/javascript">
-            /* ==============================================
-            Counter Up
-            =============================================== */
-            jQuery(document).ready(function($) {
-                $('.counter').counterUp({
-                    delay: 100,
-                    time: 1200
-                });
-            });
-        </script>
-        
-	    <!-- Examples -->
-	    <script src="${pageContext.request.contextPath}/resources/assets/magnific-popup/magnific-popup.js"></script>
-	    <script src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/jquery.dataTables.js"></script> 
-	    <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
-	    <script src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/datatables.editable.init.js"></script>
-    
+    	<script type="text/javascript">
+    	$(function(){
+	    	$(document).on('click','#btnRemove',function(){
+				var id = $(this).parents("tr").find("#CATEGORY_ID").html();
+				if(confirm("Do you want to delete that category?")){
+					$.ajax({ 
+					    url: "${pageContext.request.contextPath}/admin/category/delete/"+id, 
+					    type: 'POST', 
+					    dataType: 'JSON', 
+					    //data: JSON.stringify(json), 
+					    beforeSend: function(xhr) {
+		                    xhr.setRequestHeader("Accept", "application/json");
+		                    xhr.setRequestHeader("Content-Type", "application/json");
+		                },
+					    success: function(data) { 
+					        if(data){
+					        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
+					        	location.href="${pageContext.request.contextPath}/admin/categorylist";
+					        }else{
+					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
+					        }
+					    },
+					    error:function(data,status,er) { 
+					        console.log("error: "+data+" status: "+status+" er:"+er);
+					    }
+					});
+					
+				}
+			});
+    	});
+    	</script>
     </body>
 </html>

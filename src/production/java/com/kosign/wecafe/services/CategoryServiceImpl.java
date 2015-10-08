@@ -3,7 +3,9 @@ package com.kosign.wecafe.services;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +18,16 @@ public class CategoryServiceImpl implements CategoryService{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@Autowired
+	UserService userService;
+	
 	@Override
 	@Transactional
 	public List<Category> getAllCategories() {
 		try{
-			return (List<Category>)sessionFactory.getCurrentSession().createCriteria(Category.class).list();
+			return (List<Category>)sessionFactory.getCurrentSession()
+												 .createCriteria(Category.class)
+												 .add(Restrictions.eq("status", true)).list();
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
@@ -56,9 +63,22 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public Boolean deleteCategory(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Boolean deleteCategory(Category deleteCategory) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Category category = session.get(Category.class, deleteCategory.getCatId());
+			category.setStatus(false);
+			category.setLastUpdatedDate(new Date());
+			//category.setLastUpdatedBy(deleteCategory.getLastUpdatedBy());
+			session.saveOrUpdate(category);
+			return true;			
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override

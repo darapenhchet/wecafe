@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Category;
-import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.CategoryForm;
 import com.kosign.wecafe.services.CategoryService;
@@ -67,6 +66,7 @@ public class CategoryController {
                 category.setCreatedBy(user);
                 category.setImg(randomUUIDFileName+"."+extension);
                 category.setCreatedDate(new Date());
+                category.setStatus(true);
                 
         		System.out.println(user.getUsername());
         		return categoryService.addNewCategory(category);
@@ -127,6 +127,21 @@ public class CategoryController {
             System.out.println("You failed to upload " + name + " because the file was empty.");
             return false;
         }
+		
+	}
+	
+	@RequestMapping(value="/admin/category/delete/{id}" , method=RequestMethod.POST)
+	public @ResponseBody Boolean deleteCategory(@PathVariable Long id, Principal principal){
+		try{
+			Category category = new Category();
+			category.setCatId(id);
+			//category.setLastUpdatedBy(userService.findUserByUsername(principal.getName()));
+			return categoryService.deleteCategory(category);
+		}catch(Exception e){
+			System.out.println("You failed to delete the category.");
+			e.printStackTrace();
+		}
+		return false;
 		
 	}
 }
