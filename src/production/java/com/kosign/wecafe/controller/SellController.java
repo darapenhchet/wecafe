@@ -28,7 +28,12 @@ public class SellController {
 	@Inject SellProductsService sellProductService;
 	
 	@RequestMapping(value="/seller")
-	public String listAllProducts(Map<String, Object> model){
+	public String listAllProducts(HttpSession session, Map<String, Object> model){
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (List<Cart>)session.getAttribute("CARTS");
+		}
+		model.put("carts", carts);
 		model.put("products", sellProductService.getAllProducts());
 		return "seller/seller";
 	}

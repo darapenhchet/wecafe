@@ -274,13 +274,7 @@
 					</div>
 				</div>
 		</div>
-	</div>
-
-
-
-
-
-
+	</div> 
 	<!-- ################################################################## -->
 	<div style="width: 100%; height: 30px; background-color: #E0E0E0;"
 		align="center">Copyright&#64; 2015 kosign</div>
@@ -289,32 +283,11 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 			getsizeSession();
-			listqtyorder();
+			 
 			$("#btnlistorder").click(function(){
 				
 			});
-			
-			function listqtyorder(){
-				$.ajax({
-					url: "${pageContext.request.contextPath}/seller/listtocart",
-					type: 'POST',
-					dataType: 'JSON',
-					beforeSend: function(xhr){
-						xhr.setRequestHeader("Accept", "application/json");
-						xhr.setRequestHeader("Content-Type", "application/json");
-					},
-					success: function(data){
-							for(i=0;i<data.length;i++) { 
-								
-								_this.parents(".panel-body").find("#txtqty").val(data[i].quantity); 
-							}  
-					},
-					error:function(data,stutus,er){
-						console.log("error:  "+data+" status: "+status+" er:" + er)
-					} 
-				});
-			}
-			
+						
 			function listproductorder(){
 				 var st=""; var amount=0;
 				 $.ajax({
@@ -370,6 +343,9 @@
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
 				    success: function(data) { 
+				    	 
+						if(_this.parents(".panel-body").find("#txtqty").val()==1)
+							_this.parents(".panel-body").find("#txtqty").val("0");
 							for(i=0; i<data.length; i++)
 								{
 									if(data[i].quantity >= 1){
@@ -380,20 +356,18 @@
 							    	  	st += "<td>" + data[i].totalAmount + "</td>";
 							    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
 							    	  	amount += data[i].totalAmount;
-										
 									}
-									if(data[i].productId == proId){  
-		 								_this.parents(".panel-body").find("#txtqty").val(data[i].quantity); 
-		 							}
+									
+									if(data[i].productId == proId){
+		 									_this.parents(".panel-body").find("#txtqty").val(data[i].quantity); 
+		 							}    
+									
 								}
-							if(data.length == 0) 
-								_this.parents(".panel-body").find("#txtqty").val("0"); 
+							
+								 
 		 					 
 								 $("#totalamount").val(amount);
 							     $("#orderdetail").html(st);
-						 
-	               
-					     
 					     getsizeSession();
 				    },
 				    error:function(data,status,er) { 
