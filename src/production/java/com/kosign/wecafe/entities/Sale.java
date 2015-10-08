@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class Sale {
 	@Column(name="total_amount")
 	private BigDecimal totalAmount= new BigDecimal("0");
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.ALL}, fetch= FetchType.LAZY)
 	@JoinColumn(name="ord_id")
 	private Order order;
 	

@@ -1,15 +1,13 @@
 package com.kosign.wecafe.controller;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.math.BigDecimal;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
-
-
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.services.SellProductsService;
 
@@ -35,7 +34,18 @@ public class SellController {
 		}
 		model.put("carts", carts);
 		model.put("products", sellProductService.getAllProducts());
+		model.put("orders", sellProductService.getOrdered());
 		return "seller/seller";
+	}
+	
+	@RequestMapping(value="/seller/getordered", method=RequestMethod.GET)
+	public  @ResponseBody List<Order> listAllOrders(){
+		try{
+			return sellProductService.getOrdered();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	
 	@RequestMapping(value="/seller/addtocart", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)

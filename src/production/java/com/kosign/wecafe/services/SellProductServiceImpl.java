@@ -48,6 +48,26 @@ public class SellProductServiceImpl implements SellProductsService {
 	}
 
 	@Override
+	public List<Order> getOrdered(){
+		Session session = null;
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			Query query = session.createQuery("From Order");
+			List<Order> ordered = query.list();
+			session.getTransaction().commit();
+			return ordered;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}finally{
+			session.close();
+		}
+		return null;		
+	}
+	
+	
+	@Override
 	public Boolean addNewSaleProducts(List<Cart> carts) {
 		Session session = null;
 		try {

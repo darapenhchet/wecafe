@@ -283,7 +283,7 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 			getsizeSession();
-			 
+			getordered(); 
 			$("#btnlistorder").click(function(){
 				
 			});
@@ -485,6 +485,26 @@
 				});
 				return ;
 			}	
+			
+			function getordered(){
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/seller/getordered", 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				       console.log(data); 
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+				return ;
+				
+			}
 		});
 	</script>
 </html>

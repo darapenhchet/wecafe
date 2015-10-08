@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Embeddable
@@ -14,10 +15,10 @@ public class OrderDetailsPK implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	private Product product;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	private Order order;
 
 	public Product getProduct() {

@@ -12,5 +12,6 @@ import com.kosign.wecafe.forms.Cart;
 public interface SellProductsService {
 
 	public List<Product> getAllProducts();
+	public List<Order> getOrdered();
 	public Boolean addNewSaleProducts(List<Cart> carts);
 }
