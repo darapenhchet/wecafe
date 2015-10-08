@@ -59,7 +59,7 @@ public class Order implements java.io.Serializable {
 	private Integer status;
 	
 
-	@OneToOne(mappedBy="order")
+	@OneToOne(mappedBy="order", fetch=FetchType.LAZY)
 	private Sale sale;
 	
 	public Sale getSale() {

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,6 +31,7 @@ public class Sale {
 	
 	@OneToOne(cascade = {CascadeType.ALL}, fetch= FetchType.LAZY)
 	@JoinColumn(name="ord_id")
+	@PrimaryKeyJoinColumn
 	private Order order;
 	
 	public Order getOrder() {

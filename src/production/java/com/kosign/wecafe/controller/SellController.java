@@ -45,7 +45,7 @@ public class SellController {
 		return "seller/seller";
 	}
 	
-	@RequestMapping(value="/seller/getordered", method=RequestMethod.GET)
+	@RequestMapping(value="/seller/getordered", method=RequestMethod.POST)
 	public  @ResponseBody List<Order> listAllOrders(){
 		try{
 			return sellProductService.getOrdered();
