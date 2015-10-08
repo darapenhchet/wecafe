@@ -113,11 +113,11 @@
 										          				if(cart.getProductId().equals(products.get(i).getProductId())){
 										          					exist = true;
 										          					%>
-										          					<input id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="<%=cart.getQuantity()%>">
+										          					<input name="orderqty" id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="<%=cart.getQuantity()%>">
 										          		<%		}
 										          			}
 										          			if(!exist){%>
-										          				<input id='txtqty' type="text" readonly="readonly" style="width: 10%; text-align: center;" value="<%=0%>">
+										          				<input id='txtqty' name="orderqty" type="text" readonly="readonly" style="width: 10%; text-align: center;" value="<%=0%>">
 										          			<%		
 										          			}
 										          		%>
@@ -422,6 +422,9 @@
 			
 			$("#btncancel").click(function(){
 				clearallsession(); 
+				 
+				$('input[name="orderqty"]').val('0');
+				 
 				});
 			
 			$("#btnconfirm").click(function(){
@@ -436,7 +439,7 @@
 	 		        },
 	 				success: function(data){
 	 					clearallsession();
-	 					console.log(data);
+	 					$('input[name="orderqty"]').val('0');
 	 				},
 	 				error:function(data, status,er){
 	 					console.log("error: " + data + "status: " + status + "er: ");

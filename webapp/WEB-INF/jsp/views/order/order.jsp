@@ -155,7 +155,7 @@
                 <div class="modal-body form-horizontal" style="height: 290px;">
                
                     <div class="col-sm-4">
-						  <img id="imgpath" style="width 200px; height: 250px; ">  			
+						  <img id="imgpath" style="width: 150px; height: 250px; ">  			
 					</div>
 					<div class="col-sm-8 container">
 						<div class="form-group">
