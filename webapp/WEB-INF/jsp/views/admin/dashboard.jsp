@@ -49,6 +49,7 @@
 
 
     <body class="fixed-left-void">
+    	
     	Dear <strong>${user}</strong>, Welcome to Admin Page.
      
 	    <sec:authorize access="isFullyAuthenticated()">

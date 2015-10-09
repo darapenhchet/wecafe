@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,11 @@ public class CategoryController {
 	public String getAllCategories(Map<String, Object> model){
 		model.put("categories", categoryService.getAllCategories());
 		return "admin/categorylist";
+	}
+	
+	@RequestMapping(value="/admin/categoryadd")
+	public String categoryadd(){
+		return "admin/categoryadd";
 	}
 	
 	@RequestMapping(value="/admin/category/add", method=RequestMethod.POST)
@@ -137,6 +143,7 @@ public class CategoryController {
 			category.setCatId(id);
 			//category.setLastUpdatedBy(userService.findUserByUsername(principal.getName()));
 			return categoryService.deleteCategory(category);
+			
 		}catch(Exception e){
 			System.out.println("You failed to delete the category.");
 			e.printStackTrace();

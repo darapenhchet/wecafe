@@ -18,6 +18,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
 @Entity
 @Table(name="wecafe_order")
 public class Order implements java.io.Serializable {
@@ -53,8 +55,7 @@ public class Order implements java.io.Serializable {
 	private Integer status;
 	
 
-	@OneToOne(mappedBy="order", fetch=FetchType.LAZY)
-	@PrimaryKeyJoinColumn
+	/*@OneToOne(mappedBy="order", fetch=FetchType.LAZY)
 	private Sale sale;
 	
 	public Sale getSale() {
@@ -63,7 +64,7 @@ public class Order implements java.io.Serializable {
 	
 	public void setSale(Sale sale) {
 		this.sale = sale;
-	}
+	}*/
 	
 	public long getOrderId() {
 		return orderId;

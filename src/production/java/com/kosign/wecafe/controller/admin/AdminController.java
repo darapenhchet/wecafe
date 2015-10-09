@@ -75,35 +75,5 @@ public class AdminController {
 	public String dashboard(){
 		return "admin/dashboard";
 	}
-	
-	@RequestMapping(value="/admin/productlist")
-	public String productlist(){
-		return "admin/productlist";
-	}
-		
-	@RequestMapping(value="/admin/categoryadd")
-	public String categoryadd(){
-		return "admin/categoryadd";
-	}
-	
-	@RequestMapping(value="/admin/orderlist")
-	public String orderlist(){
-		return "admin/orderlist";
-	}
-	
-	@RequestMapping(value="/admin/orderadd")
-	public String orderadd(){
-		return "admin/orderadd";
-	}
-	
-	@RequestMapping(value="/admin/supplierlist")
-	public String supplierlist(){
-		return "admin/supplierlist";
-	}
-	
-	@RequestMapping(value="/admin/supplieradd")
-	public String supplieradd(){
-		return "admin/supplieradd";
-	}
 			
 }

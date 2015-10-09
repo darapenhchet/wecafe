@@ -29,7 +29,7 @@ public class Sale {
 	@Column(name="total_amount")
 	private BigDecimal totalAmount= new BigDecimal("0");
 	
-	@OneToOne(cascade = {CascadeType.ALL}, fetch= FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	@JoinColumn(name="ord_id")
 	private Order order;
 	

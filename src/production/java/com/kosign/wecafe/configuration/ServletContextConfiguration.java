@@ -122,5 +122,17 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	public MultipartResolver resolver() {
 		return new StandardServletMultipartResolver();
 	}
+/*	
+	@Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setObjectMapper(new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
+        return converter;
+    }
+	
+	@Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(mappingJackson2HttpMessageConverter());
+    }*/
 
 }

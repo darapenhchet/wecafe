@@ -43,5 +43,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
 		System.out.print("authorities :" + authorities);
 		return authorities;
 	}
+	
+	
 
 }
