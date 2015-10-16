@@ -12,21 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.kosign.wecafe.services.SellService;
 
 @Controller
-@RequestMapping(name="/admin/sale")
 public class AdminSellController {
 
 	@Autowired SellService sellService;
 	
-	@RequestMapping(name="list", method= RequestMethod.GET)
+	@RequestMapping(name="/admin/salelist", method= RequestMethod.GET)
 	public String getAllSell(Map<String, Object> model, Principal principal){
-		System.out.println("fasdhfjsakfadfksdajfhgiriariaefio");
 		model.put("Sale", sellService.getSellAllList());
 		return "admin/salelist";
 	}
 	
 	@RequestMapping(name="/order/all")
 	public String getAllOrders(){
-		System.out.println("HELLO WORLD ");
 		return "admin/productlist";
 	}
 }

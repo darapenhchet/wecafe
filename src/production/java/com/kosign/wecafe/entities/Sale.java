@@ -6,13 +6,12 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -41,8 +40,9 @@ public class Sale {
 		this.order = order;
 	}
 
-	@Column(name="user_id")
-	private long userId;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	@Column(name="money_in")
 	private BigDecimal moneyIn;
@@ -66,14 +66,6 @@ public class Sale {
 		this.totalAmount = totalAmount;
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
 	public BigDecimal getMoneyIn() {
 		return moneyIn;
 	}
@@ -88,6 +80,14 @@ public class Sale {
 
 	public void setSaleDatetime(Date saleDatetime) {
 		this.saleDatetime = saleDatetime;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

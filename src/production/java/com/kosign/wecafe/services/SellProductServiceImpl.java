@@ -4,14 +4,19 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Sale;
+import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -19,6 +24,8 @@ import com.kosign.wecafe.util.HibernateUtil;
 @SuppressWarnings("unchecked")
 public class SellProductServiceImpl implements SellProductsService {
 
+	@Inject UserService userService;
+	
 	@Override
 	public List<Product> getAllProducts() {
 		
@@ -73,7 +80,9 @@ public class SellProductServiceImpl implements SellProductsService {
 			Sale sale = new Sale();
 			sale.setSaleDatetime(new Date());
 			sale.setMoneyIn(new BigDecimal("2000"));
-			sale.setUserId(1L);
+			User user = userService.findUserByUsername(getPrincipal());
+			//sale.setUserId(1L);
+			sale.setUser(user);
 			
 			System.out.println("SALE DATE="+ sale.getSaleDatetime());
 			
@@ -138,6 +147,18 @@ public class SellProductServiceImpl implements SellProductsService {
 			session.close();
 		}
 		return false;
+	}
+	
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
 	}
 	
 }

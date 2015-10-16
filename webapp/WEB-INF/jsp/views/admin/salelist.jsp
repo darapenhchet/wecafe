@@ -123,7 +123,7 @@
 													<td id="orderId" style="display:none;">${sell.order.orderId }</td>
 													<td style="text-align: right;">${sell.moneyIn }	</td>
 													<td style="text-align: right;"><a>${sell.totalAmount }</a>	</td>
-													<td style="text-align: center;">${sell.userId}</td>
+													<td style="text-align: center;">${sell.user.email}</td>
 													<td style="text-align: center;">${sell.saleDatetime}</td>
 													<td class="actions" style="text-align: center;"><a
 														class="on-default edit-row"
