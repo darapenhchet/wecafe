@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService{
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 
 	@Override
@@ -53,13 +53,13 @@ public class CategoryServiceImpl implements CategoryService{
 	public Boolean updateCategory(Category category) {
 		try{
 			category.setLastUpdatedDate(new Date());
-			sessionFactory.openSession().saveOrUpdate(category);
+			sessionFactory.getCurrentSession().update(category);
 			return true;
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 
 	@Override

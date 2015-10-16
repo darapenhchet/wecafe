@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 @Table(name="wecafe_order")
 public class Order implements java.io.Serializable {
@@ -47,11 +49,14 @@ public class Order implements java.io.Serializable {
 	@JoinColumn(name="cus_id")
 	private User customer;
 	
-	//@Formula("(SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=orderId)")
+	@Formula("(SELECT SUM(o.pro_qty*o.pro_unit_price) FROM order_detail o WHERE o.order_id=order_id)")
 	private BigDecimal orderAmount;
 	
 	@Column(name="status")
 	private Integer status;
+	
+	@Formula("(SELECT SUM(o.pro_qty) FROM order_detail o WHERE o.order_id=order_id)")
+	private Integer orderQuantity;
 	
 
 	/*@OneToOne(mappedBy="order", fetch=FetchType.LAZY)
@@ -115,6 +120,14 @@ public class Order implements java.io.Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public Integer getOrderQuantity() {
+		return orderQuantity;
+	}
+	
+	public void setOrderQuantity(Integer orderQuantity) {
+		this.orderQuantity = orderQuantity;
 	}
 	
 }

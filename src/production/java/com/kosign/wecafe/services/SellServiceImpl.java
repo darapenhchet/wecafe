@@ -66,8 +66,8 @@ public class SellServiceImpl implements SellService {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			
-			Query query = session.createQuery("FROM Order"
-											+ "WHERE Order.status = 1");
+			Query query = session.createQuery("FROM Order "
+											+ "WHERE status = 1");
 			
 			List<Order> orders = (List<Order>)query.list();
 			

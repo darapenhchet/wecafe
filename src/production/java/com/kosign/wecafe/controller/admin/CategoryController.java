@@ -96,7 +96,7 @@ public class CategoryController {
 	
 	@RequestMapping(value="/admin/category/update", method=RequestMethod.POST)
 	public  @ResponseBody Boolean updateCategory(CategoryForm form, Principal principal){
-		
+		System.out.println(form.getImage());
 		String name = form.getImage().getOriginalFilename();
 		if (!form.getImage().isEmpty()) {
             try {
@@ -123,6 +123,8 @@ public class CategoryController {
                 category.setLastUpdatedDate(new Date());
                 category.setImg(randomUUIDFileName+"."+extension);
         		//System.out.println(user.getUsername());
+                
+                System.out.println("==================="+category.getImg()+"=================");
         		return categoryService.updateCategory(category);
             } catch (Exception e) {
             	System.out.println(e.getMessage());
