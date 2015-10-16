@@ -65,7 +65,12 @@
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="md md-crop-free"></i></a>
                                 </li>
                                 <li class="hidden-xs">
-                                    <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="md md-chat"></i></a>
+                                    <!-- <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="fa fa-shopping-cart"></i></a> -->
+                                     
+                                    	<a href="#" data-target="#" id="btnCart" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="fa fa-shopping-cart" ></i> <span class="badge badge-xs badge-danger" id="totalproduce">0</span>
+                                    </a>
+                                   
                                 </li>
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="${pageContext.request.contextPath}/resources/images/img/Coke.jpg" alt="user-img" class="img-circle"> </a>

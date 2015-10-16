@@ -111,9 +111,9 @@
 					<img
 						src="${pageContext.request.contextPath}/resources/images/img/add_to_cart.jpg"
 						width="55px" height="34px">
-					<button type="button" id="btnCart" class="btn btn-primary">
+					<!-- <button type="button" id="btnCart" class="btn btn-primary">
 						<span id="totalproduce" class="badge">0 </span> product
-					</button>
+					</button> -->
 				</div>
 				<div>
 					<img
@@ -382,7 +382,7 @@
         <script src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
-
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 
         <!-- CUSTOM JS -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
@@ -686,8 +686,7 @@
 													"application/json");
 										},
 										success : function(data) {
-											$("#totalproduce")
-													.html(data.length);
+											$("#totalproduce").html(data.length);
 										},
 										error : function(data, status, er) {
 											console.log("error: " + data
