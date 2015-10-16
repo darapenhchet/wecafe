@@ -496,6 +496,7 @@
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
 				    success: function(data) { 
+				    	$("#totalorder").html(data.length);
 				       console.log(data); 
 				    },
 				    error:function(data,status,er) { 

@@ -463,7 +463,7 @@
 				    	  	st += "<td>" + data[i].totalAmount + "</td>";
 				    	  	st += "<td>" + data[i].time + "</td>";
 				    	  	st += "<td>" + data[i].comment +"</td>";
-				    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+				    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
 				    	  	amount += data[i].totalAmount;
 				    	}
 				      	 $("#totalamount").val(amount);

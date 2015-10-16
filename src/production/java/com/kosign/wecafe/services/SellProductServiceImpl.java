@@ -1,13 +1,9 @@
 package com.kosign.wecafe.services;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.connector.Request;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -53,7 +49,7 @@ public class SellProductServiceImpl implements SellProductsService {
 		try{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query query = session.createQuery("From Order");
+			Query query = session.createQuery("From Order Where status = 1");
 			List<Order> ordered = query.list();
 			session.getTransaction().commit();
 			return ordered;
