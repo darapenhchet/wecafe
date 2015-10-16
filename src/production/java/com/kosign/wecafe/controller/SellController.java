@@ -22,12 +22,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.services.SellProductsService;
+import com.kosign.wecafe.services.SellService;
 import com.kosign.wecafe.services.UserService;
 
 @Controller
 public class SellController {
 	
 	@Inject SellProductsService sellProductService;
+	
+	@Inject SellService sellService;
 	
 	@Autowired
 	UserService userService;
@@ -139,6 +142,11 @@ public class SellController {
 			return sellProductService.addNewSaleProducts(carts);
 		}
 		return false;
+	}
+	
+	@RequestMapping(value="/seller/orders", method=RequestMethod.GET)
+	public  @ResponseBody List<Order> getAllOrders(){
+		return sellService.getAllOrders();		
 	}
 
 }

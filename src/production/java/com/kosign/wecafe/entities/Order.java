@@ -12,13 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name="wecafe_order")
@@ -45,8 +43,9 @@ public class Order implements java.io.Serializable {
 	@Column(name="order_Date")
 	private Date orderDate;
 	
-	@Column(name="cus_id")
-	private long cusId;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cus_id")
+	private User customer;
 	
 	//@Formula("(SELECT SUM(OD.proUnitPrice) FROM OrderDetail OD WHERE OD.pk.order.orderId=orderId)")
 	private BigDecimal orderAmount;
@@ -82,12 +81,12 @@ public class Order implements java.io.Serializable {
 		this.orderDate = orderDate;
 	}
 
-	public long getCusId() {
-		return cusId;
+	public User getCustomer() {
+		return customer;
 	}
 
-	public void setCusId(long cusId) {
-		this.cusId = cusId;
+	public void setCustomer(User customer) {
+		this.customer = customer;
 	}
 	
 	public Set<OrderDetail> getOrderDetail() {

@@ -104,7 +104,7 @@ public class SellProductServiceImpl implements SellProductsService {
 			
 			Order order = new Order();
 			order.setOrderDate(new Date());
-			order.setCusId(1L);
+			//order.setCusId(1L);
 			order.setStatus(1);
 			
 			for(Cart cart : carts){

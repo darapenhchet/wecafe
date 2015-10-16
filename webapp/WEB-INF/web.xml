@@ -47,7 +47,7 @@
 	-->
 	
 	<session-config>
-        <session-timeout>10</session-timeout>
+        <session-timeout>1000</session-timeout>
         <cookie-config>
             <http-only>true</http-only>
         </cookie-config>
