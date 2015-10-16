@@ -213,7 +213,7 @@
      				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
      				        	location.href="${pageContext.request.contextPath}/admin/categorylist";
      				        }else{
-     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
      				        }
      				    },
      				    error:function(data,status,er) { 

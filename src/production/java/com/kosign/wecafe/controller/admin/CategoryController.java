@@ -116,13 +116,13 @@ public class CategoryController {
                 stream.close();
                 System.out.println( "You successfully uploaded " + name + "!");
                 
-                User user = userService.findUserByUsername(principal.getName());
+                //User user = userService.findUserByUsername(principal.getName());
                 Category category = categoryService.findCategoryById(form.getCategoryId());
                 category.setCatName(form.getCategoryName());
-                category.setLastUpdatedBy(user);
+                //category.setLastUpdatedBy(user);
                 category.setLastUpdatedDate(new Date());
                 category.setImg(randomUUIDFileName+"."+extension);
-        		System.out.println(user.getUsername());
+        		//System.out.println(user.getUsername());
         		return categoryService.updateCategory(category);
             } catch (Exception e) {
             	System.out.println(e.getMessage());

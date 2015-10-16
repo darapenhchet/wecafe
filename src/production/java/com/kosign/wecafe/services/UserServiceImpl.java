@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public User findUserByUsername(String username) {
 		try{
-			return  (User) sessionFactory.openSession().createCriteria(User.class)
+			return  (User) sessionFactory.getCurrentSession().createCriteria(User.class)
 								.add(Restrictions.eq("username", username))
 								.uniqueResult();
 		}catch(Exception ex){
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
 		try{
 			System.out.println(user.getPassword());
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			sessionFactory.openSession().save(user);
+			sessionFactory.getCurrentSession().save(user);
 			return true;
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

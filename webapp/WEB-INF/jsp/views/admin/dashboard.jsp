@@ -1,181 +1,218 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
-        <meta name="author" content="Coderthemes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description"
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+<meta name="author" content="Coderthemes">
 
-        <link rel="shortcut icon" href="images/favicon_1.ico">
+<link rel="shortcut icon" href="images/favicon_1.ico">
 
-        <title>KOSIGN WeCafe...</title>
+<title>KOSIGN WeCafe...</title>
 
-        <!-- Base Css Files -->
-        <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Base Css Files -->
+<link
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+	rel="stylesheet" />
 
-        <!-- Font Icons -->
-        <link href="${pageContext.request.contextPath}/resources/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
-        <link href="${pageContext.request.contextPath}/resources/css/material-design-iconic-font.min.css" rel="stylesheet">
+<!-- Font Icons -->
+<link
+	href="${pageContext.request.contextPath}/resources/assets/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/resources/assets/ionicon/css/ionicons.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/resources/css/material-design-iconic-font.min.css"
+	rel="stylesheet">
 
-        <!-- animate css -->
-        <link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet" />
+<!-- animate css -->
+<link
+	href="${pageContext.request.contextPath}/resources/css/animate.css"
+	rel="stylesheet" />
 
-        <!-- Waves-effect -->
-        <link href="${pageContext.request.contextPath}/resources/css/waves-effect.css" rel="stylesheet">
+<!-- Waves-effect -->
+<link
+	href="${pageContext.request.contextPath}/resources/css/waves-effect.css"
+	rel="stylesheet">
 
-        <!-- sweet alerts -->
-        <link href="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.css" rel="stylesheet">
+<!-- sweet alerts -->
+<link
+	href="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.css"
+	rel="stylesheet">
 
-        <!-- Custom Files -->
-        <link href="${pageContext.request.contextPath}/resources/css/helper.css" rel="stylesheet" type="text/css" />
-        <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+<!-- Custom Files -->
+<link href="${pageContext.request.contextPath}/resources/css/helper.css"
+	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        <script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-        
-    </head>
+<script
+	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+
+</head>
 
 
 
-    <body class="fixed-left-void">
-    	
-    	Dear <strong>${user}</strong>, Welcome to Admin Page.
-     
-	    <sec:authorize access="isFullyAuthenticated()">
-	        <label><a href="#">Create New User</a> | <a href="#">View existing Users</a></label>
-	    </sec:authorize>
-	    <sec:authorize access="isRememberMe()">
-	        <label><a href="#">View existing Users</a></label>
-	    </sec:authorize>
-        
-        <!-- Begin page -->
-        <div id="wrapper">
-        
-			
-			<%@ include file="topbar.jsp" %>
+<body class="fixed-left-void">
 
-            <!-- ========== Left Sidebar Start ========== -->
-            <%@ include file="left_sidebar.jsp" %>
-            <!-- Left Sidebar End --> 
+	Dear
+	<strong>${user}</strong>, Welcome to Admin Page.
+
+	<sec:authorize access="isFullyAuthenticated()">
+		<label><a href="#">Create New User</a> | <a href="#">View
+				existing Users</a></label>
+	</sec:authorize>
+	<sec:authorize access="isRememberMe()">
+		<label><a href="#">View existing Users</a></label>
+	</sec:authorize>
+
+	<!-- Begin page -->
+	<div id="wrapper">
 
 
+		<%@ include file="topbar.jsp"%>
 
-            <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->                      
-            <div class="content-page">
-                <!-- Start content -->
-                <div class="content">
-            <div class="container">
-
-                        <!-- Page-Title -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Welcome !</h4>
-                                <ol class="breadcrumb pull-right">
-                                    <li><a href="#">KOSIGN WECAFE</a></li>
-                                    <li class="active">Dashboard</li>
-                                </ol>
-                            </div>
-                        </div>
-
-                        <!-- Start Widget -->
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-lg-3">
-                                <div class="mini-stat clearfix bx-shadow">
-                                    <span class="mini-stat-icon bg-info"><i class="ion-social-usd"></i></span>
-                                    <div class="mini-stat-info text-right text-muted">
-                                        <span class="counter">15852</span>
-                                        Total Sales
-                                    </div>
-                                    <div class="tiles-progress">
-                                        <div class="m-t-20">
-                                            <h5 class="text-uppercase">Sales <span class="pull-right">60%</span></h5>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                                    <span class="sr-only">60% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-lg-3">
-                                <div class="mini-stat clearfix bx-shadow">
-                                    <span class="mini-stat-icon bg-purple"><i class="ion-ios7-cart"></i></span>
-                                    <div class="mini-stat-info text-right text-muted">
-                                        <span class="counter">956</span>
-                                        New Orders
-                                    </div>
-                                    <div class="tiles-progress">
-                                        <div class="m-t-20">
-                                            <h5 class="text-uppercase">Orders <span class="pull-right">90%</span></h5>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar progress-bar-purple" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-                                                    <span class="sr-only">90% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6 col-sm-6 col-lg-3">
-                                <div class="mini-stat clearfix bx-shadow">
-                                    <span class="mini-stat-icon bg-success"><i class="ion-eye"></i></span>
-                                    <div class="mini-stat-info text-right text-muted">
-                                        <span class="counter">20544</span>
-                                        Unique Visitors
-                                    </div>
-                                    <div class="tiles-progress">
-                                        <div class="m-t-20">
-                                            <h5 class="text-uppercase">Visitors <span class="pull-right">60%</span></h5>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                                    <span class="sr-only">60% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 col-lg-3">
-                                <div class="mini-stat clearfix bx-shadow">
-                                    <span class="mini-stat-icon bg-primary"><i class="ion-android-contacts"></i></span>
-                                    <div class="mini-stat-info text-right text-muted">
-                                        <span class="counter">5210</span>
-                                        New Users
-                                    </div>
-                                    <div class="tiles-progress">
-                                        <div class="m-t-20">
-                                            <h5 class="text-uppercase">Users <span class="pull-right">57%</span></h5>
-                                            <div class="progress progress-sm m-0">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%;">
-                                                    <span class="sr-only">57% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <!-- End row-->
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left_sidebar.jsp"%>
+		<!-- Left Sidebar End -->
 
 
-                        <!-- <div class="row"> -->
-                            <!-- <div class="col-lg-8">
+
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="container">
+
+					<!-- Page-Title -->
+					<div class="row">
+						<div class="col-sm-12">
+							<h4 class="pull-left page-title">Welcome !</h4>
+							<ol class="breadcrumb pull-right">
+								<li><a href="#">KOSIGN WECAFE</a></li>
+								<li class="active">Dashboard</li>
+							</ol>
+						</div>
+					</div>
+
+					<!-- Start Widget -->
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="mini-stat clearfix bx-shadow">
+								<span class="mini-stat-icon bg-info"><i
+									class="ion-social-usd"></i></span>
+								<div class="mini-stat-info text-right text-muted">
+									<span class="counter">15852</span> Total Sales
+								</div>
+								<div class="tiles-progress">
+									<div class="m-t-20">
+										<h5 class="text-uppercase">
+											Sales <span class="pull-right">60%</span>
+										</h5>
+										<div class="progress progress-sm m-0">
+											<div class="progress-bar progress-bar-info"
+												role="progressbar" aria-valuenow="60" aria-valuemin="0"
+												aria-valuemax="100" style="width: 60%;">
+												<span class="sr-only">60% Complete</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="mini-stat clearfix bx-shadow">
+								<span class="mini-stat-icon bg-purple"><i
+									class="ion-ios7-cart"></i></span>
+								<div class="mini-stat-info text-right text-muted">
+									<span class="counter">956</span> New Orders
+								</div>
+								<div class="tiles-progress">
+									<div class="m-t-20">
+										<h5 class="text-uppercase">
+											Orders <span class="pull-right">90%</span>
+										</h5>
+										<div class="progress progress-sm m-0">
+											<div class="progress-bar progress-bar-purple"
+												role="progressbar" aria-valuenow="90" aria-valuemin="0"
+												aria-valuemax="100" style="width: 90%;">
+												<span class="sr-only">90% Complete</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="mini-stat clearfix bx-shadow">
+								<span class="mini-stat-icon bg-success"><i
+									class="ion-eye"></i></span>
+								<div class="mini-stat-info text-right text-muted">
+									<span class="counter">20544</span> Unique Visitors
+								</div>
+								<div class="tiles-progress">
+									<div class="m-t-20">
+										<h5 class="text-uppercase">
+											Visitors <span class="pull-right">60%</span>
+										</h5>
+										<div class="progress progress-sm m-0">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar" aria-valuenow="60" aria-valuemin="0"
+												aria-valuemax="100" style="width: 60%;">
+												<span class="sr-only">60% Complete</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 col-sm-6 col-lg-3">
+							<div class="mini-stat clearfix bx-shadow">
+								<span class="mini-stat-icon bg-primary"><i
+									class="ion-android-contacts"></i></span>
+								<div class="mini-stat-info text-right text-muted">
+									<span class="counter">5210</span> New Users
+								</div>
+								<div class="tiles-progress">
+									<div class="m-t-20">
+										<h5 class="text-uppercase">
+											Users <span class="pull-right">57%</span>
+										</h5>
+										<div class="progress progress-sm m-0">
+											<div class="progress-bar progress-bar-primary"
+												role="progressbar" aria-valuenow="57" aria-valuemin="0"
+												aria-valuemax="100" style="width: 57%;">
+												<span class="sr-only">57% Complete</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End row-->
+
+
+					<!-- <div class="row"> -->
+					<!-- <div class="col-lg-8">
                                 <div class="portlet">/portlet heading
                                     <div class="portlet-heading">
                                         <h3 class="portlet-title text-dark text-uppercase">
@@ -256,10 +293,11 @@
                                     </div>
                                 </div> /Portlet
                             </div> end col -->
-                        </div> <!-- End row -->
+				</div>
+				<!-- End row -->
 
 
-                        <!-- <div class="row">
+				<!-- <div class="row">
                             INBOX
                             <div class="col-lg-4">
                                 <div class="panel panel-default">
@@ -450,192 +488,198 @@
                             </div> end col
                         </div> end row -->
 
-                    </div>
-                               
-                </div> <!-- content -->
+			</div>
 
-                <%@ include file="footer.jsp" %>
+		</div>
+		<!-- content -->
 
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
+		<%@ include file="footer.jsp"%>
 
-
-            <!-- Right Sidebar -->
-            <div class="side-bar right-bar nicescroll">
-                <h4 class="text-center">Chat</h4>
-                <div class="contact-list nicescroll">
-                    <ul class="list-group contacts-list">
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg" alt="">
-                                </div>
-                                <span class="name">Chadengle</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg" alt="">
-                                </div>
-                                <span class="name">Tomaslau</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg" alt="">
-                                </div>
-                                <span class="name">Stillnotdavid</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg" alt="">
-                                </div>
-                                <span class="name">Kurafire</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg" alt="">
-                                </div>
-                                <span class="name">Shahedk</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg" alt="">
-                                </div>
-                                <span class="name">Adhamdannaway</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg" alt="">
-                                </div>
-                                <span class="name">Ok</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg" alt="">
-                                </div>
-                                <span class="name">Arashasghari</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg" alt="">
-                                </div>
-                                <span class="name">Joshaustin</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg" alt="">
-                                </div>
-                                <span class="name">Sortino</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                    </ul>  
-                </div>
-            </div>
-            <!-- /Right-bar -->
-
-        </div>
-        <!-- END wrapper -->
+	</div>
+	<!-- ============================================================== -->
+	<!-- End Right content here -->
+	<!-- ============================================================== -->
 
 
-    
-        <script>
-            var resizefunc = [];
-        </script>
+	<!-- Right Sidebar -->
+	<div class="side-bar right-bar nicescroll">
+		<h4 class="text-center">Chat</h4>
+		<div class="contact-list nicescroll">
+			<ul class="list-group contacts-list">
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg"
+								alt="">
+						</div> <span class="name">Chadengle</span> <i
+						class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg"
+								alt="">
+						</div> <span class="name">Tomaslau</span> <i class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg"
+								alt="">
+						</div> <span class="name">Stillnotdavid</span> <i
+						class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg"
+								alt="">
+						</div> <span class="name">Kurafire</span> <i class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg"
+								alt="">
+						</div> <span class="name">Shahedk</span> <i class="fa fa-circle away"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg"
+								alt="">
+						</div> <span class="name">Adhamdannaway</span> <i
+						class="fa fa-circle away"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg"
+								alt="">
+						</div> <span class="name">Ok</span> <i class="fa fa-circle away"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg"
+								alt="">
+						</div> <span class="name">Arashasghari</span> <i
+						class="fa fa-circle offline"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg"
+								alt="">
+						</div> <span class="name">Joshaustin</span> <i
+						class="fa fa-circle offline"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg"
+								alt="">
+						</div> <span class="name">Sortino</span> <i class="fa fa-circle offline"></i>
+				</a> <span class="clearfix"></span></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /Right-bar -->
 
-        <!-- jQuery  -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js" type="text/javascript"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/chat/moment-2.2.1.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-sparkline/jquery.sparkline.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
+	</div>
+	<!-- END wrapper -->
 
-        <!-- sweet alerts -->
-        <script src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 
-        <!-- flot Chart -->
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
 
-        <!-- Counter-up -->
-        <script src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js" type="text/javascript"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js" type="text/javascript"></script>
-        
-        <!-- CUSTOM JS -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<script>
+		var resizefunc = [];
+	</script>
 
-        <!-- Dashboard -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
+	<!-- jQuery  -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/chat/moment-2.2.1.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-sparkline/jquery.sparkline.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
 
-        <!-- Chat -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+	<!-- sweet alerts -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 
-        <!-- Todo -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+	<!-- flot Chart -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
 
-        <script type="text/javascript">
-            /* ==============================================
-            Counter Up
-            =============================================== */
-            jQuery(document).ready(function($) {
-                $('.counter').counterUp({
-                    delay: 100,
-                    time: 1200
-                });
-            });
-        </script>
-    
-    </body>
+	<!-- Counter-up -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
+		type="text/javascript"></script>
+
+	<!-- CUSTOM JS -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+
+	<!-- Dashboard -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
+
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+
+	<script type="text/javascript">
+		/* ==============================================
+		Counter Up
+		=============================================== */
+		jQuery(document).ready(function($) {
+			$('.counter').counterUp({
+				delay : 100,
+				time : 1200
+			});
+		});
+	</script>
+
+</body>
 </html>
