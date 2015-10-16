@@ -109,11 +109,11 @@
 											<tr>
 												<th>Sell ID</th>
 												<!-- <th>Order ID</th> -->
+												<th>Sell BY</th>
+												<th style="text-align: right;">Total Amount</th>
 												<th style="text-align: right;">Money In</th>
-												<th style="text-align: center;">Total Amount</th>
-												<th style="text-align: center;">Sell BY</th>
 												<th style="text-align: center;">Date</th>
-												<th style="text-align: center;">Action</th>
+												<!-- <th style="text-align: center;">Action</th> -->
 											</tr>
 										</thead>
 										<tbody>
@@ -121,16 +121,16 @@
 												<tr>
 													<td id=""><a href="javascipt:" id="saleId">${sell.saleId}</a></td>
 													<td id="orderId" style="display:none;">${sell.order.orderId }</td>
-													<td style="text-align: right;">${sell.moneyIn }	</td>
+													<td>${sell.user.email}</td>
 													<td style="text-align: right;"><a>${sell.totalAmount }</a>	</td>
-													<td style="text-align: center;">${sell.user.email}</td>
+													<td style="text-align: right;"><a>${sell.moneyIn }</a>	</td>
 													<td style="text-align: center;">${sell.saleDatetime}</td>
-													<td class="actions" style="text-align: center;"><a
+													<%-- <td class="actions" style="text-align: center;"><a
 														class="on-default edit-row"
 														href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i
 															class="fa fa-pencil"></i></a> <a
 														class="on-default remove-row" href="javascript:;"
-														id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
+														id="btnRemove"><i class="fa fa-trash-o"></i></a></td> --%>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -158,7 +158,7 @@
 		<!-- ############################################################# -->
 
 
-		<div id="sellDetail" style="display: none;" style="width: 80%;">
+		<div id="sellDetail" style="display: none;width: 90%;">
 			<div class="modal-content">
 				<div class="modal-header">
 
@@ -168,7 +168,7 @@
 					<h4 class="modal-title">Cart</h4>
 
 				</div>
-				<div class="modal-body" style="height: 290px;">
+				<div class="modal-body" style="height: 290px; width: 100%;">
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -198,7 +198,7 @@
 
 					</div>
 				</div>
-				<div class="modal-footer" style="height: 80px;">
+				<!-- <div class="modal-footer" style="height: 80px;">
 					<div align="right">
 						<button type="button" id="btnbuymore" class="btn btn-default">
 							<span class="button b-close"><span>Buy more</span></span>
@@ -210,7 +210,7 @@
 							<span class="button b-close"><span>Cancel Order</span></span>
 						</button>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 

@@ -85,32 +85,35 @@
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
                                     <div class="panel-body">
                                         <div class=" form">
-                                            <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="#" novalidate="novalidate">
+                                            <form class="cmxform form-horizontal tasi-form" id="frmAddNewUser" method="POST" action="${pageContext.request.contextPath}/admin/users/add" novalidate="novalidate">
                                                 <div class="form-group ">
-                                                    <label for="productname" class="control-label col-lg-2">User Name *</label>
+                                                    <label for="productname" class="control-label col-lg-2">First Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productname" name="productname" type="text">
+                                                        <input class=" form-control" id="firstName" name="firstName" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="category" class="control-label col-lg-2">Gender *</label>
+                                                    <label for="productname" class="control-label col-lg-2">Last Name *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control">
-                                                       		<option value="M">Male</option>
-                                                       		<option value="F">Female</option>
-                                                       	</select>
+                                                        <input class=" form-control" id="lastName" name="lastName" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
+                                                    <label for="productname" class="control-label col-lg-2">Username *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="phonenumber" name=""phonenumber"" type="text">
+                                                        <input class=" form-control" id="username" name="username" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="price" class="control-label col-lg-2">Address *</label>
+                                                    <label for="productname" class="control-label col-lg-2">Password *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="address" name="address" type="text">
+                                                        <input class=" form-control" id="password" name="password" type="password">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="productname" class="control-label col-lg-2">Confirm Password *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class=" form-control" id="confirmation_password" name="confirmation_password" type="password">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -120,11 +123,34 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
+                                                    <label for="category" class="control-label col-lg-2">Gender *</label>
+                                                    <div class="col-lg-10">
+                                                       	<select class="form-control" id="gender" name="gender">
+                                                       		<option value="M">Male</option>
+                                                       		<option value="F">Female</option>
+                                                       	</select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="phonenumber" name="phonenumber" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="price" class="control-label col-lg-2">Address *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="address" name="address" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">User Type *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control" id="USER_TYPE" name="user_type">
-                                                       		<option value="0">Administrator</option>
-                                                       		<option value="1">Seller</option>
+                                                       	<select class="form-control" id="USER_ROLE" name="userRoles[0].id">
+                                                       		<option value="0">-- SELECT USER ROLE --</option>
+                                                       		<c:forEach items="${roles}" var="role">
+                                                       			<option value="${role.id }">${role.type}</option>
+				                                       		</c:forEach>
                                                        	</select>
                                                     </div>
                                                 </div>
@@ -162,116 +188,7 @@
             <!-- ============================================================== -->
 
 
-            <!-- Right Sidebar -->
-            <div class="side-bar right-bar nicescroll">
-                <h4 class="text-center">Chat</h4>
-                <div class="contact-list nicescroll">
-                    <ul class="list-group contacts-list">
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg" alt="">
-                                </div>
-                                <span class="name">Chadengle</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg" alt="">
-                                </div>
-                                <span class="name">Tomaslau</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg" alt="">
-                                </div>
-                                <span class="name">Stillnotdavid</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg" alt="">
-                                </div>
-                                <span class="name">Kurafire</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg" alt="">
-                                </div>
-                                <span class="name">Shahedk</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg" alt="">
-                                </div>
-                                <span class="name">Adhamdannaway</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg" alt="">
-                                </div>
-                                <span class="name">Ok</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg" alt="">
-                                </div>
-                                <span class="name">Arashasghari</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg" alt="">
-                                </div>
-                                <span class="name">Joshaustin</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg" alt="">
-                                </div>
-                                <span class="name">Sortino</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                    </ul>  
-                </div>
-            </div>
-            <!-- /Right-bar -->
-
+            
         </div>
         <!-- END wrapper -->
 
@@ -324,6 +241,8 @@
 
         <!-- Todo -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 
         <script type="text/javascript">
             /* ==============================================
@@ -336,6 +255,71 @@
                 });
             });
         </script>
+        
+        <script type="text/javascript">
+    		$(function(){
+    			$("#frmAddNewUser").submit(function(e){
+    				e.preventDefault();    				
+    				json = {
+    					"username"  : $("#username").val(),
+    					"password"	: $("#password").val(),
+    					"firstName" : $("#firstName").val(),
+    					"lastName"  : $("#lastName").val(),
+    					//"gender"    : $("#gender").val()
+    					"email"	    : $("#email").val(),
+    					"status"    : 1, //$("#status").val(),
+    					"phoneNumber" : $("#phoneNumber").val(),
+    					//"address"   : $("#address").val(),
+    					"userRoles": [
+    					              {
+    					              	"id" : $("#USER_ROLE").val()
+    						
+    					              }]
+    				};
+    				
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/admin/users/add", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    data: JSON.stringify(json), 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				        if(data){
+    				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+    				        	location.href="${pageContext.request.contextPath}/admin/userlist";
+    				        }else{
+    				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
+    				        }
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				}); 
+    				
+    				/* $("#frmAddNewUser").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/user/add",
+    					dataType: 'JSON', 
+    					type: 'POST',
+    					data:
+    					success: function(data) { 
+    						console.log(data);
+     				        if(data){
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	//location.href="${pageContext.request.contextPath}/userlist";
+     				        }else{
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
+    				}); */
+    			});
+    		});
+    	</script>
     
     </body>
 </html>

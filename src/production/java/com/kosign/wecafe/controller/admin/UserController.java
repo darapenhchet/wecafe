@@ -4,9 +4,15 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.services.UserService;
 
 @Controller
@@ -21,7 +27,44 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/admin/useradd")
-	public String useradd(){
+	public String useradd(Map<String, Object> model){
+		model.put("roles", userService.getAllUserRoles());
 		return "admin/useradd";
 	}
+	
+	@RequestMapping(value="/admin/users/add", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Boolean addNewUser(@RequestBody User user){
+		//System.out.println("==============================================================================================");
+		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
+		///System.out.println("==============================================================================================");
+		//return "redirect:admin/useradd";
+		System.out.println("NEW USER...");
+		return userService.saveUser(user);
+	}
+	
+	@RequestMapping(value="/admin/user/{id}")
+	public String updateUserView(@PathVariable("id") Long id, Map<String, Object> model){
+		model.put("user", userService.findUserById(id));
+		//model.put("roles", userService.getAllUserRoles());
+		return "admin/userupdate";
+	}
+	
+	@RequestMapping(value="/admin/users/update", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Boolean updateUser(@RequestBody User user){
+		//System.out.println("==============================================================================================");
+		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
+		///System.out.println("==============================================================================================");
+		//return "redirect:admin/useradd";
+		System.out.println("NEW USER...");
+		return userService.saveUser(user);
+	}
+	
+	/*@RequestMapping(value="/admin/users/add", method=RequestMethod.POST)
+	public String addNewUser(User user, Map<String, Object> model){
+		System.out.println("==============================================================================================");
+		System.out.println("==============================="+userService.saveUser(user)+"=================================");
+		System.out.println("==============================================================================================");
+		//return "redirect:admin/useradd";
+		return "";
+	}*/
 }

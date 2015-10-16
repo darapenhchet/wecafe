@@ -2,10 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<%@page import="com.kosign.wecafe.entities.Product"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.kosign.wecafe.entities.Category"%>
-<%@page import="java.util.List"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -78,80 +74,81 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Update Product</h4>
+                                <h4 class="pull-left page-title">Add New User</h4>
                             </div>
                         </div>
                         <!-- Form-validation -->
                         <div class="row">
+                        
                             <div class="col-sm-12">
                                 <div class="panel panel-default">
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
                                     <div class="panel-body">
                                         <div class=" form">
-                                            <form class="cmxform form-horizontal tasi-form" id="frmProductAdd" method="POST" action="/admin/product/update" novalidate="novalidate">
+                                            <form class="cmxform form-horizontal tasi-form" id="frmUpdateUser" method="POST" action="${pageContext.request.contextPath}/admin/users/add" novalidate="novalidate">
                                                 <div class="form-group ">
-                                                	<input type="hidden" id="productId" name="productId" type="text" value="${product.productId }"/>
-                                                    <label for="productname" class="control-label col-lg-2">Product Name *</label>
+                                                    <label for="productname" class="control-label col-lg-2">First Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productName" name=""productName"" type="text" value="${product.productName }">
+                                                        <input class=" form-control" id="firstName" name="firstName" type="text" value="${user.firstName }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="category" class="control-label col-lg-2">Category *</label>
+                                                    <label for="productname" class="control-label col-lg-2">Last Name *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control" id="optCategory" name="categoryId">
-                                                       		<option value="">Please choose your category</option>
-                                                       	<%
-                                                       		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
-                                                     		Product product = (Product)request.getAttribute("product"); 
-                                                    		for(Category category : categories){
-                                                    			if(category.getCatId()== product.getCategory().getCatId()){
-                                                    				out.println("<option value="+category.getCatId()+" selected>"+category.getCatName()+"</option>");
-                                                    			}else{
-                                                    				out.println("<option value="+category.getCatId()+">"+category.getCatName()+"</option>");
-                                                    			}
-                                                    		}
-                                                       	%>
-                                       
+                                                        <input class=" form-control" id="lastName" name="lastName" type="text" value="${user.lastName }">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="productname" class="control-label col-lg-2">Username *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class=" form-control" id="username" name="username" type="text" value="${user.username }">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="costprice" class="control-label col-lg-2">Email *</label>
+                                                    <div class="col-lg-10">
+                                                        <input class="form-control " id="email" name="email" type="email" value="${user.email }">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="category" class="control-label col-lg-2">Gender *</label>
+                                                    <div class="col-lg-10">
+                                                       	<select class="form-control" id="gender" name="gender">
+                                                       		<option value="M">Male</option>
+                                                       		<option value="F">Female</option>
                                                        	</select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="quantity" class="control-label col-lg-2">Quantity *</label>
+                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="quantity" name="quantity" type="text" value="${product.quantity }">
+                                                        <input class="form-control " id="phonenumber" name="phonenumber" type="text" value="${user.phoneNumber }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="price" class="control-label col-lg-2">Unit Price *</label>
+                                                    <label for="price" class="control-label col-lg-2">Address *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="unitPrice" name="unitPrice" type="text" value="${product.unitPrice }">
+                                                        <input class="form-control " id="address" name="address" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Cost Price</label>
+                                                    <label for="category" class="control-label col-lg-2">User Type *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="costPrice" name="costPrice" type="text" value="${product.costPrice }">
+                                                       	<select class="form-control" id="USER_ROLE" name="">
+                                                       		<option value="0">-- SELECT USER ROLE --</option>
+                                                       		<%-- <c:forEach items="${roles}" var="role">
+                                                       			<option value="${role.id }">${role.type}</option>
+				                                       		</c:forEach> --%>
+                                                       	</select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Sale Price</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="salePrice" name="salePrice" type="text" value="${product.salePrice }">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Image</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="images" name="images" type="file" value="${product.image }">
-                                                        <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}" width="400px" height="400px" class="img-thumbnail"/>
-                                                    </div>
-                                                </div>                                                                                            
+                                                
+                                                
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button class="btn btn-success waves-effect waves-light" type="submit">Save</button>
-                                                        <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-default waves-effect" type="button">Cancel</a>
+                                                        <button class="btn btn-default waves-effect" type="button">Cancel</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -174,6 +171,12 @@
                 <%@ include file="footer.jsp" %>
 
             </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+            
         </div>
         <!-- END wrapper -->
 
@@ -227,12 +230,8 @@
         <!-- Todo -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
         
-        <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
-		
         <script type="text/javascript">
             /* ==============================================
             Counter Up
@@ -244,27 +243,30 @@
                 });
             });
         </script>
-    	<script type="text/javascript">
+        
+        <script type="text/javascript">
     		$(function(){
-    			$("#frmProductAdd").submit(function(e){
+    			$("#frmAddNewUser").submit(function(e){
     				e.preventDefault();    				
-    				if($("#optCategory").val()==""){
-    					alert("PLEASE CHOOSE THE CATEGORY");
-    					return;
-    				}
-    				/* json = {
-    					"productId"   : $("#productId").val(),
-    					"productName" : $("#productname").val(),
-    					"category"    : {
-    										"catId"	: $("#optCategory").val()
-    					},
-    					"quantity"    : $("#quantity").val(),
-    					"unitPrice"   : $("#unitprice").val(),
-    					"costPrice"	  : $("#costprice").val(),
-    					"salePrice"   : $("#saleprice").val()
+    				json = {
+    					"username"  : $("#username").val(),
+    					"password"	: $("#password").val(),
+    					"firstName" : $("#firstName").val(),
+    					"lastName"  : $("#lastName").val(),
+    					//"gender"    : $("#gender").val()
+    					"email"	    : $("#email").val(),
+    					"status"    : 1, //$("#status").val(),
+    					"phoneNumber" : $("#phoneNumber").val(),
+    					//"address"   : $("#address").val(),
+    					"userRoles": [
+    					              {
+    					              	"id" : $("#USER_ROLE").val()
+    						
+    					              }]
     				};
+    				
     				$.ajax({ 
-    				    url: "${pageContext.request.contextPath}/admin/product/update", 
+    				    url: "${pageContext.request.contextPath}/admin/users/add", 
     				    type: 'POST', 
     				    dataType: 'JSON', 
     				    data: JSON.stringify(json), 
@@ -274,36 +276,38 @@
     	                },
     				    success: function(data) { 
     				        if(data){
-    				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-    				        	location.href="${pageContext.request.contextPath}/admin/products";
+    				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+    				        	location.href="${pageContext.request.contextPath}/admin/userlist";
     				        }else{
-    				        	alert('YOU HAVE ERRORS WHEN UPDATE A PRODUCT.');
+    				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
     				        }
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
     				    }
-    				}); */
+    				}); 
     				
-    				$("#frmProductAdd").ajaxSubmit({
-    					url: "${pageContext.request.contextPath}/admin/product/update",
+    				/* $("#frmAddNewUser").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/user/add",
     					dataType: 'JSON', 
     					type: 'POST',
+    					data:
     					success: function(data) { 
     						console.log(data);
      				        if(data){
-     				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-     				        	location.href="${pageContext.request.contextPath}/admin/products";
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	//location.href="${pageContext.request.contextPath}/userlist";
      				        }else{
-     				        	alert('YOU HAVE ERRORS WHEN UPDATED EXISING PRODUCT.');
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
      				        }
      				    },
      				    error:function(data,status,er) { 
      				        console.log("error: "+data+" status: "+status+" er:"+er);
      				    }
-    				});
+    				}); */
     			});
     		});
     	</script>
+    
     </body>
 </html>
