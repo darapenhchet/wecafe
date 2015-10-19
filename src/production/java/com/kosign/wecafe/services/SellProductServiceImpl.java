@@ -80,9 +80,8 @@ public class SellProductServiceImpl implements SellProductsService {
 			Sale sale = new Sale();
 			sale.setSaleDatetime(new Date());
 			sale.setMoneyIn(new BigDecimal("2000"));
-			User user = userService.findUserByUsername(getPrincipal());
-			//sale.setUserId(1L);
-			sale.setUser(user);
+			//User user = userService.findUserByUsername(getPrincipal());
+			//sale.setUser(user);
 			
 			System.out.println("SALE DATE="+ sale.getSaleDatetime());
 			
@@ -111,9 +110,10 @@ public class SellProductServiceImpl implements SellProductsService {
 			}
 			*/
 			
+			session.clear();
 			Order order = new Order();
 			order.setOrderDate(new Date());
-			//order.setCusId(1L);
+			//order.setCustomer(userService.findUserByUsername("GENERAL"));
 			order.setStatus(2);
 			
 			for(Cart cart : carts){
@@ -133,12 +133,10 @@ public class SellProductServiceImpl implements SellProductsService {
 				order.getOrderDetail().add(orderDetail);
 			} 
 
-			sale.setOrder(order);
-
-		
-			session.save(sale);
-			
+			sale.setOrder(order);		
+			session.saveOrUpdate(sale);
 			session.getTransaction().commit();
+			session.clear();
 			return true;
 		}catch(Exception ex){
 			ex.printStackTrace();
