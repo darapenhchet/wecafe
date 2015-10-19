@@ -15,6 +15,8 @@ public interface UserService {
 	
 	public Boolean saveUser(User user);
 	
+	public Boolean updateUser(User user);
+	
 	public List<User> getAllUsers();
 	
 	public List<UserRole> getAllUserRoles();

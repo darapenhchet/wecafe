@@ -133,9 +133,10 @@
 																  	<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a></td>
 																  </c:when>
 															      <c:when test="${!product.status}">
-															      	<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Inactive</a></td>
+															      	<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Inactive</a>
 																  </c:when>
 																</c:choose>
+															</td>
                                                             <td class="actions" style="text-align:center;">
 				                                                <a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i class="fa fa-pencil"></i></a>
 				                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>

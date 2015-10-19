@@ -1,3 +1,5 @@
+<%@page import="com.kosign.wecafe.enums.Status"%>
+<%@page import="com.kosign.wecafe.entities.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -113,7 +115,9 @@
                                             <td>${user.lastName }</td>
                                             <td>${user.firstName }</td>
                                             <td>${user.email }</td>
-                                            <td>${user.status }</td>
+                                            <td style="text-align:center;">
+                                      			<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">${user.status }</a></td>
+											</td>
                                             <td>${user.username }</td>
                                             <td>${user.createdBy.lastName } ${user.createdBy.firstName }</td>
                                             <td>${user.createdDate }</td>

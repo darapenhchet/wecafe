@@ -89,6 +89,7 @@
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">First Name *</label>
                                                     <div class="col-lg-10">
+                                                    <input class=" form-control" id="userId" name="id" type="hidden" value="${user.id }">
                                                         <input class=" form-control" id="firstName" name="firstName" type="text" value="${user.firstName }">
                                                     </div>
                                                 </div>
@@ -120,25 +121,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="phonenumber" name="phonenumber" type="text" value="${user.phoneNumber }">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="price" class="control-label col-lg-2">Address *</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="address" name="address" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">User Type *</label>
                                                     <div class="col-lg-10">
                                                        	<select class="form-control" id="USER_ROLE" name="">
                                                        		<option value="0">-- SELECT USER ROLE --</option>
-                                                       		<%-- <c:forEach items="${roles}" var="role">
-                                                       			<option value="${role.id }">${role.type}</option>
-				                                       		</c:forEach> --%>
+                                                       		<c:forEach items="${roles}" var="role">
+                                                       			<c:forEach items="${user.userRoles}" var="userRole">
+	                                                       			<c:choose>
+	                                                       			 <c:when test="${userRole.id==role.id}">
+																	  	<option value="${role.id }" selected="selected">${role.type}</option>
+																	  </c:when>
+																      <c:when test="${userRole.id!=role.id}">
+																      	<option value="${role.id }">${role.type}</option>
+																	  </c:when>
+																	</c:choose>
+                                                       			</c:forEach>
+				                                       		</c:forEach>
                                                        	</select>
                                                     </div>
                                                 </div>
@@ -246,18 +244,15 @@
         
         <script type="text/javascript">
     		$(function(){
-    			$("#frmAddNewUser").submit(function(e){
+    			$("#frmUpdateUser").submit(function(e){
     				e.preventDefault();    				
     				json = {
+    					"id"		: $("#userId").val(),
     					"username"  : $("#username").val(),
-    					"password"	: $("#password").val(),
     					"firstName" : $("#firstName").val(),
     					"lastName"  : $("#lastName").val(),
-    					//"gender"    : $("#gender").val()
     					"email"	    : $("#email").val(),
     					"status"    : 1, //$("#status").val(),
-    					"phoneNumber" : $("#phoneNumber").val(),
-    					//"address"   : $("#address").val(),
     					"userRoles": [
     					              {
     					              	"id" : $("#USER_ROLE").val()
@@ -266,7 +261,7 @@
     				};
     				
     				$.ajax({ 
-    				    url: "${pageContext.request.contextPath}/admin/users/add", 
+    				    url: "${pageContext.request.contextPath}/admin/users/update", 
     				    type: 'POST', 
     				    dataType: 'JSON', 
     				    data: JSON.stringify(json), 
@@ -276,35 +271,16 @@
     	                },
     				    success: function(data) { 
     				        if(data){
-    				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+    				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
     				        	location.href="${pageContext.request.contextPath}/admin/userlist";
     				        }else{
-    				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
+    				        	alert('YOU HAVE ERRORS WHEN UPDATE USER.');
     				        }
     				    },
     				    error:function(data,status,er) { 
     				        console.log("error: "+data+" status: "+status+" er:"+er);
     				    }
     				}); 
-    				
-    				/* $("#frmAddNewUser").ajaxSubmit({
-    					url: "${pageContext.request.contextPath}/admin/user/add",
-    					dataType: 'JSON', 
-    					type: 'POST',
-    					data:
-    					success: function(data) { 
-    						console.log(data);
-     				        if(data){
-     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
-     				        	//location.href="${pageContext.request.contextPath}/userlist";
-     				        }else{
-     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
-     				        }
-     				    },
-     				    error:function(data,status,er) { 
-     				        console.log("error: "+data+" status: "+status+" er:"+er);
-     				    }
-    				}); */
     			});
     		});
     	</script>

@@ -44,8 +44,10 @@ public class UserController {
 	
 	@RequestMapping(value="/admin/user/{id}")
 	public String updateUserView(@PathVariable("id") Long id, Map<String, Object> model){
-		model.put("user", userService.findUserById(id));
-		//model.put("roles", userService.getAllUserRoles());
+		User user = userService.findUserById(id);
+		System.out.println(user.getFirstName());
+		model.put("user", user);
+		model.put("roles", userService.getAllUserRoles());
 		return "admin/userupdate";
 	}
 	
@@ -55,8 +57,7 @@ public class UserController {
 		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
 		///System.out.println("==============================================================================================");
 		//return "redirect:admin/useradd";
-		System.out.println("NEW USER...");
-		return userService.saveUser(user);
+		return userService.updateUser(user);
 	}
 	
 	/*@RequestMapping(value="/admin/users/add", method=RequestMethod.POST)

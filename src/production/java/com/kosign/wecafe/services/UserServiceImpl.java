@@ -1,10 +1,11 @@
 package com.kosign.wecafe.services;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public User findUserById(Long id) {
 		try{
-			return sessionFactory.getCurrentSession().load(User.class, id);
+			return sessionFactory.getCurrentSession().get(User.class, id);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -80,6 +81,36 @@ public class UserServiceImpl implements UserService{
 		}
 		return false;
 	}
+	
+	@Override
+	@Transactional
+	public Boolean updateUser(User userUpdate) {
+		try{
+			//User user = (User) sessionFactory.getCurrentSession().get(User.class, newUser.getId());
+			//user.setFirstName(newUser.getFirstName());
+			//user.setLastName(newUser.getLastName());
+			//user.set
+			User user = (User) sessionFactory.getCurrentSession().get(User.class, userUpdate.getId());
+			Long id = user.getUserRoles().iterator().next().getId();
+			System.out.println(id);
+			UserRole userRole = (UserRole) sessionFactory.getCurrentSession().get(UserRole.class, id);
+			Set userRoles = new HashSet<UserRole>();
+			userRoles.add(userRole);
+			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
+			user.setLastUpdatedDate(new Date());
+			user.setEmail(userUpdate.getEmail());
+			user.setFirstName(userUpdate.getFirstName());
+			user.setLastName(userUpdate.getLastName());
+			user.setStatus(userUpdate.getStatus());
+			user.setUserRoles(userRoles);
+			sessionFactory.getCurrentSession().saveOrUpdate(user);
+			return true;
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return false;
+	}
 
 	
 	@Override
@@ -100,7 +131,6 @@ public class UserServiceImpl implements UserService{
 		try{
 			return (List<UserRole>)sessionFactory.getCurrentSession()
 						.createCriteria(UserRole.class)
-						.addOrder(Order.desc("createdDate"))
 						.list();
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

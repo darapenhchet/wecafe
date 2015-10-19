@@ -132,18 +132,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="quantity" class="control-label col-lg-2">Phone Number *</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="phonenumber" name="phonenumber" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="price" class="control-label col-lg-2">Address *</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="address" name="address" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">User Type *</label>
                                                     <div class="col-lg-10">
                                                        	<select class="form-control" id="USER_ROLE" name="userRoles[0].id">
@@ -268,8 +256,6 @@
     					//"gender"    : $("#gender").val()
     					"email"	    : $("#email").val(),
     					"status"    : 1, //$("#status").val(),
-    					"phoneNumber" : $("#phoneNumber").val(),
-    					//"address"   : $("#address").val(),
     					"userRoles": [
     					              {
     					              	"id" : $("#USER_ROLE").val()
