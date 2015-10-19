@@ -2,8 +2,12 @@ package com.kosign.wecafe.services;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.kosign.wecafe.entities.Order;
@@ -15,6 +19,7 @@ import com.kosign.wecafe.util.HibernateUtil;
 @Service
 public class OrderProductServiceImpl implements OrderProductService{
 
+	@Inject UserService userService;
 	@Override
 	public boolean addNewOrder(List<Cart> carts) {
 		Session session = null;
@@ -25,6 +30,7 @@ public class OrderProductServiceImpl implements OrderProductService{
 			Order order = new Order();
 			order.setOrderDate(new Date());
 			//order.setCusId(1L);
+			order.setCustomer(userService.findUserByUsername(getPrincipal()));
 			order.setStatus(1);
 			
 			for(Cart cart : carts){
@@ -68,5 +74,17 @@ public class OrderProductServiceImpl implements OrderProductService{
 			session.close();
 		}
 		return null;		
+	}
+	
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
 	}
 }

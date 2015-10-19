@@ -110,7 +110,6 @@ public class SellProductServiceImpl implements SellProductsService {
 			}
 			*/
 			
-			session.clear();
 			Order order = new Order();
 			order.setOrderDate(new Date());
 			//order.setCustomer(userService.findUserByUsername("GENERAL"));
@@ -127,7 +126,6 @@ public class SellProductServiceImpl implements SellProductsService {
 				sale.setTotalAmount(sale.getTotalAmount().add((product.getSalePrice().multiply(new BigDecimal(cart.getQuantity())))));
 				
 				product.setQuantity(product.getQuantity()-cart.getQuantity());
-				
 				session.update(product);
 				
 				order.getOrderDetail().add(orderDetail);
