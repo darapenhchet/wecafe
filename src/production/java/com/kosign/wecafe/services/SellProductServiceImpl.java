@@ -8,9 +8,12 @@ import javax.inject.Inject;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
@@ -25,6 +28,9 @@ import com.kosign.wecafe.util.HibernateUtil;
 public class SellProductServiceImpl implements SellProductsService {
 
 	@Inject UserService userService;
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Override
 	public List<Product> getAllProducts() {
@@ -71,17 +77,18 @@ public class SellProductServiceImpl implements SellProductsService {
 	
 	
 	@Override
+	@Transactional
 	public Boolean addNewSaleProducts(List<Cart> carts) {
 		Session session = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
+			session = sessionFactory.getCurrentSession();//HibernateUtil.getSessionFactory().openSession();
+			//session.beginTransaction();
 			
 			Sale sale = new Sale();
 			sale.setSaleDatetime(new Date());
 			sale.setMoneyIn(new BigDecimal("2000"));
-			//User user = userService.findUserByUsername(getPrincipal());
-			//sale.setUser(user);
+			User user = userService.findUserByUsername(getPrincipal());
+			sale.setUser(user);
 			
 			System.out.println("SALE DATE="+ sale.getSaleDatetime());
 			
@@ -133,14 +140,14 @@ public class SellProductServiceImpl implements SellProductsService {
 
 			sale.setOrder(order);		
 			session.saveOrUpdate(sale);
-			session.getTransaction().commit();
-			session.clear();
+			//session.getTransaction().commit();
+			//session.clear();
 			return true;
 		}catch(Exception ex){
 			ex.printStackTrace();
-			session.getTransaction().rollback();
+			//session.getTransaction().rollback();
 		}finally{
-			session.close();
+			//session.close();
 		}
 		return false;
 	}

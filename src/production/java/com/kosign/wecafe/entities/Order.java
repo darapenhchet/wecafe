@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 
@@ -50,12 +51,14 @@ public class Order implements java.io.Serializable {
 	private User customer;
 	
 	@Formula("(SELECT SUM(o.pro_qty*o.pro_unit_price) FROM order_detail o WHERE o.order_id=order_id)")
+	@Transient
 	private BigDecimal orderAmount;
 	
 	@Column(name="status")
 	private Integer status;
 	
 	@Formula("(SELECT SUM(o.pro_qty) FROM order_detail o WHERE o.order_id=order_id)")
+	@Transient
 	private Integer orderQuantity;
 	
 

@@ -6,9 +6,12 @@ import javax.inject.Inject;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
@@ -18,14 +21,18 @@ import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
 public class OrderProductServiceImpl implements OrderProductService{
-
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Inject UserService userService;
+	
+	@Transactional
 	@Override
 	public boolean addNewOrder(List<Cart> carts) {
 		Session session = null;
 		try{
-			session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
 			
 			Order order = new Order();
 			order.setOrderDate(new Date());
@@ -45,14 +52,11 @@ public class OrderProductServiceImpl implements OrderProductService{
 				order.getOrderDetail().add(orderDetail);
 			} 
 			session.save(order);			
-			session.getTransaction().commit();
 			return true;
 		}catch(Exception ex){
 			ex.printStackTrace();
-			session.getTransaction().rollback();
 		}finally{
-			session.close();
-			 //HibernateUtil.getSessionFactory().close();*/
+			
 		}
 		return false;	
 	}
