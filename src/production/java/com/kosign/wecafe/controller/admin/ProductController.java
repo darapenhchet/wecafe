@@ -90,7 +90,7 @@ public class ProductController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                 String fileName = File.separator +"resources"
                         		+ File.separator + "images" + File.separator + "products" + File.separator
                         		+ randomUUIDFileName+"."+extension;
