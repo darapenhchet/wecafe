@@ -119,7 +119,7 @@
 										<tbody>
 											<c:forEach items="${Sale}" var="sell">
 												<tr>
-													<td id=""><a href="javascipt:" id="saleId">${sell.saleId}</a></td>
+													<td ><a href="javascipt:" id="saleId">${sell.saleId}</a></td>
 													<td id="orderId" style="display:none;">${sell.order.orderId }</td>
 													<td>${sell.user.email}</td>
 													<td style="text-align: right;"><a>${sell.totalAmount }</a>	</td>
@@ -181,12 +181,12 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody id="orderdetail">
-
+						<tbody id="orderProdetail">
+							
 						</tbody>
 					</table>
 
-					<div class="form-horizontal">
+					<!-- <div class="form-horizontal">
 						<div class="form-group">
 							<label class="control-label col-sm-10" for="txtName">Total
 								Amount :</label>
@@ -196,7 +196,7 @@
 							</div>
 						</div>
 
-					</div>
+					</div> -->
 				</div>
 				<!-- <div class="modal-footer" style="height: 80px;">
 					<div align="right">
@@ -398,20 +398,37 @@
                 });
                 
                 $("table tbody tr td #saleId").click(function(){
-                	console.log($(this).html()); 
-                	var id = $(this).html();
+                
+                	var id =  $(this).parent().parent().children().eq(1).html()
+                	
                 	$("#sellDetail").bPopup();
+                	//alert("${pageContext.request.contextPath}/admin/sell/"+id); 
+                	alert("${pageContext.request.contextPath}/admin/sell/"+id);
                 	$.ajax({ 
        				    url: "${pageContext.request.contextPath}/admin/sell/"+id, 
        				    type: 'POST', 
        				    dataType: 'JSON', 
+       					
        				    //data: JSON.stringify(json), 
        				    beforeSend: function(xhr) {
        	                    xhr.setRequestHeader("Accept", "application/json");
        	                    xhr.setRequestHeader("Content-Type", "application/json");
        	                },
+       	                
        				    success: function(data) { 
-       				        
+       				        console.log(data.length);
+       				        var str = "";
+       				        for(i = 0; i < data.length; i++){
+       				        	str += "<tr>"
+								str += "<td>" + data[i].productName + "</td>"
+								str += "<td>" + data[i].SalePrice + "</td>"
+								str += "<td>" + data[i].ProQty + "</td>"
+								str += "<td>" + data[i].ProUnitPrrice + "</td>"	
+								str += "<td>" + data[i].orderDate + "</td>"	
+								str += "<td>" + data[i].ProComment + "</td>"	
+								str += "</tr>"
+								$("#orderProdetail").html(str);
+       				        }
        				    },
        				    error:function(data,status,er) { 
        				        console.log("error: "+data+" status: "+status+" er:"+er);

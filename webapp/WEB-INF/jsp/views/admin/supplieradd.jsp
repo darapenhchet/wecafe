@@ -339,7 +339,7 @@
     	 		            xhr.setRequestHeader("Content-Type", "application/json");
     	 		        },
     	 				success: function(data){
-    	 					
+    	 					location.href="${pageContext.request.contextPath}/admin/supplierlist";
     	 				},
     	 				error:function(data, status,er){
     	 					console.log("error: " + data + "status: " + status + "er: ");

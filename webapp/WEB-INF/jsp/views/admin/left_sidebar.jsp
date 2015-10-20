@@ -51,8 +51,8 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="md md-palette"></i> <span> Import </span> <span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/orderlist">Import List</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/orderadd">Add Import</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/importlist">Import List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/importadd">Add Import</a></li>
                                 </ul>
                             </li>
 
@@ -88,7 +88,7 @@
                                <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/userlist">User List</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/useradd">Add User</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/supplieradd">Change Password</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/useradd">Change Password</a></li>
                                 </ul>
                             </li>
                             

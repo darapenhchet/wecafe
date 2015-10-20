@@ -29,6 +29,10 @@ public class SupplierController {
 		System.out.println(SupplierService.getAllSupplier());
 		return "admin/supplierlist";
 	}
+	@RequestMapping(value="/admin/supplieradd", method = RequestMethod.GET)
+	public String SupplierAdd(){
+		return "admin/supplieradd";
+	}
 	
 	@RequestMapping(value="/admin/addSupplier", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Boolean addNewSupplier(@RequestBody Supplier supplierForm, Principal pricipal){
