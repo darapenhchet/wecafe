@@ -60,12 +60,22 @@ public class UserController {
 		return userService.updateUser(user);
 	}
 	
-	/*@RequestMapping(value="/admin/users/add", method=RequestMethod.POST)
-	public String addNewUser(User user, Map<String, Object> model){
-		System.out.println("==============================================================================================");
-		System.out.println("==============================="+userService.saveUser(user)+"=================================");
-		System.out.println("==============================================================================================");
+	@RequestMapping(value="/admin/users/delete/{id}", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody Boolean deleteUser(@RequestBody @PathVariable("id") Long id){
+		//System.out.println("==============================================================================================");
+		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
+		///System.out.println("==============================================================================================");
 		//return "redirect:admin/useradd";
-		return "";
-	}*/
+		return userService.deleteUser(id);
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/admin/users/status/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody boolean changeProductStatus(@RequestBody @PathVariable("id") Long id) {
+		System.out.println("ID=" + id);
+		return userService.updateUserStatus(id);
+	}
+	
 }

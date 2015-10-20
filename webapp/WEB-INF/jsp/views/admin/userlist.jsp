@@ -76,7 +76,7 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Product List</h4>
+                                <h4 class="pull-left page-title">User List</h4>
                             </div>
                         </div>
 
@@ -98,36 +98,49 @@
                                             <th>Last Name</th>
                                             <th>First Name</th>
                                             <th>Email</th>
-                                            <th>Status</th>
                                             <th>Username</th>
                                             <th>Created By</th>
                                             <th>Created Date</th>
                                             <th>Updated By</th>
                                             <th>Updated Date</th>
-                                            
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${users}" var="user">
                                         <tr class="gradeX">
-                                        	<td>${user.id }
+                                        	<td id="USER_ID">${user.id }
                                             <td>${user.lastName }</td>
                                             <td>${user.firstName }</td>
                                             <td>${user.email }</td>
-                                            <td style="text-align:center;">
-                                      			<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">${user.status }</a></td>
-											</td>
                                             <td>${user.username }</td>
                                             <td>${user.createdBy.lastName } ${user.createdBy.firstName }</td>
                                             <td>${user.createdDate }</td>
                                             <td>${user.lastUpdatedBy.lastName } ${user.lastUpdatedBy.firstName }</td>
                                             <td>${user.lastUpdatedDate }</td>
+                                            <td style="text-align:center;">
+                                      			<c:choose>
+                                      				<c:when test="${user.status == 'ACTIVE'}">
+                                      					<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
+                                      				</c:when>
+                                      				<c:when test="${user.status == 'INACTIVE'}">
+                                      					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Inactive</a>
+                                      				</c:when>
+                                      				<c:when test="${user.status == 'DELETED'}">
+                                      					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
+                                      				</c:when>
+                                      				<c:when test="${user.status == 'LOCKED'}">
+                                      					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Locked</a>
+                                      				</c:when>
+                                      			</c:choose>
+                                      			</td>
+											</td>
                                             <td class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
                                                 <a href="${pageContext.request.contextPath}/admin/user/${user.id}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="on-default remove-row" id="btnDeleteUser"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                        </c:forEach>
@@ -212,10 +225,75 @@
         </script>
         
 	    <!-- Examples -->
-	    <script src="${pageContext.request.contextPath}/resources/assets/magnific-popup/magnific-popup.js"></script>
+	    <%-- <script src="${pageContext.request.contextPath}/resources/assets/magnific-popup/magnific-popup.js"></script>
 	    <script src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/jquery.dataTables.js"></script> 
 	    <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
-	    <script src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/datatables.editable.init.js"></script>
-    
+	    <script src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/datatables.editable.init.js"></script> --%>
+    	
+    	<script>
+    	$(function(){
+    		
+	    	$(document).on('click','#btnStatus',function(){
+				var id = $(this).parents("tr").find("#USER_ID").html();
+				var _this = $(this);
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/users/status/"+id, 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    //data: JSON.stringify(json), 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				        if(data){
+				        	if(_this.hasClass('btn-success')){
+				        		_this.removeClass('btn-success');
+				        		_this.addClass('btn-danger');
+				        		_this.html('Inactive');
+				        	}else if(_this.hasClass('btn-danger')){
+				        		_this.removeClass('btn-danger');
+				        		_this.addClass('btn-success');
+				        		_this.html('Active');
+				        	}
+				        }else{
+				        	alert('YOU HAVE ERRORS WHEN CHANGING THE STATUS.');
+				        }
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+	    	});
+	    	
+	    	$(document).on('click','#btnDeleteUser',function(){
+				var id = $(this).parents("tr").find("#USER_ID").html();
+				var _this = $(this);
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/users/delete/"+id,
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    //data: JSON.stringify(json), 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				        if(data){
+			        		_this.parents('tr').find("#btnStatus").removeClass('btn-danger');
+			        		_this.parents('tr').find("#btnStatus").removeClass('btn-success');
+			        		_this.parents('tr').find("#btnStatus").addClass('btn-danger');
+			        		_this.parents('tr').find("#btnStatus").html('Deleted');
+				        }else{
+				        	alert('YOU HAVE ERRORS WHEN DELETE THE USER.');
+				        }
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+	    	});
+    	});
+    	</script>
     </body>
 </html>

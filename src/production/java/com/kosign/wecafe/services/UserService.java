@@ -20,4 +20,8 @@ public interface UserService {
 	public List<User> getAllUsers();
 	
 	public List<UserRole> getAllUserRoles();
+	
+	public Boolean updateUserStatus(Long id);
+	
+	public Boolean deleteUser(Long id);
 }

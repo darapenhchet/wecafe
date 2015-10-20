@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.entities.UserRole;
+import com.kosign.wecafe.enums.Status;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -137,6 +140,44 @@ public class UserServiceImpl implements UserService{
 			ex.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	@Transactional
+	public Boolean updateUserStatus(Long id){
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			User user = session.load(User.class, id);
+			if(user.getStatus().equals(Status.ACTIVE)){
+				user.setStatus(Status.INACTIVE);
+			}else if(user.getStatus().equals(Status.INACTIVE)){
+				user.setStatus(Status.ACTIVE);
+			}else {
+				user.setStatus(Status.ACTIVE);
+			}
+			user.setLastUpdatedDate(new Date());
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
+	@Transactional
+	public Boolean deleteUser(Long id){
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			User user = session.load(User.class, id);
+			user.setStatus(Status.DELETED);
+			user.setLastUpdatedDate(new Date());
+			return true;
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return false;
 	}
 	
 	private String getPrincipal() {

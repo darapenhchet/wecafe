@@ -214,6 +214,11 @@ public class ProductController {
 		return productService.updateProductStatus(id);
 	}
 	
+	@RequestMapping(value = "/admin/product/invoice")
+	public String productInvoice(){
+		return "admin/invoice";
+	}
+	
 	
 
 	private String getPrincipal() {
