@@ -56,7 +56,7 @@ public class OrderController {
 					carts.get(i).setComment(cart.getComment());
 					carts.get(i).setTime(cart.getTime());
 					carts.get(i).setTotalAmount(cart.getPrice().multiply(new BigDecimal(carts.get(i).getQuantity())));
-					session.setAttribute("Carts", carts);
+					session.setAttribute("CARTS", carts);
 					return carts; 
 				}
 			}
