@@ -1,6 +1,5 @@
 package com.kosign.wecafe.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import com.kosign.wecafe.entities.Order;
-import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -80,10 +78,14 @@ public class SellServiceImpl implements SellService {
 			session.getTransaction().begin();
 			
 			Query query = session.createQuery("FROM Order "
-											+ "WHERE status = 1");
+											+ "WHERE status = 1 ORDER BY orderDate");
 			
 			List<Order> orders = (List<Order>)query.list();
 			
+			for(Order order: orders){
+				System.out.println(order.getCustomer());
+				System.out.println(order.getOrderAmount());
+			}
 			return orders;
 			
 		} catch (Exception e) {

@@ -87,7 +87,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="m-b-30">
-                                            <button id="addToTable" class="btn btn-primary waves-effect waves-light">Add <i class="fa fa-plus"></i></button>
+                                            <a id="addToTable" href="${pageContext.request.contextPath}/admin/useradd" class="btn btn-primary waves-effect waves-light">Add <i class="fa fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -125,22 +125,23 @@
                                       					<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
                                       				</c:when>
                                       				<c:when test="${user.status == 'INACTIVE'}">
-                                      					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Inactive</a>
+                                      					<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a>
                                       				</c:when>
                                       				<c:when test="${user.status == 'DELETED'}">
                                       					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
                                       				</c:when>
                                       				<c:when test="${user.status == 'LOCKED'}">
-                                      					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Locked</a>
+                                      					<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a>
                                       				</c:when>
                                       			</c:choose>
                                       			</td>
 											</td>
-                                            <td class="actions">
+                                            <td class="actions" style="width:10%;">
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
                                                 <a href="${pageContext.request.contextPath}/admin/user/${user.id}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
                                                 <a href="#" class="on-default remove-row" id="btnDeleteUser"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="on-default remove-row" id="btnChangePassword"><i class="fa fa-cog fa-fw"></i></a>
                                             </td>
                                         </tr>
                                        </c:forEach>
@@ -249,10 +250,17 @@
 				        if(data){
 				        	if(_this.hasClass('btn-success')){
 				        		_this.removeClass('btn-success');
-				        		_this.addClass('btn-danger');
+				        		_this.addClass('btn-warning');
 				        		_this.html('Inactive');
-				        	}else if(_this.hasClass('btn-danger')){
+				        	}else if(_this.hasClass('btn-warning')){
+				        		_this.removeClass('btn-warning');
+				        		_this.addClass('btn-success');
+				        		_this.html('Active');
+				        	}else{
+				        		_this.removeClass('btn-warning');
+				        		_this.removeClass('btn-success');
 				        		_this.removeClass('btn-danger');
+				        		_this.removeClass('btn-info');
 				        		_this.addClass('btn-success');
 				        		_this.html('Active');
 				        	}
@@ -280,7 +288,7 @@
 	                },
 				    success: function(data) { 
 				        if(data){
-			        		_this.parents('tr').find("#btnStatus").removeClass('btn-danger');
+			        		_this.parents('tr').find("#btnStatus").removeClass('btn-warning');
 			        		_this.parents('tr').find("#btnStatus").removeClass('btn-success');
 			        		_this.parents('tr').find("#btnStatus").addClass('btn-danger');
 			        		_this.parents('tr').find("#btnStatus").html('Deleted');

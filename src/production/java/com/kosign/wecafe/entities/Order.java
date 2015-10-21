@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="wecafe_order")
@@ -42,7 +43,7 @@ public class Order implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.order", cascade=CascadeType.ALL)
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
-	
+	@DateTimeFormat(pattern = "dd/MM/yy")
 	@Column(name="order_Date")
 	private Date orderDate;
 	
@@ -51,14 +52,12 @@ public class Order implements java.io.Serializable {
 	private User customer;
 	
 	@Formula("(SELECT SUM(o.pro_qty*o.pro_unit_price) FROM order_detail o WHERE o.order_id=order_id)")
-	@Transient
 	private BigDecimal orderAmount;
 	
 	@Column(name="status")
 	private Integer status;
 	
 	@Formula("(SELECT SUM(o.pro_qty) FROM order_detail o WHERE o.order_id=order_id)")
-	@Transient
 	private Integer orderQuantity;
 	
 
