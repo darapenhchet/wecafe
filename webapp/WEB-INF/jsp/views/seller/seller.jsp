@@ -393,10 +393,13 @@
 					function() {
 						getsizeSession();
 						getordered();
-						$("#btnlistorder").click(function() {
-
+						 
+						$(document).on('click','#cusordered',function(){						 
+							alert($(this).find("#orderedId").html());
 						});
-
+						
+						
+						
 						function listproductorder() {
 							var st = "";
 							var amount = 0;
@@ -736,9 +739,16 @@
 													"application/json");
 										},
 										success : function(data) {
+											st="";
 											console.log(data);
 											$("#totalorder").html(data.length);
-											
+											for(i=0;i<data.length; i++)
+												{
+													st += "<a href='javascript:void(0);' id='cusordered' class='list-group-item'><div class='media'><div class='media-body clearfix'>- <span id='cusName'>" + 
+									                 		 data[i].customer.username + "</span> (<span id='cusorderqty'>" + data[i].orderQuantity + "</span>)</div></div>"
+									                st += "<div style='display: none;' id='orderedId'>" + data[i].orderId + "</div></a>"
+												}
+											$("#listorder").html(st);
 										},
 										error : function(data, status, er) {
 											console.log("error: " + data
@@ -752,3 +762,4 @@
 					});
 </script>
 </html>
+;

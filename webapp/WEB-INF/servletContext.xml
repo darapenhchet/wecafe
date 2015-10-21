@@ -11,7 +11,7 @@
 	 
 	<mvc:annotation-driven />
 	<context:annotation-config />
-	<context:component-scan base-package="com.kosign.wecafe.controller"
+	<context:component-scan base-package="com.kosign.wecafe.controller" 
 		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />

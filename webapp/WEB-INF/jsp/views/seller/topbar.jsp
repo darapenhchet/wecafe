@@ -31,7 +31,7 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-lg">
                                         <li class="text-center notifi-title">Customer Ordered</li>
-                                        <li class="list-group">
+                                        <li class="list-group" id="listorder">
                                            <!-- list item-->
                                           <!--  <a href="javascript:void(0);" class="list-group-item">
                                               <div class="media">
@@ -46,13 +46,7 @@
                                                  </div>
                                               </div>
                                            </a> -->
-                                           <!-- list item--> 
-                                            <a href="javascript:void(0);" id="cusordered" class="list-group-item">
-                                              <div class="media"> 
-                                                 <div class="media-body clearfix">- <span id="cusName">Dara Penhchet</span> (<span id="cusorderqty">2</span>)
-                                                 </div>
-                                              </div>
-                                            </a>
+                                           
                                            <!-- last list item -->
                                             
                                             <a href="javascript:void(0);" class="list-group-item">
