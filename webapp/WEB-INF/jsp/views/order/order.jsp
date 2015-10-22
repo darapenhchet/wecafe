@@ -169,13 +169,7 @@
 					      	<div class="col-sm-9">
 					         <input type="text" class="form-control" maxlength="30" id="proqty"> 
 					    	</div>
-    					</div>	
-    					<div class="form-group">
-					      	<label class="control-label col-sm-3" >Time :</label>
-					      	<div class="col-sm-9">
-					         <input type="text" class="form-control" maxlength="30"  id="protime"> 
-					    	</div>
-    					</div>
+    					</div>	 
     					<div class="form-group">
 					      	<label class="control-label col-sm-3" for="txtcomment">Comment:</label>
 					      	<div class="col-sm-9">
@@ -211,8 +205,7 @@
 								        <th>Produce Name</th>
 								        <th>Price</th>
 								        <th>Qty</th>
-								        <th>Total Amount</th>
-								        <th>Time</th>
+								        <th>Total Amount</th> 
 								        <th>Comment</th>
 								        <th></th>
 								      </tr>
@@ -295,9 +288,8 @@
 	                },
 				    success: function(data) { 
 				    	$("#MOD_PRICE").html(data.unitPrice);
-		      			$("#proqty").val(_this.parent().parent().children().eq(3).html());
-		      			$("#protime").val(_this.parent().parent().children().eq(5).html());
-		      			$("#procomment").val(_this.parent().parent().children().eq(6).html());
+		      			$("#proqty").val(_this.parent().parent().children().eq(3).html()); 
+		      			$("#procomment").val(_this.parent().parent().children().eq(5).html());
 		      			$("#protitle").html(data.productName);
 		      			$("#proid").html(data.productId);
 		      			$("#imgpath").attr('src','${pageContext.request.contextPath}/resources/images/products/' + data.image);
@@ -359,8 +351,7 @@
 				      		  	if(data[i].productId == produecID)
 				      		  		 {
 						      		  	$("#MOD_PRICE").html($(this).find("#PRICE").html());
-						      			$("#proqty").val(data[i].quantity);
-						      			$("#protime").val(data[i].time);
+						      			$("#proqty").val(data[i].quantity); 
 						      			$("#procomment").val(data[i].comment);
 						      			$("#protitle").html($(this).find("#Proname").html());
 						      			$("#proid").html($(this).find("#idpro").html());
@@ -393,8 +384,7 @@
     					"productId"   : $("#proid").html(),
     					"productName" : $("#protitle").html().trim(),
     					"quantity"    : $("#proqty").val(),
-    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").val(),
-    					"time"    		: $("#protime").val(),
+    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").val(), 
     					"price"    		: $("#MOD_PRICE").html(),
     					"comment"	  : $("#procomment").val()
     				};
@@ -459,8 +449,7 @@
 				    	  	st += "<td>" + data[i].productName + "</td>";
 				    	  	st += "<td>" + data[i].price + "</td>";
 				    	  	st += "<td>" + data[i].quantity + "</td>";
-				    	  	st += "<td>" + data[i].totalAmount + "</td>";
-				    	  	st += "<td>" + data[i].time + "</td>";
+				    	  	st += "<td>" + data[i].totalAmount + "</td>"; 
 				    	  	st += "<td>" + data[i].comment +"</td>";
 				    	  	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
 				    	  	amount += data[i].totalAmount;
@@ -474,8 +463,7 @@
 				});				
 			}
 			function clear(){
-				$("#proqty").val("");
-				$("#protime").val("");
+				$("#proqty").val(""); 
 				$("#procomment").val("");
 			}
 			function clearallsession(){
@@ -504,8 +492,7 @@
     					"productId"   : $("#proid").html(),
     					"productName" : $("#protitle").html().trim(),
     					"quantity"    : $("#proqty").val(),
-    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").val(),
-    					"time"    		: $("#protime").val(),
+    					"totalAmount" : $("#MOD_PRICE").html() * $("#proqty").val(), 
     					"price"    		: $("#MOD_PRICE").html(),
     					"comment"	  : $("#procomment").val()
     				};

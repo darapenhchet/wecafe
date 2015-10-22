@@ -163,5 +163,23 @@ public class SellProductServiceImpl implements SellProductsService {
 		}
 		return userName;
 	}
+
+	@Override
+	@Transactional
+	public List<OrderDetail> getOrderedDetail(Long orderID) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			// SELECT * FROM OrderDetail 
+			Query query = session.createQuery("from OrderDetail OD "
+											+ "INNER JOIN OD.pk.order "
+											+ "INNER JOIN OD.pk.product where OD.pk.order.orderId = ?");
+			query.setParameter(0, orderID);
+			return (List<OrderDetail>)query.list();
+		}catch(Exception ex){ 
+								ex.printStackTrace();
+							}
+		return null;
+	}
 	
 }

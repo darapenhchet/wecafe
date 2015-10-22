@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Order;
+import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.services.SellProductsService;
 import com.kosign.wecafe.services.SellService;
@@ -148,5 +149,11 @@ public class SellController {
 	public  @ResponseBody List<Order> getAllOrders(){
 		return sellService.getAllOrders();		
 	}
-
+	
+	@RequestMapping(value="/seller/getOrderedDetail/{orderId}", method=RequestMethod.GET)
+	public @ResponseBody List<OrderDetail> getOrderedDetail(@PathVariable("orderId") Long orderID){
+		List<OrderDetail> orderdetail = new ArrayList<OrderDetail>();
+		orderdetail = sellProductService.getOrderedDetail(orderID);
+		return orderdetail;
+	}
 }

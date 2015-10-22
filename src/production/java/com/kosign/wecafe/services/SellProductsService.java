@@ -13,5 +13,6 @@ public interface SellProductsService {
 
 	public List<Product> getAllProducts();
 	public List<Order> getOrdered();
+	public List<OrderDetail> getOrderedDetail(Long orderID);
 	public Boolean addNewSaleProducts(List<Cart> carts);
 }

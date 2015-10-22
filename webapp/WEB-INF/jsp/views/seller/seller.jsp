@@ -363,9 +363,53 @@
 			</div>
 		</div>
 		<%@ include file="footer.jsp"%>
-		<!-- ################################################################## -->
-		<!-- <div style="width: 100%; height: 30px; background-color: #E0E0E0;"
-			align="center">Copyright&#64; 2015 kosign</div> -->
+		<!-- ################################################################## -->  
+  <div id="addtocart" style="display: none;" style="width: 80%;">       
+  	<div class="modal-content"> 
+  	 <div class="modal-header">                     
+                     
+                    <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
+                    <h4 class="modal-title"  >Cart</h4>
+                
+                </div>
+                <div class="modal-body" style="height: 290px;">
+								  <table class="table table-hover">
+								    <thead>
+								      <tr> 
+								        <th>Produce Name</th>
+								        <th>Price</th>
+								        <th>Qty</th>
+								        <th>Total Amount</th> 
+								        <th>Comment</th>
+								        <th></th>
+								      </tr>
+								    </thead>
+								    <tbody id="orderdetail">
+								      
+								    </tbody>
+								  </table>
+						 
+							<div class="form-horizontal">
+								<div class="form-group">
+								      	<label class="control-label col-sm-10" for="txtName">Total Amount :</label>
+								      	<div class="col-sm-2">
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="totalamount" style="margin-bottom: 2px;"> 
+								    	</div>
+		    					</div>
+		    				 						 
+					   </div>
+				</div>
+				<div class="modal-footer" style="height: 80px;">
+					<div align="right">
+						<button type="button" id="btnbuymore" class="btn btn-default"><span class="button b-close"><span>Buy more</span></span></button>
+						<button type="button" id="btnconfirm" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
+						<button type="button" id="btncancel" class="btn btn-default"><span class="button b-close"><span>Cancel Order</span></span></button>		
+					</div>
+				</div>
+		</div>
+	</div>
+ 
+<!-- ################################################################## -->
 	</div>
 	 <script>
             var resizefunc = [];
@@ -394,8 +438,60 @@
 						getsizeSession();
 						getordered();
 						 
-						$(document).on('click','#cusordered',function(){						 
-							alert($(this).find("#orderedId").html());
+						$(document).on('click','#cusordered',function(){
+							_this = $(this);
+							$.ajax({
+								url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"	+ _this.find("#orderedId").html(),
+								type : 'GET',
+								dataType : 'JSON',
+								beforeSend : function(
+										xhr) {
+									xhr
+											.setRequestHeader(
+													"Accept",
+													"application/json");
+									xhr
+											.setRequestHeader(
+													"Content-Type",
+													"application/json");
+								},
+								success : function(data) {
+									var st = "";// var amount = 0;
+										console.log(data);
+										 for (i = 0; i < data.length; i++) {
+											st += "<tr><td style='display: none;'>"
+													+ data[i][2].productId
+													+ "</td>"
+											st += "<td>"
+													+ data[i][2].productName
+													+ "</td>";
+											st += "<td>" + data[i][0].proUnitPrice
+													+ "</td>";
+											st += "<td>" + data[i][0].proQty
+													+ "</td>";
+											st += "<td>"
+													+ (data[i][0].proUnitPrice * data[i][0].proQty)
+													+ "</td>"; 
+										    st += "<td>" + data[i][0].proComment +"</td>";
+											st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+											//amount += data[i][1].orderAmount;
+										}
+										$("#totalamount").val(data[0][1].orderAmount);
+										$("#orderdetail").html(st);
+ 
+										$("#addtocart").bPopup();
+								},
+								error : function(data,
+										status, er) {
+									console
+											.log("error: "
+													+ data
+													+ " status: "
+													+ status
+													+ " er:"
+													+ er);
+								}
+							}); 
 						});
 						
 						
@@ -446,9 +542,9 @@
 						}
 
 						$("#bt_add, #btnCart").click(function() {
-
-							$("#addtocart").bPopup();
 							listproductorder();
+							$("#addtocart").bPopup();
+							
 
 						});
 
