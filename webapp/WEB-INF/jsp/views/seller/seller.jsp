@@ -327,6 +327,7 @@
 								<th>Price</th>
 								<th>Qty</th>
 								<th>Total Amount</th>
+								<th>Comment</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -363,53 +364,7 @@
 			</div>
 		</div>
 		<%@ include file="footer.jsp"%>
-		<!-- ################################################################## -->  
-  <div id="addtocart" style="display: none;" style="width: 80%;">       
-  	<div class="modal-content"> 
-  	 <div class="modal-header">                     
-                     
-                    <button type="button" class="close" aria-hidden="true"><span class="button b-close"><span>×</span></span></button>
-                    <h4 class="modal-title"  >Cart</h4>
-                
-                </div>
-                <div class="modal-body" style="height: 290px;">
-								  <table class="table table-hover">
-								    <thead>
-								      <tr> 
-								        <th>Produce Name</th>
-								        <th>Price</th>
-								        <th>Qty</th>
-								        <th>Total Amount</th> 
-								        <th>Comment</th>
-								        <th></th>
-								      </tr>
-								    </thead>
-								    <tbody id="orderdetail">
-								      
-								    </tbody>
-								  </table>
-						 
-							<div class="form-horizontal">
-								<div class="form-group">
-								      	<label class="control-label col-sm-10" for="txtName">Total Amount :</label>
-								      	<div class="col-sm-2">
-								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="totalamount" style="margin-bottom: 2px;"> 
-								    	</div>
-		    					</div>
-		    				 						 
-					   </div>
-				</div>
-				<div class="modal-footer" style="height: 80px;">
-					<div align="right">
-						<button type="button" id="btnbuymore" class="btn btn-default"><span class="button b-close"><span>Buy more</span></span></button>
-						<button type="button" id="btnconfirm" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
-						<button type="button" id="btncancel" class="btn btn-default"><span class="button b-close"><span>Cancel Order</span></span></button>		
-					</div>
-				</div>
-		</div>
-	</div>
- 
-<!-- ################################################################## -->
+		<!-- ======================================================================================= -->
 	</div>
 	 <script>
             var resizefunc = [];
@@ -512,7 +467,7 @@
 													"application/json");
 										},
 										success : function(data) {
-											console.log(data.length);
+											console.log(data);
 											for (i = 0; i < data.length; i++) {
 												st += "<tr><td style='display: none;'>"
 														+ data[i].productId
@@ -531,7 +486,7 @@
 												amount += data[i].totalAmount;
 											}
 											$("#totalamount").val(amount);
-											$("#orderdetail").html(st);
+											$("#orderdetail").html(st); 
 										},
 										error : function(data, stutus, er) {
 											console.log("error:  " + data
