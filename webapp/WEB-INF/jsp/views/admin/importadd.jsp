@@ -40,9 +40,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-
-        <script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
         
+        
+        <script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
+  		
     </head>
 
 
@@ -86,7 +88,7 @@
                                     <div class="panel-body">
                                         <div class=" form">
                                             <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="#" novalidate="novalidate">
-                                                <div class="form-group ">
+                                                <div class="form-group ui-widget">
                                                     <label for="productName" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productName" name="productName" type="text">
@@ -312,6 +314,7 @@
             Counter Up
             =============================================== */
             jQuery(document).ready(function($) {
+            	searchProduct()
                 $('.counter').counterUp({
                     delay: 100,
                     time: 1200
@@ -347,8 +350,51 @@
     	 				}
     	 			}); 
                 });
+
+                 
+                 
+                 
+                
+                function searchProduct(){
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				       console.log(data); 
+    				       var availableTags=[];
+    				       for(i=0; i<data.length; i++)
+		   						{							
+    				    	   availableTags[i]= 
+		   						         {
+		   						         	"label": data[i].productName,
+		   									"dataid": data[i].productId 
+		   						         };
+		   						}
+    				       $("#productName" ).autocomplete({
+    				    	   
+    				    	   select: function(event, ui){
+    				    		   alert(ui.item.dataid);
+    				    	   },
+    				    	   maxShowItems: 8,
+    				           source: availableTags
+    				       });
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
+    				
+    			} 
+    		 
             });
         </script>
     
     </body>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+  		<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script> 
 </html>
