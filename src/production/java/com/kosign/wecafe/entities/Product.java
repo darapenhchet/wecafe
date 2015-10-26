@@ -51,6 +51,9 @@ public class Product implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product", cascade=CascadeType.ALL)
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
+	@OneToMany(fetch = FetchType.LAZY,  mappedBy = "pk1.product", cascade=CascadeType.ALL)
+	private Set<ImportDetail> importDetail = new HashSet<ImportDetail>();
+	
 	@Column(name="pro_name")
 	private String productName;
 	
@@ -234,5 +237,19 @@ public class Product implements Serializable{
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+
+
+	public Set<ImportDetail> getImportDetail() {
+		return importDetail;
+	}
+
+
+
+	public void setImportDetail(Set<ImportDetail> importDetail) {
+		this.importDetail = importDetail;
+	}
+	
+	
 
 }

@@ -42,7 +42,6 @@ public class SupplierImpl implements SupplierService{
 			List<Supplier> supplier = (List<Supplier>)query.list();
 			
 			System.out.println(supplier);
-			session.getTransaction().commit();
 			return supplier;
 			
 		} catch (Exception e) {
@@ -65,7 +64,6 @@ public class SupplierImpl implements SupplierService{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			session.update(supplier);
-			session.getTransaction().commit();
 			
 			
 		} catch (Exception e) {
@@ -80,7 +78,21 @@ public class SupplierImpl implements SupplierService{
 
 	@Override
 	public Supplier findSupplierById(long id) {
-		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.getTransaction().begin();
+			Supplier supplier = session.get(Supplier.class, id);
+			session.getTransaction().commit();
+			return supplier;
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.out.println(e.getMessage());
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
+		}
+		
 		return null;
 	}
 
