@@ -357,7 +357,10 @@
 						<button type="button" id="btnbuymore" class="btn btn-default">
 							<span class="button b-close"><span>Buy more</span></span>
 						</button>
-						<button type="button" id="btnconfirm" class="btn btn-default">
+						<button type="button" id="btnconfirm" class="btn btn-default hidebtn">
+							<span class="button b-close"><span>Confirm</span></span>
+						</button>
+						<button type="button" id="btnconfirmorder" class="btn btn-default hidebtn">
 							<span class="button b-close"><span>Confirm</span></span>
 						</button>
 						<button type="button" id="btncancel" class="btn btn-default hidebtn">
@@ -400,10 +403,13 @@
 						$("#btnlistorder").click(function(){
 							getordered();
 						});
-						$('#btncancelorder').click(function(){
-						 
-							  $.ajax({
-								url : "${pageContext.request.contextPath}/seller/updateOrder/"	+ $("#orderID").html(),
+						$('#btncancelorder, #btnconfirmorder').click(function(){	
+							if($(this).attr('id')=='btncancelorder')
+								var updatestatus= 'cancelOrder/';
+							else
+								var updatestatus= 'confirmOrder/';
+							   $.ajax({
+								url : "${pageContext.request.contextPath}/seller/"+ updatestatus + $("#orderID").html(),
 								type : 'GET',
 								dataType : 'JSON',
 								beforeSend : function(xhr) {xhr.setRequestHeader("Accept","application/json");
@@ -422,8 +428,8 @@
 													+ er);
 								}
 							}); 
-							
-							$("#totalorder").html($("#totalorder").html() - 1);	  					 
+							  
+							   $("#totalorder").html($("#totalorder").html() - 1);	  					 
 						});
 							
 						
@@ -435,9 +441,11 @@
 							});
 						
 						$(document).on('click','#cusordered',function(){ 
-
+							
+							$("#btnconfirmorder").removeClass("hidebtn");
 							$("#btncancelorder").removeClass("hidebtn");
 							$("#btncancel").addClass("hidebtn");
+							$("#btnconfirm").addClass("hidebtn");
 							
 							_this = $(this);
 							$.ajax({
@@ -544,6 +552,9 @@
 						$("#bt_add, #btnCart").click(function() { 
 							$("#btncancel").removeClass("hidebtn");
 							$("#btncancelorder").addClass("hidebtn");
+							$("#btnconfirmorder").addClass("hidebtn");
+							$("#btnconfirm").removeClass("hidebtn");
+							
 							listproductorder();
 							$("#addtocart").bPopup();
 							

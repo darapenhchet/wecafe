@@ -85,8 +85,7 @@ public class SellProductServiceImpl implements SellProductsService {
 			// session.beginTransaction();
 
 			Sale sale = new Sale();
-			sale.setSaleDatetime(new Date());
-			sale.setMoneyIn(new BigDecimal("2000"));
+			sale.setSaleDatetime(new Date()); 
 			User user = userService.findUserByUsername(getPrincipal());
 			sale.setUser(user);
 
@@ -195,8 +194,24 @@ public class SellProductServiceImpl implements SellProductsService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean addOrderToSale(Long orderID) {
 		// TODO Auto-generated method stub
+		Session session = null;
+		try {
+		session = sessionFactory.getCurrentSession();
+		Sale sale = new Sale();
+		User user = userService.findUserByUsername(getPrincipal());
+		Order order = session.get(Order.class, orderID);
+		sale.setSaleDatetime(new Date());		
+		sale.setTotalAmount(order.getOrderAmount());		
+		order.setStatus(2);		
+		sale.setUser(user);
+		sale.setOrder(order);
+		session.save(sale);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 		return null;
 	}
 
