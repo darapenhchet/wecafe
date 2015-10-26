@@ -88,6 +88,9 @@
 .modal-content {
 	border-radius: 0;
 }
+ .hidebtn{
+  	display : none;
+  }
 </style>
 </head>
 <body>
@@ -299,6 +302,7 @@
 					<div class="modal-footer" style="height: 80px; overflow: auto;">
 						<button type="button" class="btn btn-default">
 							<span class="button b-close"><span>Add to cart</span></span>
+							<span class='btnhidden' id='orderID'></span>
 						</button>
 						<button type="button" class="btn btn-primary" id="bt_add">
 							<span class="button b-close"><span>Buy</span></span>
@@ -356,7 +360,10 @@
 						<button type="button" id="btnconfirm" class="btn btn-default">
 							<span class="button b-close"><span>Confirm</span></span>
 						</button>
-						<button type="button" id="btncancel" class="btn btn-default">
+						<button type="button" id="btncancel" class="btn btn-default hidebtn">
+							<span class="button b-close"><span>Cancel Order</span></span>
+						</button>
+						<button type="button" id="btncancelorder" class="btn btn-default hidebtn">
 							<span class="button b-close"><span>Cancel Order</span></span>
 						</button>
 					</div>
@@ -387,13 +394,51 @@
         <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 </body>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 						getsizeSession();
 						getordered();
+						$("#btnlistorder").click(function(){
+							getordered();
+						});
+						$('#btncancelorder').click(function(){
 						 
-						$(document).on('click','#cusordered',function(){
+							  $.ajax({
+								url : "${pageContext.request.contextPath}/seller/updateOrder/"	+ $("#orderID").html(),
+								type : 'GET',
+								dataType : 'JSON',
+								beforeSend : function(xhr) {xhr.setRequestHeader("Accept","application/json");
+									xhr.setRequestHeader("Content-Type","application/json");},
+								success : function(data) {
+									
+								},
+								error : function(data,
+										status, er) {
+									console
+											.log("error: "
+													+ data
+													+ " status: "
+													+ status
+													+ " er:"
+													+ er);
+								}
+							}); 
+							
+							$("#totalorder").html($("#totalorder").html() - 1);	  					 
+						});
+							
+						
+						$('#btncancel').click(function(){ 
+								clearallsession();
+
+								$('input[name="orderqty"]').val('0');
+
+							});
+						
+						$(document).on('click','#cusordered',function(){ 
+
+							$("#btncancelorder").removeClass("hidebtn");
+							$("#btncancel").addClass("hidebtn");
+							
 							_this = $(this);
 							$.ajax({
 								url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"	+ _this.find("#orderedId").html(),
@@ -433,7 +478,7 @@
 										}
 										$("#totalamount").val(data[0][1].orderAmount);
 										$("#orderdetail").html(st);
- 
+ 										$("#orderID").html(data[0][1].orderId);
 										$("#addtocart").bPopup();
 								},
 								error : function(data,
@@ -496,7 +541,9 @@
 									});
 						}
 
-						$("#bt_add, #btnCart").click(function() {
+						$("#bt_add, #btnCart").click(function() { 
+							$("#btncancel").removeClass("hidebtn");
+							$("#btncancelorder").addClass("hidebtn");
 							listproductorder();
 							$("#addtocart").bPopup();
 							
@@ -679,12 +726,6 @@
 													});
 										});
 
-						$("#btncancel").click(function() {
-							clearallsession();
-
-							$('input[name="orderqty"]').val('0');
-
-						});
 
 						$("#btnconfirm")
 								.click(

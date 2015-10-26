@@ -156,4 +156,13 @@ public class SellController {
 		orderdetail = sellProductService.getOrderedDetail(orderID);
 		return orderdetail;
 	}
+	@RequestMapping(value="/seller/cancelOrder/{orderId}{status}", method=RequestMethod.GET)
+	public @ResponseBody Boolean updateOrder(@PathVariable("orderId") Long orderID, @PathVariable("status") int status){
+		if(status==0){
+			sellProductService.cancelOrder(orderID);			
+		}else if(status==2){
+			sellProductService.addOrderToSale(orderID);
+		}
+		return false;
+	}
 }

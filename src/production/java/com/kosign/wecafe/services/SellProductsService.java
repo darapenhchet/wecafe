@@ -2,8 +2,6 @@ package com.kosign.wecafe.services;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
@@ -15,4 +13,6 @@ public interface SellProductsService {
 	public List<Order> getOrdered();
 	public List<OrderDetail> getOrderedDetail(Long orderID);
 	public Boolean addNewSaleProducts(List<Cart> carts);
+	public Boolean cancelOrder(Long orderID);
+	public Boolean addOrderToSale(Long orderID);
 }
