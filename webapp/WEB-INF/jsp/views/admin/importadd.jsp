@@ -314,7 +314,8 @@
             Counter Up
             =============================================== */
             jQuery(document).ready(function($) {
-            	searchProduct()
+            	searchProduct();
+            	searchSupplier();
                 $('.counter').counterUp({
                     delay: 100,
                     time: 1200
@@ -352,12 +353,9 @@
                 });
 
                  
-                 
-                 
-                
-                function searchProduct(){
+                function searchSupplier(){
     				$.ajax({ 
-    				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
+    				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
     				    type: 'POST', 
     				    dataType: 'JSON', 
     				    beforeSend: function(xhr) {
@@ -371,6 +369,43 @@
 		   						{							
     				    	   availableTags[i]= 
 		   						         {
+		   						         	"label": data[i].supplierName,
+		   									"dataid": data[i].supId 
+		   						         };
+		   						}
+    				       $("#supplierName" ).autocomplete({
+    				    	   
+    				    	   select: function(event, ui){
+    				    		   alert("supID: " + ui.item.dataid);
+    				    	   },
+    				    	   maxShowItems: 8,
+    				           source: availableTags
+    				       });  
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
+    				
+    			}
+                 
+                
+                function searchProduct(){
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				       //console.log(data); 
+    				       var availableTags=[];
+    				       for(i=0; i<data.length; i++)
+		   						{							
+    				    	   availableTags[i]= 
+		   						         {
 		   						         	"label": data[i].productName,
 		   									"dataid": data[i].productId 
 		   						         };
@@ -378,7 +413,7 @@
     				       $("#productName" ).autocomplete({
     				    	   
     				    	   select: function(event, ui){
-    				    		   alert(ui.item.dataid);
+    				    		   alert("proID : " + ui.item.dataid);
     				    	   },
     				    	   maxShowItems: 8,
     				           source: availableTags
