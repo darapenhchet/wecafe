@@ -746,8 +746,7 @@
 														url : "${pageContext.request.contextPath}/seller/insertcartsell",
 														type : 'POST',
 														datatype : 'JSON',
-														data : JSON
-																.stringify(json),
+														data : JSON.stringify(json),
 														beforeSend : function(
 																xhr) {
 															xhr
