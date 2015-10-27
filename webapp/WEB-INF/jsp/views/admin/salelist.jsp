@@ -102,39 +102,11 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-12 col-sm-12 col-xs-12">
-									<table id="datatable"
-										class="table table-striped table-bordered">
-										<thead>
-										<thead>
-											<tr>
-												<th>Sell ID</th>
-												<!-- <th>Order ID</th> -->
-												<th>Sell BY</th>
-												<th style="text-align: right;">Total Amount</th>
-												<th style="text-align: right;">Money In</th>
-												<th style="text-align: center;">Date</th>
-												<!-- <th style="text-align: center;">Action</th> -->
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${Sale}" var="sell">
-												<tr>
-													<td ><a href="javascipt:" id="saleId">${sell.saleId}</a></td>
-													<td id="orderId" style="display:none;">${sell.order.orderId }</td>
-													<td>${sell.user.email}</td>
-													<td style="text-align: right;"><a>${sell.totalAmount }</a>	</td>
-													<td style="text-align: right;"><a>${sell.moneyIn }</a>	</td>
-													<td style="text-align: center;">${sell.saleDatetime}</td>
-													<%-- <td class="actions" style="text-align: center;"><a
-														class="on-default edit-row"
-														href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i
-															class="fa fa-pencil"></i></a> <a
-														class="on-default remove-row" href="javascript:;"
-														id="btnRemove"><i class="fa fa-trash-o"></i></a></td> --%>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
+									
+									
+									
+									
+									
 								</div>
 							</div>
 						</div>

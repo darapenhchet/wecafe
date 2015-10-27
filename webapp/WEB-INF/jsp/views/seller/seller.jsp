@@ -88,9 +88,10 @@
 .modal-content {
 	border-radius: 0;
 }
- .hidebtn{
-  	display : none;
-  }
+
+.hidebtn {
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -123,7 +124,7 @@
 						src="${pageContext.request.contextPath}/resources/images/img/order.png"
 						width="55px" height="34px">
 					<button type="button" class="btn btn-primary">
-						<span  class="badge">0 </span> Order
+						<span class="badge">0 </span> Order
 					</button>
 				</div>
 			</div>
@@ -131,8 +132,7 @@
 
 		<div id="myCarousel1" class="carousel slide">
 			<!-- Wrapper for slides -->
-			<div class="carousel-inner" role="listbox"
-				style="height: 888px;">
+			<div class="carousel-inner" role="listbox" style="height: 888px;">
 				<%
 					List<Product> products = (List<Product>) request.getAttribute("products");
 					int A = products.size();
@@ -266,7 +266,7 @@
 						<button type="button" class="close" aria-hidden="true">
 							<span class="button b-close"><span>×</span></span>
 						</button>
-						<h4 class="modal-title">Coca Cola</h4>
+						<h4 class="modal-title" id="productNm">Coca Cola</h4>
 					</div>
 					<div class="modal-body form-horizontal" style="height: 290px;">
 						<div class="col-sm-4">
@@ -282,7 +282,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-sm-3" for="txtName">Qty
+								<label class="control-label col-sm-3" id="qty" for="txtName">Qty
 									:</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" maxlength="30"
@@ -301,8 +301,8 @@
 					</div>
 					<div class="modal-footer" style="height: 80px; overflow: auto;">
 						<button type="button" class="btn btn-default">
-							<span class="button b-close"><span>Add to cart</span></span>
-							<span class='btnhidden' id='orderID'></span>
+							<span class="button b-close"><span>Add to cart</span></span> <span
+								class='btnhidden' id='orderID'></span>
 						</button>
 						<button type="button" class="btn btn-primary" id="bt_add">
 							<span class="button b-close"><span>Buy</span></span>
@@ -311,6 +311,79 @@
 				</div>
 			</div>
 		</div>
+
+
+
+
+
+
+
+		<!-- ############################################################# -->
+
+		<div id="myModal"  style="display: none;"  style="display: none;" 
+			style="left: 321px; position: absolute; top: 827.182px; z-index: 9999; opacity: 1;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" aria-hidden="true">
+							<span class="button b-close"><span>×</span></span>
+						</button>
+						<h4 class="modal-title" id="title"></h4>
+					</div>
+					<div class="modal-body form-horizontal" style="height: 290px;">
+
+						<div class="col-sm-4">
+							<img id="imgpath" style="width: 150px; height: 250px;"
+								src="/WeCafe/resources/images/products/6e5f3438-bfbd-43e8-a3d8-be6a12619187.gif">
+						</div>
+						<div class="col-sm-8 container">
+							<div class="form-group">
+								<label class="control-label col-sm-3">Price :</label>
+								<div class="col-sm-9">
+									<label class="control-label col-sm-3" id="price">2500.00</label>
+								</div>
+								<div style="display: none;" id="proid">34</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="proqty">Qty :</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" maxlength="30"
+										id="proqty">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" id="comment" for="txtcomment">Comment:</label>
+								<div class="col-sm-9">
+									<textarea id="procomment" cols="33" rows="4"
+										style="resize: none;"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="height: 80px; overflow: auto;">
+						<button type="button" class="btn btn-default" id="btnAddToCart">
+							<span class="button b-close"><span>Add to cart</span></span>
+						</button>
+						<button type="button" class="btn btn-default hidebtn" id="btnok">
+							<span class="button b-close"><span>Ok</span></span>
+						</button>
+						<button type="button" class="btn btn-primary" id="btn_buy">
+							<span class="button b-close"><span>Buy</span></span>
+						</button>
+						<button type="button" class="btn btn-default hidebtn"
+							id="btncancelup">
+							<span class="button b-close"><span>Cancel</span></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- ############################################################# -->
+		
+		
+		
 		<!-- ############################################################# -->
 
 		<div id="addtocart" style="display: none;" style="width: 80%;">
@@ -357,16 +430,20 @@
 						<button type="button" id="btnbuymore" class="btn btn-default">
 							<span class="button b-close"><span>Buy more</span></span>
 						</button>
-						<button type="button" id="btnconfirm" class="btn btn-default hidebtn">
+						<button type="button" id="btnconfirm"
+							class="btn btn-default hidebtn">
 							<span class="button b-close"><span>Confirm</span></span>
 						</button>
-						<button type="button" id="btnconfirmorder" class="btn btn-default hidebtn">
+						<button type="button" id="btnconfirmorder"
+							class="btn btn-default hidebtn">
 							<span class="button b-close"><span>Confirm</span></span>
 						</button>
-						<button type="button" id="btncancel" class="btn btn-default hidebtn">
+						<button type="button" id="btncancel"
+							class="btn btn-default hidebtn">
 							<span class="button b-close"><span>Cancel Order</span></span>
 						</button>
-						<button type="button" id="btncancelorder" class="btn btn-default hidebtn">
+						<button type="button" id="btncancelorder"
+							class="btn btn-default hidebtn">
 							<span class="button b-close"><span>Cancel Order</span></span>
 						</button>
 					</div>
@@ -376,134 +453,187 @@
 		<%@ include file="footer.jsp"%>
 		<!-- ======================================================================================= -->
 	</div>
-	 <script>
-            var resizefunc = [];
-        </script>
+	<script>
+		var resizefunc = [];
+	</script>
 
-        <!-- jQuery  -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js" type="text/javascript"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<!-- jQuery  -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 
-        <!-- CUSTOM JS -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<!-- CUSTOM JS -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 </body>
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document)
+			.ready(
+					function() {
 						getsizeSession();
 						getordered();
-						$("#btnlistorder").click(function(){
+						$("#btnlistorder").click(function() {
 							getordered();
 						});
-						$('#btncancelorder, #btnconfirmorder').click(function(){	
-							if($(this).attr('id')=='btncancelorder')
-								var updatestatus= 'cancelOrder/';
-							else
-								var updatestatus= 'confirmOrder/';
-							   $.ajax({
-								url : "${pageContext.request.contextPath}/seller/"+ updatestatus + $("#orderID").html(),
-								type : 'GET',
-								dataType : 'JSON',
-								beforeSend : function(xhr) {xhr.setRequestHeader("Accept","application/json");
-									xhr.setRequestHeader("Content-Type","application/json");},
-								success : function(data) {
-									
-								},
-								error : function(data,
-										status, er) {
-									console
-											.log("error: "
-													+ data
-													+ " status: "
-													+ status
-													+ " er:"
-													+ er);
-								}
-							}); 
-							  
-							   $("#totalorder").html($("#totalorder").html() - 1);	  					 
-						});
-							
-						
-						$('#btncancel').click(function(){ 
-								clearallsession();
+						$('#btncancelorder, #btnconfirmorder')
+								.click(
+										function() {
+											if ($(this).attr('id') == 'btncancelorder')
+												var updatestatus = 'cancelOrder/';
+											else
+												var updatestatus = 'confirmOrder/';
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/"
+																+ updatestatus
+																+ $("#orderID")
+																		.html(),
+														type : 'GET',
+														dataType : 'JSON',
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
 
-								$('input[name="orderqty"]').val('0');
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ " status: "
+																			+ status
+																			+ " er:"
+																			+ er);
+														}
+													});
 
-							});
-						
-						$(document).on('click','#cusordered',function(){ 
-							
-							$("#btnconfirmorder").removeClass("hidebtn");
-							$("#btncancelorder").removeClass("hidebtn");
-							$("#btncancel").addClass("hidebtn");
-							$("#btnconfirm").addClass("hidebtn");
-							
-							_this = $(this);
-							$.ajax({
-								url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"	+ _this.find("#orderedId").html(),
-								type : 'GET',
-								dataType : 'JSON',
-								beforeSend : function(
-										xhr) {
-									xhr
-											.setRequestHeader(
-													"Accept",
-													"application/json");
-									xhr
-											.setRequestHeader(
-													"Content-Type",
-													"application/json");
-								},
-								success : function(data) {
-									var st = "";// var amount = 0;
-										console.log(data);
-										 for (i = 0; i < data.length; i++) {
-											st += "<tr><td style='display: none;'>"
-													+ data[i][2].productId
-													+ "</td>"
-											st += "<td>"
-													+ data[i][2].productName
-													+ "</td>";
-											st += "<td>" + data[i][0].proUnitPrice
-													+ "</td>";
-											st += "<td>" + data[i][0].proQty
-													+ "</td>";
-											st += "<td>"
-													+ (data[i][0].proUnitPrice * data[i][0].proQty)
-													+ "</td>"; 
-										    st += "<td>" + data[i][0].proComment +"</td>";
-											st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
-											//amount += data[i][1].orderAmount;
-										}
-										$("#totalamount").val(data[0][1].orderAmount);
-										$("#orderdetail").html(st);
- 										$("#orderID").html(data[0][1].orderId);
-										$("#addtocart").bPopup();
-								},
-								error : function(data,
-										status, er) {
-									console
-											.log("error: "
-													+ data
-													+ " status: "
-													+ status
-													+ " er:"
-													+ er);
-								}
-							}); 
+											$("#totalorder")
+													.html(
+															$("#totalorder")
+																	.html() - 1);
+										});
+
+						$('#btncancel').click(function() {
+							clearallsession();
+
+							$('input[name="orderqty"]').val('0');
+
 						});
-						
-						
-						
+
+						$(document)
+								.on(
+										'click',
+										'#cusordered',
+										function() {
+
+											_this = $(this);
+											alert(_this.find("#orderedId")
+													.html());
+											$("#btnconfirmorder").removeClass(
+													"hidebtn");
+											$("#btncancelorder").removeClass(
+													"hidebtn");
+											$("#btncancel").addClass("hidebtn");
+											$("#btnconfirm")
+													.addClass("hidebtn");
+
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"
+																+ _this
+																		.find(
+																				"#orderedId")
+																		.html(),
+														type : 'GET',
+														dataType : 'JSON',
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+															var st = "";// var amount = 0;
+															console.log(data);
+															for (i = 0; i < data.length; i++) {
+																st += "<tr><td style='display: none;'>"
+																		+ data[i][2].productId
+																		+ "</td>"
+																st += "<td>"
+																		+ data[i][2].productName
+																		+ "</td>";
+																st += "<td>"
+																		+ data[i][0].proUnitPrice
+																		+ "</td>";
+																st += "<td>"
+																		+ data[i][0].proQty
+																		+ "</td>";
+																st += "<td>"
+																		+ (data[i][0].proUnitPrice * data[i][0].proQty)
+																		+ "</td>";
+																st += "<td>"
+																		+ data[i][0].proComment
+																		+ "</td>";
+																st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+																//amount += data[i][1].orderAmount;
+															}
+															$("#totalamount")
+																	.val(
+																			data[0][1].orderAmount);
+															$("#orderdetail")
+																	.html(st);
+															$("#orderID")
+																	.html(
+																			data[0][1].orderId);
+															$("#addtocart")
+																	.bPopup();
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ " status: "
+																			+ status
+																			+ " er:"
+																			+ er);
+														}
+													});
+										});
+
 						function listproductorder() {
 							var st = "";
 							var amount = 0;
@@ -522,7 +652,7 @@
 										success : function(data) {
 											console.log(data);
 											for (i = 0; i < data.length; i++) {
-												st += "<tr><td style='display: none;'>"
+												st += "<tr><td id='pro_id' style='display: none;'>"
 														+ data[i].productId
 														+ "</td>"
 												st += "<td>"
@@ -539,7 +669,7 @@
 												amount += data[i].totalAmount;
 											}
 											$("#totalamount").val(amount);
-											$("#orderdetail").html(st); 
+											$("#orderdetail").html(st);
 										},
 										error : function(data, stutus, er) {
 											console.log("error:  " + data
@@ -549,117 +679,124 @@
 									});
 						}
 
-						$("#bt_add, #btnCart").click(function() { 
+						$("#bt_add, #btnCart").click(function() {
 							$("#btncancel").removeClass("hidebtn");
 							$("#btncancelorder").addClass("hidebtn");
 							$("#btnconfirmorder").addClass("hidebtn");
 							$("#btnconfirm").removeClass("hidebtn");
-							
+
 							listproductorder();
 							$("#addtocart").bPopup();
-							
 
 						});
 
 						$(document)
 								.on(
 										'click',
-										"#btndelete, #btnminus",
+										"#btndelete, #btnminus, #btnedit",
 										function() {
 											var st = "";
 											var amount = 0;
 											_this = $(this);
-											if (_this.html() != "Delete")
-												var proId = $(this).parents(
-														".panel-body").find(
-														"#pro_id").val();
+											
+											if (_this.html() == "Delete"){
+												var proId = $(this).parent().parent().children().eq(0).html();
+											}
+											else if(_this.html() == "Edit"){
+												alert($(this).parent().parent().children().eq(0).html());
+												//var proId = $(this).parents(".panel-body").find("#pro_id").val();
+												var proId = $(this).parent().parent().children().eq(0).html();
+												
+												$("#myModal").bPopup();
+												
+											}
+											
 											else
 												var proId = $(this).parent()
 														.parent().children()
 														.html();
 
-											$
-													.ajax({
-														url : "${pageContext.request.contextPath}/seller/removetocart/"
-																+ proId,
-														type : 'POST',
-														dataType : 'JSON',
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			"Accept",
-																			"application/json");
-															xhr
-																	.setRequestHeader(
-																			"Content-Type",
-																			"application/json");
-														},
-														success : function(data) {
+// 											$.ajax({
+// 														url : "${pageContext.request.contextPath}/seller/removetocart/"
+// 																+ proId,
+// 														type : 'POST',
+// 														dataType : 'JSON',
+// 														beforeSend : function(
+// 																xhr) {
+// 															xhr
+// 																	.setRequestHeader(
+// 																			"Accept",
+// 																			"application/json");
+// 															xhr
+// 																	.setRequestHeader(
+// 																			"Content-Type",
+// 																			"application/json");
+// 														},
+// 														success : function(data) {
 
-															if (_this
-																	.parents(
-																			".panel-body")
-																	.find(
-																			"#txtqty")
-																	.val() == 1)
-																_this
-																		.parents(
-																				".panel-body")
-																		.find(
-																				"#txtqty")
-																		.val(
-																				"0");
-															for (i = 0; i < data.length; i++) {
-																if (data[i].quantity >= 1) {
-																	st += "<tr><td style='display: none;'>"
-																			+ data[i].productId
-																			+ "</td>"
-																	st += "<td>"
-																			+ data[i].productName
-																			+ "</td>";
-																	st += "<td>"
-																			+ data[i].price
-																			+ "</td>";
-																	st += "<td>"
-																			+ data[i].quantity
-																			+ "</td>";
-																	st += "<td>"
-																			+ data[i].totalAmount
-																			+ "</td>";
-																	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
-																	amount += data[i].totalAmount;
-																}
+// 															if (_this
+// 																	.parents(
+// 																			".panel-body")
+// 																	.find(
+// 																			"#txtqty")
+// 																	.val() == 1)
+// 																_this
+// 																		.parents(
+// 																				".panel-body")
+// 																		.find(
+// 																				"#txtqty")
+// 																		.val(
+// 																				"0");
+// 															for (i = 0; i < data.length; i++) {
+// 																if (data[i].quantity >= 1) {
+// 																	st += "<tr><td style='display: none;'>"
+// 																			+ data[i].productId
+// 																			+ "</td>"
+// 																	st += "<td>"
+// 																			+ data[i].productName
+// 																			+ "</td>";
+// 																	st += "<td>"
+// 																			+ data[i].price
+// 																			+ "</td>";
+// 																	st += "<td>"
+// 																			+ data[i].quantity
+// 																			+ "</td>";
+// 																	st += "<td>"
+// 																			+ data[i].totalAmount
+// 																			+ "</td>";
+// 																	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+// 																	amount += data[i].totalAmount;
+// 																}
 
-																if (data[i].productId == proId) {
-																	_this
-																			.parents(
-																					".panel-body")
-																			.find(
-																					"#txtqty")
-																			.val(
-																					data[i].quantity);
-																}
+// 																if (data[i].productId == proId) {
+// 																	_this
+// 																			.parents(
+// 																					".panel-body")
+// 																			.find(
+// 																					"#txtqty")
+// 																			.val(
+// 																					data[i].quantity);
+// 																}
 
-															}
+// 															}
 
-															$("#totalamount")
-																	.val(amount);
-															$("#orderdetail")
-																	.html(st);
-															getsizeSession();
-														},
-														error : function(data,
-																status, er) {
-															console
-																	.log("error: "
-																			+ data
-																			+ " status: "
-																			+ status
-																			+ " er:"
-																			+ er);
-														}
-													});
+// 															$("#totalamount")
+// 																	.val(amount);
+// 															$("#orderdetail")
+// 																	.html(st);
+// 															getsizeSession();
+// 														},
+// 														error : function(data,
+// 																status, er) {
+// 															console
+// 																	.log("error: "
+// 																			+ data
+// 																			+ " status: "
+// 																			+ status
+// 																			+ " er:"
+// 																			+ er);
+// 														}
+// 													});
 
 										});
 
@@ -737,7 +874,6 @@
 													});
 										});
 
-
 						$("#btnconfirm")
 								.click(
 										function() {
@@ -746,7 +882,8 @@
 														url : "${pageContext.request.contextPath}/seller/insertcartsell",
 														type : 'POST',
 														datatype : 'JSON',
-														data : JSON.stringify(json),
+														data : JSON
+																.stringify(json),
 														beforeSend : function(
 																xhr) {
 															xhr
@@ -791,7 +928,8 @@
 													"application/json");
 										},
 										success : function(data) {
-											$("#totalproduce").html(data.length);
+											$("#totalproduce")
+													.html(data.length);
 										},
 										error : function(data, status, er) {
 											console.log("error: " + data
@@ -841,15 +979,19 @@
 													"application/json");
 										},
 										success : function(data) {
-											st="";
+											st = "";
 											console.log(data);
 											$("#totalorder").html(data.length);
-											for(i=0;i<data.length; i++)
-												{
-													st += "<a href='javascript:void(0);' id='cusordered' class='list-group-item'><div class='media'><div class='media-body clearfix'>- <span id='cusName'>" + 
-									                 		 data[i].customer.username + "</span> (<span id='cusorderqty'>" + data[i].orderQuantity + "</span>)</div></div>"
-									                st += "<div style='display: none;' id='orderedId'>" + data[i].orderId + "</div></a>"
-												}
+											for (i = 0; i < data.length; i++) {
+												st += "<a href='javascript:void(0);' id='cusordered' class='list-group-item'><div class='media'><div class='media-body clearfix'>- <span id='cusName'>"
+														+ data[i].customer.username
+														+ "</span> (<span id='cusorderqty'>"
+														+ data[i].orderQuantity
+														+ "</span>)</div></div>"
+												st += "<div style='display: none;' id='orderedId'>"
+														+ data[i].orderId
+														+ "</div></a>"
+											}
 											$("#listorder").html(st);
 										},
 										error : function(data, status, er) {

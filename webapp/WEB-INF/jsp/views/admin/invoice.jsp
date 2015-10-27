@@ -111,7 +111,7 @@
                                                             <th>Quantity</th>
                                                             <th>Unit Cost</th>
                                                             <th>Total</th>
-                                                        </tr></thead>
+                                                        </tr></thead>http://localhost:8080/WeCafe/admin/sellreportList
                                                         <tbody>
                                                             <tr>
                                                                 <td>1</td>

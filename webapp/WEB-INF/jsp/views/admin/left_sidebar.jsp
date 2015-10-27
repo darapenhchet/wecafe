@@ -75,7 +75,7 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="md md-now-widgets"></i><span> Reports </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/salelist">Sale Reports</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/sellreport">Sell Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Order Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Import Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Income Reports</a></li>
