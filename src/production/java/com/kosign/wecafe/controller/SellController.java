@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.forms.Cart;
+import com.kosign.wecafe.services.SellProductServiceImpl;
 import com.kosign.wecafe.services.SellProductsService;
 import com.kosign.wecafe.services.SellService;
 import com.kosign.wecafe.services.UserService;
@@ -166,4 +167,30 @@ public class SellController {
 			sellProductService.addOrderToSale(orderID); 
 		return false;
 	}
+	@RequestMapping(value="/seller/updateOrderProduct/{orderId}/{productId}/{quatity}", method=RequestMethod.GET)
+	public @ResponseBody Boolean updateOrderProduct(@PathVariable("orderId") Long orderID, @PathVariable("productId") Long productID, @PathVariable("quatity") Long qty){
+		sellProductService.updateOrderProduct(orderID, productID, qty);
+		return false;
+	}
+	
+	@RequestMapping(value="/seller/deletedOrderProduct/{orderId}/{productId}", method=RequestMethod.GET)
+	public @ResponseBody Boolean deletedOrderProduct(@PathVariable("orderId") Long orderID,@PathVariable("productId") Long productID){
+		sellProductService.deleteOrderProduct(orderID, productID);
+		
+		System.out.println("orderIIID" + orderID);
+		System.out.println("oPPerIIID" + productID);
+		
+		return false;
+	}
+	
+//	@RequestMapping(value="/seller/updateOrderProduct", method=RequestMethod.GET)
+//	public @ResponseBody Boolean updateOrderProduct(@RequestBody OrderDetail orderDetailForm){
+//		OrderDetail orderDetail = new OrderDetail();
+//		Order orders = new Order();
+//		orders.setOrderId(orderDetailForm.get);;
+//		orderDetail.setOrder(orderDetailForm.getOrder().getOrderId());
+//		orderDetail.setProQty(orderDetailForm.getProQty());
+//		sellProductService.updateOrderProduct(orderDetail);
+//		return false;
+//	}
 }

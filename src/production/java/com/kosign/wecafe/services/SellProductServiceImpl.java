@@ -3,6 +3,7 @@ package com.kosign.wecafe.services;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,7 @@ import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
+
 @SuppressWarnings("unchecked")
 public class SellProductServiceImpl implements SellProductsService {
 
@@ -214,5 +216,59 @@ public class SellProductServiceImpl implements SellProductsService {
 		}
 		return null;
 	}
+
+//	@Override
+//	public Boolean updateOrderProduct(OrderDetail orderDetail) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	@Override
+	public Boolean updateOrderProduct(Long orderId, Long productId, Long qty) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM OrderDetail od "
+												+ "where od.pk.order.orderId = ?  and od.pk.product.productId =? ");
+			query.setParameter(0, orderId);
+			query.setParameter(1, productId);
+			OrderDetail orderDetail= (OrderDetail)query.uniqueResult();
+			orderDetail.setProQty(qty);
+			session.update(orderDetail);
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
+		}
+		return null;
+	}
+
+	
+	public Boolean deleteOrderProduct(Long orderId, Long productId) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		try{
+			session.getTransaction().begin();
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM OrderDetail od "
+												+ "where od.pk.order.orderId = ?  and od.pk.product.productId =? ");
+			query.setParameter(0, orderId);
+			query.setParameter(1, productId);
+			OrderDetail orderDetail= (OrderDetail)query.uniqueResult();
+			session.delete(orderDetail);
+			session.getTransaction().commit();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
+		}
+		return null;
+	}
+	
 
 }

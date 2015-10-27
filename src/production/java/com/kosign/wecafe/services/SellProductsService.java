@@ -15,4 +15,7 @@ public interface SellProductsService {
 	public Boolean addNewSaleProducts(List<Cart> carts);
 	public Boolean cancelOrder(Long orderID);
 	public Boolean addOrderToSale(Long orderID);
+	public Boolean updateOrderProduct(Long orderId, Long productId, Long qty );
+	public Boolean deleteOrderProduct(Long orderId, Long productId);
+//	public Boolean updateOrderProduct(OrderDetail orderDetail);
 }
