@@ -3,7 +3,7 @@
 			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
             <!-- Top Bar Start -->
-            <div class="topbar">
+            <div class="topbar hidden-print">
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">

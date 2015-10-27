@@ -2,7 +2,7 @@
 			<form id="logout" action="${logoutUrl}" method="post" >
 			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
-            <div class="left side-menu">
+            <div class="left side-menu hidden-print" >
                 <div class="sidebar-inner slimscrollleft">
                     <div class="user-details">
                         <div class="pull-left">
