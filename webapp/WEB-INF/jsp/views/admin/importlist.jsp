@@ -92,7 +92,7 @@
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4 class="pull-left page-title">Supplier List</h4>
+							<h4 class="pull-left page-title">Import List</h4>
 						</div>
 					</div>
 					<div class="panel-body">

@@ -44,6 +44,11 @@
         
         <script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
+        <style>
+	          .hidebtn{
+					  	display : none;
+					  }
+        </style>
   		
     </head>
 
@@ -92,6 +97,7 @@
                                                     <label for="productName" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productName" name="productName" type="text">
+                                                        <input class="hidebtn" id="proID">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -103,23 +109,65 @@
                                                 <div class="form-group ">
                                                     <label for="UnitPrice" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="Unit Price" name="Unit Pirce" type="text">
+                                                        <input class="form-control " id="UnitPrice" name="Unit Pirce" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="supplierName" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="supplierName" name="SupplierName" type="text">
+                                                        <input class="hidebtn" id="supID">
                                                     </div>
-                                                </div>
-                                                
-                                                
+                                                </div> 
+                                                <div class="form-group" align="right">
+                                                     
+                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Add</button>
+                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtn" type="button">Cancel</button>
+                                              	</div>
+                                                <!-- =================== --> 
+                        <h5 class="pull-left page-title"># Import List</h5>                        
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+							<table id="datatable" class="table table-striped table-bordered dataTable">
+									<thead>
+									
+									</thead><thead>
+										<tr>
+											<th>#</th>
+											<th>Product Name</th>
+											<th style="text-align: center;">Qty</th>
+											<th style="text-align: center;">Unit Price</th> 
+											<th style="text-align: center;">Supplier Name</th>
+											<th style="text-align: center;">Edit</th>
+										</tr>
+									</thead>
+									<tbody id="tbllistimport">
 
-                                                <div class="form-group">
-                                                    <div class="col-lg-offset-2 col-lg-10">
-                                                        <button class="btn btn-success waves-effect waves-light" id="savebtn" type="button">Save</button>
-                                                        <button class="btn btn-default waves-effect" id="cencelBtn" type="button">Cancel</button>
-                                                    </div>
+<!-- 											<tr> -->
+
+
+
+<!-- 												</td> -->
+
+<!-- 												</td> -->
+
+<!-- 												<td class="actions" style="text-align: center;"><a -->
+<!-- 													class="on-default edit-row" -->
+
+<!-- 														class="fa fa-pencil"></i></a> <a class="on-default remove-row" -->
+<!-- 													href="javascript:;" id="btnRemove"><i -->
+<!-- 														class="fa fa-trash-o"></i></a></td> -->
+<!-- 											</tr> -->
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					 
+												<!-- =================== -->
+                                                <div class="form-group" align="right"> 
+                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px;" id="savebtn" type="button">Save</button>
+                                                        <button class="btn btn-default waves-effect" style="width: 100px; margin-right: 10px;" id="cencelBtn" type="button">Cancel</button> 
                                                 </div>
                                             </form>
                                         </div> <!-- .form -->
@@ -316,6 +364,53 @@
             jQuery(document).ready(function($) {
             	searchProduct();
             	searchSupplier();
+            	var _thisRow ;
+            	$(document).on("click","#btndelete",function(){
+            		$(this).parents("tr").remove();            		
+            	});
+            	
+            	$(document).on("click","#btnedit",function(){
+					
+
+            		_thisRow = $(this).parents("tr");
+            		
+            		$("#productName").val($(this).parents("tr").children().eq(3).html());
+            		$("#qty").val($(this).parents("tr").children().eq(4).html());
+            		$("#UnitPrice").val($(this).parents("tr").children().eq(5).html());
+            		$("#supplierName").val($(this).parents("tr").children().eq(6).html());
+            		$("#productName").attr("readonly","readonly");
+            		$("#supplierName").attr("readonly","readonly");
+            		$("#addbtn").attr("id","editbtn");
+            	});
+            	$(document).on("click","#editbtn",function(){
+            		_thisRow.children().eq(4).html($("#qty").val());
+            		_thisRow.children().eq(5).html($("#UnitPrice").val());
+            		$("#productName").removeAttr("readonly");
+            		$("#supplierName").removeAttr("readonly");
+            		$("#editbtn").attr("id","addbtn");
+            		clear();
+            	});
+            	$("#cancelbtn").click(function(){
+            		clear();
+            		$("#productName").removeAttr("readonly");
+            		$("#supplierName").removeAttr("readonly");
+            		$("#editbtn").attr("id","addbtn");
+            	});
+            	$(document).on("click","#addbtn",function(){ 
+            		
+            		var st="";
+            		st += "<tr><td style='display: none;'>" + $('#proID').val() +"</td>";
+            		st += "<td style='display: none;'>"+ $('#supID').val() +"</td>";
+            		st += "<td>" + 1 +"</td>"; 
+            		st += "<td>" + $("#productName").val() +"</td>";
+            		st += "<td>" + $("#qty").val() +"</td>";
+            		st += "<td>" + $("#UnitPrice").val() +"</td>";
+            		st += "<td>" + $("#supplierName").val() +"</td>";
+            		st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+            		$("#tbllistimport").append(st);
+            		clear();
+            	});
+            	
                 $('.counter').counterUp({
                     delay: 100,
                     time: 1200
@@ -376,7 +471,7 @@
     				       $("#supplierName" ).autocomplete({
     				    	   
     				    	   select: function(event, ui){
-    				    		   alert("supID: " + ui.item.dataid);
+    				    		   $("#supID").val(ui.item.dataid);
     				    	   },
     				    	   maxShowItems: 8,
     				           source: availableTags
@@ -389,6 +484,14 @@
     				
     			}
                  
+                function clear(){
+            		$("#productName").val("");
+            		$('#proID').val("");
+            		$('#supID').val("");
+            		$("#qty").val("");
+            		$("#UnitPrice").val("");
+            		$("#supplierName").val(""); 
+            	}
                 
                 function searchProduct(){
     				$.ajax({ 
@@ -413,7 +516,7 @@
     				       $("#productName" ).autocomplete({
     				    	   
     				    	   select: function(event, ui){
-    				    		   alert("proID : " + ui.item.dataid);
+    				    		   $("#proID").val(ui.item.dataid);
     				    	   },
     				    	   maxShowItems: 8,
     				           source: availableTags
