@@ -37,7 +37,7 @@ public class AppSelectOrder {
 			List<Map> products = (ArrayList<Map>)query.list();
 			/*System.out.println(products.size());*/
 			for(Map product : products){
-				System.out.println(product.get("ProductName"));
+				System.out.println(product.get("productName"));
 				System.out.println(product.get("Quantity"));
 				System.out.println(product.get("CategoryName"));
 			}
