@@ -851,6 +851,7 @@ var _thisRow;
 						
 	            		_thisRow.children().eq(3).html($("#qtytxt").val()); 
 	            		_thisRow.children().eq(4).html(subtotal);
+	            		_thisRow.children().eq(5).html($("#procomment").html());
 	            		$("#totalamount").val(subtotal + totalamount);
 					},
 					error : function(data,
