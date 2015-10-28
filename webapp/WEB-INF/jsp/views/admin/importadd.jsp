@@ -416,23 +416,23 @@
                     time: 1200
                 });
                 
-                $("#savebtn").click(function(){
-                	//var proName 				= $("#productName").val();
-    	 			var qty 					= $("#qty").val();
-    	 			var unitPrice 				= $("#unitPrice").val();
-    	 			//var supplierName 			= $("#supplierName").val();
-    	 			json = {
-    	 						"proId"   	 	  : 31,
-    	 						"quantity" 		  : qty,
-    	 						"unitPrice"		  : unitPrice,
-    	 						"supplierId"	  : 9
-    	 			};
-    	 			console.log(JSON.stringify(json));
+                $("#savebtn").click(function(){ 
+                	var importDetail = [];
+                		$('#tbllistimport tr').each(function(){
+                			json ={
+                						"proId"				: ($(this).find("td").eq(0).html()),
+                						"quantity" 		 	:($(this).find("td").eq(4).html()),
+                						"unitPrice"		    :($(this).find("td").eq(5).html()),
+                						"supplierId"	  	:($(this).find("td").eq(1).html())
+                					};
+                				importDetail.push(json);	
+                		}); 
+                		
     	 			$.ajax({
     	 				 url: "${pageContext.request.contextPath}/admin/addImport", 
      				    type: 'POST',
     	 				datatype: 'JSON',
-    	 				data: JSON.stringify(json), 
+    	 				data: JSON.stringify(importDetail), 
     	 				beforeSend: function(xhr) {
     	 		            xhr.setRequestHeader("Accept", "application/json");
     	 		            xhr.setRequestHeader("Content-Type", "application/json");
@@ -444,7 +444,7 @@
     	 				error:function(data, status,er){
     	 					console.log("error: " + data + "status: " + status + "er: ");
     	 				}
-    	 			}); 
+    	 			});    
                 });
 
                  

@@ -59,9 +59,11 @@ public class importProductController {
 	}
 	
 	@RequestMapping(value="/admin/addImport", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Boolean saveImpProduct(@RequestBody ImportForm importForm)	{
+	public @ResponseBody Boolean saveImpProduct(@RequestBody List<ImportForm> importForm)	{
 		ImportDetail importDetails = new ImportDetail();
-		try {
+		System.out.println(importForm.size());
+		return true;
+		/*try {
 			Product product = productService.findProductById(importForm.getProId());
 		    //Supplier supplier = supplierService.findSupplierById(importForm.getSupplierId());
 			importDetails.setProduct(product);
@@ -74,7 +76,7 @@ public class importProductController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return false;
+		return false;*/
 	}
 	
 	
