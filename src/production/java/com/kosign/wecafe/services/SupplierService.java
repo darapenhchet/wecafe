@@ -10,6 +10,7 @@ public interface SupplierService {
 	public Boolean saveSupplier(Supplier supplier);
 	public Boolean updateSupplier(Supplier supplier);
 	public List<Supplier> getAllSupplier();
-	public Boolean deleteSupplier(long id);
+	public Boolean deleteSupplier(Supplier id);
+	
 	
 }

@@ -114,7 +114,8 @@
 									<tbody>
 										<c:forEach items="${suppliers}" var="supplier">
 											<tr>
-												<td id="supplierId">${supplier.supId}</td>
+												<td id="supplierId" style="display: none;">${supplier.supId}</td>
+												<td ></td>
 												<td id="supplierName">${supplier.supplierName }</td>
 												<td style="text-align: right;">${supplier.supplierNumber }
 												</td>
@@ -123,10 +124,9 @@
 												<td style="text-align: center;">${supplier.supplierAddress}</td>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i
+													href="${pageContext.request.contextPath}/admin/product/${supplier.supId}"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-													href="javascript:;" id="btnRemove"><i
-														class="fa fa-trash-o"></i></a></td>
+													href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -323,23 +323,43 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
 
-	<script type="text/javascript">
-		/* ==============================================
-		Counter Up
-		=============================================== */
-		jQuery(document).ready(function($) {
-			$('#datatable').dataTable();
-
-			$('.counter').counterUp({
-				delay : 100,
-				time : 1200
-			});
-
-		});
-	</script>
+	
 
 	<!-- Examples -->
 	 <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+        <script type="text/javascript">
+    	$(function(){
+	    	$(document).on('click','#btnRemove',function(){ 
+	    		
+  				var id = $(this).parents("tr").find("#supplierId").html(); 
+  				if(confirm("Do you want to delete that supplier?")){
+  					$.ajax({ 
+  					    url: "${pageContext.request.contextPath}/admin/delete/"+id, 
+  					    type: 'POST', 
+   					    dataType: 'JSON', 
+  					    //data: JSON.stringify(json), 
+  					    beforeSend: function(xhr) {
+  		                    xhr.setRequestHeader("Accept", "application/json");
+  		                    xhr.setRequestHeader("Content-Type", "application/json");
+  		                },
+  					    success: function(data) { 
+  					    	console.log(data);
+  					        if(data){
+  					        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
+  					        	location.href="${pageContext.request.contextPath}/admin/supplierlist";
+  					        }else{
+  					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
+  					        }
+  					    },
+  					    error:function(data,status,er) { 
+  					        console.log("error: "+data+" status: "+status+" er:"+er);
+  					    }
+  					});
+					
+  				}
+			});
+    	});
+    	</script>
 </body>
 </html>

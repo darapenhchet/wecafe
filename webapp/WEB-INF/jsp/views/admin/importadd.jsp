@@ -365,6 +365,9 @@
             	searchProduct();
             	searchSupplier();
             	var _thisRow ;
+            	$("#cencelBtn").click(function(){
+            		$("#tbllistimport tr").remove();
+            	});
             	$(document).on("click","#btndelete",function(){
             		$(this).parents("tr").remove();            		
             	});
@@ -401,7 +404,7 @@
             		var st="";
             		st += "<tr><td style='display: none;'>" + $('#proID').val() +"</td>";
             		st += "<td style='display: none;'>"+ $('#supID').val() +"</td>";
-            		st += "<td>" + 1 +"</td>"; 
+            		st += "<td>" + ($("#tbllistimport tr").length + 1) +"</td>"; 
             		st += "<td>" + $("#productName").val() +"</td>";
             		st += "<td>" + $("#qty").val() +"</td>";
             		st += "<td>" + $("#UnitPrice").val() +"</td>";

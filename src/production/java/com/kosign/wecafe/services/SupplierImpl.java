@@ -97,15 +97,16 @@ public class SupplierImpl implements SupplierService{
 	}
 
 	@Override
-	public Boolean deleteSupplier(long id) {
+	public Boolean deleteSupplier(Supplier supplier) {
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
-			Supplier suppliers = session.get(Supplier.class, id);
+			Supplier suppliers = session.get(Supplier.class, supplier.getSupId());
 			//add field status
-			session.update(suppliers);
+			session.delete(suppliers);
 			session.beginTransaction().commit();
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,6 +114,6 @@ public class SupplierImpl implements SupplierService{
 			session.close();
 		}
 		
-		return false;
+		return true;
 	}
 }

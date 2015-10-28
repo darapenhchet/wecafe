@@ -9,11 +9,13 @@ import javax.inject.Inject;
 import org.hibernate.jpa.criteria.predicate.PredicateImplementor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Supplier;
 import com.kosign.wecafe.services.SupplierService;
 
@@ -74,5 +76,21 @@ public class SupplierController {
 		}
 		return false;
 	}
-	
+	@RequestMapping(value="/admin/delete/{id}" , method=RequestMethod.POST)
+	public @ResponseBody Boolean deleteSupplier(@PathVariable Long id){
+		System.out.println(id);
+		
+		try{
+			Supplier supplier = new Supplier();
+			supplier.setSupId(id);
+			//category.setLastUpdatedBy(userService.findUserByUsername(principal.getName()));
+			return SupplierService.deleteSupplier(supplier);
+			
+		}catch(Exception e){
+			System.out.println("You failed to delete the category.");
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
 }
