@@ -95,23 +95,40 @@
 							<h4 class="pull-left page-title">Sell List</h4>
 						</div>
 					</div>
-
-
 					<div class="panel">
-
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-12 col-sm-12 col-xs-12">
-									
-									
-									
-									
-									
-								</div>
+									<table id="datatable"
+										class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th style="text-align: right;">Order Number</th>
+											<th style="text-align: center;">Money</th>
+											<th style="text-align: center;">Total Amount</th>
+											<th style="text-align: center;">Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${Sale}" var="sell">
+											<tr>
+												<td><a href="javascipt:" id="saleId">${sell.saleId}</a></td>
+												<td id="orderId">${sell.order.orderId }</td>
+												<td style="text-align: right;" id="moneyIn">${sell.moneyIn }
+												</td>
+												<td style="text-align: right;">${sell.totalAmount }
+												</td>
+												<td style="text-align: center;">${sell.saleDatetime}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</div>
-						<!-- end: page -->
 					</div>
+					<!-- end: page --></div>
+										
 					<!-- end Panel -->
 
 
@@ -369,9 +386,10 @@
                     time: 1200
                 });
                 
-                $("table tbody tr td #saleId").click(function(){
+                $(document).on(" click","table tbody tr td #saleId", function(){
                 
                 	var id =  $(this).parent().parent().children().eq(1).html()
+                	alert(id);
                 	
                 	$("#sellDetail").bPopup();
                 	//alert("${pageContext.request.contextPath}/admin/sell/"+id); 
