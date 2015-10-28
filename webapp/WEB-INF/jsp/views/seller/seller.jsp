@@ -300,7 +300,7 @@
 					</div>
 					<div class="modal-footer" style="height: 80px; overflow: auto;">
 						<button type="button" class="btn btn-default" id="btnUpdate">
-							<span class="button"><span>Update</span></span> 
+							<span class="button b-close"><span>Update</span></span> 
 <!-- 							<span style="display:none;" class='btnhidden' id='orderID'></span> -->
 						</button>
 						<button type="button" class="btn btn-primary" id="cancelbtn">
@@ -488,6 +488,7 @@
 var _orderid = 0;
 var _productid = 0;
 var _qty = 0;
+var _thisRow;
 	$(document)
 			.ready(
 					function() {
@@ -550,29 +551,14 @@ var _qty = 0;
 
 						});
 
-						$(document)
-								.on(
-										'click',
-										'#cusordered',
-										function() {
+						$(document).on('click','#cusordered',function() {
 											_this = $(this);
-											_orderid = (_this.find("#orderedId")
-													.html());
-											$("#btnconfirmorder").removeClass(
-													"hidebtn");
-											$("#btncancelorder").removeClass(
-													"hidebtn");
+											_orderid = (_this.find("#orderedId").html());
+											$("#btnconfirmorder").removeClass("hidebtn");
+											$("#btncancelorder").removeClass("hidebtn");
 											$("#btncancel").addClass("hidebtn");
-											$("#btnconfirm")
-													.addClass("hidebtn");
-
-											$
-													.ajax({
-														url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"
-																+ _this
-																		.find(
-																				"#orderedId")
-																		.html(),
+											$("#btnconfirm").addClass("hidebtn");
+											$.ajax({url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"+ _this.find("#orderedId").html(),
 														type : 'GET',
 														dataType : 'JSON',
 														beforeSend : function(
@@ -696,6 +682,7 @@ var _qty = 0;
 										'click',
 										"#btndelete, #btnminus, #btnedit,#cancelbtn",
 										function() {
+											_thisRow = $(this).parents("tr"); 
 											var st = "";
 											var _url = "";
 											var amount = 0;
@@ -843,7 +830,6 @@ var _qty = 0;
 
 			$("#btnUpdate").click(function(){
 				_qty =$("#qtytxt").val();
-				alert("${pageContext.request.contextPath}/seller/updateOrderProduct/"+ _orderid + "/"+ _productid + "/" +_qty);
 				$.ajax({
 					url : "${pageContext.request.contextPath}/seller/updateOrderProduct/"+ _orderid + "/"+ _productid + "/" +_qty,
 					type : 'GET',
@@ -860,6 +846,12 @@ var _qty = 0;
 										"application/json");
 					},
 					success : function(data) {
+						var subtotal = $("#qtytxt").val() * _thisRow.children().eq(2).html();
+						var totalamount = $("#totalamount").val() - _thisRow.children().eq(4).html();
+						
+	            		_thisRow.children().eq(3).html($("#qtytxt").val()); 
+	            		_thisRow.children().eq(4).html(subtotal);
+	            		$("#totalamount").val(subtotal + totalamount);
 					},
 					error : function(data,
 							status, er) {
