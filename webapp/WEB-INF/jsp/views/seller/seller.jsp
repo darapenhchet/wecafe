@@ -417,7 +417,7 @@
 							<label class="control-label col-sm-10" for="txtName">Total
 								Amount :</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" maxlength="30"
+								<input type="text" class="form-control" maxlength="30" readonly="readonly"
 									name="txtName" id="totalamount" style="margin-bottom: 2px;">
 							</div>
 						</div>
@@ -494,6 +494,17 @@ var _thisRow;
 					function() {
 						getsizeSession();
 						getordered();
+						$(document).on('keypress','#qtytxt', function(e){
+
+							if((e.keyCode == 8) || (e.keyCode == 46) || ((e.keyCode >=37) && (e.keyCode <= 40)))
+								return ;
+
+						var data = String.fromCharCode(e.which);	
+								var reg = new RegExp('^[0-9]+$');
+					    	    if(!reg.test(data)){
+					    	    	e.preventDefault();
+								}
+						     });
 						$("#btnlistorder").click(function() {
 							getordered();
 						});

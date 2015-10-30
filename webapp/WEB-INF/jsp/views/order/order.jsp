@@ -13,6 +13,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/xregexp-all.js"></script>
   <style>
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
@@ -219,7 +220,7 @@
 								<div class="form-group">
 								      	<label class="control-label col-sm-10" for="txtName">Total Amount :</label>
 								      	<div class="col-sm-2">
-								         	<input type="text" class="form-control" maxlength="30" name="txtName" id="totalamount" style="margin-bottom: 2px;"> 
+								         	<input type="text" class="form-control" maxlength="30" name="txtName" readonly="readonly" id="totalamount" style="margin-bottom: 2px;"> 
 								    	</div>
 		    					</div>
 		    				 						 
@@ -244,6 +245,19 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			getsizeSession();
+			
+			$(document).on('keypress','#proqty', function(e){
+
+				if((e.keyCode == 8) || (e.keyCode == 46) || ((e.keyCode >=37) && (e.keyCode <= 40)))
+					return ;
+
+			var data = String.fromCharCode(e.which);	
+					var reg = new RegExp('^[0-9]+$');
+		    	    if(!reg.test(data)){
+		    	    	e.preventDefault();
+					}
+			     });	
+		 
 			$("#btnconfirm").click(function(){
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/order/insertcartorder/", 
