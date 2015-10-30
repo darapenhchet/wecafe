@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -25,15 +27,18 @@ import javax.persistence.Transient;
 		joinColumns = @JoinColumn(name = "pro_id")) })
 public class ImportDetail {
 
-	@Id
+/*	@Id
 	// value primary key
 	@SequenceGenerator(allocationSize = 1, initialValue = 1, sequenceName = "importDetail_imp_detail_id_seq", name = "imp_detail_id")
-	@GeneratedValue(generator = "imp_detail_id", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "imp_detail_id", strategy = GenerationType.SEQUENCE)*/
 	
 	
 	@EmbeddedId
 	private importDetailPK pk1 = new importDetailPK();
 	
+	@ManyToOne
+	@JoinColumn(name="sup_id")
+	private Supplier supplier;
 	
 	@Column(name = "imp_detail_id")
 	private long impDetailId;
@@ -47,8 +52,8 @@ public class ImportDetail {
 	@Column(name = "pro_status")
 	private Boolean proStatus;
 
-		@Column(name = "sup_id")
-	private long supId;
+//	@Column(name = "sup_id")
+//	private long supId;
 
 	@Transient
 	private long supplierid;
@@ -102,14 +107,14 @@ public class ImportDetail {
 		this.proStatus = proStatus;
 	}
 
-	public long getSupId() {
-		return supId;
-	}
-
-	public void setSupId(long supId) {
-		this.supId = supId;
-	}
-	
+//	public long getSupId() {
+//		return supId;
+//	}
+//
+//	public void setSupId(long supId) {
+//		this.supId = supId;
+//	}
+//	
 	@Transient
 	public Product getProduct(){
 		return pk1.getProduct();
@@ -128,4 +133,11 @@ public class ImportDetail {
 		this.pk1.setImportProduct(importProduct);
 	}
 
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 }

@@ -14,17 +14,29 @@ public class test {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
-			Query query = session.createQuery("SELECT new Map(io.proQty as proQty ,product.productName as productName, ip.userId as userId )"
+			Query query = session.createQuery("SELECT new Map("
+					+ "io.proQty as proQty"
+					+ ", io.unitPrice as unitPrice"
+					+ ", io.proStatus as status"
+					+ ",product.productName as productName"
+					+ ",ip.userId as userId"
+					+ ",sp.supplierName as supplierName)"
 					+ "FROM ImportDetail io "
 					+ "INNER JOIN io.pk1.product product "
-					+ "INNER JOIN io.pk1.importProduct ip ");
+					+ "INNER JOIN io.pk1.importProduct ip "
+					+ "INNER JOIN io.supplier sp"
+					);
 			
 			List<Map> products = (ArrayList<Map>)query.list();
 			System.out.println("products.size()" + products.size());
 			for(Map product : products){
 				System.out.println("product.productName" + product.get("productName"));
-				System.out.println("IP.userId" + product.get("proQty"));
-				System.out.println("I.proQty" +  product.get("userId"));
+				System.out.println("qty" + product.get("proQty"));
+				System.out.println("user id" +  product.get("userId"));
+				System.out.println("supplierName " +  product.get("supplierName"));
+				System.out.println("status " +  product.get("status"));
+				System.out.println("status " +  product.get("unitPrice"));
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

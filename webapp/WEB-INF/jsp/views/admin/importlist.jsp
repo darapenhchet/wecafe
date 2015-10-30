@@ -109,26 +109,28 @@
 											<th style="text-align: center;">Unit Price</th>
 											<th style="text-align: center;">Status</th>
 											<th style="text-align: center;">Supplier Name</th>
+											<th style="text-align: center;">import By</th>
+											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-<%-- 										<c:forEach items="${suppliers}" var="supplier"> --%>
-<!-- 											<tr> -->
-<%-- 												<td id="supplierId">${supplier.supId}</td> --%>
-<%-- 												<td id="supplierName">${supplier.supplierName }</td> --%>
-<%-- 												<td style="text-align: right;">${supplier.supplierNumber } --%>
-<!-- 												</td> -->
-<%-- 												<td style="text-align: right;">${supplier.supplierEmail } --%>
-<!-- 												</td> -->
-<%-- 												<td style="text-align: center;">${supplier.supplierAddress}</td> --%>
-<!-- 												<td class="actions" style="text-align: center;"><a -->
-<!-- 													class="on-default edit-row" -->
-<%-- 													href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i --%>
-<!-- 														class="fa fa-pencil"></i></a> <a class="on-default remove-row" -->
-<!-- 													href="javascript:;" id="btnRemove"><i -->
-<!-- 														class="fa fa-trash-o"></i></a></td> -->
-<!-- 											</tr> -->
-<%-- 										</c:forEach> --%>
+										<c:forEach items="${importproducts}" var="importproducts">
+											<tr>
+												<td id=""></td>
+												<td id="importNm">${importproducts.productName}</td>
+												<td id="importQty">${importproducts.proQty }</td>
+												<td style="text-align: right;" id="">${importproducts.unitPrice }</td>
+												<td style="text-align: right;">${importproducts.status }
+												<td style="text-align: right;">${importproducts.supplierName }
+												<td style="text-align: right;">${importproducts.userId }
+												<td class="actions" style="text-align: center;"><a
+													class="on-default edit-row"
+													href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i
+														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
+													href="javascript:;" id="btnRemove"><i
+														class="fa fa-trash-o"></i></a></td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>

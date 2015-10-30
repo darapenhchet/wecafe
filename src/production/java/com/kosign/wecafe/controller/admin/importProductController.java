@@ -39,7 +39,7 @@ public class importProductController {
 	
 	@RequestMapping(value="/admin/importlist", method=RequestMethod.GET)
 	public String listAllImpProduct(Map<String, Object>model){
-//		model.put("supplier",importServiceImp.listAllSupplier());
+		model.put("importproducts",importService.listAllImportProduct());
 		return "admin/importlist";
 	}
 	
@@ -62,9 +62,9 @@ public class importProductController {
 	public @ResponseBody Boolean saveImpProduct(@RequestBody List<ImportForm> importForm)	{
 		ImportDetail importDetails = new ImportDetail();
 		System.out.println(importForm.size());
-		return true;
-		/*try {
-			Product product = productService.findProductById(importForm.getProId());
+		try {
+			/*
+			 * Product product = productService.findProductById(importForm.getProId());
 		    //Supplier supplier = supplierService.findSupplierById(importForm.getSupplierId());
 			importDetails.setProduct(product);
 			
@@ -72,11 +72,13 @@ public class importProductController {
 			importDetails.setUnitPrice(importForm.getUnitPrice());
 			importDetails.setProStatus(true);
 			importDetails.setSupId(importForm.getSupplierId());
-			return importService.saveImportPro(importDetails);
+			;*/
+			return importService.saveImportPro(importForm);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
-		return false;*/
+		return false;
 	}
 	
 	
