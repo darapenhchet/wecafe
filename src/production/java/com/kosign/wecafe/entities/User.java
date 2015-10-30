@@ -57,8 +57,8 @@ public class User {
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-	private List<ImportProduct> importproduct = new ArrayList<>();
+	/*@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<ImportProduct> importproduct = new ArrayList<>();*/
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
@@ -172,13 +172,13 @@ public class User {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-	public List<ImportProduct> getImportproduct() {
+/*	public List<ImportProduct> getImportproduct() {
 		return importproduct;
 	}
 
 	public void setImportproduct(List<ImportProduct> importproduct) {
 		this.importproduct = importproduct;
-	}
+	}*/
 
 	
 	

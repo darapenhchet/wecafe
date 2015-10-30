@@ -40,9 +40,8 @@ public class ImportProduct implements Serializable{
 	@Column(name="imp_date")
 	private Date impDate;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private User user;
+	@Column(name="user_id")
+	private long userId;
 	
 	
 
@@ -74,12 +73,12 @@ public class ImportProduct implements Serializable{
 		this.impDate = impDate;
 	}
 
-	public User getUser() {
-		return user;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	
