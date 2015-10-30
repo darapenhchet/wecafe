@@ -44,7 +44,7 @@ public class OrderDetail implements java.io.Serializable{
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="order_id")
 	private Order order;*/
-	
+
 	@Column(name="pro_qty")
 	private long proQty;
 	

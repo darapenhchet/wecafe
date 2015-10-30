@@ -77,7 +77,8 @@ public class ImportServiceImp implements ImportService {
 			ImportProduct importProduct = new ImportProduct();
 			importProduct.setImpDate(new Date());
 			User user = userService.findUserByUsername(getPrincipal());
-			importProduct.setUserId(user.getId());
+			importProduct.setUser(user);
+			System.out.println("userid idididi" + user.getId());
 			//session.save(importProduct);
 
 			//2.save import detail

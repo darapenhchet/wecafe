@@ -36,15 +36,13 @@ public class ImportProduct implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk1.importProduct", cascade=CascadeType.ALL)
 	private Set<ImportDetail> importDetail = new HashSet<ImportDetail>();
 	
-	@ManyToOne
-	@JoinColumn(name="USER_ID")
-	private User user;
 	
 	@Column(name="imp_date")
 	private Date impDate;
 
-	@Column(name="user_id")
-	private long userId;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	
 
@@ -76,14 +74,6 @@ public class ImportProduct implements Serializable{
 		this.impDate = impDate;
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -91,6 +81,6 @@ public class ImportProduct implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	
 }

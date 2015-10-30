@@ -19,11 +19,12 @@ public class test {
 					+ ", io.unitPrice as unitPrice"
 					+ ", io.proStatus as status"
 					+ ",product.productName as productName"
-					+ ",ip.userId as userId"
+					+ ",U.email as userId"
 					+ ",sp.supplierName as supplierName)"
 					+ "FROM ImportDetail io "
 					+ "INNER JOIN io.pk1.product product "
 					+ "INNER JOIN io.pk1.importProduct ip "
+					+ "INNER JOIN io.pk1.importProduct.user U "
 					+ "INNER JOIN io.supplier sp"
 					);
 			

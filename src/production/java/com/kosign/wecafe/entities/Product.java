@@ -54,6 +54,7 @@ public class Product implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY,  mappedBy = "pk1.product", cascade=CascadeType.ALL)
 	private Set<ImportDetail> importDetail = new HashSet<ImportDetail>();
 	
+	
 	@Column(name="pro_name")
 	private String productName;
 	

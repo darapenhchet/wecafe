@@ -1,7 +1,9 @@
 package com.kosign.wecafe.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,6 +56,9 @@ public class User {
              joinColumns = { @JoinColumn(name = "USER_ID") }, 
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<ImportProduct> importproduct = new ArrayList<>();
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
@@ -165,5 +171,16 @@ public class User {
 	public void setLastUpdatedBy(User lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
+
+	public List<ImportProduct> getImportproduct() {
+		return importproduct;
+	}
+
+	public void setImportproduct(List<ImportProduct> importproduct) {
+		this.importproduct = importproduct;
+	}
+
+	
+	
 	
 }
