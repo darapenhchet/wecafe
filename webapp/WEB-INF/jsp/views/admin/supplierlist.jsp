@@ -112,10 +112,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${suppliers}" var="supplier">
+										<c:forEach items="${suppliers}" var="supplier" varStatus="theCount">
 											<tr>
 												<td id="supplierId" style="display: none;">${supplier.supId}</td>
-												<td ></td>
+												<td >${theCount.count }  </td>
 												<td id="supplierName">${supplier.supplierName }</td>
 												<td style="text-align: right;">${supplier.supplierNumber }
 												</td>
@@ -124,7 +124,7 @@
 												<td style="text-align: center;">${supplier.supplierAddress}</td>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/product/${supplier.supId}"><i
+													href="${pageContext.request.contextPath}/admin/viewupdate/${supplier.supId}"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
 											</tr>

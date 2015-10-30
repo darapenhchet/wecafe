@@ -57,14 +57,15 @@ public class SupplierImpl implements SupplierService{
 	}
 
 	@Override
-	public Boolean updateSupplier(Supplier supplier) {
-		
+	public Boolean updateSupplier(Supplier supplier) { 
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
+//			Supplier suppliers = session.get(Supplier.class, supplier.getSupId());
 			session.update(supplier);
-			
+
+			session.beginTransaction().commit();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,6 +83,7 @@ public class SupplierImpl implements SupplierService{
 		try {
 			session.getTransaction().begin();
 			Supplier supplier = session.get(Supplier.class, id);
+			System.out.println(supplier.getSupplierName());
 			session.getTransaction().commit();
 			return supplier;
 			
@@ -92,7 +94,6 @@ public class SupplierImpl implements SupplierService{
 		}finally {
 			session.close();
 		}
-		
 		return null;
 	}
 

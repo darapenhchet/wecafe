@@ -2,6 +2,7 @@ package com.kosign.wecafe.controller.admin;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -56,11 +57,14 @@ public class SupplierController {
 		return false;
 	}
 	
-	@RequestMapping(value="/admin/updateSupplier", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Boolean updateSupplier(@RequestBody Supplier supplierForm, Principal principal){
+	@RequestMapping(value="/admin/updateSupplier/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Boolean updateSupplier(@RequestBody Supplier supplierForm,@PathVariable("id") Long id, Principal principal){
 		
 		try {
-			Supplier suppliers = new Supplier();
+			
+			System.out.println("id= " + id);
+			Supplier suppliers = new Supplier(); 
+			suppliers.setSupId(id);
 			suppliers.setCreatedBy(principal.getName());
 			suppliers.setCreatedDate(new Date());
 			suppliers.setLastUpdatedBy(principal.getName());
@@ -76,6 +80,14 @@ public class SupplierController {
 		}
 		return false;
 	}
+	@RequestMapping(value="/admin/viewupdate/{id}", method=RequestMethod.GET)
+	public String updatesup(@PathVariable Long id, Map<String, Object> model){
+		model.put("supplier", (Supplier)SupplierService.findSupplierById(id));
+		
+		System.out.println(((Supplier)(model.get("supplier"))).getSupplierName());
+		return "admin/supplierupdate";		
+	}
+	
 	@RequestMapping(value="/admin/delete/{id}" , method=RequestMethod.POST)
 	public @ResponseBody Boolean deleteSupplier(@PathVariable Long id){
 		System.out.println(id);
