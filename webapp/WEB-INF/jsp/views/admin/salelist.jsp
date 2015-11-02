@@ -104,17 +104,18 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th style="text-align: right;">Order Number</th>
+											<th style="text-align: right;">Sale Number</th>
 											<th style="text-align: center;">Money</th>
 											<th style="text-align: center;">Total Amount</th>
 											<th style="text-align: center;">Date</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${Sale}" var="sell">
+										<c:forEach items="${Sale}" var="sell" varStatus="theCount">
 											<tr>
-												<td><a href="javascipt:" id="saleId">${sell.saleId}</a></td>
-												<td id="orderId">${sell.order.orderId }</td>
+												<td >${theCount.count }</td>
+												<td id="orderId" style="display : none;">${sell.order.orderId }</td>
+												<td><a href="javascipt:" id="saleId">${sell.saleId}</a></td>												
 												<td style="text-align: right;" id="moneyIn">${sell.moneyIn }
 												</td>
 												<td style="text-align: right;">${sell.totalAmount }

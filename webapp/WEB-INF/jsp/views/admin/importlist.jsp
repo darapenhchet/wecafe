@@ -114,9 +114,9 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${importproducts}" var="importproducts">
+										<c:forEach items="${importproducts}" var="importproducts" varStatus="theCount">
 											<tr>
-												<td id=""></td>
+												<td id="">${theCount.count }</td>
 												<td id="importNm">${importproducts.productName}</td>
 												<td id="importQty">${importproducts.proQty }</td>
 												<td style="text-align: right;" id="">${importproducts.unitPrice }</td>

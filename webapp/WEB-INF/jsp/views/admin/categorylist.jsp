@@ -103,9 +103,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${categories}" var="category">
+                                    <c:forEach items="${categories}" var="category" varStatus="theCount">
                                         <tr class="gradeX">
-                                            <td id="CATEGORY_ID">${category.catId}</td>
+                                            <td id="CATEGORY_ID" style="display : none;">${category.catId}</td>
+                                            <td >${theCount.count }</td>
                                             <td>${category.catName }</td>
                                             <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/${category.img }" class="img-thumbnail" alt="${category.catName}" width="30px" height="30px" /></td>
                                             <td>${category.createdBy.lastName } ${category.createdBy.firstName }</td>

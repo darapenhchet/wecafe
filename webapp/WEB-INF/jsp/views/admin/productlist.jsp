@@ -117,9 +117,11 @@
 
                                              
                                                     <tbody>
-                                                    	<c:forEach items="${products}" var="product">
+                                                    	<c:forEach items="${products}" var="product" varStatus="theCount">
                                                         <tr>
-                                                        	<td id="PRODUCT_ID">${product.productId }</td>
+                                                        	<td id="PRODUCT_ID" style="display : none;">${product.productId }</td>
+                                                        	
+                                                        	<td >${theCount.count }</td>
                                                             <td>${product.productName}</td>
                                                             <td style="text-align:right;">${product.quantity}</td>
                                                             <td style="text-align:right;">${product.unitPrice} <span style="font-weight:bold;">Riel</span></td>
