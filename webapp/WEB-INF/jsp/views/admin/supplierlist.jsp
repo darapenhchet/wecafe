@@ -114,7 +114,8 @@
 									<tbody>
 										<c:forEach items="${suppliers}" var="supplier" varStatus="theCount">
 											<tr>
-												<td id="supplierId">${theCount.count }</td>
+												<td id="supplierId" style="display : none;">${supplier.supId}</td>											
+												<td >${theCount.count }</td>
 												<td id="supplierName">${supplier.supplierName }</td>
 												<td style="text-align: right;">${supplier.supplierNumber }
 												</td>
@@ -328,17 +329,17 @@
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-			$('#datatable').dataTable();
+			//$('#datatable').dataTable();
 
 			$('.counter').counterUp({
 				delay : 100,
 				time : 1200
 			});
 			
-			$(function(){
-				 	    	$(document).on('click','#btnRemove',function(){ 
-				 	    		alert();
+			 
+				 	    	$(document).on('click','#btnRemove',function(){  
 				   				var id = $(this).parents("tr").find("#supplierId").html(); 
+				   				alert(id);
 				   				if(confirm("Do you want to delete that supplier?")){
 				   					$.ajax({ 
 				   					    url: "${pageContext.request.contextPath}/admin/delete/"+id, 
@@ -365,8 +366,7 @@
 				 					
 				   				}
 				 			});
-				     	});
-
+				      
 		});
 	</script>
 
