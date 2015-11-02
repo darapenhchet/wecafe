@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -79,7 +80,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST)
-	public  @ResponseBody Boolean addNewProduct(ProductForm form){
+	public  @ResponseBody Boolean addNewProduct(ProductForm form , HttpServletRequest request){
 		
 		String name = form.getImages().getOriginalFilename();
 		System.out.println("name="+form.getProductName());
@@ -88,18 +89,26 @@ public class ProductController {
                 byte[] bytes = form.getImages().getBytes();
                 UUID uuid = UUID.randomUUID();
                 String randomUUIDFileName = uuid.toString();
-                
+
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+/*                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                 String fileName = File.separator +"resources"
                         		+ File.separator + "images" + File.separator + "products" + File.separator
-                        		+ randomUUIDFileName+"."+extension;
+                        		+ randomUUIDFileName+"."+extension;*/
+                
+                // creating the directory to store file
+                String savePath = request.getServletContext().getRealPath("/resources/images/products/");
+				System.out.println(savePath);
+				File path = new File(savePath);
+				if(!path.exists()){
+					path.mkdir();
+				}
                 
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(webappRoot+fileName));
+                        new BufferedOutputStream(new FileOutputStream(new File(savePath + File.separator  + randomUUIDFileName + "." + extension)));
                 stream.write(bytes);
                 stream.close();
-                System.out.println( "You successfully uploaded " + name + "!");
+                System.out.println( "You successfully uploaded " + savePath + File.separator + randomUUIDFileName+extension + "!");
 
                 
                 Product product = new Product();
@@ -163,11 +172,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/admin/product/update", method = RequestMethod.POST)
-	public @ResponseBody boolean updateProduct(ProductForm product) {
-		//User user = userService.findUserByUsername(getPrincipal());
-		//product.setLastUpdatedBy(user);
-		//System.out.println()
-		
+	public @ResponseBody boolean updateProduct(ProductForm product, HttpServletRequest request) {
+
 		System.out.println("UPDATING CONTROLLER...");
 		String name = product.getImages().getOriginalFilename();
 		System.out.println("name="+product.getProductName());
@@ -178,13 +184,20 @@ public class ProductController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
-                String fileName = File.separator +"resources"
-                        		+ File.separator + "images" + File.separator + "products" + File.separator
-                        		+ randomUUIDFileName+"."+extension;
+                /*                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+                                String fileName = File.separator +"resources"
+                                        		+ File.separator + "images" + File.separator + "products" + File.separator
+                                        		+ randomUUIDFileName+"."+extension;*/
+                                
+                                // creating the directory to store file
+				String savePath = request.getServletContext().getRealPath("/resources/images/products/");
+				File path = new File(savePath);
+				if(!path.exists()){
+					path.mkdir();
+				}
                 
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(webappRoot+fileName));
+                        new BufferedOutputStream(new FileOutputStream(savePath + File.separator + randomUUIDFileName+"."+extension));
                 stream.write(bytes);
                 stream.close();
                 System.out.println( "You successfully uploaded " + name + "!");
@@ -218,8 +231,6 @@ public class ProductController {
 	public String productInvoice(){
 		return "admin/invoice";
 	}
-	
-	
 
 	private String getPrincipal() {
 		String userName = null;

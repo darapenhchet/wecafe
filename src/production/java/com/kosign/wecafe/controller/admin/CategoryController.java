@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value="/admin/category/add", method=RequestMethod.POST)
-	public  @ResponseBody Boolean addNewCategory(CategoryForm form, Principal principal){
+	public  @ResponseBody Boolean addNewCategory(CategoryForm form, Principal principal, HttpServletRequest request){
 		
 		String name = form.getImage().getOriginalFilename();
 		if (!form.getImage().isEmpty()) {
@@ -55,13 +56,19 @@ public class CategoryController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+                /*String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                 String fileName = File.separator +"resources"
                         		+ File.separator + "images" + File.separator + "categories" + File.separator
-                        		+ randomUUIDFileName+"."+extension;
+                        		+ randomUUIDFileName+"."+extension;*/
+                
+                String savePath = request.getServletContext().getRealPath("/resources/images/categories/");
+				File path = new File(savePath);
+				if(!path.exists()){
+					path.mkdir();
+				}
                 
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(webappRoot+fileName));
+                        new BufferedOutputStream(new FileOutputStream(savePath + File.separator + randomUUIDFileName+"."+extension));
                 stream.write(bytes);
                 stream.close();
                 System.out.println( "You successfully uploaded " + name + "!");
@@ -95,7 +102,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value="/admin/category/update", method=RequestMethod.POST)
-	public  @ResponseBody Boolean updateCategory(CategoryForm form, Principal principal){
+	public  @ResponseBody Boolean updateCategory(CategoryForm form, Principal principal, HttpServletRequest request){
 		System.out.println(form.getImage());
 		String name = form.getImage().getOriginalFilename();
 		if (!form.getImage().isEmpty()) {
@@ -105,13 +112,20 @@ public class CategoryController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
+                /*
                 String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                 String fileName = File.separator +"resources"
                         		+ File.separator + "images" + File.separator + "categories" + File.separator
-                        		+ randomUUIDFileName+"."+extension;
+                        		+ randomUUIDFileName+"."+extension;*/
+                
+                String savePath = request.getServletContext().getRealPath("/resources/images/categories/");
+				File path = new File(savePath);
+				if(!path.exists()){
+					path.mkdir();
+				}
                 
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(webappRoot+fileName));
+                        new BufferedOutputStream(new FileOutputStream(savePath + File.separator + randomUUIDFileName+"."+extension));
                 stream.write(bytes);
                 stream.close();
                 System.out.println( "You successfully uploaded " + name + "!");
