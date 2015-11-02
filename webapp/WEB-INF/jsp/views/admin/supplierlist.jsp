@@ -107,12 +107,15 @@
 											<th>Order Number</th>
 											<th style="text-align: right;">Total Amount</th>
 											<th style="text-align: center;">Data</th>
+											<th style="text-align: center;">Address</th>
+											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${suppliers}" var="supplier">
+										<c:forEach items="${suppliers}" var="supplier" varStatus="theCount">
 											<tr>
-												<td id="supplierId">${supplier.supId}</td>
+												<td id="supplierId" style="display : none;">${supplier.supId}</td>											
+												<td >${theCount.count }</td>
 												<td id="supplierName">${supplier.supplierName }</td>
 												<td style="text-align: right;">${supplier.supplierNumber }
 												</td>
@@ -121,7 +124,7 @@
 												<td style="text-align: center;">${supplier.supplierAddress}</td>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i
+													href="${pageContext.request.contextPath}/admin/viewupdate/${supplier.supId}"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
@@ -326,13 +329,44 @@
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-			$('#datatable').dataTable();
+			//$('#datatable').dataTable();
 
 			$('.counter').counterUp({
 				delay : 100,
 				time : 1200
 			});
-
+			
+			 
+				 	    	$(document).on('click','#btnRemove',function(){  
+				   				var id = $(this).parents("tr").find("#supplierId").html(); 
+				   				alert(id);
+				   				if(confirm("Do you want to delete that supplier?")){
+				   					$.ajax({ 
+				   					    url: "${pageContext.request.contextPath}/admin/delete/"+id, 
+				   					    type: 'POST', 
+				    					    dataType: 'JSON', 
+				   					    //data: JSON.stringify(json), 
+				   					    beforeSend: function(xhr) {
+				   		                    xhr.setRequestHeader("Accept", "application/json");
+				   		                    xhr.setRequestHeader("Content-Type", "application/json");
+				    		                },
+				   					    success: function(data) { 
+				   					    	console.log(data);
+				   					        if(data){
+				   					        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
+				   					        	location.href="${pageContext.request.contextPath}/admin/supplierlist";
+				  					        }else{
+				   					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
+				   					        }
+				   					    },
+				   					    error:function(data,status,er) { 
+				   					        console.log("error: "+data+" status: "+status+" er:"+er);
+				   					    }
+				   					});
+				 					
+				   				}
+				 			});
+				      
 		});
 	</script>
 
