@@ -67,7 +67,7 @@ public class OrderProductServiceImpl implements OrderProductService{
 		try{
 			session = HibernateUtil.getSessionFactory().openSession();
 			
-			Query query = session.createQuery("FROM Product");
+			Query query = session.createQuery("FROM Product Where status = true");
 			
 			List<Product> products = query.list();
 			
