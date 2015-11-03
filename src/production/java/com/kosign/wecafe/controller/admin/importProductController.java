@@ -95,11 +95,19 @@ public class importProductController {
 		return false;
 	}
 	
+	@RequestMapping(value="admin/getimportdetail{id}", method=RequestMethod.POST)
+		public @ResponseBody List<Map> importdetail(@PathVariable("id") Long impid, Map<String, Object>model){
+			   
+		return importService.listAllImportDetail(impid);
+			
+		}
+	 
 	@RequestMapping(value="/admin/viewById/{id}", method=RequestMethod.GET)
 	public String viewById(@PathVariable("id") Long impid, Map<String, Object>model){
-		model.put("importpro", importService.findById(impid));
-//		  model.put("supplier", (Supplier)SupplierService.findSupplierById(id));
+		 
+		model.put("importpro", importService.listAllImportDetail(impid)); 
 		  
+		 
 		return "admin/importupdate";
 	}
 	

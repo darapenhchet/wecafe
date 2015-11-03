@@ -239,28 +239,37 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	@Override
-	public Map findById(Long id) {
+	public List<Map> findById(Long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			
-			Query query = session.createQuery("SELECT new Map("
-					+ "io.proQty as proQty"
-					+ ",ip.impId as impId"
-					+ ", io.unitPrice as unitPrice"
-					+ ", io.proStatus as status"
-					+ ",product.productName as productName"
-					+ ", product.productId as productId"
-					+ ",ip.userId as userId"
-					+ ",sp.supplierName as supplierName)"
-					+ "FROM ImportDetail io "
-					+ "INNER JOIN io.pk1.product product "
-					+ "INNER JOIN io.pk1.importProduct ip "
-					+ "INNER JOIN io.supplier sp "
-					+ "WHERE ip.impId = ? "
-					);
+//			Query query = session.createQuery("SELECT new Map("
+//					+ "io.proQty as proQty"
+//					+ ",ip.impId as impId"
+//					+ ", io.unitPrice as unitPrice"
+//					+ ", io.proStatus as status"
+//					+ ",product.productName as productName"
+//					+ ", product.productId as productId"
+//					+ ",ip.userId as userId"
+//					+ ",sp.supplierName as supplierName)"
+//					+ "FROM ImportDetail io "
+//					+ "INNER JOIN io.pk1.product product "
+//					+ "INNER JOIN io.pk1.importProduct ip "
+//					+ "INNER JOIN io.supplier sp "
+//					+ "WHERE ip.impId = ? "
+//					);
+			Query query = session.createQuery("Select new Map("
+					+ "p.productName as proname,"
+					+ "impdetail.proQty as proqty,"
+					+ "impdetail.unitPrice as prounitprice,"
+					+ "impdetail.supplier.supplierName as supname)"
+					+ " FROM ImportDetail impdetail" 
+					+ " INNER JOIN impdetail.pk1.product  p"
+					+ " WHERE impdetail.pk1.importProduct.impId= ? ");
+			
 			query.setParameter(0, id);
 			
-			Map importProducts = (Map)query.uniqueResult();
+			List<Map> importProducts = (List<Map>)query.list();
 			
 			return importProducts;
 			
@@ -271,13 +280,22 @@ public class ImportServiceImp implements ImportService {
 		return null;
 	}
 	
-	public List<ImportDetail> listAllImportDetail(Long id){
+	public List<Map> listAllImportDetail(Long id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
-			Query query = session.createQuery("FROM ImportDetail WHERE impId = ? ");
+			Query query = session.createQuery("Select new Map("
+											+ "p.productName as proname,"
+											+ "p.productId as proid,"
+											+ "impdetail.proQty as proqty,"
+											+ "impdetail.unitPrice as prounitprice,"
+											+ "impdetail.supplier.supId as supId,"
+											+ "impdetail.supplier.supplierName as supname)"
+											+ " FROM ImportDetail impdetail" 
+											+ " INNER JOIN impdetail.pk1.product  p"
+											+ " WHERE impdetail.pk1.importProduct.impId= ? ");
 			query.setParameter(0, id);
-			List<ImportDetail> importDetails = query.list();
+			List<Map> importDetails = query.list();
 			session.getTransaction().commit();
 			return importDetails;
 		} catch (Exception e) {

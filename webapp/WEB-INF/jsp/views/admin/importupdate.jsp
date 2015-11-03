@@ -104,7 +104,7 @@
                                                 <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Qty *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="qty"   name="qty" type="text">
+                                                        <input class="form-control " id="qty"  name="qty" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -142,24 +142,25 @@
 											<th style="text-align: center;">Edit</th>
 										</tr>
 									</thead>
-									<tbody id="tbllistimport">
-
-<!-- 											<tr> -->
-
-
-
-<!-- 												</td> -->
-
-<!-- 												</td> -->
-
-<!-- 												<td class="actions" style="text-align: center;"><a -->
-<!-- 													class="on-default edit-row" -->
-
-<!-- 														class="fa fa-pencil"></i></a> <a class="on-default remove-row" -->
-<!-- 													href="javascript:;" id="btnRemove"><i -->
-<!-- 														class="fa fa-trash-o"></i></a></td> -->
-<!-- 											</tr> -->
-
+									<tbody id="tbllistimport"> 
+											<c:forEach items="${importpro}" var="importpro" varStatus="theCount">
+											<tr>
+												<%-- <td id="supplierId" style="display : none;">${supplier.supId}</td> --%>	
+												<td id="supplierId" style="display: none;">${importpro.proid }</td>										
+												<td >${theCount.count }</td>
+												<td id="supplierName">${importpro.proname }</td>  
+												<td id="supplierName">${importpro.proqty }</td> 
+												<td id="supplierName">${importpro.prounitprice }</td> 
+												<td id="supplierId" style="display: none;">${importpro.supId }</td>	
+												<td id="supplierName">${importpro.supname }</td> 
+												<td class="actions" style="text-align: center;"><a
+													class="on-default edit-row"
+													<%-- href="${pageContext.request.contextPath}/admin/viewupdate/${supplier.supId}" --%>><i
+														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
+													href="javascript:;" id="btnRemove"><i
+														class="fa fa-trash-o"></i></a></td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -362,7 +363,8 @@
             	searchProduct();
             	searchSupplier();
             	var _thisRow ;
-            	
+            	  
+            	 
                 $(document).on('keypress','#qty, #UnitPrice', function(e){
 
     				if((e.keyCode == 8) || (e.keyCode == 46) || ((e.keyCode >=37) && (e.keyCode <= 40)))

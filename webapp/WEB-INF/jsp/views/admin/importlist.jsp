@@ -368,7 +368,32 @@
 				time : 1200
 			});
 			 $(document).on("click","#impid", function(){
-				 $("#impDetail").bPopup();
+				 
+				   $.ajax({ 
+					    url: "${pageContext.request.contextPath}/admin/getimportdetail" + $(this).html() , 
+					    type: 'POST', 
+					    dataType: 'JSON', 
+					    beforeSend: function(xhr) {
+		                    xhr.setRequestHeader("Accept", "application/json");
+		                    xhr.setRequestHeader("Content-Type", "application/json");
+		                },
+					    success: function(data) { 
+					    	var st= "";
+					       for(i=0; i<data.length; i++){
+					    	   st += "<tr><td>" + (i + 1) + "</td>";
+					    	   st += "<td>" + data[i].proname +"</td>";
+					    	   st += "<td>" + data[i].proqty +"</td>";
+					    	   st += "<td>" + data[i].prounitprice +"</td>";
+					    	   st += "<td>" + data[i].supname +"</td></tr>"
+					       }
+					       $("#impProDetail").html(st);
+					    },
+					    error:function(data,status,er) { 
+					        console.log("error: "+data+" status: "+status+" er:"+er);
+					    }
+					});
+				 
+				 $("#impDetail").bPopup();  
 			 });
 			function searchSupplier(){
 				$.ajax({ 
