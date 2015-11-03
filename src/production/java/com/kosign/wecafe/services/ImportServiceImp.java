@@ -19,6 +19,7 @@ import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
 import com.kosign.wecafe.entities.User;
+import com.kosign.wecafe.entities.importDetailPK;
 import com.kosign.wecafe.forms.ImportForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -39,6 +40,7 @@ public class ImportServiceImp implements ImportService {
 					+ "INNER JOIN io.pk1.importProduct ip ");*/
 			Query query = session.createQuery("SELECT new Map("
 					+ "io.proQty as proQty"
+					+ ",ip.impId as impId"
 					+ ", io.unitPrice as unitPrice"
 					+ ", io.proStatus as status"
 					+ ",product.productName as productName"
@@ -177,7 +179,61 @@ public class ImportServiceImp implements ImportService {
 		return userName;
 	}
 
-	
-	
-	
+	@Override
+	public Boolean updateImportPro(ImportForm importform) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    try {
+			session.getTransaction().begin();
+			ImportProduct importproduct = new ImportProduct();
+			ImportDetail importdetail = new ImportDetail();
+			importdetail.setProQty(importform.getQuantity());
+			importdetail.setUnitPrice(importform.getUnitPrice());
+			importdetail.setSupplierid(importform.getSupplierId());
+			importproduct.getImportDetail().add(importdetail);
+			
+			
+			session.update(importproduct);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.getStackTrace();
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
+		}
+		return null;
+	}
+
+	@Override
+	public Map findById(Long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			
+			Query query = session.createQuery("SELECT new Map("
+					+ "io.proQty as proQty"
+					+ ",ip.impId as impId"
+					+ ", io.unitPrice as unitPrice"
+					+ ", io.proStatus as status"
+					+ ",product.productName as productName"
+					+ ", product.productId as productId"
+					+ ",ip.userId as userId"
+					+ ",sp.supplierName as supplierName)"
+					+ "FROM ImportDetail io "
+					+ "INNER JOIN io.pk1.product product "
+					+ "INNER JOIN io.pk1.importProduct ip "
+					+ "INNER JOIN io.supplier sp "
+					+ "WHERE ip.impId = ? "
+					);
+			query.setParameter(0, id);
+			
+			Map importProducts = (Map)query.uniqueResult();
+			
+			return importProducts;
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

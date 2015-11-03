@@ -7,10 +7,12 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.hibernate.Session;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +29,7 @@ import com.kosign.wecafe.services.ImportServiceImp;
 import com.kosign.wecafe.services.ProductService;
 import com.kosign.wecafe.services.SupplierService;
 import com.kosign.wecafe.services.UserService;
+import com.kosign.wecafe.util.HibernateUtil;
 
 @Controller
 public class importProductController {
@@ -81,6 +84,24 @@ public class importProductController {
 		return false;
 	}
 	
+	@RequestMapping(value="/admin/importupdate}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Boolean importupdate(@RequestBody ImportForm importform){
+		try {
+			return importService.updateImportPro(importform);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	@RequestMapping(value="/admin/viewById/{id}", method=RequestMethod.GET)
+	public String viewById(@PathVariable("id") Long impid, Map<String, Object>model){
+		model.put("importpro", importService.findById(impid));
+//		  model.put("supplier", (Supplier)SupplierService.findSupplierById(id));
+		  
+		return "admin/importupdate";
+	}
 	
 
 }

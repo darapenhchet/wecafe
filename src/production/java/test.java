@@ -16,18 +16,20 @@ public class test {
 			session.getTransaction().begin();
 			Query query = session.createQuery("SELECT new Map("
 					+ "io.proQty as proQty"
+					+ ",ip.impId as impId"
 					+ ", io.unitPrice as unitPrice"
 					+ ", io.proStatus as status"
 					+ ",product.productName as productName"
-					+ ",U.email as userId"
+					+ ", product.productId as productId"
+					+ ",ip.userId as userId"
 					+ ",sp.supplierName as supplierName)"
 					+ "FROM ImportDetail io "
 					+ "INNER JOIN io.pk1.product product "
 					+ "INNER JOIN io.pk1.importProduct ip "
-					+ "INNER JOIN io.pk1.importProduct.user U "
-					+ "INNER JOIN io.supplier sp"
+					+ "INNER JOIN io.supplier sp "
+					+ "WHERE ip.impId = ? "
 					);
-			
+			query.setParameter(0, new Long(36));
 			List<Map> products = (ArrayList<Map>)query.list();
 			System.out.println("products.size()" + products.size());
 			for(Map product : products){

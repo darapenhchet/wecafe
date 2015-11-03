@@ -114,9 +114,9 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${importproducts}" var="importproducts" varStatus="theCount">
+										<c:forEach items="${importproducts}" var="importproducts">
 											<tr>
-												<td id="">${theCount.count }</td>
+												<td id="">${importproducts.impId}</td>
 												<td id="importNm">${importproducts.productName}</td>
 												<td id="importQty">${importproducts.proQty }</td>
 												<td style="text-align: right;" id="">${importproducts.unitPrice }</td>
@@ -125,7 +125,7 @@
 												<td style="text-align: right;">${importproducts.userId }
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/product/${product.productId}"><i
+													href="${pageContext.request.contextPath}/admin/viewById/${importproducts.impId}"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>

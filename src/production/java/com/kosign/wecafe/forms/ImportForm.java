@@ -6,7 +6,14 @@ public class ImportForm {
 	private long proId;
 	private long UnitPrice;
 	private long supplierId;
+	private long impId;
 	
+	public long getImpId() {
+		return impId;
+	}
+	public void setImpId(long impId) {
+		this.impId = impId;
+	}
 	public long getQuantity() {
 		return quantity;
 	}
