@@ -1,6 +1,5 @@
 package com.kosign.wecafe.services;
 
-import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +18,6 @@ import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
 import com.kosign.wecafe.entities.User;
-import com.kosign.wecafe.entities.importDetailPK;
 import com.kosign.wecafe.forms.ImportForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -52,7 +50,7 @@ public class ImportServiceImp implements ImportService {
 					+ "INNER JOIN io.supplier sp"
 					);*/
 			
-			Query query = session.createQuery("SELECT new Map("
+/*			Query query = session.createQuery("SELECT new Map("
 					+ "io.proQty as proQty"
 					+ ",ip.impId as impId"
 					+ ", io.unitPrice as unitPrice"
@@ -68,7 +66,8 @@ public class ImportServiceImp implements ImportService {
 					
 //					+ "INNER JOIN io.supplier sp "
 //					+ "WHERE ip.impId = ? "
-					);
+					);*/
+			Query query = session.createQuery("FROM ImportProduct");
 			
 			List<Map> importProducts = (ArrayList<Map>)query.list();
 //			System.out.println("products.size()" + products.size());
@@ -268,6 +267,25 @@ public class ImportServiceImp implements ImportService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<ImportDetail> listAllImportDetail(Long id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM ImportDetail WHERE impId = ? ");
+			query.setParameter(0, id);
+			List<ImportDetail> importDetails = query.list();
+			session.getTransaction().commit();
+			return importDetails;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.getStackTrace();
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
 		}
 		return null;
 	}

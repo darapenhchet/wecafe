@@ -18,5 +18,6 @@ public interface ImportService {
 	public List<Supplier> listAllSupplier();
 	public Boolean updateImportPro(ImportForm importform);
 	public Map findById(Long id);
+	public List<ImportDetail> listAllImportDetail(Long id);
 	
 }
