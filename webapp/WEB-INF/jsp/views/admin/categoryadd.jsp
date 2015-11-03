@@ -95,7 +95,7 @@
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Image *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="image" name="image" type="file">
+                                                        <input class=" form-control" id="image" name="image" type="file" required="required">
                                                     </div>
                                                 </div>
 

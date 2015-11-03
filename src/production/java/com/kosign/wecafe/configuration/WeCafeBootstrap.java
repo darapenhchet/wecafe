@@ -17,7 +17,7 @@ public class WeCafeBootstrap implements WebApplicationInitializer{
 	public void onStartup(ServletContext container)
 			throws ServletException {
 	
-		 container.getServletRegistration("default").addMapping("/resources/*", "*.css", "*.js", "*.png", "*.gif", "*.jpg");
+		 /*container.getServletRegistration("default").addMapping("/resources/*", "*.css", "*.js", "*.png", "*.gif", "*.jpg");*/
 		 
 		 AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		 rootContext.register(RootContextConfiguration.class);

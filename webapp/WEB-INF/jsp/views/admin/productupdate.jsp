@@ -143,7 +143,7 @@
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Image</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="images" name="images" type="file" value="${product.image }">
+                                                        <input class="form-control " id="images" name="images" type="file" value="${product.image }" required="requrired">
                                                         <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}" width="400px" height="400px" class="img-thumbnail"/>
                                                     </div>
                                                 </div>                                                                                            

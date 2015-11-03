@@ -126,7 +126,8 @@
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control" id="image" name="image"
+													<input class="form-control" id="image" name="image"  
+														required="required"  
 														type="file"
 														value="C:\\Users\\PENHCHET\\git\\wecafe\\webapp\\resources\\images\\categories\\03b5909f-74ba-46ec-bf31-ddcd1e5e3a31.jpg">
 													<img

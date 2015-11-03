@@ -244,6 +244,43 @@
 </body>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			var wsURI = "ws://" + document.location.host + "${pageContext.request.contextPath}/chat";
+			if (!("WebSocket" in window)) {
+				console.log("WebSocket is not support on your browser...")
+			} else {
+				console.log("WebSocket is support on your browser...");
+			}
+			var connection = new WebSocket(wsURI);
+			var sendedMessage = "";
+			connection.binaryType = 'arraybuffer';
+		
+			connection.onopen = function(event) {
+				onOpen(event);
+			}
+		
+			connection.onerror = function(event) {
+				onError(event);
+		
+			}
+			
+			function onOpen(event) {
+				console.log("CONNECTED...")
+			}
+		
+			function onError(event) {
+				console.log(event);
+			}
+		
+			function sendMessage() {
+				sendedMessage = "SENT";
+				if (connection.readyState != WebSocket.OPEN) {
+					return;
+				}
+				if (connection.bufferedAmount == 0) {
+					connection.send("SENT");
+				}
+				alert("SENT");
+			}
 			getsizeSession();
 			
 			$(document).on('keypress','#proqty', function(e){
@@ -270,6 +307,9 @@
 				    success: function(data) { 
 				       console.log(data);
 				       getsizeSession();
+						
+					   sendMessage();
+				       
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -283,7 +323,7 @@
 		//	getsizeSession();	
 			});
 		
-			 
+			
 			$(document).on('click','#btnedit',function(){
 				$("#btnok").removeClass("hidebtn");
 				$("#btncancelup").removeClass("hidebtn");

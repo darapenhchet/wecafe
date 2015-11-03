@@ -27,6 +27,7 @@ import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
@@ -122,17 +123,22 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	public MultipartResolver resolver() {
 		return new StandardServletMultipartResolver();
 	}
-/*	
-	@Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
-        return converter;
-    }
-	
+
 	@Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(mappingJackson2HttpMessageConverter());
-    }*/
+	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	}
+	/*
+	 * @Bean public MappingJackson2HttpMessageConverter
+	 * mappingJackson2HttpMessageConverter() {
+	 * MappingJackson2HttpMessageConverter converter = new
+	 * MappingJackson2HttpMessageConverter(); converter.setObjectMapper(new
+	 * ObjectMapper().configure(DeserializationFeature.
+	 * FAIL_ON_UNKNOWN_PROPERTIES, false)); return converter; }
+	 * 
+	 * @Override public void
+	 * extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+	 * converters.add(mappingJackson2HttpMessageConverter()); }
+	 */
 
 }

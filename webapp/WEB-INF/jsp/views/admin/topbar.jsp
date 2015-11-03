@@ -22,7 +22,7 @@
                             </div>
                             <form class="navbar-form pull-left" role="search">
                                 <div class="form-group">
-                                    <input type="text" class="form-control search-bar" placeholder="Type here for search...">
+                                    <input type="text" class="form-control search-bar" placeholder="Type here for search..." id="txtMessage">
                                 </div>
                                 <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
                             </form>
