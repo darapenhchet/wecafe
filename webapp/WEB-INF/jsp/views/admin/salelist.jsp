@@ -390,11 +390,11 @@
                 $(document).on(" click","table tbody tr td #saleId", function(){
                 
                 	var id =  $(this).parent().parent().children().eq(1).html()
-                	alert(id);
+                	//alert(id);
                 	
                 	$("#sellDetail").bPopup();
                 	//alert("${pageContext.request.contextPath}/admin/sell/"+id); 
-                	alert("${pageContext.request.contextPath}/admin/sell/"+id);
+                	//alert("${pageContext.request.contextPath}/admin/sell/"+id);
                 	$.ajax({ 
        				    url: "${pageContext.request.contextPath}/admin/sell/"+id, 
        				    type: 'POST', 

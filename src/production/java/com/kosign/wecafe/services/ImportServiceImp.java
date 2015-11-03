@@ -37,7 +37,7 @@ public class ImportServiceImp implements ImportService {
 					+ "							 )"
 					+ "FROM ImportDetail io "
 					+ "INNER JOIN io.pk1.product product "
-					+ "INNER JOIN io.pk1.importProduct ip ");*/
+					+ "INNER JOIN io.pk1.importProduct ip ");
 			Query query = session.createQuery("SELECT new Map("
 					+ "io.proQty as proQty"
 					+ ",ip.impId as impId"
@@ -50,6 +50,24 @@ public class ImportServiceImp implements ImportService {
 					+ "INNER JOIN io.pk1.product product "
 					+ "INNER JOIN io.pk1.importProduct ip "
 					+ "INNER JOIN io.supplier sp"
+					);*/
+			
+			Query query = session.createQuery("SELECT new Map("
+					+ "io.proQty as proQty"
+					+ ",ip.impId as impId"
+					+ ", io.unitPrice as unitPrice"
+					+ ", io.proStatus as status"
+					+ ",product.productName as productName"
+					+ ", product.productId as productId"
+					+ ",ip.userId as userId"
+					+ ",ip.impDate as impDate"
+					+ ",ip.totalAmount as totalAmount)"
+					+ "FROM ImportDetail io "
+					+ "INNER JOIN io.pk1.product product "
+					+ "INNER JOIN io.pk1.importProduct ip "
+					
+//					+ "INNER JOIN io.supplier sp "
+//					+ "WHERE ip.impId = ? "
 					);
 			
 			List<Map> importProducts = (ArrayList<Map>)query.list();
@@ -68,7 +86,24 @@ public class ImportServiceImp implements ImportService {
 		
 		return null;
 	}
-	
+//	@Override
+//	public List<ImportProduct> listAllImportProduct() {
+//		Session session = null;
+//		try{
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			session.getTransaction().begin();
+//			Query query = session.createQuery("SELECT ImportProduct");
+//			List<ImportProduct>	importProducts = (List<ImportProduct>)query.list();	
+//			session.getTransaction().commit();
+//			return importProducts;
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return null;
+//	}
 	@Override
 	public Boolean saveImportPro(List<ImportForm> importform) {
 		

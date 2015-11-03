@@ -1,6 +1,7 @@
 package com.kosign.wecafe.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name="import")
@@ -44,9 +48,21 @@ public class ImportProduct implements Serializable{
 	private long userId;
 	
 	
-
+	@Formula("(SELECT SUM(o.pro_qty*o.unit_price) FROM import_detail o WHERE o.imp_id=imp_id)")
+	@Column(name = "total_Amount")
+	private long totalAmount;
+	
+	
 	public Set<ImportDetail> getImportDetail() {
 		return importDetail;
+	}
+
+	public long getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(long totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public void setImportDetail(Set<ImportDetail> importDetail) {

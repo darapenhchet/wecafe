@@ -11,10 +11,12 @@ import com.kosign.wecafe.forms.ImportForm;
 
 public interface ImportService {
 
+	//public List<ImportProduct> listAllImportProduct();
 	public List<Map> listAllImportProduct();
 	public Boolean saveImportPro(List<ImportForm> importForm);
 	public List<Product> listAllProduct();
 	public List<Supplier> listAllSupplier();
 	public Boolean updateImportPro(ImportForm importform);
 	public Map findById(Long id);
+	
 }

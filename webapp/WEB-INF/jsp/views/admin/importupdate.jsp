@@ -96,27 +96,27 @@
                                                 <div class="form-group ui-widget">
                                                     <label for="productName" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productName" value="${importpro.productName }" name="" type="text">
-                                                        <input class="hidebtn" id="proID" value="${importpro.productId }">
-                                                        <input class="hidebtn" id="impId" value="${importpro.impId }">
+                                                        <input class=" form-control" id="productName"   name="" type="text">
+                                                        <input class="hidebtn" id="proID"  >
+                                                        <input class="hidebtn" id="impId"  >
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Qty *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="qty" value="${importpro.proQty }" name="qty" type="text">
+                                                        <input class="form-control " id="qty"   name="qty" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="UnitPrice" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="UnitPrice" value="${importpro.unitPrice }" name="Unit Pirce" type="text">
+                                                        <input class="form-control " id="UnitPrice"   name="Unit Pirce" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="supplierName" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="supplierName" value="${importpro.supplierName }" name="SupplierName" type="text">
+                                                        <input class="form-control " id="supplierName"   name="SupplierName" type="text">
                                                         <input class="hidebtn" id="supID">
                                                     </div>
                                                 </div> 
@@ -126,7 +126,44 @@
                                                      	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtn" type="button">Cancel</button>
                                               	</div>
                                                 <!-- =================== --> 
+						<h5 class="pull-left page-title"># Import List</h5>                        
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+							<table id="datatable" class="table table-striped table-bordered dataTable">
+									<thead>
+									
+									</thead><thead>
+										<tr>
+											<th>#</th>
+											<th>Product Name</th>
+											<th style="text-align: center;">Qty</th>
+											<th style="text-align: center;">Unit Price</th> 
+											<th style="text-align: center;">Supplier Name</th>
+											<th style="text-align: center;">Edit</th>
+										</tr>
+									</thead>
+									<tbody id="tbllistimport">
 
+<!-- 											<tr> -->
+
+
+
+<!-- 												</td> -->
+
+<!-- 												</td> -->
+
+<!-- 												<td class="actions" style="text-align: center;"><a -->
+<!-- 													class="on-default edit-row" -->
+
+<!-- 														class="fa fa-pencil"></i></a> <a class="on-default remove-row" -->
+<!-- 													href="javascript:;" id="btnRemove"><i -->
+<!-- 														class="fa fa-trash-o"></i></a></td> -->
+<!-- 											</tr> -->
+
+									</tbody>
+								</table>
+							</div>
+						</div>
 												<!-- =================== -->
                                                 
                                             </form>

@@ -22,23 +22,24 @@ public class test {
 					+ ",product.productName as productName"
 					+ ", product.productId as productId"
 					+ ",ip.userId as userId"
-					+ ",sp.supplierName as supplierName)"
+					+ ",ip.impDate as impDate"
+					+ ",ip.totalAmount as totalAmount)"
 					+ "FROM ImportDetail io "
 					+ "INNER JOIN io.pk1.product product "
 					+ "INNER JOIN io.pk1.importProduct ip "
-					+ "INNER JOIN io.supplier sp "
-					+ "WHERE ip.impId = ? "
+					
+//					+ "INNER JOIN io.supplier sp "
+//					+ "WHERE ip.impId = ? "
 					);
-			query.setParameter(0, new Long(36));
 			List<Map> products = (ArrayList<Map>)query.list();
 			System.out.println("products.size()" + products.size());
 			for(Map product : products){
 				System.out.println("product.productName" + product.get("productName"));
 				System.out.println("qty" + product.get("proQty"));
 				System.out.println("user id" +  product.get("userId"));
-				System.out.println("supplierName " +  product.get("supplierName"));
 				System.out.println("status " +  product.get("status"));
 				System.out.println("status " +  product.get("unitPrice"));
+				System.out.println("totalAmount " +  product.get("totalAmount"));
 				
 			}
 		} catch (Exception e) {

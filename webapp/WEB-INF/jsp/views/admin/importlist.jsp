@@ -104,25 +104,21 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Product Name</th>
-											<th style="text-align: right;">Qty</th>
-											<th style="text-align: center;">Unit Price</th>
-											<th style="text-align: center;">Status</th>
-											<th style="text-align: center;">Supplier Name</th>
-											<th style="text-align: center;">import By</th>
+											<th>Invoice ID</th>
+											<th style="text-align: right;">Date</th>
+											<th style="text-align: center;">Name</th>
+											<th style="text-align: center;">Total Amount</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${importproducts}" var="importproducts">
+										<c:forEach items="${importproducts}" var="importproducts" varStatus="theCount">
 											<tr>
-												<td id="">${importproducts.impId}</td>
-												<td id="importNm">${importproducts.productName}</td>
-												<td id="importQty">${importproducts.proQty }</td>
-												<td style="text-align: right;" id="">${importproducts.unitPrice }</td>
-												<td style="text-align: right;">${importproducts.status }
-												<td style="text-align: right;">${importproducts.supplierName }
+												<td>${theCount.count}</td>
+												<td ><a href="javascript:;" id="impid"> ${importproducts.impId}</a> </td>												
+												<td >${importproducts.impDate}</td>
 												<td style="text-align: right;">${importproducts.userId }
+												<td style="text-align: right;">${importproducts.totalAmount }
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
 													href="${pageContext.request.contextPath}/admin/viewById/${importproducts.impId}"><i
@@ -245,7 +241,39 @@
 	</div>
 	<!-- END wrapper -->
 
+<!-- ############################################################# -->
 
+
+		<div id="impDetail" style="display: none;width: 90%;">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<button type="button" class="close" aria-hidden="true">
+						<span class="button b-close"><span>×</span></span>
+					</button>
+					<h4 class="modal-title">Cart</h4>
+
+				</div>
+				<div class="modal-body" style="height: 290px; width: 100%;">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Produce Name</th>
+								<th>Qty</th>
+								<th>Unit Price</th>
+								<th>Supplier Name</th>
+							</tr>
+						</thead>
+						<tbody id="impProDetail">
+							
+						</tbody>
+					</table> 
+				</div> 
+			</div>
+		</div>
+
+		<!-- ################################################################## -->
 
 	<script>
 		var resizefunc = [];
@@ -324,7 +352,7 @@
 	<!-- Todo -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 	<script type="text/javascript">
 		/* ==============================================
 		Counter Up
@@ -332,14 +360,16 @@
 		jQuery(document).ready(function($) {
 			searchProduct();
 			searchSupplier();
-			$('#datatable').dataTable();
+			//$('#datatable').dataTable();
 
 			$('.counter').counterUp({
 				delay : 100,
 				
 				time : 1200
 			});
-			
+			 $(document).on("click","#impid", function(){
+				 $("#impDetail").bPopup();
+			 });
 			function searchSupplier(){
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
