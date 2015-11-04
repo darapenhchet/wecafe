@@ -81,7 +81,7 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Add New Import Product</h4>
+                                <h4 class="pull-left page-title">Update Import Product</h4>
                             </div>
                         </div>
                         <!-- Form-validation -->
@@ -98,7 +98,8 @@
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productName"   name="" type="text">
                                                         <input class="hidebtn" id="proID"  >
-                                                        <input class="hidebtn" id="impId"  >
+                                                        <input class="hidebtn" id="supId"  >
+                                                        <input class="hidebtn" value="${IMPORT_ID }" id="impId"  >
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -122,7 +123,7 @@
                                                 </div> 
                                                 <div class="form-group" align="right">
                                                      
-                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Add</button>
+                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Update</button>
                                                      	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtn" type="button">Cancel</button>
                                               	</div>
                                                 <!-- =================== --> 
@@ -146,16 +147,16 @@
 											<c:forEach items="${importpro}" var="importpro" varStatus="theCount">
 											<tr>
 												<%-- <td id="supplierId" style="display : none;">${supplier.supId}</td> --%>	
-												<td id="supplierId" style="display: none;">${importpro.proid }</td>										
+												<td id="proId" style="display: none;">${importpro.proid }</td>										
 												<td >${theCount.count }</td>
-												<td id="supplierName">${importpro.proname }</td>  
-												<td id="supplierName">${importpro.proqty }</td> 
-												<td id="supplierName">${importpro.prounitprice }</td> 
-												<td id="supplierId" style="display: none;">${importpro.supId }</td>	
-												<td id="supplierName">${importpro.supname }</td> 
+												<td id="proName">${importpro.proname }</td>  
+												<td id="proqty">${importpro.proqty }</td> 
+												<td id="prounitprice">${importpro.prounitprice }</td> 
+												<td id="supid" style="display: none;">${importpro.supId }</td>	
+												<td id="supname">${importpro.supname }</td> 
 												<td class="actions" style="text-align: center;"><a
-													class="on-default edit-row"
-													<%-- href="${pageContext.request.contextPath}/admin/viewupdate/${supplier.supId}" --%>><i
+													class="on-default edit-row" id="btnedit"
+													 href="javascript:;"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
@@ -166,7 +167,10 @@
 							</div>
 						</div>
 												<!-- =================== -->
-                                                
+                                                <div class="form-group" align="right"> 
+                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px;" id="savebtn" type="button">Save</button>
+                                                        <button class="btn btn-default waves-effect" style="width: 100px; margin-right: 10px;" id="cencelBtn" type="button">Cancel</button> 
+                                                </div>
                                             </form>
                                         </div> <!-- .form -->
 
@@ -363,7 +367,16 @@
             	searchProduct();
             	searchSupplier();
             	var _thisRow ;
-            	  
+            	
+            	$(document).on("click","#btnedit",function(){
+            		_thisRow = $(this).parents("tr");
+            		$("proID").val($(this).parents("tr").children().eq(0).html());
+            		$("#productName").val($(this).parents("tr").children().eq(2).html());
+            		$("#qty").val($(this).parents("tr").children().eq(3).html());
+            		$("#UnitPrice").val($(this).parents("tr").children().eq(4).html());
+            		$("#supId").val($(this).parents("tr").children().eq(5).html());
+            		$("#supplierName").val($(this).parents("tr").children().eq(6).html());
+            	});
             	 
                 $(document).on('keypress','#qty, #UnitPrice', function(e){
 
@@ -380,43 +393,52 @@
             	$("#cencelBtn").click(function(){
             		$("#tbllistimport tr").remove();
             	});
-            	$(document).on("click","#btndelete",function(){
+            	
+           
+            	
+            	$(document).on("click","#btnRemove",function(){
             		$(this).parents("tr").remove();            		
             	});
             	
-            	$("#cancelbtn").click(function(){
-            		clear();
-            		$("#productName").removeAttr("readonly");
-            		$("#supplierName").removeAttr("readonly");
-            		$("#editbtn").attr("id","addbtn");
-            	});
+            	 $("#savebtn").click(function(){ 
+                 	var importDetail = [];
+                 		$('#tbllistimport tr').each(function(){
+                 			json ={
+                 						"proId"				: ($(this).find("td").eq(0).html()),
+                 						"quantity" 		 	:($(this).find("td").eq(3).html()),
+                 						"unitPrice"		    :($(this).find("td").eq(4).html()),
+                 						"supplierId"	  	:($(this).find("td").eq(5).html())
+                 					};
+                 				importDetail.push(json);	
+                 		}); 
+                 		
+     	 			$.ajax({
+     	 				 url: "${pageContext.request.contextPath}/admin/importupdate" + $("#impId").val(), 
+      				    type: 'POST',
+     	 				datatype: 'JSON',
+     	 				data: JSON.stringify(importDetail), 
+     	 				beforeSend: function(xhr) {
+     	 		            xhr.setRequestHeader("Accept", "application/json");
+     	 		            xhr.setRequestHeader("Content-Type", "application/json");
+     	 		        },
+     	 				success: function(data){
+     	 					console.log(data);
+     	 					//location.href="${pageContext.request.contextPath}/admin/importlist";
+     	 				},
+     	 				error:function(data, status,er){
+     	 					console.log("error: " + data + "status: " + status + "er: ");
+     	 				}
+     	 			});    
+                 });
             	
             	$(document).on("click","#addbtn",function(){ 
-            		json ={
-    						"proId"				: $("#proID").val(),
-    						"quantity" 		 	: $("#qty").val(),
-    						"unitPrice"		    : $("#UnitPrice").val(),
-    						"impId"				: $("#impId").val(),
-    						"supplierId"	  	: $("#supID").val()
-    					};
-            	console.log(json);	
-	 			 $.ajax({
-	 				 url: "${pageContext.request.contextPath}/admin/importupdate", 
- 				    type: 'POST',
-	 				datatype: 'JSON',
-// 	 				data: JSON.stringify(), 
-	 				beforeSend: function(xhr) {
-	 		            xhr.setRequestHeader("Accept", "application/json");
-	 		            xhr.setRequestHeader("Content-Type", "application/json");
-	 		        },
-	 				success: function(data){
-	 					console.log(data);
-	 					//location.href="${pageContext.request.contextPath}/admin/supplierlist";
-	 				},
-	 				error:function(data, status,er){
-	 					console.log("error: " + data + "status: " + status + "er: ");
-	 				}
-	 			});
+
+            		_thisRow.children().eq(0).html($("#proID").val());
+            		_thisRow.children().eq(5).html($("#supID").val());
+            		_thisRow.children().eq(2).html($("#productName").val());
+            		_thisRow.children().eq(3).html($("#qty").val());
+            		_thisRow.children().eq(4).html($("#UnitPrice").val());
+            		_thisRow.children().eq(6).html($("#supplierName").val()); 
             		clear();
             	});
             	

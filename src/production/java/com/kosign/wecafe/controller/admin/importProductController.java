@@ -84,14 +84,14 @@ public class importProductController {
 		return false;
 	}
 	
-	@RequestMapping(value="/admin/importupdate}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/admin/importupdate{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Boolean importupdate(@RequestBody ImportForm importform){
-		try {
+		/*try {
 			return importService.updateImportPro(importform);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-		}
+		}*/
 		return false;
 	}
 	
@@ -105,7 +105,8 @@ public class importProductController {
 	@RequestMapping(value="/admin/viewById/{id}", method=RequestMethod.GET)
 	public String viewById(@PathVariable("id") Long impid, Map<String, Object>model){
 		 
-		model.put("importpro", importService.listAllImportDetail(impid)); 
+		model.put("importpro", importService.listAllImportDetail(impid));
+		model.put("IMPORT_ID", impid);
 		  
 		 
 		return "admin/importupdate";
