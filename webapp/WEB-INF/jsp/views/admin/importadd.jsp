@@ -393,23 +393,21 @@
             		$("#productName").val($(this).parents("tr").children().eq(3).html());
             		$("#qty").val($(this).parents("tr").children().eq(4).html());
             		$("#UnitPrice").val($(this).parents("tr").children().eq(5).html());
-            		$("#supplierName").val($(this).parents("tr").children().eq(6).html());
-            		$("#productName").attr("readonly","readonly");
-            		$("#supplierName").attr("readonly","readonly");
+            		$("#supplierName").val($(this).parents("tr").children().eq(6).html()); 
             		$("#addbtn").attr("id","editbtn");
             	});
             	$(document).on("click","#editbtn",function(){
+            		_thisRow.children().eq(0).html($("#proID").val());
+            		_thisRow.children().eq(1).html($("#supID").val());
+            		_thisRow.children().eq(3).html($("#productName").val());
             		_thisRow.children().eq(4).html($("#qty").val());
-            		_thisRow.children().eq(5).html($("#UnitPrice").val());
-            		$("#productName").removeAttr("readonly");
-            		$("#supplierName").removeAttr("readonly");
+            		_thisRow.children().eq(5).html($("#UnitPrice").val()); 
+            		_thisRow.children().eq(6).html($("#supplierName").val());
             		$("#editbtn").attr("id","addbtn");
             		clear();
             	});
             	$("#cancelbtn").click(function(){
-            		clear();
-            		$("#productName").removeAttr("readonly");
-            		$("#supplierName").removeAttr("readonly");
+            		clear(); 
             		$("#editbtn").attr("id","addbtn");
             	});
             	$(document).on("click","#addbtn",function(){ 
@@ -455,7 +453,7 @@
     	 		        },
     	 				success: function(data){
     	 					console.log(data);
-    	 					//location.href="${pageContext.request.contextPath}/admin/supplierlist";
+    	 					location.href="${pageContext.request.contextPath}/admin/importlist";
     	 				},
     	 				error:function(data, status,er){
     	 					console.log("error: " + data + "status: " + status + "er: ");
