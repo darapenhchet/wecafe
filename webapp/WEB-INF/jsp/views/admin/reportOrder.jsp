@@ -144,15 +144,23 @@
                                                     <thead>
                                                         <tr>
 	                                                        <th>#</th>
-	                                                        <th>Item</th>
-	                                                        <th>Description</th>
+	                                                        <th>product Name</th>
 	                                                        <th>Quantity</th>
-	                                                        <th>Unit Cost</th>
+	                                                        <th>Unit Price</th>
 	                                                        <th>Total</th>
 	                                                    </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
+                                                   		 <c:forEach items="${reportOrder}" var="reportOrders" varStatus="theCount" >
+	                                                    	<tr>
+	                                                            <td>${theCount.count}</td>
+	                                                            <td>${reportOrders.productName }</td>
+	                                                            <td>${reportOrders.proQty }</td>
+	                                                            <td>${reportOrders.UnitPrice }</td>
+	                                                            <td>${reportOrders.Total }</td>
+	                                                        </tr>
+                                                        </c:forEach>
+                                                        <!-- <tr>
                                                             <td>1</td>
                                                             <td>LCD</td>
                                                             <td>Lorem ipsum dolor sit amet.</td>
@@ -279,7 +287,7 @@
                                                             <td>5</td>
                                                             <td>$50</td>
                                                             <td>$250</td>
-                                                        </tr>
+                                                        </tr> -->
                                                     </tbody>
                                                 </table>
                                             </div>

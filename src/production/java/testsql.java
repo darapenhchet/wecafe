@@ -48,13 +48,12 @@ public class testsql {
 							+ " INNER JOIN O.pk.order "
 							+ " INNER JOIN O.pk.order.sale "
 							+ " Where O.pk.order.sale.saleDatetime BETWEEN :startDate AND :endDate "
-							+ " and O.pk.order.status = 2 "
-							+ " GROUP BY  O.pk.product.productId, O.pk.product.productName, O.proUnitPrice");
+							+ " and O.pk.order.status = 2roductId, O.pk.product.productName, O.proUnitPrice");
 			
 //			query.setParameter("orderId", new Long(94));
 			SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy");
 			 Date date1 = dateformat3.parse("26/10/2015");
-			 Date date2 = dateformat3.parse("27/10/2015");
+			 Date date2 = dateformat3.parse("29/11/2015");
 			query.setParameter("startDate", date1);
 			query.setParameter("endDate", date2);
 			List<Map> products = (ArrayList<Map>)query.list();
