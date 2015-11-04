@@ -11,7 +11,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/chat")
+@ServerEndpoint(value = "/notification")
 public class Notification {
 
 	private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());

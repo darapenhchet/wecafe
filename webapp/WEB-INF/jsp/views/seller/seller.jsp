@@ -1084,7 +1084,7 @@
 
         }
 
-        var wsURI = "ws://" + document.location.host + "${pageContext.request.contextPath}/chat";
+        var wsURI = "ws://" + document.location.host + "${pageContext.request.contextPath}/notification";
         if (!("WebSocket" in window)) {
             console
                 .log("WebSocket is not support on your browser...")

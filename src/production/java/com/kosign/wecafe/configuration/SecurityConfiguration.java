@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	UserDetailsService userDetailsService;
 	
 	@Autowired
-	CustomSuccessConfiguration customSuccessConfiruation;
+	CustomSuccessConfiguration customSuccessConfirguation;
 	
 	@Autowired
 	DataSource dataSource;
@@ -93,7 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.loginPage("/admin/login")
 					.failureUrl("/admin/login?error")
 					//.defaultSuccessUrl("/admin/")
-					.successHandler(customSuccessConfiruation)
+					.successHandler(customSuccessConfirguation)
 					.usernameParameter("username")
 					.passwordParameter("password")
 					.permitAll()
