@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -61,7 +62,7 @@ public class Order implements java.io.Serializable {
 	private Integer orderQuantity;
 	
 
-	/*@OneToOne(mappedBy="order", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="order", fetch=FetchType.LAZY)
 	private Sale sale;
 	
 	public Sale getSale() {
@@ -70,7 +71,7 @@ public class Order implements java.io.Serializable {
 	
 	public void setSale(Sale sale) {
 		this.sale = sale;
-	}*/
+	}
 	
 	public long getOrderId() {
 		return orderId;
