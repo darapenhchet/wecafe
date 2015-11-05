@@ -87,12 +87,14 @@ public class importProductController {
 	
 	@RequestMapping(value="/admin/importupdate/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Boolean importupdate(@RequestBody List<ImportForm> importform, @PathVariable("id") Long impId){
-		try {
+		
+		System.out.println(+impId +" + impId");
+		 try {
 			return importService.updateImportPro(importform, impId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-		}
+		}  
 		return false;
 	}
 	

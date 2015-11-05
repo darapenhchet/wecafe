@@ -42,8 +42,7 @@ public class ImportDetail {
 	@JoinColumn(name="sup_id")
 	private Supplier supplier;
 	
-	@Column(name = "imp_detail_id")
-	private long impDetailId;
+
 
 	@Column(name = "pro_qty")
 	private long proQty;

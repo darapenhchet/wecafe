@@ -404,7 +404,7 @@
                  	var importDetail = [];
                  		$('#tbllistimport tr').each(function(){
                  			json ={
-                 						"impid"				: ($("#impId").val()),
+                 						
                  						"proId"				: ($(this).find("td").eq(0).html()),
                  						"quantity" 		 	:($(this).find("td").eq(3).html()),
                  						"unitPrice"		    :($(this).find("td").eq(4).html()),
@@ -415,7 +415,7 @@
                  		
                  		console.log( JSON.stringify(importDetail));
      	 			$.ajax({
-     	 				 url: "${pageContext.request.contextPath}/admin/importupdate" + $("#impId").val(), 
+     	 				 url: "${pageContext.request.contextPath}/admin/importupdate/" + $("#impId").val(), 
       				    type: 'POST',
      	 				datatype: 'JSON',
      	 				data: JSON.stringify(importDetail), 

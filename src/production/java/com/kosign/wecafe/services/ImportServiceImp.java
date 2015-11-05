@@ -218,39 +218,51 @@ public class ImportServiceImp implements ImportService {
 	@Override
 	public Boolean updateImportPro(List<ImportForm> importform, Long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		
 	    try {
 			session.getTransaction().begin();
 			//1. update import 
-			ImportProduct importproduct = new ImportProduct();
+			ImportProduct importproduct = session.get(ImportProduct.class, id);
 			importproduct.setImpDate(new Date());
 			User user = userService.findUserByUsername(getPrincipal());
-			importproduct.setUserId(user.getId());
+			importproduct.setUserId(user.getId()); 
 			importproduct.setImpId(id);
 			session.update(importproduct);
+			/*Query query = session.createQuery("FROM ImportDetail "
+					+ " Where ImprtDetail.pk1.importProduct.impId = ? ");
+			query.setParameter(0, id);
+			List<ImportDetail> importDetails = query.list();*/
 			
-			for(int i=0; i < importform.size();i++){
+			for(ImportDetail importDetail: importproduct.getImportDetail()){
+				importDetail.setProStatus(false);
+				//session.save(importDetail);
+				
+				Product product = session.get(Product.class, importDetail.getProduct().getProductId());
+				product.setQuantity(product.getQuantity()-importDetail.getProQty());
+				session.save(product);
+			}
+			
+			//for(ImportP)
+			
+			
+			/*for(int i=0; i < importform.size();i++){
+				
 				//2. update importtDetail
 				ImportDetail importdetail = new ImportDetail();
 				//2.1 update product 
-				Product product = new Product();
-				
-				Query query = session.createQuery("FROM ImportDetail "
-												+ " Where ImprtDetail.pk1.importProduct.impId = ? and ImportDetail.pk1.product.productId = ? ");
-				query.setParameter(0, importform.get(i).getImpId());
-				query.setParameter(1, importform.get(i).getProId());
-				
-				ImportDetail importDB = (ImportDetail)query.uniqueResult();
-				
-				
-				
-				
+				Product product = new Product(); 
+//				Query query = session.createQuery("FROM ImportDetail "
+//												+ " Where ImprtDetail.pk1.importProduct.impId = ? ");
+//				query.setParameter(0, importform.get(i).getImpId());
+			//	query.setParameter(1, importform.get(i).getProId()); 
+			//	List<ImportDetail> importDB = (List<ImportDetail>)query.list(); 
 				product.setProductId(importform.get(i).getProId());
-				product.setQuantity(importform.get(i).getQuantity());
-				
-				System.out.println("importform.size(pid)" + importform.get(i).getProId());
+				importdetail.setProStatus(false);
+				importdetail.setImportProduct(importproduct);
 				importdetail.setProduct(product);
-				
-				
+			//	product.setQuantity(importform.get(i).getQuantity()); 
+				System.out.println("importform.size(pid)" + importform.get(i).getProId());
+				importdetail.setProduct(product); 
 				importdetail.setImportProduct(importproduct);
 				importdetail.setProQty(importform.get(i).getQuantity());
 				System.out.println("importform.size(pid)" + importform.get(i).getQuantity());
@@ -263,17 +275,16 @@ public class ImportServiceImp implements ImportService {
 				importdetail.setUnitPrice(importform.get(i).getUnitPrice());
 				System.out.println("importform.size(price)" + importform.get(i).getUnitPrice());
 				importproduct.getImportDetail().add(importdetail);
-				//session.save(importdetail);
-				
-				
+				//session.save(importdetail); 
 				//3. update product (stock)
 				Product products  = session.get(Product.class, importdetail.getProduct().getProductId());
 				System.out.println("importdetail.getProduct().getProductId()" + products.getQuantity());
 				products.setQuantity(products.getQuantity() + importform.get(i).getQuantity() );
 				System.out.println("product.getQuantity()" +  importform.get(i).getQuantity());
-				session.update(products);
+				session.update(importdetail);
+				System.out.println("+importform.size() 111+" + importform.size());
 			}
-			
+			*/
 //			importdetail.setProQty(importform.getQuantity());
 //			importdetail.setUnitPrice(importform.getUnitPrice());
 //			importdetail.setSupplierid(importform.getSupplierId());
