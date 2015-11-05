@@ -3,7 +3,7 @@ package com.kosign.wecafe.services;
 import java.util.Date;
 import java.util.List;
 
-import org.h2.store.Data;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,9 +29,14 @@ public class ProductServiceImpl implements ProductService{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			
-			Query query = session.createQuery("FROM Product ORDER BY createdDate DESC");
+			Criteria criteria = session.createCriteria(Product.class);
+			//criteria.setFirstResult(0);
+			//criteria.setMaxResults(10);
+			List<Product> products = (List<Product>)criteria.list();
 			
-			List<Product> products = (List<Product>)query.list();
+/*			Query query = session.createQuery("FROM Product ORDER BY createdDate DESC");
+			
+			List<Product> products = (List<Product>)query.list();*/
 			
 			session.getTransaction().commit();
 			return products;
@@ -145,5 +150,23 @@ public class ProductServiceImpl implements ProductService{
 			ex.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	@Transactional
+	public List<Product> getAllProductsPagination(int pageNumber, int perPage) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			criteria.setFirstResult(pageNumber-1);
+			criteria.setMaxResults(perPage);
+			List<Product> products = (List<Product>)criteria.list();
+			return products;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+		}
+		return null;
 	}
 }

@@ -84,14 +84,14 @@
                         <div class="panel">
                             
                             <div class="panel-body">
-                                <div class="row">
+<%--                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="m-b-30">
                                             <a id="addToTable" href="${pageContext.request.contextPath}/admin/useradd" class="btn btn-primary waves-effect waves-light">Add <i class="fa fa-plus"></i></a>
                                         </div>
                                     </div>
-                                </div>
-                                <table class="table table-bordered table-striped" id="datatable-editable">
+                                </div> --%>
+                                <table class="table table-bordered table-striped" id="datatable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -212,6 +212,9 @@
 
         <!-- Todo -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+        
+        <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 
         <script type="text/javascript">
             /* ==============================================

@@ -57,10 +57,10 @@
 
 
 
-    <body class="fixed-left-void">
+    <body class="fixed-left-void" >
         
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper" >
         
             <!-- Top Bar Start -->
 			<%@ include file="topbar.jsp" %>
@@ -74,11 +74,11 @@
             <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->                      
-            <div class="content-page">
+            <div class="content-page" ng-app="wecafe">
                 <!-- Start content -->
-                <div class="content">
+                <div class="content" ng-controller="ProductController as controller">
                     <div class="container">
-
+				
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
@@ -95,6 +95,12 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <!-- <h3 class="panel-title">Product Lists</h3> -->
+									    <form class="form-inline">
+									        <div class="form-group">
+									            <label >Search</label>
+									            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
+									        </div>
+									    </form>
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
@@ -102,25 +108,24 @@
                                                 <table id="datatable" class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr>
-                                                        	<th>#</th>
-                                                            <th>Name</th>
-                                                            <th style="text-align:right;">Quantity</th>
-                                                            <th style="text-align:right;">Unit Price</th>
-                                                            <th style="text-align:right;">Cost Price</th>
-                                                            <th style="text-align:right;">Sale Price</th>
-                                                            <th>Category</th>
-                                                            <th style="text-align:center;">Image</th>
-                                                            <th style="text-align:center;">Status</th>
-                                                            <th style="text-align:center;">Action</th>
+                                                        	<th width="5%">#</th>
+                                                            <th width="20%">Name</th>
+                                                            <th style="text-align:right;" width="10%">Quantity</th>
+                                                            <th style="text-align:right;" width="10%">Unit Price</th>
+                                                            <th style="text-align:right;" width="10%">Cost Price</th>
+                                                            <th style="text-align:right;" width="10%">Sale Price</th>
+                                                            <th width="15%">Category</th>
+                                                            <th style="text-align:center;" width="7%">Image</th>
+                                                            <th style="text-align:center;" width="7%">Status</th>
+                                                            <th style="text-align:center;" width="15%">Action</th>
                                                         </tr>
                                                     </thead>
 
                                              
                                                     <tbody>
-                                                    	<c:forEach items="${products}" var="product" varStatus="theCount">
+                                                    	<%-- <c:forEach items="${products}" var="product" varStatus="theCount">
                                                         <tr>
                                                         	<td id="PRODUCT_ID" style="display : none;">${product.productId }</td>
-                                                        	
                                                         	<td >${theCount.count }</td>
                                                             <td>${product.productName}</td>
                                                             <td style="text-align:right;">${product.quantity}</td>
@@ -144,11 +149,39 @@
 				                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
 				                                            </td>
                                                         </tr>
-														</c:forEach>
+														</c:forEach> --%>
+														<tr dir-paginate="(key,product) in products|filter:search|itemsPerPage:15|orderBy : product.productName : true">
+															<td id="PRODUCT_ID">{{product.productId}}</td>
+                                                        	<td>{{product.productName}}</td>
+                                                        	<td style="text-align:right;">{{product.quantity}}</td>
+                                                            <td style="text-align:right;">{{product.unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+                                                            <td style="text-align:right;">{{product.costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
+                                                            <td style="text-align:right;">{{product.salePrice}} <span style="font-weight:bold;">Riel</span></td>
+                                                            <td>{{product.category.catName}}</td>
+                                                            <td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{product.image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
+                                                            <td style="text-align:center;">
+                                                            <span ng-if="product.status==true">
+                                                            	<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus" ng-click="changeProductStatus(product)">Active</a>
+                                                            </span>
+                                                             <span ng-if="product.status==false">
+                                                            	<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus" ng-click="changeProductStatus(product)">InActive</a>
+                                                            </span>
+                                                            </td>
+                                                            <td class="actions" style="text-align:center;">
+				                                                <a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{product.productId}}"><i class="fa fa-pencil"></i></a>
+				                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
+				                                            </td>
+														</tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
+                                        <dir-pagination-controls 
+                                        	max-size="15"  
+                                        	direction-links="true"
+						        			boundary-links="true" >
+						    			</dir-pagination-controls>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -168,8 +201,14 @@
     
         <script>
             var resizefunc = [];
+            var ctx = "${pageContext.request.contextPath}"
         </script>
-
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+	    <script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/app.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/services/product_service.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/controllers/product_controller.js' />"></script>
+	    
         <!-- jQuery  -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -186,18 +225,23 @@
         <!-- CUSTOM JS -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 
-        <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
+        <%-- <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 
 
         <script type="text/javascript">
             $(document).ready(function() {
-               // $('#datatable').dataTable();
+               $('#datatable').dataTable();
             } );
-        </script>
+        </script> --%>
+        
+	    
         
         <script>
         	$(function(){
+        		$(document).on('click', '.pagination li a', function(e){
+        			e.preventDefault();
+        		});
         		$(document).on('click','#btnRemove',function(){
         			var id = $(this).parents("tr").find("#PRODUCT_ID").html();
         			if(confirm("Do you want to delete that product?")){
