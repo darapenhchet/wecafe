@@ -106,7 +106,7 @@
 											<th>#</th>
 											<th>Order Number</th>
 											<th style="text-align: right;">Total Amount</th>
-											<th style="text-align: center;">Data</th>
+											<th style="text-align: center;">E-mail</th>
 											<th style="text-align: center;">Address</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
@@ -338,8 +338,7 @@
 			
 			 
 				 	    	$(document).on('click','#btnRemove',function(){  
-				   				var id = $(this).parents("tr").find("#supplierId").html(); 
-				   				alert(id);
+				   				var id = $(this).parents("tr").find("#supplierId").html();  
 				   				if(confirm("Do you want to delete that supplier?")){
 				   					$.ajax({ 
 				   					    url: "${pageContext.request.contextPath}/admin/delete/"+id, 

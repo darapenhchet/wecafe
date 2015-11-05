@@ -141,7 +141,7 @@
 												<div class="col-lg-offset-2 col-lg-10">
 													<button class="btn btn-success waves-effect waves-light"
 														type="button" id="btnSubmit">Save</button>
-													<button class="btn btn-default waves-effect" type="button">Cancel</button>
+													<button class="btn btn-default waves-effect" id="btncancel" type="button">Cancel</button>
 												</div>
 											</div>
 										</form>
@@ -280,6 +280,9 @@
 			$('input[type=file]').change(function() {
 				$("#images_sample").show();
 				$("#images_sample").attr('src', ($(this).val()));
+			});
+			$("#btncancel").click(function(){
+				location.href="${pageContext.request.contextPath}/admin/categorylist";
 			});
 			$("#btnSubmit")
 					.click(

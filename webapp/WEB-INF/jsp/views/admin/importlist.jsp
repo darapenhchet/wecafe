@@ -358,8 +358,8 @@
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-			searchProduct();
-			searchSupplier();
+			 searchProduct();
+			 searchSupplier();
 			//$('#datatable').dataTable();
 
 			$('.counter').counterUp({
@@ -370,7 +370,7 @@
 			 $(document).on("click","#impid", function(){
 				 
 				   $.ajax({ 
-					    url: "${pageContext.request.contextPath}/admin/getimportdetail" + $(this).html() , 
+					    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
 					    type: 'POST', 
 					    dataType: 'JSON', 
 					    beforeSend: function(xhr) {
@@ -378,6 +378,7 @@
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
 					    success: function(data) { 
+					    	console.log(data);
 					    	var st= "";
 					       for(i=0; i<data.length; i++){
 					    	   st += "<tr><td>" + (i + 1) + "</td>";
@@ -393,7 +394,7 @@
 					    }
 					});
 				 
-				 $("#impDetail").bPopup();  
+				  $("#impDetail").bPopup();  
 			 });
 			function searchSupplier(){
 				$.ajax({ 

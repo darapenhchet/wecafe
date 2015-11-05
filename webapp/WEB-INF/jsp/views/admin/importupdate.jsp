@@ -404,6 +404,7 @@
                  	var importDetail = [];
                  		$('#tbllistimport tr').each(function(){
                  			json ={
+                 						"impid"				: ($("#impId").val()),
                  						"proId"				: ($(this).find("td").eq(0).html()),
                  						"quantity" 		 	:($(this).find("td").eq(3).html()),
                  						"unitPrice"		    :($(this).find("td").eq(4).html()),
@@ -412,6 +413,7 @@
                  				importDetail.push(json);	
                  		}); 
                  		
+                 		console.log( JSON.stringify(importDetail));
      	 			$.ajax({
      	 				 url: "${pageContext.request.contextPath}/admin/importupdate" + $("#impId").val(), 
       				    type: 'POST',
@@ -428,8 +430,8 @@
      	 				error:function(data, status,er){
      	 					console.log("error: " + data + "status: " + status + "er: ");
      	 				}
-     	 			});    
-                 });
+     	 			});   
+                 }); 
             	
             	$(document).on("click","#addbtn",function(){ 
 

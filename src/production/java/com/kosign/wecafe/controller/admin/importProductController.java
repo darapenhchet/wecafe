@@ -42,6 +42,7 @@ public class importProductController {
 	
 	@RequestMapping(value="/admin/importlist", method=RequestMethod.GET)
 	public String listAllImpProduct(Map<String, Object>model){
+		System.out.println("jasdfjklajfasjfjasdlkfjasdkl");
 		model.put("importproducts",importService.listAllImportProduct());
 		return "admin/importlist";
 	}
@@ -84,18 +85,18 @@ public class importProductController {
 		return false;
 	}
 	
-	@RequestMapping(value="/admin/importupdate{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Boolean importupdate(@RequestBody ImportForm importform){
-		/*try {
-			return importService.updateImportPro(importform);
+	@RequestMapping(value="/admin/importupdate/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Boolean importupdate(@RequestBody List<ImportForm> importform, @PathVariable("id") Long impId){
+		try {
+			return importService.updateImportPro(importform, impId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-		}*/
+		}
 		return false;
 	}
 	
-	@RequestMapping(value="admin/getimportdetail{id}", method=RequestMethod.POST)
+	@RequestMapping(value="admin/getimportdetail/{id}", method=RequestMethod.POST)
 		public @ResponseBody List<Map> importdetail(@PathVariable("id") Long impid, Map<String, Object>model){
 			   
 		return importService.listAllImportDetail(impid);
