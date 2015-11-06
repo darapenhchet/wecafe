@@ -19,10 +19,11 @@ App.factory('ProductService', ['$http', '$q', function($http, $q){
             return $http({
             	method: 'POST',
             	url: ctx+'/admin/product/status/'+id,
-            	type: 'JSON',
+            	dataType: 'JSON',
             	headers: {
                     'Content-Type': 'application/json'
-            	}
+            	},
+            	data: '',
             }).then(
                         function(response){
                             return response.data;

@@ -51,11 +51,10 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        <script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-        
+        <script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>        
     </head>
 
-
+	
 
     <body class="fixed-left-void" >
         
@@ -116,7 +115,7 @@
                                                             <th style="text-align:right;" width="10%">Sale Price</th>
                                                             <th width="15%">Category</th>
                                                             <th style="text-align:center;" width="7%">Image</th>
-                                                            <th style="text-align:center;" width="7%">Status</th>
+                                                            <th style="text-align:center;" width="15%">Status</th>
                                                             <th style="text-align:center;" width="15%">Action</th>
                                                         </tr>
                                                     </thead>
@@ -150,7 +149,7 @@
 				                                            </td>
                                                         </tr>
 														</c:forEach> --%>
-														<tr dir-paginate="(key,product) in products|filter:search|itemsPerPage:15|orderBy : product.productName : true">
+														<tr dir-paginate="(key,product) in products|filter:search|itemsPerPage:perPage|orderBy : product.createdDate">
 															<td id="PRODUCT_ID">{{product.productId}}</td>
                                                         	<td>{{product.productName}}</td>
                                                         	<td style="text-align:right;">{{product.quantity}}</td>
@@ -161,10 +160,10 @@
                                                             <td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{product.image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
                                                             <td style="text-align:center;">
                                                             <span ng-if="product.status==true">
-                                                            	<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus" ng-click="changeProductStatus(product)">Active</a>
+                                                            	<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus" ng-click="changeProductStatus(product)">Active</a>
                                                             </span>
                                                              <span ng-if="product.status==false">
-                                                            	<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus" ng-click="changeProductStatus(product)">InActive</a>
+                                                            	<a href="javascript:;" class="btn btn-danger btn-sm waves-effect" type="button" id="btnStatus" ng-click="changeProductStatus(product)">InActive</a>
                                                             </span>
                                                             </td>
                                                             <td class="actions" style="text-align:center;">
@@ -176,10 +175,17 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <ul class="pagination" id="PER_PAGE">
+                                          <li class="active" ng-click="perPage=10"><a href="javascript:;">10</a></li>
+										  <li ng-click="perPage=15"><a href="javascript:;">15</a></li>
+										  <li ng-click="perPage=50"><a href="javascript:;">50</a></li>
+										  <li ng-click="perPage=100"><a href="javascript:;">100</a></li>
+										</ul>
                                         <dir-pagination-controls 
                                         	max-size="15"  
                                         	direction-links="true"
-						        			boundary-links="true" >
+						        			boundary-links="true" 
+						        			class="pull-right" >
 						    			</dir-pagination-controls>
                                         
                                     </div>
@@ -269,7 +275,7 @@
         				
         			}
         		});
-        		
+        		/*
         		$(document).on('click','#btnStatus',function(){
         			var id = $(this).parents("tr").find("#PRODUCT_ID").html();
         			var _this = $(this);
@@ -301,6 +307,11 @@
        				        console.log("error: "+data+" status: "+status+" er:"+er);
        				    }
        				});
+        		}); */
+        		
+        		$("#PER_PAGE li").click(function(){
+        			 $('#PER_PAGE li.active').removeClass('active');
+        			 $(this).addClass('active');
         		});
         	});
         </script>

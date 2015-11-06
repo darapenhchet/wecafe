@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class ProductServiceImpl implements ProductService{
 			session.beginTransaction();
 			
 			Criteria criteria = session.createCriteria(Product.class);
+			criteria.addOrder(Order.desc("createdDate"));
 			//criteria.setFirstResult(0);
 			//criteria.setMaxResults(10);
 			List<Product> products = (List<Product>)criteria.list();
