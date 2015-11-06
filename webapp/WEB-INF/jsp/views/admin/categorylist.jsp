@@ -47,10 +47,10 @@
 
 
 
-    <body class="fixed-left-void">
+    <body class="fixed-left-void" ng-app="wecafe">
         
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper" ng-controller="CategoryController as controller">
         
             <!-- Top Bar Start -->
 			<%@ include file="topbar.jsp" %>
@@ -80,15 +80,24 @@
 
 
                         <div class="panel">
-                            
+                            <div class="panel-heading">
+                                <!-- <h3 class="panel-title">Product Lists</h3> -->
+							    <form class="form-inline">
+							        <div class="form-group">
+							            <label >Search</label>
+							            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
+							        </div>
+							    </form>
+                            </div>
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="m-b-30">
-                                            <button id="addToTable" class="btn btn-primary waves-effect waves-light">Add <i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
+                               <!--  <div class="row">
+                                    <form class="form-inline">
+								        <div class="form-group">
+								            <label >Search</label>
+								            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
+								        </div>
+								    </form>
+                                </div> -->
                                 <table class="table table-bordered table-striped" id="datatable-editable">
                                     <thead>
                                         <tr>
@@ -103,7 +112,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${categories}" var="category" varStatus="theCount">
+                                    <%-- <c:forEach items="${categories}" var="category" varStatus="theCount">
                                         <tr class="gradeX">
                                             <td id="CATEGORY_ID" style="display : none;">${category.catId}</td>
                                             <td >${theCount.count }</td>
@@ -120,13 +129,41 @@
                                                 <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
-                                    </c:forEach>
+                                    </c:forEach> --%>
+	                                    <tr dir-paginate="(key,category) in categories|filter:search|itemsPerPage:perPage|orderBy : category.createdDate" class="gradeX" >
+                                            <td id="CATEGORY_ID" style="display : none;">{{category.catId}}</td>
+                                            <td >{{key+1 }}</td>
+                                            <td>{{category.catName }}</td>
+                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/{{category.img }}" class="img-thumbnail" alt="{{category.catName}}" width="30px" height="30px" /></td>
+                                            <td>{{category.createdBy.lastName }} {{category.createdBy.firstName }}</td>
+                                            <td>{{category.createdDate | date:'yyyy-MM-dd'}}</td>
+                                            <td>{{category.lastUpdatedBy.lastName }} {{category.lastUpdatedBy.firstName }}</td>
+                                            <td>{{category.lastUpdatedDate | date:'yyyy-MM-dd'}}</td>
+                                            <td style="text-align:center;" class="actions">
+                                                <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                                                <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                                                <a href="${pageContext.request.contextPath}/admin/category/update/{{category.catId}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- end: page -->
 
                         </div> <!-- end Panel -->
+                        <ul class="pagination" id="PER_PAGE">
+                           <li class="active" ng-click="perPage=10"><a href="javascript:;">10</a></li>
+						   <li ng-click="perPage=15"><a href="javascript:;">15</a></li>
+						   <li ng-click="perPage=50"><a href="javascript:;">50</a></li>
+						   <li ng-click="perPage=100"><a href="javascript:;">100</a></li>
+						</ul>
+                        <dir-pagination-controls 
+                        	max-size="15"  
+                        	direction-links="true"
+							boundary-links="true" 
+							class="pull-right" >
+	    				</dir-pagination-controls>
 
                     </div> <!-- container -->
                                
@@ -257,7 +294,13 @@
     
         <script>
             var resizefunc = [];
+            var ctx = "${pageContext.request.contextPath}"
         </script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+	    <script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/app.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/services/category_service.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/controllers/category_controller.js' />"></script>
 
         <!-- jQuery  -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -309,6 +352,10 @@
 					
 				}
 			});
+	    	$("#PER_PAGE li").click(function(){
+   			 	$('#PER_PAGE li.active').removeClass('active');
+   			 	$(this).addClass('active');
+   			});
     	});
     	</script>
     </body>

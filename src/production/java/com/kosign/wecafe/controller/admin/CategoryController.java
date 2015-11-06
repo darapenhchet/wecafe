@@ -102,7 +102,7 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value="/admin/category/update", method=RequestMethod.POST)
-	public  @ResponseBody Boolean updateCategory(CategoryForm form, Principal principal, HttpServletRequest request){
+	public  @ResponseBody Boolean updateCategory(CategoryForm form/*, Principal principal*/, HttpServletRequest request){
 		System.out.println(form.getImage());
 		String name = form.getImage().getOriginalFilename();
 		if (!form.getImage().isEmpty()) {
@@ -119,6 +119,7 @@ public class CategoryController {
                         		+ randomUUIDFileName+"."+extension;*/
                 
                 String savePath = request.getServletContext().getRealPath("/resources/images/categories/");
+                System.out.println("SAVE PATH=" + savePath);
 				File path = new File(savePath);
 				if(!path.exists()){
 					path.mkdir();

@@ -128,8 +128,7 @@
 												<div class="col-lg-10">
 													<input class="form-control" id="image" name="image"  
 														required="required"  
-														type="file"
-														value="C:\\Users\\PENHCHET\\git\\wecafe\\webapp\\resources\\images\\categories\\03b5909f-74ba-46ec-bf31-ddcd1e5e3a31.jpg">
+														type="file">
 													<img
 														src="${pageContext.request.contextPath}/resources/images/categories/${category.img}"
 														width="400px" height="400px" class="img-thumbnail"
@@ -158,12 +157,12 @@
 					</div>
 					<!-- End row -->
 
-					<p>This is the most minimal example of Dropzone. The upload in
+					<!-- <p>This is the most minimal example of Dropzone. The upload in
 						this example doesn't work, because there is no actual server to
 						handle the file upload.</p>
 
-					<!-- Change /upload-target to your upload address -->
-					<form action="/admin/upload-target" class="dropzone"></form>
+					Change /upload-target to your upload address
+					<form action="/admin/upload-target" class="dropzone"></form> -->
 
 
 
@@ -292,8 +291,9 @@
 									alert("PLEASE CHOOSE THE CATEGORY");
 									return;
 								}
-								$('input[type=file]').val(
-										$("#images_sample").attr('src'));
+								/* 
+								$('input[type=file]').val($("#images_sample").attr('src')); 
+								*/
 								$("#frmAddCategory")
 										.ajaxSubmit(
 												{
@@ -304,7 +304,7 @@
 														console.log(data);
 														if (data) {
 															alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-															//location.href="${pageContext.request.contextPath}/admin/categorylist";
+															location.href="${pageContext.request.contextPath}/admin/categorylist";
 														} else {
 															alert('YOU HAVE ERRORS WHEN UPDATE NEW PRODUCT.');
 														}

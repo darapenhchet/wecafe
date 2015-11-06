@@ -49,10 +49,10 @@
 
 
 
-    <body class="fixed-left-void">
+    <body class="fixed-left-void" ng-app="wecafe">
         
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper" ng-controller="UserController as controller">
         
             <!-- Top Bar Start -->
 			<%@ include file="topbar.jsp" %>
@@ -82,7 +82,15 @@
 
 
                         <div class="panel">
-                            
+                        	<div class="panel-heading">
+                            <!-- <h3 class="panel-title">Product Lists</h3> -->
+					    		<form class="form-inline">
+					        	<div class="form-group">
+					            	<label >Search</label>
+					            	<input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
+					        	</div>
+					    		</form>
+                            </div>
                             <div class="panel-body">
 <%--                                 <div class="row">
                                     <div class="col-sm-6">
@@ -108,17 +116,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${users}" var="user">
+<%--                                     <c:forEach items="{{users}" var="user">
                                         <tr class="gradeX">
-                                        	<td id="USER_ID">${user.id }
-                                            <td>${user.lastName }</td>
-                                            <td>${user.firstName }</td>
-                                            <td>${user.email }</td>
-                                            <td>${user.username }</td>
-                                            <td>${user.createdBy.lastName } ${user.createdBy.firstName }</td>
-                                            <td>${user.createdDate }</td>
-                                            <td>${user.lastUpdatedBy.lastName } ${user.lastUpdatedBy.firstName }</td>
-                                            <td>${user.lastUpdatedDate }</td>
+                                        	<td id="USER_ID">{{user.id }
+                                            <td>{{user.lastName }</td>
+                                            <td>{{user.firstName }</td>
+                                            <td>{{user.email }</td>
+                                            <td>{{user.username }</td>
+                                            <td>{{user.createdBy.lastName } {{user.createdBy.firstName }</td>
+                                            <td>{{user.createdDate }</td>
+                                            <td>{{user.lastUpdatedBy.lastName } {{user.lastUpdatedBy.firstName }</td>
+                                            <td>{{user.lastUpdatedDate }</td>
                                             <td style="text-align:center;">
                                       			<c:choose>
                                       				<c:when test="${user.status == 'ACTIVE'}">
@@ -139,17 +147,61 @@
                                             <td class="actions" style="width:10%;">
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                                <a href="${pageContext.request.contextPath}/admin/user/${user.id}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                <a href="${pageContext.request.contextPath}/admin/user/{{user.id}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
                                                 <a href="#" class="on-default remove-row" id="btnDeleteUser"><i class="fa fa-trash-o"></i></a>
                                                 <a href="#" class="on-default remove-row" id="btnChangePassword"><i class="fa fa-cog fa-fw"></i></a>
                                             </td>
                                         </tr>
-                                       </c:forEach>
+                                       </c:forEach> --%>
+                                       <tr dir-paginate="(key,user) in users|filter:search|itemsPerPage:perPage|orderBy : user.createdDate">
+											<td id="USER_ID">{{user.id }}
+                                            <td>{{user.lastName }}</td>
+                                            <td>{{user.firstName }}</td>
+                                            <td>{{user.email }}</td>
+                                            <td>{{user.username }}</td>
+                                            <td>{{user.createdBy.lastName }} {{user.createdBy.firstName }}</td>
+                                            <td>{{user.createdDate | date:'yyyy-MM-dd'}}</td>
+                                            <td>{{user.lastUpdatedBy.lastName }} {{user.lastUpdatedBy.firstName }}</td>
+                                            <td>{{user.lastUpdatedDate | date:'yyyy-MM-dd' }}</td>
+                                            <td style="text-align:center;">
+                                            	<span ng-if="user.status=='ACTIVE'">
+                                                   	<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
+                                                </span>
+                                                <span ng-if="user.status=='INACTIVE'">
+                                                	<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a>
+                                                </span>
+                                                <span ng-if="user.status=='DELETED'">
+                                                   	<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
+                                                </span>
+                                                <span ng-if="user.status=='LOCKED'">
+                                                	<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a>
+                                                </span>
+                                      			</td>
+											</td>
+                                            <td class="actions" style="width:10%;">
+                                                <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                                                <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                                                <a href="${pageContext.request.contextPath}/admin/user/{{user.id}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                <a href="#" class="on-default remove-row" id="btnDeleteUser"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="on-default remove-row" id="btnChangePassword"><i class="fa fa-cog fa-fw"></i></a>
+                                            </td>
+										</tr>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- end: page -->
-
+							<ul class="pagination" id="PER_PAGE">
+                              <li class="active" ng-click="perPage=10"><a href="javascript:;">10</a></li>
+							  <li ng-click="perPage=15"><a href="javascript:;">15</a></li>
+							  <li ng-click="perPage=50"><a href="javascript:;">50</a></li>
+							  <li ng-click="perPage=100"><a href="javascript:;">100</a></li>
+							</ul>
+                            <dir-pagination-controls 
+                              	max-size="15"  
+                              	direction-links="true"
+					 			boundary-links="true" 
+					 			class="pull-right" >
+							</dir-pagination-controls>
                         </div> <!-- end Panel -->
 
                     </div> <!-- container -->
@@ -167,7 +219,13 @@
     
         <script>
             var resizefunc = [];
+            var ctx = "${pageContext.request.contextPath}"
         </script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+	    <script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/app.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/services/user_service.js' />"></script>
+	    <script src="<c:url value='/resources/scripts/controllers/user_controller.js' />"></script>
 
         <!-- jQuery  -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -304,6 +362,11 @@
 				    }
 				});
 	    	});
+	    	
+	    	$("#PER_PAGE li").click(function(){
+	   			 $('#PER_PAGE li.active').removeClass('active');
+	   			 $(this).addClass('active');
+	   		});
     	});
     	</script>
     </body>

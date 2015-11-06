@@ -56,10 +56,10 @@
 
 	
 
-    <body class="fixed-left-void" >
+    <body class="fixed-left-void"  ng-app="wecafe" >
         
         <!-- Begin page -->
-        <div id="wrapper" >
+        <div id="wrapper" ng-controller="ProductController as controller">
         
             <!-- Top Bar Start -->
 			<%@ include file="topbar.jsp" %>
@@ -73,9 +73,9 @@
             <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->                      
-            <div class="content-page" ng-app="wecafe">
+            <div class="content-page">
                 <!-- Start content -->
-                <div class="content" ng-controller="ProductController as controller">
+                <div class="content" >
                     <div class="container">
 				
                         <!-- Page-Title -->
