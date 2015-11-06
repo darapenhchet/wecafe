@@ -519,7 +519,7 @@
             else
                 var updatestatus = 'confirmOrder/';
             $.ajax({
-                url: "${pageContext.request.contextPath}/seller/" + updatestatus + $("#orderID").html(),
+                url: "${pageContext.request.contextPath}/seller/" + updatestatus + _orderid,
                 type: 'GET',
                 dataType: 'JSON',
                 beforeSend: function(xhr) {
@@ -549,13 +549,9 @@
         });
 
         $(document)
-            .on(
-                'click',
-                '#cusordered',
-                function() {
+            .on('click', '#cusordered',function() {
                     _this = $(this);
-                    _orderid = (_this
-                        .find("#orderedId").html());
+                    _orderid = (_this.find("#orderedId").html());
                     $("#btnconfirmorder").removeClass(
                         "hidebtn");
                     $("#btncancelorder").removeClass(

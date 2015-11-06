@@ -22,7 +22,6 @@ public class SaleRestController {
 	public Map<String, Object> getAllSales(@PathVariable("pageNumber") int pageNumber, @PathVariable("perPage") int perPage){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("PAGINATION","PAGINATION");
-		//map.put("PRODUCTS", categoryService.getAllProductsPagination(pageNumber, perPage));
 		return map;
 	}
 	

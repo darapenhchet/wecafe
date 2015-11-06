@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kosign.wecafe.services.CategoryService;
+import com.kosign.wecafe.services.ImportService;
 
 @RestController
 @RequestMapping("/admin/rest")
-public class CategoryRestController {
+public class ImportRestController {
 
 
 	@Autowired
-	CategoryService categoryService;
+	ImportService importService;
 	
-	@RequestMapping(value="/categories/{pageNumber}/{perPage}")
+	@RequestMapping(value="/imports/{pageNumber}/{perPage}")
 	public Map<String, Object> getAllCategories(@PathVariable("pageNumber") int pageNumber, @PathVariable("perPage") int perPage){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("PAGINATION","PAGINATION");
 		return map;
 	}
 	
-	@RequestMapping(value="/categories/")
+	@RequestMapping(value="/imports/")
 	public Map<String, Object> getAllCategories(){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("PAGINATION","PAGINATION");
-		map.put("CATEGORIES", categoryService.getAllCategories());
+		map.put("IMPORTS", importService.listAllImportProduct());
 		return map;
 	}
 }

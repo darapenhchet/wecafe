@@ -90,14 +90,6 @@
 							    </form>
                             </div>
                             <div class="panel-body">
-                               <!--  <div class="row">
-                                    <form class="form-inline">
-								        <div class="form-group">
-								            <label >Search</label>
-								            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
-								        </div>
-								    </form>
-                                </div> -->
                                 <table class="table table-bordered table-striped" id="datatable-editable">
                                     <thead>
                                         <tr>
@@ -105,10 +97,10 @@
                                             <th>Category Name</th>
                                             <th>Image</th>
                                             <th>Created By</th>
-                                            <th>Created Date</th>
+                                            <th style="text-align:center;">Created Date</th>
                                             <th>Updated By</th>
-                                            <th>Updated Date</th>                                        
-                                            <th>Actions</th>
+                                            <th style="text-align:center;">Updated Date</th>                                        
+                                            <th style="text-align:center;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -136,9 +128,9 @@
                                             <td>{{category.catName }}</td>
                                             <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/{{category.img }}" class="img-thumbnail" alt="{{category.catName}}" width="30px" height="30px" /></td>
                                             <td>{{category.createdBy.lastName }} {{category.createdBy.firstName }}</td>
-                                            <td>{{category.createdDate | date:'yyyy-MM-dd'}}</td>
+                                            <td style="text-align:center;">{{category.createdDate | date:'dd-MMMM-yyyy'}}</td>
                                             <td>{{category.lastUpdatedBy.lastName }} {{category.lastUpdatedBy.firstName }}</td>
-                                            <td>{{category.lastUpdatedDate | date:'yyyy-MM-dd'}}</td>
+                                            <td style="text-align:center;">{{category.lastUpdatedDate | date:'dd-MMMM-yyyy'}}</td>
                                             <td style="text-align:center;" class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>

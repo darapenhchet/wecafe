@@ -113,8 +113,8 @@
 											<th>#</th>
 											<th>Order Number</th>
 											<th style="text-align: right;">Total Amount</th>
-											<th style="text-align: center;">E-mail</th>
-											<th style="text-align: center;">Address</th>
+											<th>E-mail</th>
+											<th>Address</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
@@ -143,9 +143,9 @@
 												<td id="supplierName">{{supplier.supplierName }}</td>
 												<td style="text-align: right;">{{supplier.supplierNumber }}
 												</td>
-												<td style="text-align: right;">{{supplier.supplierEmail }}
+												<td>{{supplier.supplierEmail }}
 												</td>
-												<td style="text-align: center;">{{supplier.supplierAddress}}</td>
+												<td>{{supplier.supplierAddress}}</td>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
 													href="${pageContext.request.contextPath}/admin/viewupdate/{{supplier.supId}}"><i

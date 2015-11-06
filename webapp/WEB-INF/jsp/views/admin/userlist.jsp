@@ -160,9 +160,9 @@
                                             <td>{{user.email }}</td>
                                             <td>{{user.username }}</td>
                                             <td>{{user.createdBy.lastName }} {{user.createdBy.firstName }}</td>
-                                            <td>{{user.createdDate | date:'yyyy-MM-dd'}}</td>
+                                            <td>{{user.createdDate | date:'dd-MMMM-yyyy'}}</td>
                                             <td>{{user.lastUpdatedBy.lastName }} {{user.lastUpdatedBy.firstName }}</td>
-                                            <td>{{user.lastUpdatedDate | date:'yyyy-MM-dd' }}</td>
+                                            <td>{{user.lastUpdatedDate | date:'dd-MMMM-yyyy' }}</td>
                                             <td style="text-align:center;">
                                             	<span ng-if="user.status=='ACTIVE'">
                                                    	<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
