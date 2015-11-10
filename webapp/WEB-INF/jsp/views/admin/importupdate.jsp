@@ -97,9 +97,9 @@
                                                     <label for="productName" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productName"   name="" type="text">
-                                                        <input class="hidebtn" id="proID"  >
-                                                        <input class="hidebtn" id="supId"  >
-                                                        <input class="hidebtn" value="${IMPORT_ID }" id="impId"  >
+                                                        <input type="text" class="hidebtn" id="prodID"  >
+                                                        <input  type="text" class="hidebtn" id="supId"  >
+                                                        <input  type="text" class="hidebtn" value="${IMPORT_ID }" id="impId"  >
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -370,12 +370,13 @@
             	
             	$(document).on("click","#btnedit",function(){
             		_thisRow = $(this).parents("tr");
-            		$("proID").val($(this).parents("tr").children().eq(0).html());
+            		$("#prodID").val($(this).parents("tr").children().eq(0).html());
             		$("#productName").val($(this).parents("tr").children().eq(2).html());
             		$("#qty").val($(this).parents("tr").children().eq(3).html());
             		$("#UnitPrice").val($(this).parents("tr").children().eq(4).html());
             		$("#supId").val($(this).parents("tr").children().eq(5).html());
             		$("#supplierName").val($(this).parents("tr").children().eq(6).html());
+            		alert($("#supId").val());
             	});
             	 
                 $(document).on('keypress','#qty, #UnitPrice', function(e){
@@ -436,7 +437,7 @@
             	
             	$(document).on("click","#addbtn",function(){ 
 
-            		_thisRow.children().eq(0).html($("#proID").val());
+            		_thisRow.children().eq(0).html($("#prodID").val());
             		_thisRow.children().eq(5).html($("#supID").val());
             		_thisRow.children().eq(2).html($("#productName").val());
             		_thisRow.children().eq(3).html($("#qty").val());
@@ -489,7 +490,7 @@
                  
                 function clear(){
             		$("#productName").val("");
-            		$('#proID').val("");
+            		$('#prodID').val("");
             		$('#supID').val("");
             		$("#qty").val("");
             		$("#UnitPrice").val("");
@@ -519,7 +520,7 @@
     				       $("#productName" ).autocomplete({
     				    	   
     				    	   select: function(event, ui){
-    				    		   $("#proID").val(ui.item.dataid);
+    				    		   $("#prodID").val(ui.item.dataid);
     				    	   },
     				    	   maxShowItems: 8,
     				           source: availableTags
