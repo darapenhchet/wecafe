@@ -84,11 +84,11 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ "p.productName as proname,"
 					+ "SUM(impdetail.proQty) as proqty,"
 					+ "impdetail.unitPrice as prounitprice,"
-					+ "impdetail.supplier.supplierName as supname, "
+				//	+ "impdetail.supplier.supplierName as supname, "
 					+ " SUM(impdetail.proQty * impdetail.unitPrice) as Total)"
 					+ " FROM ImportDetail impdetail" 
 					+ " INNER JOIN impdetail.pk1.product p"
-					+ " GROUP BY p.productName, impdetail.unitPrice, impdetail.supplier.supplierName ");
+					+ " GROUP BY p.productName, impdetail.unitPrice ");
 			// query.setParameter("orderId", new Long(94));
 //			SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy");
 //			 Date date1 = dateformat3.parse("26/10/2015");
