@@ -270,7 +270,7 @@
 	 		      dateFormat: "yy-mm-dd",
 	 		      onClose: function( selectedDate ) {			    	  
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
-	 						moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 	 			      }
 	 		});
@@ -284,11 +284,12 @@
 
 	 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
-	 						moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 	 			      }
 	 		});		
 	 		$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
-	 		$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
+	 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
+	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
 	 });
  </script>
