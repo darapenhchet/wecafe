@@ -99,7 +99,7 @@
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productName"   name="" type="text">
                                                         <input type="text" class="hidebtn" id="prodID"  >
-                                                        <input  type="text" class="hidebtn" id="supId"  >
+                                                        
                                                         <input  type="text" class="hidebtn" value="${IMPORT_ID }" id="impId"  >
                                                     </div>
                                                 </div>
@@ -119,7 +119,7 @@
                                                     <label for="supplierName" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="supplierName"   name="SupplierName" type="text">
-                                                        <input class="hidebtn" id="supID">
+                                                        <input  type="text" class="hidebtn" id="supId"  >
                                                     </div>
                                                 </div> 
                                                 <div class="form-group" align="right">

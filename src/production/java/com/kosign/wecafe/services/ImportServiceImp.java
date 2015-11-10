@@ -232,22 +232,23 @@ public class ImportServiceImp implements ImportService {
 			ImportProduct importProduct = session.get(ImportProduct.class, id);
 			Set<ImportDetail> importDetails = importProduct.getImportDetail();
 			
-			//System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());
+			System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());
 			
 			for(ImportDetail importDetail : importDetails){
 				Product product = session.get(Product.class, importDetail.getProduct().getProductId());
 				product.setQuantity(product.getQuantity() + importDetail.getProQty());
 				product.setLastUpdatedDate(new Date());
 				session.save(product);
-				importProduct.getImportDetail().remove(importDetail);
+				//importProduct.getImportDetail().remove(importDetail);
 				
 				//System.out.println("PRODUCT ID = " + product.getProductId());
+				//session.delete(importDetail);
 			}
 			
-			//importProduct.getImportDetail().removeAll(importDetails);
-			
+			importProduct.getImportDetail().clear();
+					
 			session.clear();
-									
+												
 			for(ImportForm importForm : importForms){
 				ImportDetail importDetail = new ImportDetail();
 				Product product = session.get(Product.class, importForm.getProId());
@@ -267,7 +268,7 @@ public class ImportServiceImp implements ImportService {
 				//System.out.println("PRODUCT = " + importForm.getProId());
 			}
 			System.out.println("IMPORT DETAIL SIZE=" + importProduct.getImportDetail().size());
-			session.update(importProduct);
+			session.saveOrUpdate(importProduct);
 			//session.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
