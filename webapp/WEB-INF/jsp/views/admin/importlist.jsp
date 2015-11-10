@@ -265,12 +265,6 @@
 			 searchProduct();
 			 searchSupplier();
 			//$('#datatable').dataTable();
-
-			$('.counter').counterUp({
-				delay : 100,
-				
-				time : 1200
-			});
 			 $(document).on("click","#impid", function(){
 				 
 				   $.ajax({ 

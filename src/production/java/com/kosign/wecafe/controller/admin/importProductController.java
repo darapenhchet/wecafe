@@ -1,16 +1,11 @@
 package com.kosign.wecafe.controller.admin;
 
-import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.hibernate.Session;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,17 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.ImportDetail;
-import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
-import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.ImportForm;
 import com.kosign.wecafe.services.ImportService;
-import com.kosign.wecafe.services.ImportServiceImp;
 import com.kosign.wecafe.services.ProductService;
 import com.kosign.wecafe.services.SupplierService;
-import com.kosign.wecafe.services.UserService;
-import com.kosign.wecafe.util.HibernateUtil;
 
 @Controller
 public class importProductController {
@@ -90,8 +80,8 @@ public class importProductController {
 		
 		System.out.println(+impId +" + impId");
 		 try {
-			//return importService.updateImportPro(importform, impId);
-			return importService.deleteImportPro(importform, impId);
+			return importService.updateImportPro(importform, impId);
+			//return importService.deleteImportPro(importform, impId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
