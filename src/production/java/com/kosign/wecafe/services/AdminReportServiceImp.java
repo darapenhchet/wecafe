@@ -66,7 +66,7 @@ public class AdminReportServiceImp implements AdminReportService {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
-			Query query = session.createQuery(
+			/*Query query = session.createQuery(
 					"SELECT new Map(O.pk.product.productId As prouductID " 
 									+ ", O.pk.product.productName as productName "
 									+ ", SUM(O.proQty) As proQty "
@@ -79,12 +79,22 @@ public class AdminReportServiceImp implements AdminReportService {
 						+ " and O.pk.order.status = 1 "
 						+ " GROUP BY  O.pk.product.productId, O.pk.product.productName, O.proUnitPrice");
 
+			*/
+			Query query = session.createQuery("Select new Map("
+					+ "p.productName as proname,"
+					+ "SUM(impdetail.proQty) as proqty,"
+					+ "impdetail.unitPrice as prounitprice,"
+					+ "impdetail.supplier.supplierName as supname, "
+					+ " SUM(impdetail.proQty * impdetail.unitPrice) as Total)"
+					+ " FROM ImportDetail impdetail" 
+					+ " INNER JOIN impdetail.pk1.product p"
+					+ " GROUP BY p.productName, impdetail.unitPrice, impdetail.supplier.supplierName ");
 			// query.setParameter("orderId", new Long(94));
-			SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy");
-			 Date date1 = dateformat3.parse("26/10/2015");
-			 Date date2 = dateformat3.parse("29/11/2015");
-			query.setParameter("startDate", date1);
-			query.setParameter("endDate", date2);
+//			SimpleDateFormat dateformat3 = new SimpleDateFormat("dd/MM/yyyy");
+//			 Date date1 = dateformat3.parse("26/10/2015");
+//			 Date date2 = dateformat3.parse("29/11/2015");
+//			query.setParameter("startDate", date1);
+//			query.setParameter("endDate", date2);
 			List<Map> products = (ArrayList<Map>) query.list();
 			System.out.println("products.size()" + products.size());
 //			for (Map product : products) {

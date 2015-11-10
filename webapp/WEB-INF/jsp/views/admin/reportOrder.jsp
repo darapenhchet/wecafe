@@ -123,10 +123,11 @@
                                             
                                             <div class="pull-left m-t-30">
                                                 <address>
-                                                  <strong>Twitter, Inc.</strong><br>
-                                                  795 Folsom Ave, Suite 600<br>
-                                                  San Francisco, CA 94107<br>
-                                                  <abbr title="Phone">P:</abbr> (123) 456-7890
+                                        
+                                                  <strong>KOSIGN, Inc.</strong><br>
+                                                  #12, St 323, Boeungkak II Commune,<br>
+                                                  Toul Kork District, Phnom Penh. Cambodia<br>
+                                                  <abbr title="Phone">P:</abbr> (855) 23- 99-13-14
                                                   </address>
                                             </div>
                                             <div class="pull-right m-t-30">
@@ -151,13 +152,15 @@
 	                                                    </tr>
                                                     </thead>
                                                     <tbody>
+                                                  	  <c:set var="total" value="${0}"/>
                                                    		 <c:forEach items="${reportOrder}" var="reportOrders" varStatus="theCount" >
 	                                                    	<tr>
 	                                                            <td>${theCount.count}</td>
-	                                                            <td>${reportOrders.productName }</td>
-	                                                            <td>${reportOrders.proQty }</td>
-	                                                            <td>${reportOrders.UnitPrice }</td>
+	                                                            <td>${reportOrders.proname }</td>
+	                                                            <td>${reportOrders.proqty }</td>
+	                                                            <td>${reportOrders.prounitprice }</td>
 	                                                            <td>${reportOrders.Total }</td>
+	                                                             <c:set var="total" value = "${total + reportOrders.Total}" />
 	                                                        </tr>
                                                         </c:forEach>
                                                         <!-- <tr>
@@ -295,11 +298,11 @@
                                     </div>
                                     <div class="row" style="border-radius: 0px;">
                                         <div class="col-md-3 col-md-offset-9">
-                                            <p class="text-right"><b>Sub-total:</b> 2930.00</p>
+                                            <!-- <p class="text-right"><b>Sub-total:</b> 2930.00</p>
                                             <p class="text-right">Discount: 12.9%</p>
-                                            <p class="text-right">VAT: 12.9%</p>
+                                            <p class="text-right">VAT: 12.9%</p> -->
                                             <hr>
-                                            <h3 class="text-right">USD 2930.00</h3>
+                                            <h3 class="text-right">${total} Riels</h3>
                                         </div>
                                     </div>
                                     <hr>

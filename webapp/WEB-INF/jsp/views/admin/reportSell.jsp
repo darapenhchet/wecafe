@@ -122,11 +122,11 @@
                                         <div class="col-md-12">
                                             
                                             <div class="pull-left m-t-30">
-                                                <address>
-                                                  <strong>Twitter, Inc.</strong><br>
-                                                  795 Folsom Ave, Suite 600<br>
-                                                  San Francisco, CA 94107<br>
-                                                  <abbr title="Phone">P:</abbr> (123) 456-7890
+                                                 <address>
+	                                                  <strong>KOSIGN, Inc.</strong><br>
+	                                                  #12, St 323, Boeungkak II Commune,<br>
+	                                                  Toul Kork District, Phnom Penh. Cambodia<br>
+	                                                  <abbr title="Phone">P:</abbr> (855) 23- 99-13-14
                                                   </address>
                                             </div>
                                             <div class="pull-right m-t-30">
@@ -151,15 +151,21 @@
 	                                                    </tr>
                                                     </thead>
                                                     <tbody>
-                                                   		 <c:forEach items="${reportSell}" var="reportSells" varStatus="theCount" >
+                                                      <c:set var="total" value="${0}"/>
+                                                   		 <c:forEach items="${reportSell}" var="reportSells" varStatus="theCount"  >
 	                                                    	<tr>
 	                                                            <td>${theCount.count}</td>
 	                                                            <td>${reportSells.productName }</td>
 	                                                            <td>${reportSells.proQty }</td>
 	                                                            <td>${reportSells.UnitPrice }</td>
 	                                                            <td>${reportSells.Total }</td>
+	                                                             <c:set var="total" value = "${total + reportSells.Total}" />
+	                                                             <!--   <td>${total}</td>-->
 	                                                        </tr>
+	                                                        
                                                         </c:forEach>
+                                                        
+                                                        
                                                         <!-- <tr>
                                                             <td>1</td>
                                                             <td>LCD</td>
@@ -295,11 +301,11 @@
                                     </div>
                                     <div class="row" style="border-radius: 0px;">
                                         <div class="col-md-3 col-md-offset-9">
-                                            <p class="text-right"><b>Sub-total:</b> 2930.00</p>
+                                             <%--<p class="text-right"><b>Sub-total:</b>${total}</p>
                                             <p class="text-right">Discount: 12.9%</p>
-                                            <p class="text-right">VAT: 12.9%</p>
+                                            <p class="text-right">VAT: 12.9%</p> --%>
                                             <hr>
-                                            <h3 class="text-right">USD 2930.00</h3>
+                                            <h3 class="text-right">${total} Riels</h3>
                                         </div>
                                     </div>
                                     <hr>
@@ -335,6 +341,7 @@
 
     <script>
         var resizefunc = [];
+        
     </script>
 
     <!-- jQuery  -->
