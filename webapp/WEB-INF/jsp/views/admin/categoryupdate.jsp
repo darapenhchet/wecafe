@@ -119,16 +119,16 @@
 														name="categoryId" type="hidden" value="${category.catId }">
 													<input class=" form-control" id="categoryName"
 														name="categoryName" type="text"
-														value="${category.catName }">
+														value="${category.catName }" required="required">
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control " id="images" name="images" type="file" required="required" value="${category.img}">
-                                                    <input type="hidden" id="image" name="image" value="${category.img}" />
-													<img src="${pageContext.request.contextPath}/resources/images/products/${category.img}" width="400px" height="400px" class="img-thumbnail" id="images_sample" />
+													<input class="form-control " id="images" name="images" type="file" required="required" value="${category.img}" required="required">
+                                                    <input type="hidden" id="image" name="image" value="${category.img}" required="required"/>
+													<img src="${pageContext.request.contextPath}/resources/images/products/${category.img}" width="400px" height="400px" class="img-thumbnail" id="images_sample" required="required" />
 												</div>
 											</div>
 
@@ -214,39 +214,9 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 
-	<!-- flot Chart -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
-
-	<!-- Counter-up -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
-		type="text/javascript"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
-		type="text/javascript"></script>
-
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
-	<!-- Dashboard -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
 
 	<!-- Chat -->
 	<script
@@ -260,17 +230,6 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 
 	<script type="text/javascript">
-		/* ==============================================
-		Counter Up
-		=============================================== */
-		jQuery(document).ready(function($) {
-			$('.counter').counterUp({
-				delay : 100,
-				time : 1200
-			});
-		});
-	</script>
-	<script type="text/javascript">
 		$(function() {
 			$("#btncancel").click(function(){
 				location.href="${pageContext.request.contextPath}/admin/categorylist";
@@ -283,6 +242,10 @@
 									alert("PLEASE CHOOSE THE CATEGORY");
 									return;
 								}
+								if($("#image").val()==""){
+			    					alert("PLEASE SELECT THE IMAGE.");
+			    					return;
+			    				}
 								/* 
 								$('input[type=file]').val($("#images_sample").attr('src')); 
 								*/

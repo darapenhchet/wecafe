@@ -88,18 +88,18 @@
                                     <!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
                                     <div class="panel-body">
                                         <div class=" form">
-                                            <form class="cmxform form-horizontal tasi-form" id="frmProductAdd" method="POST" action="/admin/product/update" novalidate="novalidate">
+                                            <form class="cmxform form-horizontal tasi-form" id="frmProductAdd" method="POST" action="/admin/product/update">
                                                 <div class="form-group ">
                                                 	<input type="hidden" id="productId" name="productId" type="text" value="${product.productId }"/>
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productName" name="productName" type="text" value="${product.productName }">
+                                                        <input class=" form-control" id="productName" name="productName" type="text" value="${product.productName }" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-2">Category *</label>
                                                     <div class="col-lg-10">
-                                                       	<select class="form-control" id="optCategory" name="categoryId">
+                                                       	<select class="form-control" id="optCategory" name="categoryId" required="required">
                                                        		<option value="">Please choose your category</option>
                                                        	<%
                                                        		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
@@ -119,25 +119,25 @@
                                                 <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Quantity *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="quantity" name="quantity" type="text" value="${product.quantity }">
+                                                        <input class="form-control " id="quantity" name="quantity" type="text" value="${product.quantity }" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="unitPrice" name="unitPrice" type="text" value="${product.unitPrice }">
+                                                        <input class="form-control " id="unitPrice" name="unitPrice" type="text" value="${product.unitPrice }" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Cost Price</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="costPrice" name="costPrice" type="text" value="${product.costPrice }">
+                                                        <input class="form-control " id="costPrice" name="costPrice" type="text" value="${product.costPrice }" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Sale Price</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="salePrice" name="salePrice" type="text" value="${product.salePrice }">
+                                                        <input class="form-control " id="salePrice" name="salePrice" type="text" value="${product.salePrice }" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -201,26 +201,9 @@
         <!-- sweet alerts -->
         <script src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
-
-        <!-- flot Chart -->
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
-
-        <!-- Counter-up -->
-        <script src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js" type="text/javascript"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js" type="text/javascript"></script>
-        
+               
         <!-- CUSTOM JS -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
-        <!-- Dashboard -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
 
         <!-- Chat -->
         <script src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
@@ -239,10 +222,6 @@
             Counter Up
             =============================================== */
             jQuery(document).ready(function($) {
-                $('.counter').counterUp({
-                    delay: 100,
-                    time: 1200
-                });
                 $(document).on('keypress','#quantity, #unitPrice, #costPrice, #salePrice', function(e){
 
     				if((e.keyCode == 8) || (e.keyCode == 46) || ((e.keyCode >=37) && (e.keyCode <= 40)))
@@ -262,6 +241,10 @@
     				e.preventDefault();    				
     				if($("#optCategory").val()==""){
     					alert("PLEASE CHOOSE THE CATEGORY");
+    					return;
+    				}
+    				if($("#image").val()==""){
+    					alert("PLEASE SELECT THE IMAGE.");
     					return;
     				}
     				/* json = {
