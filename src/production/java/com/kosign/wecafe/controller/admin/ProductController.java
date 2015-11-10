@@ -82,7 +82,7 @@ public class ProductController {
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST)
 	public  @ResponseBody Boolean addNewProduct(ProductForm form , HttpServletRequest request){
 		
-		String name = form.getImages().getOriginalFilename();
+		/*String name = form.getImages().getOriginalFilename();
 		System.out.println("name="+form.getProductName());
 		if (!form.getImages().isEmpty()) {
             try {
@@ -91,10 +91,6 @@ public class ProductController {
                 String randomUUIDFileName = uuid.toString();
 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-/*                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
-                String fileName = File.separator +"resources"
-                        		+ File.separator + "images" + File.separator + "products" + File.separator
-                        		+ randomUUIDFileName+"."+extension;*/
                 
                 // creating the directory to store file
                 String savePath = request.getServletContext().getRealPath("/resources/images/products/");
@@ -140,7 +136,7 @@ public class ProductController {
         } else {
             System.out.println("You failed to upload " + name + " because the file was empty.");
             return false;
-        }
+        }*/
 		
 		
 		
@@ -161,6 +157,28 @@ public class ProductController {
 		//return ((Product)session.getAttribute("product")).getProductName();
 		//return false;
 		
+		
+		Product product = new Product();
+        Category category = new Category();
+        category.setCatId(form.getCategoryId());
+        
+		User user = userService.findUserByUsername(getPrincipal());
+		System.out.println(user.getUsername());
+		
+		product.setProductName(form.getProductName());
+		product.setQuantity(form.getQuantity());
+		product.setCostPrice(form.getCostPrice());
+		product.setSalePrice(form.getSalePrice());
+		product.setUnitPrice(form.getUnitPrice());
+		product.setCategory(category);
+		//product.setCreatedBy(user);
+		//product.setLastUpdatedBy(user);
+		product.setImage(form.getImage());
+		product.setCreatedDate(new Date());
+		product.setLastUpdatedDate(new Date());
+		product.setStatus(true);
+		return productService.addNewProduct(product);
+		
 	}
 
 	@RequestMapping(value = "/admin/product/{id}", method = RequestMethod.GET)
@@ -174,7 +192,7 @@ public class ProductController {
 	@RequestMapping(value = "/admin/product/update", method = RequestMethod.POST)
 	public @ResponseBody boolean updateProduct(ProductForm product, HttpServletRequest request) {
 
-		System.out.println("UPDATING CONTROLLER...");
+		/*System.out.println("UPDATING CONTROLLER...");
 		String name = product.getImages().getOriginalFilename();
 		System.out.println("name="+product.getProductName());
 		if (!product.getImages().isEmpty()) {
@@ -184,10 +202,10 @@ public class ProductController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                /*                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+                                String webappRoot = new File("C:\\Users\\Channbora\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                                 String fileName = File.separator +"resources"
                                         		+ File.separator + "images" + File.separator + "products" + File.separator
-                                        		+ randomUUIDFileName+"."+extension;*/
+                                        		+ randomUUIDFileName+"."+extension;
                                 
                                 // creating the directory to store file
 				String savePath = request.getServletContext().getRealPath("/resources/images/products/");
@@ -211,8 +229,8 @@ public class ProductController {
         } else {
             System.out.println("You failed to upload " + name + " because the file was empty.");
             return false;
-        }
-		
+        }*/
+		return productService.updateProduct(product);
 	}
 
 	@RequestMapping(value = "/admin/product/delete/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

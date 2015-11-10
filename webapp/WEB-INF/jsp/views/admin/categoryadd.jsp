@@ -95,7 +95,9 @@
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Image *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="image" name="image" type="file" required="required">
+                                                        <input class="form-control " id="images" name="images" type="file" required="requrired">
+                                                        <input type="hidden" id="image" name="image" />
+                                                        <img src="" id="images_sample" name="images_sample" class="img-thumbnail" style="display:none;">
                                                     </div>
                                                 </div>
 
@@ -193,10 +195,6 @@
         </script>
     	<script type="text/javascript">
     		$(function(){
-    			$('input[type=file]').change(function() { 
-    				$("#images_sample").show();
-    			    $("#images_sample").attr('src',($(this).val()));
-    			});
     			$("#btnSubmit").click(function(e){
     				e.preventDefault();    				
     				if($("#optCategory").val()==""){
@@ -221,6 +219,26 @@
      				    }
     				});
     			});
+    			
+    			$("#images").change(function(){			
+					$("#frmAddCategory").ajaxSubmit({
+						url: "${pageContext.request.contextPath}/admin/rest/images/",
+						dataType: 'JSON', 
+						type: 'POST',
+						success: function(data) { 
+							console.log(data);
+					        if(data){
+					        	$("#images_sample").attr("src", "${pageContext.request.contextPath}/resources/images/products/"+data.IMAGE);
+					        	$("#images_sample").show();
+					        	$("#image").val(data.IMAGE);
+					        }else{
+					        }
+					    },
+					    error:function(data,status,er) { 
+					        console.log("error: "+data+" status: "+status+" er:"+er);
+					    }
+					});
+				});
     		});
     	</script>
     </body>

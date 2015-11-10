@@ -8,7 +8,7 @@ public class CategoryForm {
 	
 	private String categoryName;
 	
-	private MultipartFile image;
+	private String image;
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -26,11 +26,11 @@ public class CategoryForm {
 		this.categoryName = categoryName;
 	}
 
-	public MultipartFile getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(MultipartFile image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	

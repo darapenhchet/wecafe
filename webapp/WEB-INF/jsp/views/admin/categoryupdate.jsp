@@ -126,13 +126,9 @@
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control" id="image" name="image"  
-														required="required"  
-														type="file">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/categories/${category.img}"
-														width="400px" height="400px" class="img-thumbnail"
-														id="images_sample" />
+													<input class="form-control " id="images" name="images" type="file" required="requrired">
+                                                    <input type="hidden" id="image" name="image" />
+													<img src="${pageContext.request.contextPath}/resources/images/products/${category.img}" width="400px" height="400px" class="img-thumbnail" id="images_sample" />
 												</div>
 											</div>
 
@@ -276,10 +272,6 @@
 	</script>
 	<script type="text/javascript">
 		$(function() {
-			$('input[type=file]').change(function() {
-				$("#images_sample").show();
-				$("#images_sample").attr('src', ($(this).val()));
-			});
 			$("#btncancel").click(function(){
 				location.href="${pageContext.request.contextPath}/admin/categorylist";
 			});
@@ -319,6 +311,25 @@
 													}
 												});
 							});
+			$("#images").change(function(){			
+				$("#frmAddCategory").ajaxSubmit({
+					url: "${pageContext.request.contextPath}/admin/rest/images/",
+					dataType: 'JSON', 
+					type: 'POST',
+					success: function(data) { 
+						console.log(data);
+				        if(data){
+				        	$("#images_sample").attr("src", "${pageContext.request.contextPath}/resources/images/products/"+data.IMAGE);
+				        	$("#images_sample").show();
+				        	$("#image").val(data.IMAGE);
+				        }else{
+				        }
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+			});
 		});
 	</script>
 </body>

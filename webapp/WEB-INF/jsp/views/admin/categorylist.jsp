@@ -126,7 +126,7 @@
                                             <td id="CATEGORY_ID" style="display : none;">{{category.catId}}</td>
                                             <td >{{key+1 }}</td>
                                             <td>{{category.catName }}</td>
-                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/{{category.img }}" class="img-thumbnail" alt="{{category.catName}}" width="30px" height="30px" /></td>
+                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/products/{{category.img }}" class="img-thumbnail" alt="" width="30px" height="30px" /></td>
                                             <td>{{category.createdBy.lastName }} {{category.createdBy.firstName }}</td>
                                             <td style="text-align:center;">{{category.createdDate | date:'dd-MMMM-yyyy'}}</td>
                                             <td>{{category.lastUpdatedBy.lastName }} {{category.lastUpdatedBy.firstName }}</td>

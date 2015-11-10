@@ -48,7 +48,7 @@ public class CategoryController {
 	@RequestMapping(value="/admin/category/add", method=RequestMethod.POST)
 	public  @ResponseBody Boolean addNewCategory(CategoryForm form, Principal principal, HttpServletRequest request){
 		
-		String name = form.getImage().getOriginalFilename();
+		/*String name = form.getImage().getOriginalFilename();
 		if (!form.getImage().isEmpty()) {
             try {
                 byte[] bytes = form.getImage().getBytes();
@@ -56,10 +56,10 @@ public class CategoryController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                /*String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
+                String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                 String fileName = File.separator +"resources"
                         		+ File.separator + "images" + File.separator + "categories" + File.separator
-                        		+ randomUUIDFileName+"."+extension;*/
+                        		+ randomUUIDFileName+"."+extension;
                 
                 String savePath = request.getServletContext().getRealPath("/resources/images/categories/");
 				File path = new File(savePath);
@@ -91,7 +91,18 @@ public class CategoryController {
         } else {
             System.out.println("You failed to upload " + name + " because the file was empty.");
             return false;
-        }
+        }*/
+		
+		User user = userService.findUserByUsername(principal.getName());
+        Category category = new Category();
+        category.setCatName(form.getCategoryName());
+        category.setCreatedBy(user);
+        category.setImg(form.getImage());
+        category.setCreatedDate(new Date());
+        category.setStatus(true);
+        
+		System.out.println(user.getUsername());
+		return categoryService.addNewCategory(category);
 		
 	}
 	
@@ -103,7 +114,7 @@ public class CategoryController {
 	
 	@RequestMapping(value="/admin/category/update", method=RequestMethod.POST)
 	public  @ResponseBody Boolean updateCategory(CategoryForm form/*, Principal principal*/, HttpServletRequest request){
-		System.out.println(form.getImage());
+		/*System.out.println(form.getImage());
 		String name = form.getImage().getOriginalFilename();
 		if (!form.getImage().isEmpty()) {
             try {
@@ -112,11 +123,11 @@ public class CategoryController {
                 String randomUUIDFileName = uuid.toString();
                 
                 String extension = name.substring(name.lastIndexOf(".")+1);
-                /*
+                
                 String webappRoot = new File("C:\\Users\\PENHCHET\\git\\wecafe\\webapp").getAbsolutePath() ; //servletContext.getRealPath("/");
                 String fileName = File.separator +"resources"
                         		+ File.separator + "images" + File.separator + "categories" + File.separator
-                        		+ randomUUIDFileName+"."+extension;*/
+                        		+ randomUUIDFileName+"."+extension;
                 
                 String savePath = request.getServletContext().getRealPath("/resources/images/categories/");
                 System.out.println("SAVE PATH=" + savePath);
@@ -149,8 +160,13 @@ public class CategoryController {
         } else {
             System.out.println("You failed to upload " + name + " because the file was empty.");
             return false;
-        }
-		
+        }*/
+        Category category = categoryService.findCategoryById(form.getCategoryId());
+        category.setCatName(form.getCategoryName());
+        category.setLastUpdatedDate(new Date());
+        category.setImg(form.getImage());
+        System.out.println("==================="+category.getImg()+"=================");
+		return categoryService.updateCategory(category);
 	}
 	
 	@RequestMapping(value="/admin/category/delete/{id}" , method=RequestMethod.POST)

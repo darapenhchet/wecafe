@@ -13,8 +13,8 @@ public class ProductForm {
 	private BigDecimal salePrice;
 	private Long quantity;
 	private Long categoryId;
-	private MultipartFile images;
 	private String imgURL;
+	private String image;
 
 	public void setProductName(String productName) {
 		this.productName = productName;
@@ -22,14 +22,6 @@ public class ProductForm {
 
 	public String getProductName() {
 		return this.productName;
-	}
-
-	public void setImages(MultipartFile images) {
-		this.images = images;
-	}
-
-	public MultipartFile getImages() {
-		return this.images;
 	}
 
 	public BigDecimal getUnitPrice() {
@@ -88,5 +80,12 @@ public class ProductForm {
 		this.imgURL = imgURL;
 	}
 	
+	public String getImage(){
+		return this.image;
+	}
+	
+	public void setImage(String image){
+		this.image = image;
+	}
 }
 

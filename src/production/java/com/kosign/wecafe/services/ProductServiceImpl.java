@@ -104,7 +104,7 @@ public class ProductServiceImpl implements ProductService{
 			product.setSalePrice(newProduct.getSalePrice());
 			product.setCategory(category);
 			product.setLastUpdatedDate(new Date());
-			product.setImage(newProduct.getImgURL());
+			product.setImage(newProduct.getImage());
 			//product.setLastUpdatedBy(newProduct.getLastUpdatedBy());
 			session.saveOrUpdate(product);	
 			session.getTransaction().commit();
