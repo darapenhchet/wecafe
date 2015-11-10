@@ -1,19 +1,22 @@
 package com.kosign.wecafe.services;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.kosign.wecafe.controller.admin.importProductController;
 import com.kosign.wecafe.entities.ImportDetail;
 import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Product;
@@ -26,6 +29,8 @@ import com.kosign.wecafe.util.HibernateUtil;
 public class ImportServiceImp implements ImportService {
 
 	@Inject UserService userService;
+	
+	@Autowired SessionFactory sessionFactory;
 	
 //	@Override
 //	public List<Map> listAllImportProduct() {
@@ -215,120 +220,64 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	@Override
-	public Boolean updateImportPro(List<ImportForm> importform, Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	@Transactional
+	public Boolean updateImportPro(List<ImportForm> importForms, Long id) {
+		Session session = sessionFactory.getCurrentSession();
 		
 	    try {
-			session.getTransaction().begin();
-			//1. update import 
-			ImportProduct importproduct = session.get(ImportProduct.class, id);
-			importproduct.setImpDate(new Date());
-			User user = userService.findUserByUsername(getPrincipal());
-			importproduct.setUserId(user.getId()); 
-			importproduct.setImpId(id);
-			session.update(importproduct);
-			/*Query query = session.createQuery("FROM ImportDetail "
-					+ " Where ImprtDetail.pk1.importProduct.impId = ? ");
-			query.setParameter(0, id);
-			List<ImportDetail> importDetails = query.list();*/
+			//session.getTransaction().begin();
+			//Query query = session.createQuery("FROM ImportDetail ID WHERE ID.pk1.importProduct.impId = ? ");
+			//query.setParameter(0, id);
+			//List<ImportDetail> importDetails = (List<ImportDetail>)query.list();
+			ImportProduct importProduct = session.get(ImportProduct.class, id);
+			Set<ImportDetail> importDetails = importProduct.getImportDetail();
 			
-			for(ImportDetail importDetail: importproduct.getImportDetail()){
-				importDetail.setProStatus(false);
-				//session.save(importDetail);
-				
+			//System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());
+			
+			for(ImportDetail importDetail : importDetails){
 				Product product = session.get(Product.class, importDetail.getProduct().getProductId());
-				product.setQuantity(product.getQuantity()-importDetail.getProQty());
+				product.setQuantity(product.getQuantity() + importDetail.getProQty());
+				product.setLastUpdatedDate(new Date());
 				session.save(product);
+				importProduct.getImportDetail().remove(importDetail);
+				
+				//System.out.println("PRODUCT ID = " + product.getProductId());
 			}
 			
+			//importProduct.getImportDetail().removeAll(importDetails);
 			
-			for(int i=0; i < importform.size();i++){
+			session.clear();
+									
+			for(ImportForm importForm : importForms){
+				ImportDetail importDetail = new ImportDetail();
+				Product product = session.get(Product.class, importForm.getProId());
+				importDetail.setImportProduct(importProduct);
+				importDetail.setProduct(product);
+				importDetail.setSupplier(session.get(Supplier.class, importForm.getSupplierId()));
+				importDetail.setUnitPrice(importForm.getUnitPrice());
+				importDetail.setProQty(importForm.getQuantity());
+				importDetail.setProStatus(true);
 				
-				ImportDetail importdetails = new ImportDetail();
-				Product product = new Product(); 
-				product.setProductId(importform.get(i).getProId());
-				product.setQuantity(importform.get(i).getQuantity()); 
+				product.setUnitPrice(new BigDecimal(importForm.getUnitPrice()));
+				product.setQuantity(product.getQuantity()+importForm.getQuantity());
+				session.update(product);
 				
-				importdetails.setProduct(product); 
-				importdetails.setProStatus(true);
-				importdetails.setProQty(importform.get(i).getQuantity());
-				importdetails.setUnitPrice(importform.get(i).getUnitPrice());
-				importdetails.setProQty(importform.get(i).getQuantity());
-				
-				Supplier suppliers = new Supplier();
-				suppliers.setSupId(importform.get(i).getSupplierId());
-				importdetails.setSupplierid(importform.get(i).getSupplierId());
-				importdetails.setSupplier(suppliers);
-				importdetails.setImportProduct(importproduct);
-				
-				//3. update product (stock)
-				Product products  = session.get(Product.class, importdetails.getProduct().getProductId());
-				products.setQuantity(products.getQuantity() + importform.get(i).getQuantity() );
-				System.out.println("product.getQuantity()" +  importform.get(i).getQuantity());
-				session.update(products);
-				session.save(importdetails);
+				importProduct.getImportDetail().add(importDetail);
+				//System.out.println("PRODUCT QTY = " + importForm.getQuantity());
+				//System.out.println("PRODUCT = " + importForm.getProId());
 			}
-			
-			
-			//for(ImportP)
-			
-			
-			/*for(int i=0; i < importform.size();i++){
-				
-				//2. update importtDetail
-				ImportDetail importdetail = new ImportDetail();
-				//2.1 update product 
-				Product product = new Product(); 
-//				Query query = session.createQuery("FROM ImportDetail "
-//												+ " Where ImprtDetail.pk1.importProduct.impId = ? ");
-//				query.setParameter(0, importform.get(i).getImpId());
-			//	query.setParameter(1, importform.get(i).getProId()); 
-			//	List<ImportDetail> importDB = (List<ImportDetail>)query.list(); 
-				product.setProductId(importform.get(i).getProId());
-				importdetail.setProStatus(false);
-				importdetail.setImportProduct(importproduct);
-				importdetail.setProduct(product);
-			//	product.setQuantity(importform.get(i).getQuantity()); 
-				System.out.println("importform.size(pid)" + importform.get(i).getProId());
-				importdetail.setProduct(product); 
-				importdetail.setImportProduct(importproduct);
-				importdetail.setProQty(importform.get(i).getQuantity());
-				System.out.println("importform.size(pid)" + importform.get(i).getQuantity());
-				importdetail.setProStatus(true);
-				Supplier suppliers = new Supplier();
-				suppliers.setSupId(importform.get(i).getSupplierId());
-				importdetail.setSupplier(suppliers);
-				System.out.println("importform.get(i).getSupplierId()" + importform.get(i).getSupplierId());
-				importdetail.setSupplierid(importform.get(i).getSupplierId());
-				importdetail.setUnitPrice(importform.get(i).getUnitPrice());
-				System.out.println("importform.size(price)" + importform.get(i).getUnitPrice());
-				importproduct.getImportDetail().add(importdetail);
-				//session.save(importdetail); 
-				//3. update product (stock)
-				Product products  = session.get(Product.class, importdetail.getProduct().getProductId());
-				System.out.println("importdetail.getProduct().getProductId()" + products.getQuantity());
-				products.setQuantity(products.getQuantity() + importform.get(i).getQuantity() );
-				System.out.println("product.getQuantity()" +  importform.get(i).getQuantity());
-				session.update(importdetail);
-				System.out.println("+importform.size() 111+" + importform.size());
-			}
-			*/
-//			importdetail.setProQty(importform.getQuantity());
-//			importdetail.setUnitPrice(importform.getUnitPrice());
-//			importdetail.setSupplierid(importform.getSupplierId());
-//			importproduct.getImportDetail().add(importdetail);
-			
-			
-			
-			session.getTransaction().commit();
+			System.out.println("IMPORT DETAIL SIZE=" + importProduct.getImportDetail().size());
+			session.update(importProduct);
+			//session.getTransaction().commit();
+			return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.getStackTrace();
-			session.getTransaction().rollback();
+			//session.getTransaction().rollback();
 		}finally {
-			session.close();
+			//session.close();
 		}
-		return null;
+		return false;
 	}
 
 	@Override
