@@ -93,7 +93,7 @@
                                                 	<input type="hidden" id="productId" name="productId" type="text" value="${product.productId }"/>
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productName" name=""productName"" type="text" value="${product.productName }">
+                                                        <input class=" form-control" id="productName" name="productName" type="text" value="${product.productName }">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -145,7 +145,7 @@
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="images" name="images" type="file" value="${product.image }" required="requrired">
                                                         <img id="images_sample" name="images_sample" src="${pageContext.request.contextPath}/resources/images/products/${product.image}" width="400px" height="400px" class="img-thumbnail"/>
-                                                        <input type="hidden" id="image" name="image" />
+                                                        <input type="hidden" id="image" name="image" value="${product.image}"/>
                                                     </div>
                                                 </div>                                                                                            
 

@@ -126,8 +126,8 @@
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control " id="images" name="images" type="file" required="requrired">
-                                                    <input type="hidden" id="image" name="image" />
+													<input class="form-control " id="images" name="images" type="file" required="requrired" value="${category.img}">
+                                                    <input type="hidden" id="image" name="image" value="${category.img}" />
 													<img src="${pageContext.request.contextPath}/resources/images/products/${category.img}" width="400px" height="400px" class="img-thumbnail" id="images_sample" />
 												</div>
 											</div>
