@@ -414,6 +414,7 @@
                  		}); 
                  		
                  		console.log( JSON.stringify(importDetail));
+                 		alert($("#impId").val());
      	 			$.ajax({
      	 				 url: "${pageContext.request.contextPath}/admin/importupdate/" + $("#impId").val(), 
       				    type: 'POST',

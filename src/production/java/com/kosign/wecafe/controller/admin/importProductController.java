@@ -90,7 +90,8 @@ public class importProductController {
 		
 		System.out.println(+impId +" + impId");
 		 try {
-			return importService.updateImportPro(importform, impId);
+			//return importService.updateImportPro(importform, impId);
+			return importService.deleteImportPro(importform, impId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

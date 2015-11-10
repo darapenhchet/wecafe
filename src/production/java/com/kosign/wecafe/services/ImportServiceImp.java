@@ -106,7 +106,7 @@ public class ImportServiceImp implements ImportService {
 		return null;
 	}
 	@Override
-	public Boolean saveImportPro(List<ImportForm> importform) {
+	public Boolean saveImportPro(List<ImportForm> importform) { 
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -122,7 +122,6 @@ public class ImportServiceImp implements ImportService {
 			//2.save import detail
 			
 			for(int i=0; i < importform.size();i++){
-				
 				ImportDetail importdetail = new ImportDetail();
 				Product product = new Product();
 				product.setProductId(importform.get(i).getProId());
@@ -401,4 +400,35 @@ public class ImportServiceImp implements ImportService {
 		}
 		return null;
 	}
+	@Override
+	public Boolean deleteImportPro(List<ImportForm> importform, Long id ) {
+
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM ImportDetail ID"
+											+ " Where ID.pk1.importProduct.impId = ? "
+											+ " and ID.pk1.product.productId = ? ");
+				query.setParameter(0,  id);
+				query.setParameter(1, 1);
+			ImportDetail importdetail =   (ImportDetail)query.uniqueResult();
+			session.delete(importdetail);
+			 
+			//System.out.println("importdetail : " + importdetail);
+			
+			session.delete(importdetail);
+			session.beginTransaction().commit();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return true;
+	}
+ 
+	 
 }
