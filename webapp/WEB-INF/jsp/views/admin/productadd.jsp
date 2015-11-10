@@ -136,7 +136,7 @@
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Image</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="images" name="images" type="file" required="requrired">
+                                                        <input class="form-control " id="images" name="images" type="file" required="required">
                                                         <input type="hidden" id="image" name="image" />
                                                         <img src="" id="images_sample" name="images_sample" class="img-thumbnail" style="display:none;">
                                                     </div>
