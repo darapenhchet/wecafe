@@ -242,6 +242,35 @@ public class ImportServiceImp implements ImportService {
 				session.save(product);
 			}
 			
+			
+			for(int i=0; i < importform.size();i++){
+				
+				ImportDetail importdetails = new ImportDetail();
+				Product product = new Product(); 
+				product.setProductId(importform.get(i).getProId());
+				product.setQuantity(importform.get(i).getQuantity()); 
+				
+				importdetails.setProduct(product); 
+				importdetails.setProStatus(true);
+				importdetails.setProQty(importform.get(i).getQuantity());
+				importdetails.setUnitPrice(importform.get(i).getUnitPrice());
+				importdetails.setProQty(importform.get(i).getQuantity());
+				
+				Supplier suppliers = new Supplier();
+				suppliers.setSupId(importform.get(i).getSupplierId());
+				importdetails.setSupplierid(importform.get(i).getSupplierId());
+				importdetails.setSupplier(suppliers);
+				importdetails.setImportProduct(importproduct);
+				
+				//3. update product (stock)
+				Product products  = session.get(Product.class, importdetails.getProduct().getProductId());
+				products.setQuantity(products.getQuantity() + importform.get(i).getQuantity() );
+				System.out.println("product.getQuantity()" +  importform.get(i).getQuantity());
+				session.update(products);
+				session.save(importdetails);
+			}
+			
+			
 			//for(ImportP)
 			
 			
@@ -291,7 +320,7 @@ public class ImportServiceImp implements ImportService {
 //			importproduct.getImportDetail().add(importdetail);
 			
 			
-//			session.update(importproduct);
+			
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
