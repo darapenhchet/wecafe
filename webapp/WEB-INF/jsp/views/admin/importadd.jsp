@@ -48,6 +48,9 @@
 	          .hidebtn{
 					  	display : none;
 					  }
+				.borderRed{
+						border-color: red;
+				}
         </style>
   		
     </head>
@@ -122,8 +125,9 @@
                                                 <div class="form-group" align="right">
                                                      
                                                         <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Add</button>
-                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtn" type="button">Cancel</button>
+                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="canceladd" type="button">Cancel</button>
                                               	</div>
+                                              	</form>
                                                 <!-- =================== --> 
                         <h5 class="pull-left page-title"># Import List</h5>                        
 						<div class="row">
@@ -169,7 +173,7 @@
                                                         <button class="btn btn-success waves-effect waves-light" style="width: 100px;" id="savebtn" type="button">Save</button>
                                                         <button class="btn btn-default waves-effect" style="width: 100px; margin-right: 10px;" id="cencelBtn" type="button">Cancel</button> 
                                                 </div>
-                                            </form>
+                                            
                                         </div> <!-- .form -->
 
                                     </div> <!-- panel-body -->
@@ -379,7 +383,9 @@
     			     });
             	
             	$("#cencelBtn").click(function(){
-            		$("#tbllistimport tr").remove();
+            		if(confirm("Do you want to cancel?")){
+            			$("#tbllistimport tr").remove();
+            		}
             	});
             	$(document).on("click","#btndelete",function(){
             		$(this).parents("tr").remove();            		
@@ -406,12 +412,40 @@
             		$("#editbtn").attr("id","addbtn");
             		clear();
             	});
-            	$("#cancelbtn").click(function(){
-            		clear(); 
-            		$("#editbtn").attr("id","addbtn");
+            	$("#canceladd").click(function(){ 
+	            		clear(); 
+	            		$("#editbtn").attr("id","addbtn");
+            		 
             	});
             	$(document).on("click","#addbtn",function(){ 
-            		
+            		if($("#productName").val()=="")
+            			{
+            				$("#productName").addClass("borderRed");
+            				return;
+            			}
+            		else
+            				$("#productName").removeClass("borderRed");
+            		if($("#qty").val()=="")
+        			{
+        				$("#qty").addClass("borderRed");
+        				return;
+        			}
+            		else
+        				$("#qty").removeClass("borderRed");
+            		if($("#UnitPrice").val()=="")
+        			{
+        				$("#UnitPrice").addClass("borderRed");
+        				return;
+        			}
+            		else
+        				$("#UnitPrice").removeClass("borderRed");
+            		if($("#supplierName").val()=="")
+        			{
+        				$("#supplierName").addClass("borderRed");
+        				return;
+        			}
+            		else
+        				$("#supplierName").removeClass("borderRed");
             		var st="";
             		st += "<tr><td style='display: none;'>" + $('#proID').val() +"</td>";
             		st += "<td style='display: none;'>"+ $('#supID').val() +"</td>";
