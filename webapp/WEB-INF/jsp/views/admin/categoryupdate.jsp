@@ -115,11 +115,11 @@
 												<label for="productname" class="control-label col-lg-2">Category
 													Name *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="categoryId"
+													<input class=" form-control" id="categoryId" 
 														name="categoryId" type="hidden" value="${category.catId }">
-													<input class=" form-control" id="categoryName"
+													<input class=" form-control" id="categoryName" required="required"
 														name="categoryName" type="text"
-														value="${category.catName }" required="required">
+														value="${category.catName }" >
 												</div>
 											</div>
 											<div class="form-group ">

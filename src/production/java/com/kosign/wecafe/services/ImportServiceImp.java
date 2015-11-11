@@ -236,7 +236,7 @@ public class ImportServiceImp implements ImportService {
 			
 			for(ImportDetail importDetail : importDetails){
 				Product product = session.get(Product.class, importDetail.getProduct().getProductId());
-				product.setQuantity(product.getQuantity() + importDetail.getProQty());
+				product.setQuantity(product.getQuantity() - importDetail.getProQty());
 				product.setLastUpdatedDate(new Date());
 				session.save(product);
 				//importProduct.getImportDetail().remove(importDetail);

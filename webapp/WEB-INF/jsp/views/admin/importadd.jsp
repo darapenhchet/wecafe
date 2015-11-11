@@ -96,26 +96,26 @@
                                                 <div class="form-group ui-widget">
                                                     <label for="productName" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="productName" name="productName" type="text">
+                                                        <input class=" form-control" required="required" id="productName" name="productName" type="text">
                                                         <input class="hidebtn" id="proID">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Qty *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="qty" name="qty" type="text">
+                                                        <input class="form-control " required="required" id="qty" name="qty" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="UnitPrice" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="UnitPrice" name="Unit Pirce" type="text">
+                                                        <input class="form-control " required="required" id="UnitPrice" name="Unit Pirce" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="supplierName" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="supplierName" name="SupplierName" type="text">
+                                                        <input class="form-control " required="required" id="supplierName" name="SupplierName" type="text">
                                                         <input class="hidebtn" id="supID">
                                                     </div>
                                                 </div> 
@@ -432,6 +432,10 @@
                 
                 $("#savebtn").click(function(){ 
                 	var importDetail = [];
+                	if($('#tbllistimport tr').length==0){
+                		alert("There is no data was added");
+                		return;
+                	}
                 		$('#tbllistimport tr').each(function(){
                 			json ={
                 						"proId"				: ($(this).find("td").eq(0).html()),

@@ -122,19 +122,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Cost Price</label>
+                                                    <label for="costprice" class="control-label col-lg-2">Cost Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="costPrice" name="costPrice" type="text" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Sale Price</label>
+                                                    <label for="costprice" class="control-label col-lg-2">Sale Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="salePrice" name="salePrice" type="text" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="costprice" class="control-label col-lg-2">Image</label>
+                                                    <label for="costprice" class="control-label col-lg-2">Image *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="images" name="images" type="file" required="required">
                                                         <input type="hidden" id="image" name="image" />

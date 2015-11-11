@@ -377,7 +377,7 @@
             		$("#UnitPrice").val($(this).parents("tr").children().eq(4).html());
             		$("#supId").val($(this).parents("tr").children().eq(5).html());
             		$("#supplierName").val($(this).parents("tr").children().eq(6).html());
-            		alert($("#supId").val());
+            		 
             	});
             	 
                 $(document).on('keypress','#qty, #UnitPrice', function(e){
@@ -394,6 +394,7 @@
             	
             	$("#cencelBtn").click(function(){
             		$("#tbllistimport tr").remove();
+            		location.href="${pageContext.request.contextPath}/admin/importlist";
             	});
             	
            
@@ -416,7 +417,7 @@
                  		}); 
                  		
                  		console.log( JSON.stringify(importDetail));
-                 		alert($("#impId").val());
+                 		 
      	 			$.ajax({
      	 				 url: "${pageContext.request.contextPath}/admin/importupdate/" + $("#impId").val(), 
       				    type: 'POST',
@@ -428,7 +429,7 @@
      	 		        },
      	 				success: function(data){
      	 					console.log(data);
-     	 					//location.href="${pageContext.request.contextPath}/admin/importlist";
+     	 					location.href="${pageContext.request.contextPath}/admin/importlist";
      	 				},
      	 				error:function(data, status,er){
      	 					console.log("error: " + data + "status: " + status + "er: ");
