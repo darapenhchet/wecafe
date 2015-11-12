@@ -49,10 +49,18 @@
 		    </ol>
     <!-- Wrapper for slides -->
 	    <div class="carousel-inner" role="listbox">
-	      <div class="item active">
-	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
-	      </div>
-	      <div class="item">
+	       
+	      <c:forEach items="${slides }" var="slide" varStatus="index">
+	      		<c:if test="${index.count eq 1}">
+	      			<div id="item active">
+	      		</c:if> 
+	      		<c:otherwise>
+	      			<div id="item">
+	      		</c:otherwise>
+		        <img src="${pageContext.request.contextPath}/resources/images/products/${slide.image}" alt="Chania" style="width: 100%; height: 955px;"> 
+		      </div>
+	      </c:forEach>
+<%-- 	      <div class="item">
 	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Chania" style="width: 100%; height: 955px;">
 	      </div>    
 	      <div class="item">
@@ -60,7 +68,7 @@
 	      </div>
 	      <div class="item">
 	        <img src="${pageContext.request.contextPath}/resources/images/img/slide4.png" alt="Flower" style="width: 100%; height: 955px;">
-	      </div>
+	      </div> --%>
 	    </div>
 	    <!-- Left and right controls -->
 	    <a class="left carousel-control" href="#mySlideShow" role="button" data-slide="prev">
@@ -278,8 +286,7 @@
 				}
 				if (connection.bufferedAmount == 0) {
 					connection.send("SENT");
-				}
-				alert("SENT");
+				} 
 			}
 			getsizeSession();
 			
