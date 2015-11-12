@@ -71,9 +71,4 @@ public class AdminController {
        return "redirect:/admin/login?logout";
     }
 	
-	@RequestMapping(value={"/admin/dashboard","/admin/","/admin/home"})
-	public String dashboard(){
-		return "admin/dashboard";
-	}
-			
 }

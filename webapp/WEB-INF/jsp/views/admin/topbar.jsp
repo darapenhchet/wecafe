@@ -94,7 +94,6 @@
  -->                                <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="${pageContext.request.contextPath}/resources/images/img/Coke.jpg" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile</a></li>
                                         <!-- <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li> -->
                                         <!-- <li><a href="javascript:void(0)"><i class="md md-lock"></i> Lock screen</a></li> -->
                                         <c:if test="${pageContext.request.userPrincipal.name != null}">
