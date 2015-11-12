@@ -89,7 +89,7 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="md md-view-list"></i><span> Setting </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Slide List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/slides">Slide List</a></li>
                                 </ul>
                             </li>                            
                            
