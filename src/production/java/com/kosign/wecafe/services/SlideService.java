@@ -2,7 +2,6 @@ package com.kosign.wecafe.services;
 
 import java.util.List;
 
-import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Slide;
 
 public interface SlideService {
@@ -11,6 +10,6 @@ public interface SlideService {
 	public Boolean addNewSlide(Slide slide);
 	public Boolean updateSlide(Slide slide);
 	public Boolean deleteSlide(Integer id);
-	public Category findSlideById(Integer id);
+	public Slide findSlideById(Integer id);
 	
 }

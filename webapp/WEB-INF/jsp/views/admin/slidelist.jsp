@@ -103,13 +103,13 @@
                                     <tbody>
 	                                    <tr dir-paginate="(key,slide) in slides|filter:search|itemsPerPage:perPage|orderBy : slide.createdDate" >
                                             <td id="SLIDE_ID">{{slide.id}}</td>
-                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/products/{{slide.image }}" class="img-thumbnail" alt="" width="30px" height="30px" /></td>
+                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/products/{{slide.image }}" class="img-thumbnail" alt="" width="320px" height="320px" /></td>
                                             <td>{{slide.createdBy.lastName }} {{slide.createdBy.firstName }}</td>
                                             <td style="text-align:center;">{{slide.createdDate | date:'dd-MMMM-yyyy'}}</td>
                                             <td style="text-align:center;" class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                                <a href="${pageContext.request.contextPath}/admin/category/update/{{slide.id}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                                <a href="${pageContext.request.contextPath}/admin/slide/update/{{slide.id}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
                                                 <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr> 
@@ -183,10 +183,10 @@
     	<script type="text/javascript">
     	$(function(){
 	    	$(document).on('click','#btnRemove',function(){
-				var id = $(this).parents("tr").find("#CATEGORY_ID").html();
-				if(confirm("Do you want to delete that category?")){
+				var id = $(this).parents("tr").find("#SLIDE_ID").html();
+				if(confirm("Do you want to delete that slide?")){
 					$.ajax({ 
-					    url: "${pageContext.request.contextPath}/admin/category/delete/"+id, 
+					    url: "${pageContext.request.contextPath}/admin/slide/delete/"+id, 
 					    type: 'POST', 
 					    dataType: 'JSON', 
 					    //data: JSON.stringify(json), 
@@ -197,7 +197,7 @@
 					    success: function(data) { 
 					        if(data){
 					        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
-					        	location.href="${pageContext.request.contextPath}/admin/categorylist";
+					        	location.href="${pageContext.request.contextPath}/admin/slides";
 					        }else{
 					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
 					        }

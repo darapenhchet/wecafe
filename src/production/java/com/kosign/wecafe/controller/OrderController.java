@@ -2,13 +2,13 @@ package com.kosign.wecafe.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +21,7 @@ import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.forms.Cart;
 import com.kosign.wecafe.services.OrderProductService;
 import com.kosign.wecafe.services.ProductService;
+import com.kosign.wecafe.services.SlideService;
 
 @Controller
 @RequestMapping(value="/order")
@@ -32,10 +33,14 @@ public class OrderController {
 	@Inject
 	ProductService productService;
 	
+	@Autowired
+	SlideService slideService;
+	
 	@RequestMapping(value={"/"})
 	public String index(Map<String ,Object> model){
 		List<Product> products = orderProductService.getProduct();
 		model.put("products", products);
+		model.put("slides", slideService.getAllSlides());
 		
 		for(Product product : products){
 			System.out.println(product.getProductName());

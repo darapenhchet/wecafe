@@ -89,7 +89,7 @@
                                                 <div class="form-group ">
                                                     <label for="productname" class="control-label col-lg-2">Slide Name *</label>
                                                     <div class="col-lg-10">
-                                                        <input class=" form-control" id="categoryName" name="categoryName" type="text" required="required">
+                                                        <input class=" form-control" id="name" name="name" type="text" required="required">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -181,7 +181,7 @@
     						console.log(data);
      				        if(data){
      				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
-     				        	location.href="${pageContext.request.contextPath}/admin/slidelist";
+     				        	location.href="${pageContext.request.contextPath}/admin/slides";
      				        }else{
      				        	alert('YOU HAVE ERRORS WHEN INSERT NEW SLIDE.');
      				        }

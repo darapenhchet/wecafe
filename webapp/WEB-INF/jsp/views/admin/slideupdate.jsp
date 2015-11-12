@@ -98,7 +98,7 @@
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4 class="pull-left page-title">UPDATE CATEGORY</h4>
+							<h4 class="pull-left page-title">UPDATE SLIDE</h4>
 						</div>
 					</div>
 					<!-- Form-validation -->
@@ -110,25 +110,25 @@
 								<div class="panel-body">
 									<div class=" form">
 										<form class="cmxform form-horizontal tasi-form"
-											id="frmAddCategory" method="POST" action="#">
+											id="frmUpdateSlide" method="POST" action="#">
 											<div class="form-group ">
-												<label for="productname" class="control-label col-lg-2">Category
+												<label for="productname" class="control-label col-lg-2">Slide
 													Name *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="categoryId" 
-														name="categoryId" type="hidden" value="${category.catId }">
-													<input class=" form-control" id="categoryName" required="required"
-														name="categoryName" type="text"
-														value="${category.catName }" >
+													<input class=" form-control" id="id" 
+														name="id" type="hidden" value="${slide.id }">
+													<input class=" form-control" id="name" required="required"
+														name="name" type="text"
+														value="${slide.name }" >
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control " id="images" name="images" type="file" required="required" value="${category.img}" required="required">
-                                                    <input type="hidden" id="image" name="image" value="${category.img}" required="required"/>
-													<img src="${pageContext.request.contextPath}/resources/images/products/${category.img}" width="400px" height="400px" class="img-thumbnail" id="images_sample" required="required" />
+													<input class="form-control " id="images" name="images" type="file" required="required" value="${slide.image}" required="required">
+                                                    <input type="hidden" id="image" name="image" value="${slide.image}" required="required"/>
+													<img src="${pageContext.request.contextPath}/resources/images/products/${slide.image}" width="400px" height="400px" class="img-thumbnail" id="images_sample" required="required" />
 												</div>
 											</div>
 
@@ -232,36 +232,29 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#btncancel").click(function(){
-				location.href="${pageContext.request.contextPath}/admin/categorylist";
+				location.href="${pageContext.request.contextPath}/admin/slides";
 			});
 			$("#btnSubmit")
 					.click(
 							function(e) {
 								e.preventDefault();
-								if ($("#optCategory").val() == "") {
-									alert("PLEASE CHOOSE THE CATEGORY");
-									return;
-								}
 								if($("#image").val()==""){
 			    					alert("PLEASE SELECT THE IMAGE.");
 			    					return;
 			    				}
-								/* 
-								$('input[type=file]').val($("#images_sample").attr('src')); 
-								*/
-								$("#frmAddCategory")
+								$("#frmUpdateSlide")
 										.ajaxSubmit(
 												{
-													url : "${pageContext.request.contextPath}/admin/category/update",
+													url : "${pageContext.request.contextPath}/admin/slide/update",
 													dataType : 'JSON',
 													type : 'POST',
 													success : function(data) {
 														console.log(data);
 														if (data) {
 															alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-															location.href="${pageContext.request.contextPath}/admin/categorylist";
+															location.href="${pageContext.request.contextPath}/admin/slides";
 														} else {
-															alert('YOU HAVE ERRORS WHEN UPDATE NEW PRODUCT.');
+															alert('YOU HAVE ERRORS WHEN UPDATE SLIDE.');
 														}
 													},
 													error : function(data,
@@ -275,7 +268,7 @@
 												});
 							});
 			$("#images").change(function(){			
-				$("#frmAddCategory").ajaxSubmit({
+				$("#frmUpdateSlide").ajaxSubmit({
 					url: "${pageContext.request.contextPath}/admin/rest/images/",
 					dataType: 'JSON', 
 					type: 'POST',
