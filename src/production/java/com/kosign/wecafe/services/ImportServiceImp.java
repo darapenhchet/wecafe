@@ -94,27 +94,28 @@ public class ImportServiceImp implements ImportService {
 //		return null;
 //	}
 	@Override
+	@Transactional
 	public List<ImportProduct> listAllImportProduct() {
 		Session session = null;
 		try{
-			session = HibernateUtil.getSessionFactory().openSession();
+			session = sessionFactory.getCurrentSession();
 			session.getTransaction().begin();
 			Query query = session.createQuery("FROM ImportProduct");
 			List<ImportProduct>	importProducts = (List<ImportProduct>)query.list();	
-			session.getTransaction().commit();
 			return importProducts;
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
-			session.close();
+			
 		}
 		
 		return null;
 	}
 	@Override
+	@Transactional
 	public Boolean saveImportPro(List<ImportForm> importform) { 
 		
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.getTransaction().begin();
 			//1. save import product 
@@ -155,19 +156,13 @@ public class ImportServiceImp implements ImportService {
 				System.out.println("product.getQuantity()" +  importform.get(i).getQuantity());
 				session.update(products);
 			}
-			
 			//importProduct.setImpId(impId);
-			
 			session.save(importProduct);
-			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			session.beginTransaction().rollback();
 		}finally {
-			session.close();
 		}
-		
 		return null;
 	}
 
@@ -239,10 +234,12 @@ public class ImportServiceImp implements ImportService {
 				Product product = session.get(Product.class, importDetail.getProduct().getProductId());
 				product.setQuantity(product.getQuantity() - importDetail.getProQty());
 				product.setLastUpdatedDate(new Date());
+				product.setLastUpdatedBy(userService.findUserByUsername(getPrincipal()));
 				session.save(product);
 				//importProduct.getImportDetail().remove(importDetail);
 				
-				//System.out.println("PRODUCT ID = " + product.getProductId());
+				System.out.println("PRODUCT ID = " + product.getProductId());
+				session.evict(importDetail);
 				//session.delete(importDetail);
 			}
 			
@@ -266,8 +263,8 @@ public class ImportServiceImp implements ImportService {
 				session.update(product);
 				
 				importProduct.getImportDetail().add(importDetail);
-				//System.out.println("PRODUCT QTY = " + importForm.getQuantity());
-				//System.out.println("PRODUCT = " + importForm.getProId());
+				System.out.println("PRODUCT QTY = " + importForm.getQuantity());
+				System.out.println("PRODUCT = " + importForm.getProId());
 			}
 			System.out.println("IMPORT DETAIL SIZE=" + importProduct.getImportDetail().size());
 			session.update(importProduct);

@@ -4,11 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public List<Product> getAllProducts() {
@@ -60,6 +64,8 @@ public class ProductServiceImpl implements ProductService{
 			session = sessionFactory.getCurrentSession();
 			Category category = session.get(Category.class, product.getCategory().getCatId());
 			product.setCategory(category);
+			product.setCreatedBy(userService.findUserByUsername(getPrincipal()));
+			//product.setCreatedDate(new Date());
 			session.save(product);
 			return true;
 		}catch(Exception ex){
@@ -171,5 +177,17 @@ public class ProductServiceImpl implements ProductService{
 			System.out.println(ex.getMessage());
 		}
 		return null;
+	}
+	
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
 	}
 }
