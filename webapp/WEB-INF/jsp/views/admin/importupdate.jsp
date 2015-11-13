@@ -530,7 +530,7 @@
     				    type: 'POST', 
     				    dataType: 'JSON', 
     				    beforeSend: function(xhr) {
-    	                    xhr.setRequestHeader("Accept", "application/json1 ");
+    	                    xhr.setRequestHeader("Accept", "application/json ");
     	                    xhr.setRequestHeader("Content-Type", "application/json");
     	                },
     				    success: function(data) { 
