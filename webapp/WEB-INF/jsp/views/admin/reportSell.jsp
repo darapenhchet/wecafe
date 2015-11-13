@@ -136,17 +136,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="m-h-50 form-group">                                     
+                                    <div class="m-h-50 form-group hidden-print ">                                     
 					            		<div>
 					                		<label class="col-sm-1 control-label">Date : </label>
 												<input type="hidden" id="SEND_DT" data-id="SEND_DT" />
-											<div id="sendFrdt" class="date-range col-sm-5" >
+											<div id="sendFrdt" class="date-range col-sm-5"  >
 												<input type="text" readonly="readonly" id="REGS_DATE_S" name="startdate" class="range-start" style="width:100px; text-align: center;">&nbsp;
 												<a href="#none" id="btnREGS_DATE_S"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
 												<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
 												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
 											</div>   
     									</div> 
+                                           		<button class="btn btn-primary waves-effect waves-light hidden-print" id="btnSearch">Search</button>
                                     </div>
                                     
                                     <div class="row">
@@ -163,7 +164,7 @@
 	                                                        <th>Total</th>
 	                                                    </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody id="searchDetail">
                                                       <c:set var="total" value="${0}"/>
                                                    		 <c:forEach items="${reportSell}" var="reportSells" varStatus="theCount"  >
 	                                                    	<tr>
@@ -187,7 +188,7 @@
                                             <p class="text-right">Discount: 12.9%</p>
                                             <p class="text-right">VAT: 12.9%</p> --%>
                                             <hr>
-                                            <h3 class="text-right">${total} Riels</h3>
+                                            <h3 class="text-right" id="totalPrice">${total} Riels</h3>
                                         </div>
                                     </div>
                                     <hr>
@@ -246,8 +247,59 @@
     <!-- CUSTOM JS -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
  <script>
+ var st = "";
  $(document).ready(function(){
 	 setCalendar();
+	
+	 
+	 
+	 $("#btnSearch").click(function(){
+      	var startDate 		= $( "#REGS_DATE_S" ).val();
+		var endDate 		= $( "#REGS_DATE_E" ).val();
+		json = {
+					"startdate"   		  : startDate,
+					"enddate" 		  	  : endDate
+		};
+		console.log(JSON.stringify(json));
+		$.ajax({
+			 url: "${pageContext.request.contextPath}/admin/getsearchsellbydate", 
+	    type: 'POST',
+			datatype: 'JSON',
+			data: JSON.stringify(json), 
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader("Accept", "application/json");
+	            xhr.setRequestHeader("Content-Type", "application/json");
+	        },
+			success: function(data){
+				st="";
+				
+            	var a = 1;
+            	var total = 0;
+            	
+	            for(i=0; i<data.length; i++)	
+		      	{ 
+	            	a = i+1;
+	            	total += data[i].Total ;
+		    	  	st += "<tr>"
+		    	  	st += "<td>" + a + "</td> "
+		    	  	st += "<td>" + data[i].productName + "</td>";
+		    	  	st += "<td>" + data[i].proQty + "</td>";
+		    	  	st += "<td>" + data[i].UnitPrice + "</td>";
+		    	  	st += "<td>" + data[i].Total + "</td>"; 
+		    	  
+		    	}
+	            
+      			$("#searchDetail").html(st);
+      			$("#totalPrice").html(total);
+			},
+			error:function(data, status,er){
+				console.log("error: " + data + "status: " + status + "er: ");
+			}
+		}); 
+	 });
+	 $("#REGS_DATE_E").click(function(){
+		 alert($( "#REGS_DATE_S" ).val());
+	 });
 	 $("#btnREGS_DATE_S").click(function(){	
 	 			$( "#REGS_DATE_S" ).datepicker("show");			
 	 		});		
