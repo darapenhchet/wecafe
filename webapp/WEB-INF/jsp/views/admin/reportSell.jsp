@@ -121,7 +121,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             
-                                            <div class="pull-left m-t-30">
+                                            <div class="pull-left m-t-120">
                                                  <address>
 	                                                  <strong>KOSIGN, Inc.</strong><br>
 	                                                  #12, St 323, Boeungkak II Commune,<br>
@@ -146,8 +146,7 @@
 												<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
 												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
 											</div>   
-    									</div> 
-                                           		<button class="btn btn-primary waves-effect waves-light hidden-print" id="btnSearch">Search</button>
+    									</div>                                           		
                                     </div>
                                     
                                     <div class="row">
@@ -165,7 +164,7 @@
 	                                                    </tr>
                                                     </thead>
                                                     <tbody id="searchDetail">
-                                                      <c:set var="total" value="${0}"/>
+                                                     <%--  <c:set var="total" value="${0}"/>
                                                    		 <c:forEach items="${reportSell}" var="reportSells" varStatus="theCount"  >
 	                                                    	<tr>
 	                                                            <td>${theCount.count}</td>
@@ -176,7 +175,7 @@
 	                                                             <c:set var="total" value = "${total + reportSells.Total}" />
 	                                                             <!--   <td>${total}</td>-->
 	                                                        </tr> 
-                                                        </c:forEach> 
+                                                        </c:forEach>  --%>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -250,10 +249,10 @@
  var st = "";
  $(document).ready(function(){
 	 setCalendar();
-	
+	 searchByDate();
 	 
 	 
-	 $("#btnSearch").click(function(){
+	 function searchByDate(){
       	var startDate 		= $( "#REGS_DATE_S" ).val();
 		var endDate 		= $( "#REGS_DATE_E" ).val();
 		json = {
@@ -296,12 +295,14 @@
 				console.log("error: " + data + "status: " + status + "er: ");
 			}
 		}); 
-	 });
-	 $("#REGS_DATE_E").click(function(){
-		 alert($( "#REGS_DATE_S" ).val());
-	 });
+	 }
+	  
+	 
+	 
+	 
 	 $("#btnREGS_DATE_S").click(function(){	
-	 			$( "#REGS_DATE_S" ).datepicker("show");			
+	 			$( "#REGS_DATE_S" ).datepicker("show");		
+	 			
 	 		});		
 	 	$("#btnREGS_DATE_E").click(function(){
 	 			$( "#REGS_DATE_E" ).datepicker("show");			
@@ -324,6 +325,7 @@
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+	 						searchByDate();
 	 			      }
 	 		});
 	 		$("#REGS_DATE_E").datepicker({
@@ -337,6 +339,7 @@
 	 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 			    	   searchByDate();
 	 			      }
 	 		});		
 	 		$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
