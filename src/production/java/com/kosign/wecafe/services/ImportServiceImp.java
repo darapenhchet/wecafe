@@ -173,7 +173,7 @@ public class ImportServiceImp implements ImportService {
 		try {
 			session.getTransaction().begin();
 			Query query = session.createQuery("FROM Product");
-			List<Product> products = query.list();
+			List<Product> products = query.list(); 
 			 return products; 
 		} catch (Exception e) {
 			e.printStackTrace();
