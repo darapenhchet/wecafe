@@ -156,10 +156,10 @@
 												<td id="supid" style="display: none;">${importpro.supId }</td>	
 												<td id="supname">${importpro.supname }</td> 
 												<td class="actions" style="text-align: center;"><a
-													class="on-default edit-row" id="btnedit"
+													class="on-default edit-row" id="btnedit1"
 													 href="javascript:;"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-													href="javascript:;" id="btnRemove"><i
+													href="javascript:;" id="btnRemove1"><i
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
 										</c:forEach>
