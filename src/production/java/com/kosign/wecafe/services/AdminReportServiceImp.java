@@ -136,7 +136,7 @@ public class AdminReportServiceImp implements AdminReportService {
 						+ " GROUP BY  O.pk.product.productId, O.pk.product.productName, O.proUnitPrice");
 
 			// query.setParameter("orderId", new Long(94));
-			SimpleDateFormat dateformat3 = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dateformat3 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date startdate = dateformat3.parse(dateForm.getStartdate());
 			Date enddate = dateformat3.parse(dateForm.getEnddate());
 			query.setParameter("startDate", startdate);
