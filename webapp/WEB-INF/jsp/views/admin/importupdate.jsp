@@ -119,13 +119,13 @@
                                                     <label for="supplierName" class="control-label col-lg-2">Supplier Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="supplierName"   name="SupplierName" type="text">
-                                                        <input  type="text" class="hidebtn" id="supId"  >
+                                                        <input  type="text" class="hidebtn" id="suppId"  >
                                                     </div>
                                                 </div> 
                                                 <div class="form-group" align="right">
                                                      
-                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Update</button>
-                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtn" type="button">Cancel</button>
+                                                        <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Add</button>
+                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtnadd" type="button">Cancel</button>
                                               	</div>
                                                 <!-- =================== --> 
 						<h5 class="pull-left page-title"># Import List</h5>                        
@@ -370,14 +370,16 @@
             	var _thisRow ;
             	
             	$(document).on("click","#btnedit",function(){
-            		_thisRow = $(this).parents("tr");
+            		$("#addbtn").html("Update");
+            		$("#addbtn").attr("id","updatebtn");            		
+            		_thisRow = $(this).parents("tr"); 
+            		
             		$("#prodID").val($(this).parents("tr").children().eq(0).html());
             		$("#productName").val($(this).parents("tr").children().eq(2).html());
             		$("#qty").val($(this).parents("tr").children().eq(3).html());
             		$("#UnitPrice").val($(this).parents("tr").children().eq(4).html());
-            		$("#supId").val($(this).parents("tr").children().eq(5).html());
-            		$("#supplierName").val($(this).parents("tr").children().eq(6).html());
-            		 
+            		$("#suppId").val($(this).parents("tr").children().eq(5).html());
+            		$("#supplierName").val($(this).parents("tr").children().eq(6).html()); 
             	});
             	 
                 $(document).on('keypress','#qty, #UnitPrice', function(e){
@@ -436,15 +438,38 @@
      	 				}
      	 			});   
                  }); 
-            	
             	$(document).on("click","#addbtn",function(){ 
+            		var st="";
+            		st += "<tr><td style='display: none;'>" + $('#prodID').val() +"</td>";
+            		st += "<td>" + ($("#tbllistimport tr").length + 1) +"</td>";
+            		st += "<td>" + $("#productName").val() +"</td>";
+            		st += "<td>" + $("#qty").val() +"</td>";
+            		st += "<td>" + $("#UnitPrice").val() +"</td>";
+            		st += "<td style='display: none;'>"+ $('#suppId').val() +"</td>";  
+            		st += "<td>" + $("#supplierName").val() +"</td>";
+            		st += "<td class='actions' style='text-align: center;'>";
+            		st += "<a class='on-default edit-row' id='btnedit' href='javascript:;'><i class='fa fa-pencil'></i></a>";
+            		st += " <a class='on-default remove-row' href='javascript:;' id='btnRemove'> <i class='fa fa-trash-o'></i></a></td>";
+            		$("#tbllistimport").append(st);
+            		clear();
+            	});
+            	
+            	$(document).on("click"," #cancelbtnadd",function(){
+            		$("#updatebtn").html("Add");
+            		$("#updatebtn").attr("id","addbtn");
+            		clear();            		
+            	});
+            	
+            	$(document).on("click","#updatebtn",function(){ 
 
             		_thisRow.children().eq(0).html($("#prodID").val());
-            		_thisRow.children().eq(5).html($("#supID").val());
+            		_thisRow.children().eq(5).html($("#suppId").val());
             		_thisRow.children().eq(2).html($("#productName").val());
             		_thisRow.children().eq(3).html($("#qty").val());
             		_thisRow.children().eq(4).html($("#UnitPrice").val());
             		_thisRow.children().eq(6).html($("#supplierName").val()); 
+            		$("#updatebtn").html("Add");
+            		$("#updatebtn").attr("id","addbtn");
             		clear();
             	});
             	
@@ -477,7 +502,7 @@
     				       $("#supplierName" ).autocomplete({
     				    	   
     				    	   select: function(event, ui){
-    				    		   $("#supID").val(ui.item.dataid);
+    				    		   $("#suppId").val(ui.item.dataid);
     				    	   },
     				    	   maxShowItems: 8,
     				           source: availableTags
@@ -493,7 +518,7 @@
                 function clear(){
             		$("#productName").val("");
             		$('#prodID').val("");
-            		$('#supID').val("");
+            		$('#suppId').val("");
             		$("#qty").val("");
             		$("#UnitPrice").val("");
             		$("#supplierName").val(""); 
