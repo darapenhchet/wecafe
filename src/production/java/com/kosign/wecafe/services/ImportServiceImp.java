@@ -2,6 +2,7 @@ package com.kosign.wecafe.services;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -247,7 +248,8 @@ public class ImportServiceImp implements ImportService {
 			
 			importProduct.getImportDetail().clear();
 					
-			session.clear();
+			//importProduct.setImportDetail(new HashSet<ImportDetail>());
+			session.save(importProduct);
 												
 			for(ImportForm importForm : importForms){
 				ImportDetail importDetail = new ImportDetail();
@@ -268,7 +270,7 @@ public class ImportServiceImp implements ImportService {
 				//System.out.println("PRODUCT = " + importForm.getProId());
 			}
 			System.out.println("IMPORT DETAIL SIZE=" + importProduct.getImportDetail().size());
-			session.saveOrUpdate(importProduct);
+			session.update(importProduct);
 			//session.getTransaction().commit();
 			return true;
 		} catch (Exception e) {

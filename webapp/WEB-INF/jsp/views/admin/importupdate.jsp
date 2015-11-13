@@ -429,7 +429,7 @@
      	 		        },
      	 				success: function(data){
      	 					console.log(data);
-     	 					location.href="${pageContext.request.contextPath}/admin/importlist";
+     	 					//location.href="${pageContext.request.contextPath}/admin/importlist";
      	 				},
      	 				error:function(data, status,er){
      	 					console.log("error: " + data + "status: " + status + "er: ");

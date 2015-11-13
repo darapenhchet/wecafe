@@ -33,7 +33,7 @@ public class ImportProduct implements Serializable{
 	@Column(name="imp_id")
 	private long impId;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk1.importProduct", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk1.importProduct",  orphanRemoval=true)
 	private Set<ImportDetail> importDetail = new HashSet<ImportDetail>();
 	
 	
@@ -44,7 +44,7 @@ public class ImportProduct implements Serializable{
 	private long userId;
 	
 	
-	@Formula("(SELECT SUM(o.pro_qty*o.unit_price) FROM import_detail o WHERE o.imp_id=imp_id)")
+	@Formula("(SELECT  coalesce(SUM(o.pro_qty*o.unit_price),0) FROM import_detail o WHERE o.imp_id=imp_id)")
 	@Column(name = "total_Amount")
 	private long totalAmount;
 	
