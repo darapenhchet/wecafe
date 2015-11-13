@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -61,12 +61,12 @@
         <div id="wrapper">
         
             <!-- Top Bar Start -->
-			<%-- <%@  include file="topbar.jsp" %> --%>
+			<%@ include file="topbar.jsp" %>
             <!-- Top Bar End -->
 
 
             <!-- ========== Left Sidebar Start ========== -->
-          <%--   <%@ include file="left_sidebar.jsp" %> --%>
+            <%@ include file="left_sidebar.jsp" %>
             <!-- Left Sidebar End -->
 
 
@@ -156,10 +156,10 @@
 												<td id="supid" style="display: none;">${importpro.supId }</td>	
 												<td id="supname">${importpro.supname }</td> 
 												<td class="actions" style="text-align: center;"><a
-													class="on-default edit-row" id="btnedit1"
+													class="on-default edit-row" id="btnedit"
 													 href="javascript:;"><i
 														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-													href="javascript:;" id="btnRemove1"><i
+													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
 										</c:forEach>
