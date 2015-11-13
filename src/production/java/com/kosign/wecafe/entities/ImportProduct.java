@@ -33,7 +33,7 @@ public class ImportProduct implements Serializable{
 	@Column(name="imp_id")
 	private long impId;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk1.importProduct",  orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk1.importProduct",  orphanRemoval=true, cascade=CascadeType.ALL)
 	private Set<ImportDetail> importDetail = new HashSet<ImportDetail>();
 	
 	
