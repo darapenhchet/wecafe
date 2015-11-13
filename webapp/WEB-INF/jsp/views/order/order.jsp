@@ -51,12 +51,15 @@
 	    <div class="carousel-inner" role="listbox">
 	       
 	      <c:forEach items="${slides }" var="slide" varStatus="index">
-	      		<c:if test="${index.count eq 1}">
-	      			<div id="item active">
-	      		</c:if> 
+	      		<c:choose>
+	      		<c:when test="${index.count == '1'}">
+	      			<div class="item active">
+	      		</c:when>
 	      		<c:otherwise>
-	      			<div id="item">
+	      			<div class="item">
 	      		</c:otherwise>
+	      		</c:choose> 
+	      		
 		        <img src="${pageContext.request.contextPath}/resources/images/products/${slide.image}" alt="Chania" style="width: 100%; height: 955px;"> 
 		      </div>
 	      </c:forEach>
