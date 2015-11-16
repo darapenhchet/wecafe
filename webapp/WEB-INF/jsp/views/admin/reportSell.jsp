@@ -253,8 +253,8 @@
 	 
 	 
 	 function searchByDate(){
-      	var startDate 		= $( "#REGS_DATE_S" ).val();
-		var endDate 		= $( "#REGS_DATE_E" ).val();
+      	var startDate 		= $( "#REGS_DATE_S" ).val() + " 00:00:00";
+		var endDate 		= $( "#REGS_DATE_E" ).val() + " 24:00:00"; 
 		json = {
 					"startdate"   		  : startDate,
 					"enddate" 		  	  : endDate
