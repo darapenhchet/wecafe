@@ -40,4 +40,8 @@ public class AdminReportController {
 	public @ResponseBody List<Map> searchSalebyDate(@RequestBody DateForm dateForm){
 		return adminReportService.getSearchSellbyDate(dateForm);
 	}
+	@RequestMapping(value="/admin/getsearchorderbydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Map> searchOrderbyDate(@RequestBody DateForm dateForm){
+		return adminReportService.getSearchOrderbyDate(dateForm);
+	}
 }

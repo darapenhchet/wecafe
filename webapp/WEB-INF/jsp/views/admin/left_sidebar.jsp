@@ -74,7 +74,7 @@
                                <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/sellreport">Sell Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/orderreport">Order Reports</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Import Reports</a></li>
+                                   <%--  <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Import Reports</a></li> --%>
                                 </ul>
                             </li>
                             

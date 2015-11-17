@@ -137,7 +137,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="m-h-50"></div>
+                                   <div class="m-h-50 form-group hidden-print ">                                     
+					            		<div>
+					                		<label class="col-sm-1 control-label">Date : </label>
+												<input type="hidden" id="SEND_DT" data-id="SEND_DT" />
+											<div id="sendFrdt" class="date-range col-sm-5"  >
+												<input type="text" readonly="readonly" id="REGS_DATE_S" name="startdate" class="range-start" style="width:100px; text-align: center;">&nbsp;
+												<a href="#none" id="btnREGS_DATE_S"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+												<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
+												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+											</div>   
+    									</div>                                           		
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="table-responsive">
@@ -151,7 +162,7 @@
 	                                                        <th>Total</th>
 	                                                    </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody id="searchDetail"><%-- 
                                                   	  <c:set var="total" value="${0}"/>
                                                    		 <c:forEach items="${reportOrder}" var="reportOrders" varStatus="theCount" >
 	                                                    	<tr>
@@ -162,135 +173,7 @@
 	                                                            <td>${reportOrders.Total }</td>
 	                                                             <c:set var="total" value = "${total + reportOrders.Total}" />
 	                                                        </tr>
-                                                        </c:forEach>
-                                                        <!-- <tr>
-                                                            <td>1</td>
-                                                            <td>LCD</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>1</td>
-                                                            <td>$380</td>
-                                                            <td>$380</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>LED</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>2</td>
-                                                            <td>$500</td>
-                                                            <td>$1000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>LCD</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>3</td>
-                                                            <td>$300</td>
-                                                            <td>$900</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$80</td>
-                                                            <td>$400</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>6</td>
-                                                            <td>LCD</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>1</td>
-                                                            <td>$380</td>
-                                                            <td>$380</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>7</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>8</td>
-                                                            <td>LCD</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>1</td>
-                                                            <td>$380</td>
-                                                            <td>$380</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>9</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>10</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>11</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>12</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>11</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>12</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>11</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>12</td>
-                                                            <td>Mobile</td>
-                                                            <td>Lorem ipsum dolor sit amet.</td>
-                                                            <td>5</td>
-                                                            <td>$50</td>
-                                                            <td>$250</td>
-                                                        </tr> -->
+                                                        </c:forEach> --%>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -302,7 +185,7 @@
                                             <p class="text-right">Discount: 12.9%</p>
                                             <p class="text-right">VAT: 12.9%</p> -->
                                             <hr>
-                                            <h3 class="text-right">${total} Riels</h3>
+                                            <h3 class="text-right" id="totalPrice">${total} Riels</h3>
                                         </div>
                                     </div>
                                     <hr>
@@ -342,6 +225,10 @@
 
     <!-- jQuery  -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+    <script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
+    
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
@@ -355,5 +242,112 @@
 
     <!-- CUSTOM JS -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+    
+     <script>
+ 
+ $(document).ready(function(){
+	 setCalendar();
+	 searchByDate();
+	 
+	 
+	 function searchByDate(){
+      	var startDate 		= $( "#REGS_DATE_S" ).val() ;
+		var endDate 		= $( "#REGS_DATE_E" ).val() ; 
+		json = {
+					"startdate"   		  : startDate,
+					"enddate" 		  	  : endDate
+		};
+		console.log(JSON.stringify(json));
+		$.ajax({
+			 url: "${pageContext.request.contextPath}/admin/getsearchorderbydate", 
+	    type: 'POST',
+			datatype: 'JSON',
+			data: JSON.stringify(json), 
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader("Accept", "application/json");
+	            xhr.setRequestHeader("Content-Type", "application/json");
+	        },
+			success: function(data){
+				console.log(data);
+				 
+				var st="";
+				
+            	var a = 1;
+            	var total = 0;
+            	
+	            for(i=0; i<data.length; i++)	
+		      	{ 
+	            	a = i+1;
+	            	total += data[i].Total ;
+		    	  	st += "<tr>"
+		    	  	st += "<td>" + a + "</td> "
+		    	  	st += "<td>" + data[i].proname + "</td>";
+		    	  	st += "<td>" + data[i].proqty + "</td>";
+		    	  	st += "<td>" + data[i].prounitprice + "</td>";
+		    	  	st += "<td>" + data[i].Total + "</td>"; 
+		    	  
+		    	}
+	            
+      			$("#searchDetail").html(st);
+      			$("#totalPrice").html(total);
+			},
+			error:function(data, status,er){
+				console.log("error: " + data + "status: " + status + "er: ");
+			}
+		}); 
+	 }
+	  
+	 
+	 
+	 
+	 $("#btnREGS_DATE_S").click(function(){	
+	 			$( "#REGS_DATE_S" ).datepicker("show");		
+	 			
+	 		});		
+	 	$("#btnREGS_DATE_E").click(function(){
+	 			$( "#REGS_DATE_E" ).datepicker("show");			
+	 		});
+
+	 function calculateDay(start, end){		
+	         var days = (end - start) / (1000 * 60 * 60 * 24);
+	         $("#totalday").val(days);
+	         return;
+	 }
+
+	 function setCalendar(){		
+	 		$("#REGS_DATE_S").datepicker({
+	 		      defaultDate: new Date(),
+	 		      setDate: new Date(),
+	 		      changeMonth: true,
+	 		      numberOfMonths: 1,
+	 		      dateFormat: "yy-mm-dd",
+	 		      onClose: function( selectedDate ) {			    	  
+	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+	 						searchByDate();
+	 			      }
+	 		});
+	 		$("#REGS_DATE_E").datepicker({
+	 		     defaultDate: new Date(),
+	 		      setDate: new Date(),
+	 		      changeMonth: true,
+	 		      numberOfMonths: 1,
+	 		      dateFormat: "yy-mm-dd",
+	 		      onClose: function( selectedDate ) {
+
+	 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
+	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 			    	   searchByDate();
+	 			      }
+	 		});		
+	 		$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
+	 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
+	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
+	 }
+	 });
+ </script>
+    
 </body>
 </html>
