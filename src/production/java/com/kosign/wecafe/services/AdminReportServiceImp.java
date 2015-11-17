@@ -180,6 +180,7 @@ public class AdminReportServiceImp implements AdminReportService {
 						+ " and O.pk.order.status = 1 "
 						+ " GROUP BY  O.pk.product.productId, O.pk.product.productName, O.proUnitPrice");						
 
+
 			*/
 //			SELECT pd.pro_id, pd.imp_id, pd.pro_qty, pd.pro_status, pd.sup_id, pd.unit_price from import_detail pd INNER JOIN import p on pd.imp_id = p.imp_id where p.imp_date = '2015-11-13'
 			
