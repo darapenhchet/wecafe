@@ -43,7 +43,7 @@ public class SellProductServiceImpl implements SellProductsService {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 
-			Query query = session.createQuery("FROM Product");
+			Query query = session.createQuery("FROM Product WHERE status = 1");
 
 			List<Product> products = query.list();
 
