@@ -105,7 +105,7 @@ public class ProductServiceImpl implements ProductService{
 			Product product = session.get(Product.class, newProduct.getProductId());
 			System.out.println("PRODUCT QUANTITY="+ newProduct.getQuantity());
 			product.setProductName(newProduct.getProductName());
-			product.setQuantity(newProduct.getQuantity());
+			//product.setQuantity(newProduct.getQuantity());
 			product.setCostPrice(newProduct.getCostPrice());
 			product.setUnitPrice(newProduct.getUnitPrice());
 			product.setSalePrice(newProduct.getSalePrice());

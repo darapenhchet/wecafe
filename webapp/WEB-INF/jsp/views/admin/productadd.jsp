@@ -109,10 +109,10 @@
                                                        	</select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
+                                                <div class="form-group " style="display:none;">
                                                     <label for="quantity" class="control-label col-lg-2">Quantity *</label>
                                                     <div class="col-lg-10">
-                                                        <input class="form-control " id="quantity" name="quantity" type="text" required="required">
+                                                        <input class="form-control " id="quantity" name="quantity" type="text" value="0" >
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -363,7 +363,7 @@
     				//image.append("images", $("#image").files[0]);
     				json = {
     					"productName" : $("#productName").val(),
-    					"categoryId"	: $("#optCategory").val(),
+    					"categoryId"  : $("#optCategory").val(),
     					"quantity"    : $("#quantity").val(),
     					"unitPrice"   : $("#unitPrice").val(),
     					"costPrice"	  : $("#costPrice").val(),

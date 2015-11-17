@@ -116,12 +116,12 @@
                                                        	</select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
+                                                <%-- <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Quantity *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="quantity" name="quantity" type="text" value="${product.quantity }" required="required">
                                                     </div>
-                                                </div>
+                                                </div> --%>
                                                 <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
