@@ -109,12 +109,12 @@
                                                        	</select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group " style="display:none;">
+                                                <!-- <div class="form-group " style="display:none;">
                                                     <label for="quantity" class="control-label col-lg-2">Quantity *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="quantity" name="quantity" type="text" value="0" >
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
@@ -132,7 +132,7 @@
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="salePrice" name="salePrice" type="text" required="required">
                                                     </div>
-                                                </div>
+                                                </div> 
                                                 <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Image *</label>
                                                     <div class="col-lg-10">
@@ -364,10 +364,10 @@
     				json = {
     					"productName" : $("#productName").val(),
     					"categoryId"  : $("#optCategory").val(),
-    					"quantity"    : $("#quantity").val(),
-    					"unitPrice"   : $("#unitPrice").val(),
-    					"costPrice"	  : $("#costPrice").val(),
-    					"salePrice"   : $("#salePrice").val(),
+    					"quantity"    : 0,
+    					"unitPrice"   : 0,
+    					"costPrice"	  : 0,
+    					"salePrice"   : 0,
     					//"images"	  : $("#image").files[0]
     				};
     				//console.log(form);
