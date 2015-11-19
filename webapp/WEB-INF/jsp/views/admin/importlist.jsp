@@ -181,7 +181,7 @@
 					<h4 class="modal-title">Cart</h4>
 
 				</div>
-				<div class="modal-body" style="height: 290px; width: 100%;">
+				<div class="modal-body" style="width: 100%;">
 					<table class="table table-hover">
 						<thead>
 							<tr>

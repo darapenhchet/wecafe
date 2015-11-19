@@ -106,12 +106,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					//.invalidSessionUrl("/admin/session_expired")
 					.sessionFixation()
 					.changeSessionId()
-					.maximumSessions(1)
-					.maxSessionsPreventsLogin(true)
-					.expiredUrl("/admin/login?maxSessions")
-					.sessionRegistry(sessionRegistryImpl())
+					//.sessionRegistry(sessionRegistryImpl())
+					/*.maximumSessions(1)*/
+					/*.maxSessionsPreventsLogin(true)*/
+					/*.expiredUrl("/admin/login?maxSessions")*/
 				
-				.and().and().csrf().disable()
+				//.and()
+				.and().csrf().disable()
 					.rememberMe()
 					.rememberMeParameter("remember-me")
 					.tokenRepository(persistentTokenRepository())
