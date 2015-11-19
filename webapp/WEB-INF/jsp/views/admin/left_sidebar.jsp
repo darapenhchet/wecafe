@@ -38,6 +38,14 @@
                             </li>
 
                             <li>
+                                <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Unit </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="${pageContext.request.contextPath}/admin/categorylist">Unit List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/categoryadd">Add Unit</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li>
                                 <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Category </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/categorylist">Category List</a></li>

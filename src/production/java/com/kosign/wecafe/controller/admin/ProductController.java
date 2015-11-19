@@ -30,6 +30,7 @@ import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.ProductForm;
 import com.kosign.wecafe.services.CategoryService;
 import com.kosign.wecafe.services.ProductService;
+import com.kosign.wecafe.services.UnitService;
 import com.kosign.wecafe.services.UserService;
 
 @Controller
@@ -40,6 +41,9 @@ public class ProductController {
 
 	@Inject
 	private CategoryService categoryService;
+	
+	@Inject
+	private UnitService unitService;
 
 	@Autowired
 	private UserService userService;
@@ -53,6 +57,7 @@ public class ProductController {
 		return "admin/productlist";
 	}
 
+	
 	@RequestMapping(value = "/admin/products/rest", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Product> getAllProducts() {
 		return productService.getAllProducts();
@@ -61,6 +66,7 @@ public class ProductController {
 	@RequestMapping(value = "/admin/productadd", method = RequestMethod.GET)
 	public String productadd(Map<String, Object> model) {
 		model.put("categories", categoryService.getAllCategories());
+		model.put("units", unitService.getAllUnits());
 		return "admin/productadd";
 	}
 

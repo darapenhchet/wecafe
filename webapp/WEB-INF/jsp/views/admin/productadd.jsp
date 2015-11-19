@@ -1,3 +1,4 @@
+<%@page import="com.kosign.wecafe.entities.Unit"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -92,6 +93,20 @@
                                                     <label for="productname" class="control-label col-lg-2">Product Name *</label>
                                                     <div class="col-lg-10">
                                                         <input class=" form-control" id="productName" name="productName" type="text" required="required">
+                                                    </div>
+                                                </div>
+                                               <div class="form-group ">
+                                                    <label for="unit" class="control-label col-lg-2">Unit *</label>
+                                                    <div class="col-lg-10">
+                                                       	<select class="form-control" id="optUnit" name="unitId" required="required">
+                                                       		<option value="">Please choose your Unit</option>
+                                                       		 	<%
+	                                                       		List<Unit> units = (ArrayList<Unit>)request.getAttribute("units");
+	                                                    		for(Unit unit : units){
+                                                    			out.println("<option value="+unit.getUnitId()+">"+unit.getUnitName()+"</option>");
+                                                    		}
+                                                       	%>
+                                                       	</select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">

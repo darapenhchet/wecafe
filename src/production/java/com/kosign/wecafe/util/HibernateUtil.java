@@ -12,6 +12,7 @@ import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.entities.Supplier;
+import com.kosign.wecafe.entities.Unit;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.entities.UserRole;
 import com.kosign.wecafe.entities.importDetailPK;
@@ -49,6 +50,7 @@ public class HibernateUtil {
 			configuration.addAnnotatedClass(ImportDetail.class);
 			configuration.addAnnotatedClass(ImportProduct.class);
 			configuration.addAnnotatedClass(importDetailPK.class);
+			configuration.addAnnotatedClass(Unit.class);
 					
 			
 			//configuration.addPackage("com.kosign.wecafe.entities");

@@ -78,7 +78,7 @@ public class importProductController {
 	@RequestMapping(value="/admin/importupdate/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Boolean importupdate(@RequestBody List<ImportForm> importform, @PathVariable("id") Long impId){
 		
-		System.out.println(+impId +" + impId");
+		System.out.println("simpId +" + impId);
 		 try {
 			return importService.updateImportPro(importform, impId);
 			//return importService.deleteImportPro(importform, impId);
