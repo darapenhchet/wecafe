@@ -1,5 +1,7 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,7 +15,7 @@ import com.kosign.wecafe.enums.UserRoleType;
 
 @Entity
 @Table(name="USER_ROLES")
-public class UserRole {
+public class UserRole implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

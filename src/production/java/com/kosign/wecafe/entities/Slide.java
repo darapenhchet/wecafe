@@ -1,5 +1,6 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Slides")
-public class Slide {
+public class Slide implements Serializable{
 
 	@Id
 	@GeneratedValue

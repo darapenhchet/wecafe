@@ -1,11 +1,13 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,11 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name="sale")
-public class Sale {
-	
+public class Sale implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="sale_sale_id_seq", name="sale_id")
 	@GeneratedValue(generator="sale_id", strategy=GenerationType.SEQUENCE)
@@ -28,7 +33,7 @@ public class Sale {
 	@Column(name="total_amount")
 	private BigDecimal totalAmount= new BigDecimal("0");
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="ord_id")
 	private Order order;
 	

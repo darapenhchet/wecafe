@@ -86,7 +86,7 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 		jsonConverter.setObjectMapper(this.objectMapper);
 		converters.add(jsonConverter);
 		FormHttpMessageConverter formConverter = new FormHttpMessageConverter();
-		formConverter.setCharset(Charset.forName("UTF8"));
+		formConverter.setCharset(Charset.forName("UTF-8"));
 		converters.add(formConverter);
 	}
 
@@ -128,17 +128,18 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
-	/*
-	 * @Bean public MappingJackson2HttpMessageConverter
-	 * mappingJackson2HttpMessageConverter() {
-	 * MappingJackson2HttpMessageConverter converter = new
-	 * MappingJackson2HttpMessageConverter(); converter.setObjectMapper(new
-	 * ObjectMapper().configure(DeserializationFeature.
-	 * FAIL_ON_UNKNOWN_PROPERTIES, false)); return converter; }
-	 * 
-	 * @Override public void
-	 * extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-	 * converters.add(mappingJackson2HttpMessageConverter()); }
-	 */
+
+	@Bean
+	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setObjectMapper(
+				new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
+		return converter;
+	}
+
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(mappingJackson2HttpMessageConverter());
+	}
 
 }

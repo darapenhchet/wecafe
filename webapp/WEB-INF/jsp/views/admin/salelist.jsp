@@ -105,7 +105,7 @@
 										<tr>
 											<th>#</th>
 											<th style="text-align: right;">Sale Number</th>
-											<th style="text-align: center;">Money</th>
+											<!-- <th style="text-align: center;">Money</th> -->
 											<th style="text-align: center;">Total Amount</th>
 											<th style="text-align: center;">Date</th>
 										</tr>
@@ -116,7 +116,7 @@
 												<td >${theCount.count }</td>
 												<td id="orderId" style="display : none;">${sell.order.orderId }</td>
 												<td><a href="javascipt:" id="saleId">${sell.saleId}</a></td>												
-												<td style="text-align: right;" id="moneyIn">${sell.moneyIn }
+												<%-- <td style="text-align: right;" id="moneyIn">${sell.moneyIn } --%>
 												</td>
 												<td style="text-align: right;">${sell.totalAmount }
 												</td>
@@ -205,94 +205,6 @@
 		</div>
 
 		<!-- ################################################################## -->
-
-		<!-- Right Sidebar -->
-		<div class="side-bar right-bar nicescroll">
-			<h4 class="text-center">Chat</h4>
-			<div class="contact-list nicescroll">
-				<ul class="list-group contacts-list">
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg"
-									alt="">
-							</div> <span class="name">Chadengle</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg"
-									alt="">
-							</div> <span class="name">Tomaslau</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg"
-									alt="">
-							</div> <span class="name">Stillnotdavid</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg"
-									alt="">
-							</div> <span class="name">Kurafire</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg"
-									alt="">
-							</div> <span class="name">Shahedk</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg"
-									alt="">
-							</div> <span class="name">Adhamdannaway</span> <i
-							class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg"
-									alt="">
-							</div> <span class="name">Ok</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg"
-									alt="">
-							</div> <span class="name">Arashasghari</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg"
-									alt="">
-							</div> <span class="name">Joshaustin</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg"
-									alt="">
-							</div> <span class="name">Sortino</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-				</ul>
-			</div>
-		</div>
-		<!-- /Right-bar -->
 
 	</div>
 	<!-- END wrapper -->
@@ -443,5 +355,31 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/datatables.editable.init.js"></script>
 	  <script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	  
+	  <script type="text/javascript">
+	  	$(function(){
+	  		json = {
+	  			"currentPage" : "1",
+	  			"perPage" : "10",
+	  			"totalCount" : "0"
+	  		};
+	  		$.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/rest/sales", 
+				    type: 'POST', 
+				    dataType: 'JSON', 
+				    data: JSON.stringify(json), 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				    	console.log(data);
+				    },	
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+	  	});
+	  </script>
 </body>
 </html>

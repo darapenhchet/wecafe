@@ -1,5 +1,6 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,7 +27,7 @@ import com.kosign.wecafe.enums.Status;
 
 @Entity
 @Table(name="USERS")
-public class User {
+public class User implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

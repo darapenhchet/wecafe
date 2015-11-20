@@ -2,7 +2,6 @@ package com.kosign.wecafe.services;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,8 +228,8 @@ public class ImportServiceImp implements ImportService {
 				product.setQuantity(product.getQuantity() - importDetail.getProQty());
 				product.setLastUpdatedDate(new Date());
 				product.setLastUpdatedBy(userService.findUserByUsername(getPrincipal()));
-				sessionFactory.getCurrentSession().flush();
-				sessionFactory.getCurrentSession().clear();
+				/*sessionFactory.getCurrentSession().flush();
+				sessionFactory.getCurrentSession().clear();*/
 				sessionFactory.getCurrentSession().update(product);
 				//importProduct.getImportDetail().remove(importDetail);
 				//sessionFactory.getCurrentSession().evict(product);
@@ -242,9 +241,9 @@ public class ImportServiceImp implements ImportService {
 			importProduct.getImportDetail().clear();
 					
 			//importProduct.setImportDetail(new HashSet<ImportDetail>());
-			sessionFactory.getCurrentSession().flush();
-			sessionFactory.getCurrentSession().clear();
 			sessionFactory.getCurrentSession().update(importProduct);
+		/*	sessionFactory.getCurrentSession().flush();
+			sessionFactory.getCurrentSession().clear();*/
 			
 			//sessionFactory.getCurrentSession().evict(importProduct);
 												
@@ -260,8 +259,8 @@ public class ImportServiceImp implements ImportService {
 				
 				product.setUnitPrice(new BigDecimal(importForm.getUnitPrice()));
 				product.setQuantity(product.getQuantity()+importForm.getQuantity());
-				sessionFactory.getCurrentSession().flush();
-				sessionFactory.getCurrentSession().clear();
+				//sessionFactory.getCurrentSession().flush();
+				//sessionFactory.getCurrentSession().clear();
 				sessionFactory.getCurrentSession().update(product);
 				
 				importProduct.getImportDetail().add(importDetail);
@@ -270,8 +269,8 @@ public class ImportServiceImp implements ImportService {
 			}
 			System.out.println("IMPORT DETAIL SIZE=" + importProduct.getImportDetail().size());
 			
-			sessionFactory.getCurrentSession().flush();
-			sessionFactory.getCurrentSession().clear();
+			//sessionFactory.getCurrentSession().flush();
+			//sessionFactory.getCurrentSession().clear();
 			sessionFactory.getCurrentSession().update(importProduct);
 			//session.getTransaction().commit();
 			return true;

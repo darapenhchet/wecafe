@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.services.SellService;
 
 @Controller
@@ -20,10 +20,9 @@ public class AdminSellController {
 	@Autowired SellService sellService;
 	
 	@RequestMapping(value="/admin/salelist", method= RequestMethod.GET)
-	public String getAllSell(Map<String, Object> model, Principal principal){
-		System.out.println("sellService.getSellAllList()" + sellService.getSellAllList());
-		model.put("Sale", sellService.getSellAllList());
-		
+	public String getAllSell(Map<String, Object> model, Principal principal, Pagination pagination){
+		System.out.println("sellService.getSellAllList()" + sellService.getSellAllList(pagination));
+		model.put("Sale", sellService.getSellAllList(pagination));
 		return "admin/salelist";
 	}
 	

@@ -5,24 +5,35 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Order;
-import com.kosign.wecafe.entities.Sale;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
-public class SellServiceImpl implements SellService {
+public class SellServiceImpl implements SellService{
 
+	@Autowired
+	SessionFactory sessionFactory;
+	
 	@Override
-	public List<Sale> getSellAllList() {
+	@Transactional
+	public List<Map> getSellAllList(Pagination pagination) {
 		
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
-			Query query = session.createQuery("From Sale");
-			List<Sale> sales= (List<Sale>)query.list();
+			//Query query = session.createQuery("From Sale");
+			Query query = session.createQuery("SELECT new Map(S.saleId AS ID, S.totalAmount AS TOTAL, S.saleDatetime AS SALE_DATE) FROM Sale S");
+			query.setMaxResults(pagination.getPerPage());
+			query.setFirstResult((0)*pagination.getPerPage());
+			List<Map> sales= (List<Map>)query.list();
 			session.getTransaction().commit();
 			return sales;
 		} catch (Exception e) {
@@ -84,7 +95,7 @@ public class SellServiceImpl implements SellService {
 			
 			for(Order order: orders){
 				System.out.println(order.getCustomer());
-				System.out.println(order.getOrderAmount());
+				//System.out.println(order.getOrderAmount());
 			}
 			return orders;
 			
@@ -93,6 +104,20 @@ public class SellServiceImpl implements SellService {
 			
 		}
 		return null;
+	}
+	
+	@Override
+	public Long getAllSellCount() {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.getTransaction().begin();
+			return (Long) session.createCriteria("Sale").setProjection(Projections.rowCount()).uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return new Long(0);
 	}
 
 }

@@ -24,7 +24,7 @@ public class DashboardController {
 	
 	@RequestMapping(value={"/admin/dashboard","/admin/","/admin/home"})
 	public String dashboard(Map<String, Object> model){
-		model.put("TOTAL_SALES", sellerService.getSellAllList().size());
+		model.put("TOTAL_SALES", sellerService.getAllSellCount());
 		model.put("NEW_ORDERS", sellProductService.getOrdered().size());
 		model.put("TOTAL_USERS", userService.getAllUsers().size());
 		return "admin/dashboard";

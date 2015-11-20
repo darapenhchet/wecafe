@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Configuration
 @ComponentScan(basePackages = "com.kosign.wecafe",
 			   excludeFilters = @ComponentScan.Filter({Controller.class,RestController.class}))
-@Import({SecurityConfiguration.class})
+//@Import({SecurityConfiguration.class})
 public class RootContextConfiguration {
 
 }

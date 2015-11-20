@@ -1,5 +1,6 @@
 package com.kosign.wecafe.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.AssociationOverride;
@@ -27,7 +28,7 @@ import org.hibernate.annotations.Formula;
 		joinColumns = @JoinColumn(name = "imp_id")),
 	@AssociationOverride(name = "pk1.product", 
 		joinColumns = @JoinColumn(name = "pro_id")) })
-public class ImportDetail {
+public class ImportDetail implements Serializable{
 
 /*	@Id
 	// value primary key
