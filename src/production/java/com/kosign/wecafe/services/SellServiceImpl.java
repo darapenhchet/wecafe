@@ -30,7 +30,7 @@ public class SellServiceImpl implements SellService{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			//Query query = session.createQuery("From Sale");
-			Query query = session.createQuery("SELECT new Map(S.saleId AS ID, S.totalAmount AS TOTAL, S.saleDatetime AS SALE_DATE) FROM Sale S");
+			Query query = session.createQuery("SELECT new Map(S.saleId AS ID, S.totalAmount AS TOTAL, S.saleDatetime AS SALE_DATE, S.user.username AS seller) FROM Sale S");
 			query.setMaxResults(pagination.getPerPage());
 			query.setFirstResult((0)*pagination.getPerPage());
 			List<Map> sales= (List<Map>)query.list();
