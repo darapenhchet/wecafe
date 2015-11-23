@@ -155,7 +155,7 @@
 					<button type="button" class="close" aria-hidden="true">
 						<span class="button b-close"><span>×</span></span>
 					</button>
-					<h4 class="modal-title">Cart</h4>
+					<h4 class="modal-title">Sale detail</h4>
 
 				</div>
 				<div class="modal-body" style="height: 290px; width: 100%;">
@@ -187,6 +187,11 @@
 						</div>
 
 					</div> -->
+				</div>
+				<div class="modal-footer" style="height: 80px;">
+						<div align="right">
+							<button class="btn btn-default b-close">Close</button>
+						</div>
 				</div>
 				<!-- <div class="modal-footer" style="height: 80px;">
 					<div align="right">

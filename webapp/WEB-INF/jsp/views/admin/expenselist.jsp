@@ -92,7 +92,7 @@
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4 class="pull-left page-title">Import List</h4>
+							<h4 class="pull-left page-title">Expense List</h4>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -113,32 +113,34 @@
 											<th>#</th>
 											<th>Invoice ID</th>
 											<th style="text-align: center;">Date</th>
-											<th>Name</th>
+											<th>Description</th>
+											<th>Qty</th>
 											<th style="text-align: right;">Total Amount</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<%-- <c:forEach items="{{importproducts}" var="importproducts" varStatus="theCount">
+										<c:forEach items="${expenses}" var="expense" varStatus="theCount"> 
 											<tr>
 												<td>${theCount.count}</td>
-												<td ><a href="javascript:;" id="impid"> {{importproducts.impId}</a> </td>												
-												<td >{{importproducts.impDate}</td>
-												<td style="text-align: right;">{{importproducts.userId }
-												<td style="text-align: right;">{{importproducts.totalAmount }
+												<td ><a href="javascript:;" id="expid"> ${expense.expId}</a> </td>												
+												<td >${expense.exp_date}</td>
+												<%-- <td style="text-align: right;">${expense.description } --%>
+												<%-- <td style="text-align: right;">${expense.exp_qty } --%>
+												<%-- <td style="text-align: right;">${expense.exp_unitprice } --%>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/viewById/{{importproducts.impId}"><i
-														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
+													href="#"><i	class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
-										</c:forEach> --%>
-										<tr dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
+										</c:forEach>
+										<%-- <tr dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
 											<td>{{key+1}}</td>
 											<td ><a href="javascript:;" id="impid"> {{importproducts.impId}}</a> </td>												
 											<td style="text-align: center;">{{importproducts.impDate | date:'dd-MMMM-yyyy'}}</td>
-											<td>{{importproducts.userId }}
+											<td>{{importproducts.userId }}</td>
+											<td></td>
 											<td style="text-align: right;">{{importproducts.totalAmount }} Riel
 											<td class="actions" style="text-align: center;"><a
 												class="on-default edit-row"
@@ -146,7 +148,7 @@
 													class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 												href="javascript:;" id="btnRemove"><i
 													class="fa fa-trash-o"></i></a></td>
-										</tr>
+										</tr> --%>
 									</tbody>
 								</table>
 							</div>
@@ -178,7 +180,7 @@
 					<button type="button" class="close" aria-hidden="true">
 						<span class="button b-close"><span>×</span></span>
 					</button>
-					<h4 class="modal-title">Import Detail</h4>
+					<h4 class="modal-title">Cart</h4>
 
 				</div>
 				<div class="modal-body" style="width: 100%;">
@@ -195,14 +197,8 @@
 						<tbody id="impProDetail">
 							
 						</tbody>
-					
 					</table> 
 				</div> 
-				<div class="modal-footer" style="height: 80px;">
-						<div align="right">
-							<button class="btn btn-default b-close">Close</button>
-						</div>
-				</div>
 			</div>
 		</div>
 
@@ -268,7 +264,7 @@
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-			 searchProduct();
+		/* 	 searchProduct();
 			 searchSupplier();
 			//$('#datatable').dataTable();
 			 $(document).on("click","#impid", function(){
@@ -338,7 +334,7 @@
 				    }
 				});
 				
-			}
+			} */
 		
 		});
 	</script>

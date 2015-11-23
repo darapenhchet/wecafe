@@ -60,7 +60,13 @@
                                     <li><a href="${pageContext.request.contextPath}/admin/importadd">Add Import</a></li>
                                 </ul>
                             </li>
-
+  							<li class="has_sub">
+                                <a href="#" class="waves-effect"><i class="fa fa-shopping-cart"></i> <span> Expense </span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="${pageContext.request.contextPath}/admin/expenselist">Expense List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/expenseadd">Add Expense</a></li>
+                                </ul>
+                            </li>
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ion-social-usd"></i><span> Sale </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
