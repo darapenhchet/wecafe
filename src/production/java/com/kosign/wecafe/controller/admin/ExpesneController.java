@@ -26,6 +26,11 @@ public class ExpesneController {
 		return "admin/expenselist";
 	}
 	
+	@RequestMapping(value="/admin/expenseadd", method=RequestMethod.GET)
+	public String expProductAdd(){
+		return "admin/expenseadd";
+	}
+	
 	@RequestMapping(value="/admin/getexpensedetail/{expid}", method=RequestMethod.GET) 
 		public @ResponseBody List<ExpenseDetail> expensedetail(@PathVariable("expid") Long expid, Map<String, Object>model){ 
 		 

@@ -84,7 +84,7 @@
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Add New Import Product</h4>
+                                <h4 class="pull-left page-title">Add New Expense</h4>
                             </div>
                         </div>
                         <!-- Form-validation -->
@@ -122,11 +122,18 @@
                                                         <input class="hidebtn" id="supID">
                                                     </div>
                                                 </div> 
-                                                <div class="form-group" align="right">
+                                                <div class="form-group ">
+                                                    <label for="remark" class="control-label col-lg-2">Remark </label>
+                                                    <div class="col-lg-5">
+                                                        <textarea class="form-control" rows="4" id="remark"></textarea> 
+                                                    </div>
+                                                <div align="right">
                                                      
                                                         <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Add</button>
                                                      	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="canceladd" type="button">Cancel</button>
                                               	</div>
+                                                </div> 
+                                                
                                               	</form>
                                                 <!-- =================== --> 
                         <h5 class="pull-left page-title"># Import List</h5>                        
