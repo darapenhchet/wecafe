@@ -2,7 +2,7 @@ package com.kosign.wecafe.configuration;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
-/*public class WeCafeSecurityBootstrap extends AbstractSecurityWebApplicationInitializer{
+public class WeCafeSecurityBootstrap extends AbstractSecurityWebApplicationInitializer{
 
 	@Override
 	protected boolean enableHttpSessionEventPublisher() {
@@ -10,4 +10,3 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 		return true;
 	}
 }
-*/

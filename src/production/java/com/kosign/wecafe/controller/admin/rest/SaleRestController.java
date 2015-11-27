@@ -26,6 +26,8 @@ public class SaleRestController {
 	@RequestMapping(value="/sales", method=RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getAllSales(Pagination pagination){
 		Map<String, Object> map = new HashMap<String, Object>();
+		pagination.setTotalCount(100);
+		pagination.setTotalPages(pagination.totalPages());
 		map.put("PAGINATION", pagination);
 		map.put("SALES", sellService.getSellAllList(pagination));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

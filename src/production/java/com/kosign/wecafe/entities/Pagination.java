@@ -11,22 +11,25 @@ public class Pagination implements Serializable{
 	private int currentPage;
 	private int perPage;
 	private int totalCount;
+	private int totalPages;
 	
 	public Pagination(){
-		this(1,10,0);
+		this(1,10,0,0);
 	}	
 	
-	public Pagination(int currentPage, int perPage, int totalCount){
+	public Pagination(int currentPage, int perPage, int totalCount, int totalPages){
 		this.currentPage = currentPage;
 		this.perPage = perPage;
 		this.totalCount = totalCount;
+		this.totalPages = totalPages;
 	}
 	public int getCurrentPage() {
 		return currentPage;
 	}
 
 	public int totalPages(){
-		return (int) Math.ceil((double)this.totalCount/perPage);
+		totalPages = (int) Math.ceil((double)this.totalCount/perPage);
+		return totalPages;
 	}
 	
 	public int nextPage(){
@@ -71,4 +74,13 @@ public class Pagination implements Serializable{
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
+
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+	}
+
 }

@@ -104,27 +104,31 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th style="text-align: right;">Sale Number</th>
+											<!-- <th style="text-align: right;">Sale Number</th> -->
 											<!-- <th style="text-align: center;">Money</th> -->
-											<th style="text-align: center;">Total Amount</th>
 											<th style="text-align: center;">Date</th>
+											<th style="text-align: center;">Total Amount</th>
+											<th style="text-align: center;">Seller</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${Sale}" var="sell" varStatus="theCount">
+									<tbody id="CONTENTS">
+										<%-- <c:forEach items="${Sale}" var="sell" varStatus="theCount">
 											<tr>
 												<td >${theCount.count }</td>
 												<td id="orderId" style="display : none;">${sell.order.orderId }</td>
 												<td><a href="javascipt:" id="saleId">${sell.saleId}</a></td>												
-												<%-- <td style="text-align: right;" id="moneyIn">${sell.moneyIn } --%>
+												<td style="text-align: right;" id="moneyIn">${sell.moneyIn }
 												</td>
 												<td style="text-align: right;">${sell.totalAmount }
 												</td>
 												<td style="text-align: center;">${sell.saleDatetime}</td>
 											</tr>
-										</c:forEach>
+										</c:forEach> --%>
 									</tbody>
 								</table>
+							</div>
+							<div id="PAGINATION" class="pull-right">
+							
 							</div>
 						</div>
 					</div>
@@ -171,7 +175,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody id="orderProdetail">
+						<tbodid="orderProdetail">
 							
 						</tbody>
 					</table>
@@ -213,6 +217,15 @@
 
 	</div>
 	<!-- END wrapper -->
+	
+	<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
+        <tr>
+            <td style="text-align: center;">{{= ID}}</td>
+            <td style="text-align: center;">{{= SALE_DATE}}</td>
+            <td style="text-align: center;">{{= TOTAL }}</td>
+            <td style="text-align: center;">{{= SELLER }}</td>
+        </tr>
+    </script>
 
 
 
@@ -252,24 +265,6 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 
-	<!-- flot Chart -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
-
 	<!-- Counter-up -->
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
@@ -277,22 +272,6 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
 		type="text/javascript"></script>
-
-	<!-- CUSTOM JS -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
-	<!-- Dashboard -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
-
-	<!-- Chat -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
-
-	<!-- Todo -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
 
 	<script type="text/javascript">
             /* ==============================================
@@ -360,15 +339,24 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/datatables.editable.init.js"></script>
 	  <script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
-	  
+	  <script src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>	  
+	  <script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
 	  <script type="text/javascript">
 	  	$(function(){
-	  		json = {
-	  			"currentPage" : "1",
-	  			"perPage" : "10",
-	  			"totalCount" : "0"
-	  		};
-	  		$.ajax({ 
+	  		
+
+	  		var totalPage = 0;
+			var pageIndex = 1;
+			var pageSize = 15;
+			
+			
+		    function getAllSales(pNum, pSize, check){
+		    	var json = {
+			  			"currentPage" : pNum,
+			  			"perPage" : pSize,
+			  			"totalCount" : 100
+		  		};
+		    	$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/rest/sales", 
 				    type: 'POST', 
 				    dataType: 'JSON', 
@@ -379,11 +367,45 @@
 	                },
 				    success: function(data) { 
 				    	console.log(data);
+						if(data.SALES.length>0){
+							$("tbody#CONTENTS").html('');
+							$("#CONTENT_TEMPLATE").tmpl(data.SALES).appendTo("tbody#CONTENTS");
+						}else{
+							$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+						}
+				    	if(check){
+				    		pagination(data.PAGINATION.totalPages,1);
+				    		check=false;
+				    	}
 				    },	
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
 				    }
 				});
+		    }
+			
+		    function pagination(tPage, currentPage){
+		    	$('#PAGINATION').bootpag({
+			        total: tPage,
+			        page: currentPage,
+			        maxVisible: 5,
+			        leaps: true,
+			        firstLastUse: true,
+			        first: 'First',
+			        last: 'Last',
+			        wrapClass: 'pagination',
+			        activeClass: 'active',
+			        disabledClass: 'disabled',
+			        nextClass: 'next',
+			        prevClass: 'prev',
+			        lastClass: 'last',
+			        firstClass: 'first'
+			    }).on("page", function(event, num){
+			    	pageIndex = num;
+			    	getAllSales(pageSize,num,false);
+			    }); 
+		    }
+		    getAllSales(1, 15, true);
 	  	});
 	  </script>
 </body>
