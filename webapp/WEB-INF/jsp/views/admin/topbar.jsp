@@ -35,7 +35,6 @@
                                     <ul class="dropdown-menu dropdown-menu-lg">
                                         <li class="text-center notifi-title">Notification</li>
                                         <li class="list-group">
-                                           list item
                                            <a href="javascript:void(0);" class="list-group-item">
                                               <div class="media">
                                                  <div class="pull-left">
@@ -49,7 +48,6 @@
                                                  </div>
                                               </div>
                                            </a>
-                                           list item
                                             <a href="javascript:void(0);" class="list-group-item">
                                               <div class="media">
                                                  <div class="pull-left">
@@ -63,7 +61,6 @@
                                                  </div>
                                               </div>
                                             </a>
-                                            list item
                                             <a href="javascript:void(0);" class="list-group-item">
                                               <div class="media">
                                                  <div class="pull-left">
@@ -78,7 +75,6 @@
                                                  </div>
                                               </div>
                                             </a>
-                                           last list item
                                             <a href="javascript:void(0);" class="list-group-item">
                                               <small>See all notifications</small>
                                             </a>

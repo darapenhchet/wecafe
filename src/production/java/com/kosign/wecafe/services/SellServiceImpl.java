@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.Pagination;
+import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
@@ -30,9 +31,9 @@ public class SellServiceImpl implements SellService{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			//Query query = session.createQuery("From Sale");
-			Query query = session.createQuery("SELECT new Map(S.saleId AS ID, S.totalAmount AS TOTAL, S.saleDatetime AS SALE_DATE, S.user.username AS SELLER) FROM Sale S");
-			query.setMaxResults(pagination.getPerPage());
-			query.setFirstResult((0)*pagination.getPerPage());
+			Query query = session.createQuery("SELECT new Map(S.saleId AS ID, S.totalAmount AS TOTAL, S.saleDatetime AS SALE_DATE, S.user.username AS SELLER, S.order.orderId AS ORDER_ID) FROM Sale S");
+			query.setMaxResults(pagination.getCurrentPage()*pagination.getPerPage());
+			query.setFirstResult((pagination.previousPage())*pagination.getPerPage());
 			List<Map> sales= (List<Map>)query.list();
 			session.getTransaction().commit();
 			return sales;
@@ -112,7 +113,7 @@ public class SellServiceImpl implements SellService{
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
-			return (Long) session.createCriteria("Sale").setProjection(Projections.rowCount()).uniqueResult();
+			return (Long) session.createCriteria(Sale.class).setProjection(Projections.rowCount()).uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 			

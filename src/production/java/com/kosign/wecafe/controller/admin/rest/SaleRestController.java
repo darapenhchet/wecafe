@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosign.wecafe.entities.Pagination;
@@ -23,13 +24,19 @@ public class SaleRestController {
 	@Autowired
 	SellService sellService;
 	
-	@RequestMapping(value="/sales", method=RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getAllSales(Pagination pagination){
+	@RequestMapping(value="/sales", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getAllSales(@RequestParam(value="page") int currentPage, 
+														   @RequestParam(value="limit") int limit){
 		Map<String, Object> map = new HashMap<String, Object>();
-		pagination.setTotalCount(100);
+		Pagination pagination = new Pagination();
+		pagination.setCurrentPage(currentPage);
+		pagination.setPerPage(limit);
+		System.out.println(pagination.getPerPage());
+		map.put("SALES", sellService.getSellAllList(pagination));
+		System.out.println(sellService.getAllSellCount());
+		pagination.setTotalCount(sellService.getAllSellCount());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("PAGINATION", pagination);
-		map.put("SALES", sellService.getSellAllList(pagination));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	

@@ -15,51 +15,36 @@
 <title>KOSIGN WeCafe...</title>
 
 <!-- Base Css Files -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"	rel="stylesheet" />
 
 <!-- Font Icons -->
-<link
-	href="${pageContext.request.contextPath}/resources/assets/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" />
-<link
-	href="${pageContext.request.contextPath}/resources/assets/ionicon/css/ionicons.min.css"
-	rel="stylesheet" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/material-design-iconic-font.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/material-design-iconic-font.min.css" rel="stylesheet">
 
 <!-- animate css -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/animate.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet" />
 
 <!-- Waves-effect -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/waves-effect.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/waves-effect.css" rel="stylesheet">
 
 <!-- sweet alerts -->
-<link
-	href="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.css" rel="stylesheet">
 
 <!-- Custom Files -->
-<link href="${pageContext.request.contextPath}/resources/css/helper.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/helper.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+<!-- DATEPICKER -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 
-<script
-	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 
 </head>
 
@@ -88,7 +73,6 @@
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
-
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
@@ -99,58 +83,56 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div>
+				                		<label class="col-sm-1 control-label">Date : </label>
+											<input type="hidden" id="SEND_DT" data-id="SEND_DT" />
+										<div id="sendFrdt" class="date-range col-sm-5"  >
+											<input type="text" readonly="readonly" id="REGS_DATE_S" name="startdate" class="range-start" style="width:100px; text-align: center;">&nbsp;
+											<a href="#none" id="btnREGS_DATE_S"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+											<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
+											<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+										</div>   
+									</div>
 									<table id="datatable"
 										class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th>#</th>
-											<!-- <th style="text-align: right;">Sale Number</th> -->
-											<!-- <th style="text-align: center;">Money</th> -->
 											<th style="text-align: center;">Date</th>
 											<th style="text-align: center;">Total Amount</th>
 											<th style="text-align: center;">Seller</th>
 										</tr>
 									</thead>
 									<tbody id="CONTENTS">
-										<%-- <c:forEach items="${Sale}" var="sell" varStatus="theCount">
-											<tr>
-												<td >${theCount.count }</td>
-												<td id="orderId" style="display : none;">${sell.order.orderId }</td>
-												<td><a href="javascipt:" id="saleId">${sell.saleId}</a></td>												
-												<td style="text-align: right;" id="moneyIn">${sell.moneyIn }
-												</td>
-												<td style="text-align: right;">${sell.totalAmount }
-												</td>
-												<td style="text-align: center;">${sell.saleDatetime}</td>
-											</tr>
-										</c:forEach> --%>
 									</tbody>
 								</table>
 							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<select id="PER_PAGE" class="form-control">
+									<option value="15">15</option>
+									<option value="30">30</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</div>
 							<div id="PAGINATION" class="pull-right">
-							
 							</div>
 						</div>
 					</div>
-					<!-- end: page --></div>
+					<!-- end: page -->
+				</div>
 										
 					<!-- end Panel -->
-
-
 				</div>
 				<!-- container -->
-
 			</div>
 			<!-- content -->
 
 			<%@ include file="footer.jsp"%>
 
 		</div>
-		<!-- ============================================================== -->
-		<!-- End Right content here -->
-		<!-- ============================================================== -->
-		<!-- ############################################################# -->
-
 
 		<div id="sellDetail" style="display: none;width: 90%;">
 			<div class="modal-content">
@@ -175,192 +157,113 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbodid="orderProdetail">
+						<tbody id="orderProdetail">
 							
 						</tbody>
 					</table>
-
-					<!-- <div class="form-horizontal">
-						<div class="form-group">
-							<label class="control-label col-sm-10" for="txtName">Total
-								Amount :</label>
-							<div class="col-sm-2">
-								<input type="text" class="form-control" maxlength="30"
-									name="txtName" id="totalamount" style="margin-bottom: 2px;">
-							</div>
-						</div>
-
-					</div> -->
 				</div>
 				<div class="modal-footer" style="height: 80px;">
 						<div align="right">
 							<button class="btn btn-default b-close">Close</button>
 						</div>
 				</div>
-				<!-- <div class="modal-footer" style="height: 80px;">
-					<div align="right">
-						<button type="button" id="btnbuymore" class="btn btn-default">
-							<span class="button b-close"><span>Buy more</span></span>
-						</button>
-						<button type="button" id="btnconfirm" class="btn btn-default">
-							<span class="button b-close"><span>Confirm</span></span>
-						</button>
-						<button type="button" id="btncancel" class="btn btn-default">
-							<span class="button b-close"><span>Cancel Order</span></span>
-						</button>
-					</div>
-				</div> -->
 			</div>
 		</div>
 
-		<!-- ################################################################## -->
 
 	</div>
 	<!-- END wrapper -->
 	
 	<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
         <tr>
-            <td style="text-align: center;">{{= ID}}</td>
+            <td style="text-align: center;"><a href="javascipt:" id="saleId">{{= ID}}</a></td>
+			<td id="orderId" style="display : none;">{{= ORDER_ID}}</td>
             <td style="text-align: center;">{{= SALE_DATE}}</td>
             <td style="text-align: center;">{{= TOTAL }}</td>
             <td style="text-align: center;">{{= SELLER }}</td>
         </tr>
     </script>
 
-
-
 	<script>
             var resizefunc = [];
-        </script>
+            var ctx = "${pageContext.request.contextPath}"
+     </script>
+    <!-- jQuery  -->
+	        
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+    <script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/chat/moment-2.2.1.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
 
-	<!-- jQuery  -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js"
-		type="text/javascript"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/chat/moment-2.2.1.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/jquery-sparkline/jquery.sparkline.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
+   	<script	src="${pageContext.request.contextPath}/resources/assets/magnific-popup/magnific-popup.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>	  
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
 
-	<!-- sweet alerts -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
-
-	<!-- Counter-up -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
-		type="text/javascript"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
-		type="text/javascript"></script>
+    <!-- CUSTOM JS -->
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 
 	<script type="text/javascript">
-            /* ==============================================
-            Counter Up
-            =============================================== */
-            jQuery(document).ready(function($) {
-                $('.counter').counterUp({
-                    delay: 100,
-                    time: 1200
-                });
-                
-                $(document).on(" click","table tbody tr td #saleId", function(){
-                
-                	var id =  $(this).parent().parent().children().eq(1).html()
-                	//alert(id);
-                	
-                	$("#sellDetail").bPopup();
-                	//alert("${pageContext.request.contextPath}/admin/sell/"+id); 
-                	//alert("${pageContext.request.contextPath}/admin/sell/"+id);
-                	$.ajax({ 
-       				    url: "${pageContext.request.contextPath}/admin/sell/"+id, 
-       				    type: 'POST', 
-       				    dataType: 'JSON', 
-       					
-       				    //data: JSON.stringify(json), 
-       				    beforeSend: function(xhr) {
-       	                    xhr.setRequestHeader("Accept", "application/json");
-       	                    xhr.setRequestHeader("Content-Type", "application/json");
-       	                },
-       	                
-       				    success: function(data) { 
-       				        console.log(data.length);
-       				        var str = "";
-       				        for(i = 0; i < data.length; i++){
-       				        	str += "<tr>"
-								str += "<td>" + data[i].productName + "</td>"
-								str += "<td>" + data[i].SalePrice + "</td>"
-								str += "<td>" + data[i].ProQty + "</td>"
-								str += "<td>" + data[i].ProUnitPrrice + "</td>"	
-								str += "<td>" + data[i].orderDate + "</td>"	
-								str += "<td>" + data[i].ProComment + "</td>"	
-								str += "</tr>"
-								$("#orderProdetail").html(str);
-       				        }
-       				    },
-       				    error:function(data,status,er) { 
-       				        console.log("error: "+data+" status: "+status+" er:"+er);
-       				    }
-       				});
-                	
-                })
-                
-            });
-            
-            
-        </script>
-
-	<!-- Examples -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/magnific-popup/magnific-popup.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/jquery.dataTables.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/jquery-datatables-editable/datatables.editable.init.js"></script>
-	  <script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>	  
-	  <script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
-	  <script type="text/javascript">
+   		$(document).ready(function($) {
+       	$(document).on(" click","table tbody tr td #saleId", function(){
+              
+           	var id =  $(this).parent().parent().children().eq(1).html()
+              	
+           	$("#sellDetail").bPopup();
+             	$.ajax({ 
+     				    url: "${pageContext.request.contextPath}/admin/sell/"+id, 
+     				    type: 'POST', 
+     				    dataType: 'JSON', 
+     				    beforeSend: function(xhr) {
+     	                    xhr.setRequestHeader("Accept", "application/json");
+     	                    xhr.setRequestHeader("Content-Type", "application/json");
+     	                },
+     	                
+     				    success: function(data) { 
+     				        console.log(data.length);
+     				        var str = "";
+     				        for(i = 0; i < data.length; i++){
+     				        	str += "<tr>"
+						str += "<td>" + data[i].productName + "</td>"
+						str += "<td>" + data[i].SalePrice + "</td>"
+						str += "<td>" + data[i].ProQty + "</td>"
+						str += "<td>" + data[i].ProUnitPrrice + "</td>"	
+						str += "<td>" + data[i].orderDate + "</td>"	
+						str += "<td>" + data[i].ProComment + "</td>"	
+						str += "</tr>"
+						$("#orderProdetail").html(str);
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
+     				});
+              });
+           });
+    </script>
+	<script type="text/javascript">
 	  	$(function(){
-	  		
-
-	  		var totalPage = 0;
-			var pageIndex = 1;
-			var pageSize = 15;
-			
-			
+	  		setCalendar();
+	  		searchByDate();
 		    function getAllSales(pNum, pSize, check){
 		    	var json = {
-			  			"currentPage" : pNum,
-			  			"perPage" : pSize,
-			  			"totalCount" : 100
+			  			"page" :pNum,
+			  			"limit" : pSize,
 		  		};
 		    	$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/rest/sales", 
-				    type: 'POST', 
-				    dataType: 'JSON', 
-				    data: JSON.stringify(json), 
+				    type: 'GET',  
+				    data: json, 
 				    beforeSend: function(xhr) {
 	                    xhr.setRequestHeader("Accept", "application/json");
 	                    xhr.setRequestHeader("Content-Type", "application/json");
@@ -369,6 +272,9 @@
 				    	console.log(data);
 						if(data.SALES.length>0){
 							$("tbody#CONTENTS").html('');
+							for(var i=0;i<data.SALES.length;i++){
+								format(data.SALES[i]);
+							}
 							$("#CONTENT_TEMPLATE").tmpl(data.SALES).appendTo("tbody#CONTENTS");
 						}else{
 							$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
@@ -383,12 +289,16 @@
 				    }
 				});
 		    }
+		    
+		    function format(value){
+		    	value["SALE_DATE"] = moment(value["SALE_DATE"]).format("DD-MMMM-YYYY H:mm:ss");
+		    }
 			
 		    function pagination(tPage, currentPage){
 		    	$('#PAGINATION').bootpag({
 			        total: tPage,
 			        page: currentPage,
-			        maxVisible: 5,
+			        maxVisible: 10,
 			        leaps: true,
 			        firstLastUse: true,
 			        first: 'First',
@@ -401,11 +311,67 @@
 			        lastClass: 'last',
 			        firstClass: 'first'
 			    }).on("page", function(event, num){
-			    	pageIndex = num;
-			    	getAllSales(pageSize,num,false);
+			    	getAllSales(num,$("#PER_PAGE").val(),false);
 			    }); 
 		    }
+		    $("#PER_PAGE").change(function(){
+		    	getAllSales(1,$(this).val(),true);
+		    });
 		    getAllSales(1, 15, true);
+		    
+			$("#btnREGS_DATE_S").click(function(){	
+		 		$( "#REGS_DATE_S" ).datepicker("show");		
+		 	});		
+		 	$("#btnREGS_DATE_E").click(function(){
+		 		$( "#REGS_DATE_E" ).datepicker("show");			
+		 	});
+
+		 	function calculateDay(start, end){		
+		         var days = (end - start) / (1000 * 60 * 60 * 24);
+		         $("#totalday").val(days);
+		         return;
+		 	}
+
+		 	function setCalendar(){		
+		 		$("#REGS_DATE_S").datepicker({
+		 		      defaultDate: new Date(),
+		 		      setDate: new Date(),
+		 		      changeMonth: true,
+		 		      numberOfMonths: 1,
+		 		      dateFormat: "yy-mm-dd",
+		 		      onClose: function( selectedDate ) {			    	  
+		 		    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+	 						searchByDate();
+	 			      }
+	 			});
+		 		$("#REGS_DATE_E").datepicker({
+		 		     defaultDate: new Date(),
+	 			     setDate: new Date(),
+	 			     changeMonth: true,
+	 		      	 numberOfMonths: 1,
+		 		     dateFormat: "yy-mm-dd",
+		 		     onClose: function( selectedDate ) {
+		 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
+    	 			    	  calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+    	 			    	  searchByDate();
+	 			      }
+		 		});		
+		 		$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
+		 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
+		 	}
+		 	
+		 	function searchByDate(){
+		      	var startDate 		= $( "#REGS_DATE_S" ).val() + " 00:00:00";
+				var endDate 		= $( "#REGS_DATE_E" ).val() + " 24:00:00"; 
+				json = {
+							"startdate"   		  : startDate,
+							"enddate" 		  	  : endDate
+				};
+				console.log(JSON.stringify(json));
+				getAllSales(1,$("#PER_PAGE").val(),true);
+				return;
+			 }
 	  	});
 	  </script>
 </body>

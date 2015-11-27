@@ -10,14 +10,14 @@ public class Pagination implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int currentPage;
 	private int perPage;
-	private int totalCount;
+	private Long totalCount;
 	private int totalPages;
 	
 	public Pagination(){
-		this(1,10,0,0);
+		this(1,15,0L,0);
 	}	
 	
-	public Pagination(int currentPage, int perPage, int totalCount, int totalPages){
+	public Pagination(int currentPage, int perPage, Long totalCount, int totalPages){
 		this.currentPage = currentPage;
 		this.perPage = perPage;
 		this.totalCount = totalCount;
@@ -61,17 +61,17 @@ public class Pagination implements Serializable{
 	}
 
 	public void setPerPage(int perPage) {
-		if(perPage > 10 ){
+		if(perPage > 100 ){
 			perPage = 10;
 		}
 		this.perPage = perPage;
 	}
 
-	public int getTotalCount() {
+	public Long getTotalCount() {
 		return totalCount;
 	}
 
-	public void setTotalCount(int totalCount) {
+	public void setTotalCount(Long totalCount) {
 		this.totalCount = totalCount;
 	}
 
