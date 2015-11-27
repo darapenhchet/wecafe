@@ -65,17 +65,17 @@ public class Expense implements Serializable{
 		this.description = description;
 	}
 
-	public Set<ExpenseDetail> getExpenseDetails() {
+	/*public Set<ExpenseDetail> getExpenseDetails() {
 		return expenseDetails;
 	}
 
 	public void setExpenseDetails(Set<ExpenseDetail> expenseDetails) {
 		this.expenseDetails = expenseDetails;
-	}
+	}*/
 
 	@Column(name="expense_user_id")
 	private long exp_user_id;
 	
-	@OneToMany(mappedBy="expense", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Set<ExpenseDetail> expenseDetails = new HashSet<ExpenseDetail>();
+	/*@OneToMany(mappedBy="expense", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private Set<ExpenseDetail> expenseDetails = new HashSet<ExpenseDetail>();*/
 }

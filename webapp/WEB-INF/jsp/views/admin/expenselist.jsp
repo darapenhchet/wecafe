@@ -113,8 +113,7 @@
 											<th>#</th>
 											<th>Invoice ID</th>
 											<th style="text-align: center;">Date</th>
-											<th>Description</th> 
-											<th style="text-align: right;">Total Amount</th>
+											<th>Description</th>  
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
@@ -124,8 +123,7 @@
 												<td>${theCount.count}</td>
 												<td ><a href="javascript:;" id="expid">${expense.expId}</a> </td>												
 												<td >${expense.exp_date}</td>
-												<td>${expense.description }</td> 
-												<td>25000</td>
+												<td>${expense.description }</td>  
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
 													href="#"><i	class="fa fa-pencil"></i></a> <a class="on-default remove-row"
@@ -171,7 +169,7 @@
 <!-- ############################################################# -->
 
 
-		<div id="impDetail" style="display: none;width: 90%;">
+		<div id="impDetail" style="display: none;width: 80%;">
 			<div class="modal-content">
 				<div class="modal-header">
 
@@ -189,15 +187,24 @@
 								<th>Produce Name</th>
 								<th>Qty</th>
 								<th>Unit Price</th>
-								<th>Total Amount</th>
+								<th>Amount</th>
 								<th>Supplier Name</th>
+								<th>Remark</th>
 							</tr>
 						</thead>
-						<tbody id="impProDetail">
-							
+						<tbody id="impProDetail">							
 						</tbody>
 					</table> 
+						
 					<div class="modal-footer" style="height: 80px;">
+						<div style="float: left;">
+							<div class="form-group form-horizontal">
+                                <label class="control-label col-lg-6">Total Amount</label>
+                                <div class="col-lg-6">
+                                    <input class=" form-control" id="txttotal" type="text" readonly="readonly">
+                                </div>
+                            </div>
+						</div>
 						<div align="right">
 							<button class="btn btn-default b-close">Close</button>
 						</div>
@@ -278,17 +285,21 @@
 		                    xhr.setRequestHeader("Accept", "application/json");
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
-					    success: function(data) { 
-					    	console.log(data);
-					    	/* var st= "";
+					    success: function(data) {  
+					    var	amount = 0;
+					    var st= "";
 					       for(i=0; i<data.length; i++){
 					    	   st += "<tr><td>" + (i + 1) + "</td>";
-					    	   st += "<td>" + data[i].proname +"</td>";
-					    	   st += "<td>" + data[i].proqty +"</td>";
-					    	   st += "<td>" + data[i].prounitprice +"</td>";
-					    	   st += "<td>" + data[i].supname +"</td></tr>"
+					    	   st += "<td>" + data[i].exp_description +"</td>";
+					    	   st += "<td>" + data[i].exp_qty +"</td>";
+					    	   st += "<td>" + data[i].exp_unitprice +"</td>";
+					    	   st += "<td>" + (data[i].exp_unitprice * data[i].exp_qty) +"</td>";
+					    	   st += "<td>" + data[i].customer +"</td>";
+					    	   st += "<td>" + data[i].remark +"</td></tr>"; 
+					    	   amount += (data[i].exp_unitprice * data[i].exp_qty);
 					       }
-					       $("#impProDetail").html(st); */
+					       $("#txttotal").val(amount);
+					       $("#impProDetail").html(st); 
 					    },
 					    error:function(data,status,er) { 
 					        console.log("error: "+data+" status: "+status+" er:"+er);

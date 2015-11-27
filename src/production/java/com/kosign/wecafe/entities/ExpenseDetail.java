@@ -23,9 +23,11 @@ public class ExpenseDetail {
 	@Column(name="id")
 	private long id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	/*@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="expense_id")
-	private Expense expense;
+	private Expense expense;*/
+	@Column(name="expense_id")
+	private long exp_id;
 	
 	@Column(name="expense_description")
 	private String exp_description;
@@ -36,16 +38,54 @@ public class ExpenseDetail {
 	@Column(name="expense_unitprice")
 	private long exp_unitprice;
 	
-	@Column(name="expense_date")
-	private Date exp_date;
+	@Column(name="customer")
+	private String customer;
+	
+	@Column(name="expense_remarks")
+	private String remark;
+	
+	public long getId() {
+		return id;
+	}
 
-	public Expense getExpense() {
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public long getExp_id() {
+		return exp_id;
+	}
+
+	public void setExp_id(long exp_id) {
+		this.exp_id = exp_id;
+	}
+
+	/*@Column(name="expense_date")
+	private Date exp_date;
+*/
+/*	public Expense getExpense() {
 		return expense;
 	}
 
 	public void setExpense(Expense expense) {
 		this.expense = expense;
-	}
+	}*/
 
 	public String getExp_description() {
 		return exp_description;
@@ -71,13 +111,13 @@ public class ExpenseDetail {
 		this.exp_unitprice = exp_unitprice;
 	}
 
-	public Date getExp_date() {
+/*	public Date getExp_date() {
 		return exp_date;
 	}
 
 	public void setExp_date(Date exp_date) {
 		this.exp_date = exp_date;
-	}
+	}*/
 	
 	
 }
