@@ -113,8 +113,7 @@
 											<th>#</th>
 											<th>Invoice ID</th>
 											<th style="text-align: center;">Date</th>
-											<th>Description</th>
-											<th>Qty</th>
+											<th>Description</th> 
 											<th style="text-align: right;">Total Amount</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
@@ -123,11 +122,10 @@
 										<c:forEach items="${expenses}" var="expense" varStatus="theCount"> 
 											<tr>
 												<td>${theCount.count}</td>
-												<td ><a href="javascript:;" id="expid"> ${expense.expId}</a> </td>												
+												<td ><a href="javascript:;" id="expid">${expense.expId}</a> </td>												
 												<td >${expense.exp_date}</td>
-												<%-- <td style="text-align: right;">${expense.description } --%>
-												<%-- <td style="text-align: right;">${expense.exp_qty } --%>
-												<%-- <td style="text-align: right;">${expense.exp_unitprice } --%>
+												<td>${expense.description }</td> 
+												<td>25000</td>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
 													href="#"><i	class="fa fa-pencil"></i></a> <a class="on-default remove-row"
@@ -180,7 +178,7 @@
 					<button type="button" class="close" aria-hidden="true">
 						<span class="button b-close"><span>×</span></span>
 					</button>
-					<h4 class="modal-title">Cart</h4>
+					<h4 class="modal-title">Expense</h4>
 
 				</div>
 				<div class="modal-body" style="width: 100%;">
@@ -191,6 +189,7 @@
 								<th>Produce Name</th>
 								<th>Qty</th>
 								<th>Unit Price</th>
+								<th>Total Amount</th>
 								<th>Supplier Name</th>
 							</tr>
 						</thead>
@@ -198,6 +197,11 @@
 							
 						</tbody>
 					</table> 
+					<div class="modal-footer" style="height: 80px;">
+						<div align="right">
+							<button class="btn btn-default b-close">Close</button>
+						</div>
+				</div>
 				</div> 
 			</div>
 		</div>
@@ -264,14 +268,11 @@
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-		/* 	 searchProduct();
-			 searchSupplier();
-			//$('#datatable').dataTable();
-			 $(document).on("click","#impid", function(){
-				 
-				   $.ajax({ 
-					    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
-					    type: 'POST', 
+		 
+			 $(document).on("click","#expid", function(){ 
+		 		   $.ajax({ 
+					    url: "${pageContext.request.contextPath}/admin/getexpensedetail/" + $(this).html() , 
+					    type: 'GET', 
 					    dataType: 'JSON', 
 					    beforeSend: function(xhr) {
 		                    xhr.setRequestHeader("Accept", "application/json");
@@ -279,7 +280,7 @@
 		                },
 					    success: function(data) { 
 					    	console.log(data);
-					    	var st= "";
+					    	/* var st= "";
 					       for(i=0; i<data.length; i++){
 					    	   st += "<tr><td>" + (i + 1) + "</td>";
 					    	   st += "<td>" + data[i].proname +"</td>";
@@ -287,15 +288,16 @@
 					    	   st += "<td>" + data[i].prounitprice +"</td>";
 					    	   st += "<td>" + data[i].supname +"</td></tr>"
 					       }
-					       $("#impProDetail").html(st);
+					       $("#impProDetail").html(st); */
 					    },
 					    error:function(data,status,er) { 
 					        console.log("error: "+data+" status: "+status+" er:"+er);
 					    }
-					});
+					});  
 				 
 				  $("#impDetail").bPopup();  
 			 });
+			 /*
 			function searchSupplier(){
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 

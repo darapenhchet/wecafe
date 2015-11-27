@@ -54,6 +54,25 @@ public class Expense implements Serializable{
 	@Column(name="expense_date")
 	private Date exp_date;
 	
+	@Column(name="description")
+	private String description;
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Set<ExpenseDetail> getExpenseDetails() {
+		return expenseDetails;
+	}
+
+	public void setExpenseDetails(Set<ExpenseDetail> expenseDetails) {
+		this.expenseDetails = expenseDetails;
+	}
+
 	@Column(name="expense_user_id")
 	private long exp_user_id;
 	
