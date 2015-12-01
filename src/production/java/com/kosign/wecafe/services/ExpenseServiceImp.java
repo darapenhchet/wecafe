@@ -116,12 +116,32 @@ public class ExpenseServiceImp implements ExpenseService {
 	@Transactional
 	public Boolean updateExpense(List<ExpenseForm> expenseform, Long id) {
 		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
 		 try {
-				Expense expense = sessionFactory.getCurrentSession().get(Expense.class, id);
-				Set<ExpenseDetail> expenseDetails = expense.getExpenseDetails();
-				System.out.println("IMPORT DETAILS SIZE=" + expenseDetails.size());
+			 
+			 	/*Expense expense = (Expense)session.get(Expense.class, id);
+			 	expense.getExpenseDetails().clear();*/
+			 
+			 	Query query = session.createSQLQuery("delete from tbl_expense_detail where expense_id=?");
+			 	query.setParameter(0, id);
+			 	
+			 	query.executeUpdate();
+			 	
+			 
+				//Query query = session.createQuery("from ExpenseDetail where expense_id=" + id);
+				//Set<ExpenseDetail>	expensedetail = (Set<ExpenseDetail>)query.list();
+				//session.delete(expensedetail);
+				Expense expense = sessionFactory.getCurrentSession().get(Expense.class, id); 
+				//ExpenseDetail expenseDetails = sessionFactory.getCurrentSession().get(ExpenseDetail.class, id);
+				//System.out.println("IMPORT DETAILS SIZE=" + expenseDetails);
+				 /*Set<ExpenseDetail> expenseDetails = expense.getExpenseDetails();
+				 System.out.println("IMPORT DETAILS SIZE=" + expenseDetails);
+				 sessionFactory.getCurrentSession().delete(expenseDetails); */
+				 
 			    expense.getExpenseDetails().clear();
-				for (int i=0;i<expenseDetails.size();i++){
+			    //System.out.println("IMPORT DETAILS SIZE=" + expenseDetails);
+			    System.out.println("IMPORT DETAILS SIZE=" + expense); 
+				for (int i=0;i<expenseform.size();i++){
 					ExpenseDetail expensedetail = new ExpenseDetail();
 					expensedetail.setExp_qty(expenseform.get(i).getQuantity());
 					expensedetail.setExp_unitprice(expenseform.get(i).getUnitPrice());
@@ -129,9 +149,11 @@ public class ExpenseServiceImp implements ExpenseService {
 					expensedetail.setRemark(expenseform.get(i).getRemark());
 					expensedetail.setExp_description(expenseform.get(i).getProname());
 					expensedetail.setExpense(expense);
-					expense.getExpenseDetails().add(expensedetail);					
+					expense.getExpenseDetails().add(expensedetail);	
+					expensedetail.setExpense(expense);
+					
 				}
-				sessionFactory.getCurrentSession().update(expense);
+				sessionFactory.getCurrentSession().update(expense); 
 				return true;
 		 }catch(Exception e){ 
 			 e.printStackTrace();

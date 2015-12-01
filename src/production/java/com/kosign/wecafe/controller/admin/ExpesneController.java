@@ -46,7 +46,7 @@ public class ExpesneController {
 	}
 	
 	@RequestMapping(value="/admin/saveupdate/{id}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Boolean saveupdate(@RequestBody List<ExpenseForm> expenseform, @PathVariable("id") Long expId){
+	public @ResponseBody Boolean saveupdated(@RequestBody List<ExpenseForm> expenseform, @PathVariable("id") Long expId){
 		 
 		 try {
 			return expenseService.updateExpense(expenseform, expId); 

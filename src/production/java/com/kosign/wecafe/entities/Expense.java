@@ -78,4 +78,10 @@ public class Expense implements Serializable{
 	
 	@OneToMany(mappedBy="expense", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Set<ExpenseDetail> expenseDetails = new HashSet<ExpenseDetail>();
+	
+	@Override
+	public String toString() {
+		return "ID = " + this.expId + " DESCRIPTION = " + this.description + " Date = " + this.exp_date;
+	}
 }
+

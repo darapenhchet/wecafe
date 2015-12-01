@@ -123,16 +123,16 @@
                                                     </div>
                                                 </div> 
                                                 <div class="form-group ">
-                                                    <label for="remark" class="control-label col-lg-2">Remark</label>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control " id="remark"   name="remark" type="text"> 
+                                                    <label for="remark" class="control-label col-lg-2">Remark </label>
+                                                    <div class="col-lg-5">
+                                                        <textarea class="form-control" rows="4" id="remark"></textarea> 
                                                     </div>
-                                                </div> 
-                                                <div class="form-group" align="right">
+                                                <div align="right">
                                                      
                                                         <button class="btn btn-success waves-effect waves-light" style="width: 100px; " id="addbtn" type="button">Add</button>
-                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="cancelbtnadd" type="button">Cancel</button>
+                                                     	<button class="btn btn-default waves-effect waves-light" style="width: 100px; margin-right: 10px;" id="canceladd" type="button">Cancel</button>
                                               	</div>
+                                                </div> 
                                                 <!-- =================== --> 
 						<h5 class="pull-left page-title"># Import List</h5>                        
 						<div class="row">
@@ -430,7 +430,8 @@
      	 		        },
      	 				success: function(data){
      	 					console.log(data);
-     	 				//	location.href="${pageContext.request.contextPath}/admin/importlist";
+     	 					 
+     	 				 	location.href="${pageContext.request.contextPath}/admin/expenselist";
      	 				},
      	 				error:function(data, status,er){
      	 					console.log("error: " + data + "status: " + status + "er: ");
@@ -439,16 +440,16 @@
                  }); 
             	$(document).on("click","#addbtn",function(){ 
             		var st="";
-            		st += "<tr><td style='display: none;'>" + $('#prodID').val() +"</td>";
-            		st += "<td>" + ($("#tbllistimport tr").length + 1) +"</td>";
+            		 
+            		st += "<tr><td>" + ($("#tbllistimport tr").length + 1) +"</td>";
             		st += "<td>" + $("#productName").val() +"</td>";
             		st += "<td>" + $("#qty").val() +"</td>";
-            		st += "<td>" + $("#UnitPrice").val() +"</td>";
-            		st += "<td style='display: none;'>"+ $('#suppId').val() +"</td>";  
+            		st += "<td>" + $("#UnitPrice").val() +"</td>"; 
             		st += "<td>" + $("#supplierName").val() +"</td>";
+            		st += "<td>" + $("#remark").val() +"</td>";
             		st += "<td class='actions' style='text-align: center;'>";
             		st += "<a class='on-default edit-row' id='btnedit' href='javascript:;'><i class='fa fa-pencil'></i></a>";
-            		st += " <a class='on-default remove-row' href='javascript:;' id='btnRemove'> <i class='fa fa-trash-o'></i></a></td>";
+            		st += " <a class='on-default remove-row' href='javascript:;' id='btnRemove'> <i class='fa fa-trash-o'></i></a></td></tr>";
             		$("#tbllistimport").append(st);
             		clear();
             	});

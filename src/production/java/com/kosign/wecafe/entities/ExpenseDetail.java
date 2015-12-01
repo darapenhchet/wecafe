@@ -126,6 +126,9 @@ public class ExpenseDetail {
 	public void setExp_date(Date exp_date) {
 		this.exp_date = exp_date;
 	}*/
-	
+	 @Override
+	public String toString() {
+		 return  " DESCRIPTION = " + this.exp_description + " qty = " + this.exp_qty + " uniprice = " + this.exp_unitprice;
+	}
 	
 }
