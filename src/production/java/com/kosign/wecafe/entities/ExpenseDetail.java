@@ -23,11 +23,11 @@ public class ExpenseDetail {
 	@Column(name="id")
 	private long id;
 	
-	/*@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="expense_id")
-	private Expense expense;*/
-	@Column(name="expense_id")
-	private long exp_id;
+	private Expense expense; 
+/*	@Column(name="expense_id")
+	private long exp_id;*/
 	
 	@Column(name="expense_description")
 	private String exp_description;
@@ -68,13 +68,13 @@ public class ExpenseDetail {
 		this.remark = remark;
 	}
 
-	public long getExp_id() {
+/*	public long getExp_id() {
 		return exp_id;
 	}
 
 	public void setExp_id(long exp_id) {
 		this.exp_id = exp_id;
-	}
+	}*/
 
 	/*@Column(name="expense_date")
 	private Date exp_date;
@@ -89,6 +89,14 @@ public class ExpenseDetail {
 
 	public String getExp_description() {
 		return exp_description;
+	}
+
+	public Expense getExpense() {
+		return expense;
+	}
+
+	public void setExpense(Expense expense) {
+		this.expense = expense;
 	}
 
 	public void setExp_description(String exp_description) {

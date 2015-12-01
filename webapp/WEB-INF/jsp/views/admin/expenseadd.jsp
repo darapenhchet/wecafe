@@ -136,7 +136,7 @@
                                                 
                                               	</form>
                                                 <!-- =================== --> 
-                        <h5 class="pull-left page-title"># Import List</h5>                        
+                        <h5 class="pull-left page-title"># Expense List</h5>                        
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
 							<table id="datatable" class="table table-striped table-bordered dataTable">
@@ -149,6 +149,7 @@
 											<th style="text-align: center;">Qty</th>
 											<th style="text-align: center;">Unit Price</th> 
 											<th style="text-align: center;">Supplier Name</th>
+											<th style="text-align: center;">Remark</th>
 											<th style="text-align: center;">Edit</th>
 										</tr>
 									</thead>
@@ -372,9 +373,7 @@
             /* ==============================================
             Counter Up
             =============================================== */
-            jQuery(document).ready(function($) {
-            	searchProduct();
-            	searchSupplier();
+            jQuery(document).ready(function($) { 
             	var _thisRow ;
             	
                 $(document).on('keypress','#qty, #UnitPrice', function(e){
@@ -407,7 +406,10 @@
             		$("#qty").val($(this).parents("tr").children().eq(4).html());
             		$("#UnitPrice").val($(this).parents("tr").children().eq(5).html());
             		$("#supplierName").val($(this).parents("tr").children().eq(6).html()); 
+            		$("#remark").val($(this).parents("tr").children().eq(7).html());
+            		$("#addbtn").html("Update");
             		$("#addbtn").attr("id","editbtn");
+            		
             	});
             	$(document).on("click","#editbtn",function(){
             		_thisRow.children().eq(0).html($("#proID").val());
@@ -416,13 +418,15 @@
             		_thisRow.children().eq(4).html($("#qty").val());
             		_thisRow.children().eq(5).html($("#UnitPrice").val()); 
             		_thisRow.children().eq(6).html($("#supplierName").val());
+            		_thisRow.children().eq(7).html($("#remark").val());
+            		$("#editbtn").html("Add");
             		$("#editbtn").attr("id","addbtn");
             		clear();
             	});
             	$("#canceladd").click(function(){ 
 	            		clear(); 
 	            		$("#editbtn").attr("id","addbtn");
-            		 
+	            		$("#editbtn").html("Add");
             	});
             	$(document).on("blur","#productName ,#qty ,#UnitPrice ,#supplierName",function(){ 
             		
@@ -471,6 +475,7 @@
             		st += "<td>" + $("#qty").val() +"</td>";
             		st += "<td>" + $("#UnitPrice").val() +"</td>";
             		st += "<td>" + $("#supplierName").val() +"</td>";
+            		st += "<td>" + $("#remark").val() +"</td>";
             		st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
             		$("#tbllistimport").append(st);
             		clear();
@@ -482,33 +487,34 @@
                 });
                 
                 $("#savebtn").click(function(){ 
-                	var importDetail = [];
+                	var expenseDetail = [];
                 	if($('#tbllistimport tr').length==0){
                 		alert("There is no data was added");
                 		return;
                 	}
                 		$('#tbllistimport tr').each(function(){
                 			json ={
-                						"proId"				: ($(this).find("td").eq(0).html()),
+                						"proname"				: ($(this).find("td").eq(3).html()),
                 						"quantity" 		 	:($(this).find("td").eq(4).html()),
                 						"unitPrice"		    :($(this).find("td").eq(5).html()),
-                						"supplierId"	  	:($(this).find("td").eq(1).html())
+                						"remark"		    :($(this).find("td").eq(7).html()),
+                						"suppliername"	  	:($(this).find("td").eq(6).html())
                 					};
-                				importDetail.push(json);	
+                			expenseDetail.push(json);	
                 		}); 
                 		
     	 			$.ajax({
-    	 				 url: "${pageContext.request.contextPath}/admin/addImport", 
+    	 				 url: "${pageContext.request.contextPath}/admin/saveExpense", 
      				    type: 'POST',
     	 				datatype: 'JSON',
-    	 				data: JSON.stringify(importDetail), 
+    	 				data: JSON.stringify(expenseDetail), 
     	 				beforeSend: function(xhr) {
     	 		            xhr.setRequestHeader("Accept", "application/json");
     	 		            xhr.setRequestHeader("Content-Type", "application/json");
     	 		        },
     	 				success: function(data){
     	 					console.log(data);
-    	 					location.href="${pageContext.request.contextPath}/admin/importlist";
+    	 					location.href="${pageContext.request.contextPath}/admin/expenselist";
     	 				},
     	 				error:function(data, status,er){
     	 					console.log("error: " + data + "status: " + status + "er: ");
@@ -516,87 +522,16 @@
     	 			});    
                 });
 
-                 
-                function searchSupplier(){
-    				$.ajax({ 
-    				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
-    				    type: 'POST', 
-    				    dataType: 'JSON', 
-    				    beforeSend: function(xhr) {
-    	                    xhr.setRequestHeader("Accept", "application/json");
-    	                    xhr.setRequestHeader("Content-Type", "application/json");
-    	                },
-    				    success: function(data) { 
-    				       console.log(data); 
-    				       var availableTags=[];
-    				       for(i=0; i<data.length; i++)
-		   						{							
-    				    	   availableTags[i]= 
-		   						         {
-		   						         	"label": data[i].supplierName,
-		   									"dataid": data[i].supId 
-		   						         };
-		   						}
-    				       $("#supplierName" ).autocomplete({
-    				    	   
-    				    	   select: function(event, ui){
-    				    		   $("#supID").val(ui.item.dataid);
-    				    	   },
-    				    	   maxShowItems: 8,
-    				           source: availableTags
-    				       });  
-    				    },
-    				    error:function(data,status,er) { 
-    				        console.log("error: "+data+" status: "+status+" er:"+er);
-    				    }
-    				});
-    				
-    			}
-                 
+              
                 function clear(){
-            		$("#productName").val(""); 	$("#productName").removeClass("borderRed");
-            		$('#proID').val("");		 
-            		$('#supID').val("");		 
+            		$("#productName").val(""); 	$("#productName").removeClass("borderRed"); 
             		$("#qty").val("");			$("#qty").removeClass("borderRed");
             		$("#UnitPrice").val("");	$("#UnitPrice").removeClass("borderRed");
             		$("#supplierName").val(""); $("#supplierName").removeClass("borderRed");
+            		$("#remark").val(""); $("#remark").removeClass("borderRed");
             	}
                 
-                function searchProduct(){
-    				$.ajax({ 
-    				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
-    				    type: 'POST', 
-    				    dataType: 'JSON', 
-    				    beforeSend: function(xhr) {
-    	                    xhr.setRequestHeader("Accept", "application/json");
-    	                    xhr.setRequestHeader("Content-Type", "application/json");
-    	                },
-    				    success: function(data) { 
-    				       //console.log(data); 
-    				       var availableTags=[];
-    				       for(i=0; i<data.length; i++)
-		   						{							
-    				    	   availableTags[i]= 
-		   						         {
-		   						         	"label": data[i].productName,
-		   									"dataid": data[i].productId 
-		   						         };
-		   						}
-    				       $("#productName" ).autocomplete({
-    				    	   
-    				    	   select: function(event, ui){
-    				    		   $("#proID").val(ui.item.dataid);
-    				    	   },
-    				    	   maxShowItems: 8,
-    				           source: availableTags
-    				       });
-    				    },
-    				    error:function(data,status,er) { 
-    				        console.log("error: "+data+" status: "+status+" er:"+er);
-    				    }
-    				});
-    				
-    			} 
+        
     		 
             });
         </script>

@@ -126,7 +126,7 @@
 												<td>${expense.description }</td>  
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="#"><i	class="fa fa-pencil"></i></a> <a class="on-default remove-row"
+													href="${pageContext.request.contextPath}/admin/expenseupdate/${expense.expId}"><i	class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
