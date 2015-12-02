@@ -9,7 +9,11 @@
 <meta name="description"
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
 <meta name="author" content="Coderthemes">
-
+<style>
+	.hidetable{ display: none;}
+	thead tr th { text-align: center; font-size:12px;}
+	tbody tr td { text-align: center;}
+</style>
 <link rel="shortcut icon" href="images/favicon_1.ico">
 
 <title>KOSIGN WeCafe...</title>
@@ -98,16 +102,38 @@
 					<div class="panel-body">
                          <div class="panel-heading">
                                <!-- <h3 class="panel-title">Product Lists</h3> -->
-						    <form class="form-inline">
+						    <!-- <form class="form-inline">
 						        <div class="form-group">
 						            <label >Search</label>
 						            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
 						        </div>
-						    </form>
+						    </form> -->
+						    <div class="m-h-50 form-group hidden-print ">                                     
+					            		<div class="col-sm-9">
+					                		<label class="col-sm-1 control-label">Date : </label>
+												<input type="hidden" id="SEND_DT" data-id="SEND_DT" />
+											<div id="sendFrdt" class="date-range col-sm-5"  >
+												<input type="text" readonly="readonly" id="REGS_DATE_S" name="startdate" class="range-start" style="width:100px; text-align: center;">&nbsp;
+												<a href="#none" id="btnREGS_DATE_S"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+												<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
+												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+											</div>   
+    									</div>            
+    									<div class="col-sm-3 form-group" >
+											  	<select class="form-control" id="sel1">
+												    <option>Detail</option>
+												    <option>Daily</option>
+												    <option>Weekly</option>
+												    <option>Monthly</option>
+												    <option>Yearly</option>
+											  </select>  
+    									</div>  
+    									                            		
+                            </div>
                            </div>
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-							<table id="datatable" class="table table-striped table-bordered">
+							<table id="datatable" class="table table-striped table-bordered hidetable">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -118,22 +144,7 @@
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
-									<tbody>
-										<%-- <c:forEach items="{{importproducts}" var="importproducts" varStatus="theCount">
-											<tr>
-												<td>${theCount.count}</td>
-												<td ><a href="javascript:;" id="impid"> {{importproducts.impId}</a> </td>												
-												<td >{{importproducts.impDate}</td>
-												<td style="text-align: right;">{{importproducts.userId }
-												<td style="text-align: right;">{{importproducts.totalAmount }
-												<td class="actions" style="text-align: center;"><a
-													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/viewById/{{importproducts.impId}"><i
-														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-													href="javascript:;" id="btnRemove"><i
-														class="fa fa-trash-o"></i></a></td>
-											</tr>
-										</c:forEach> --%>
+									<tbody> 
 										<tr dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
 											<td>{{key+1}}</td>
 											<td ><a href="javascript:;" id="impid"> {{importproducts.impId}}</a> </td>												
@@ -149,6 +160,151 @@
 										</tr>
 									</tbody>
 								</table>
+								<table id="dailytable" class="table table-responsive" >
+    <thead>
+<tr >
+            <th rowspan="2">Customer</th>
+            <th rowspan="2">Item</th>
+
+            <th colspan="2">1</th>
+            <th colspan="2">2</th>
+            <th colspan="2">3</th>
+            <th colspan="2">4</th>
+            <th colspan="2">5</th>
+            <th colspan="2">6</th>
+            <th colspan="2">7</th>
+            <th colspan="2">8</th>
+            <th colspan="2">9</th>
+            <th colspan="2">10</th>
+            <th colspan="2">11</th>
+            <th colspan="2">12</th> 
+            <th colspan="2">Total</th>
+      </tr>
+      <tr>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>qty</th>
+            <th>Amount</th>
+            <th>Total Qty</th>
+            <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+			<td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+           
+      </tr>
+      <tr>
+        <td>A</td>
+        <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+<td>A</td>
+            <td>A</td>
+            
+      </tr>
+      <tr>
+      <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+<td>A</td>
+            <td>A</td>
+          
+      </tr>
+    </tbody>
+  </table>
 							</div>
 						</div>
 					</div>
@@ -219,8 +375,12 @@
     <script src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
 
 	<!-- jQuery  -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+    <script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
+	<%-- <script
+		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script> --%>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
@@ -270,6 +430,98 @@
 		jQuery(document).ready(function($) {
 			 searchProduct();
 			 searchSupplier();
+			 setCalendar();
+			 searchByDate();
+			 $("#btnREGS_DATE_S").click(function(){	
+		 			$( "#REGS_DATE_S" ).datepicker("show");		
+		 			
+		 		});		
+		 	$("#btnREGS_DATE_E").click(function(){
+		 			$( "#REGS_DATE_E" ).datepicker("show");			
+		 		});
+
+		 function calculateDay(start, end){		
+		         var days = (end - start) / (1000 * 60 * 60 * 24);
+		         $("#totalday").val(days);
+		         return;
+		 }
+
+		 function setCalendar(){		
+		 		$("#REGS_DATE_S").datepicker({
+		 		      defaultDate: new Date(),
+		 		      setDate: new Date(),
+		 		      changeMonth: true,
+		 		      numberOfMonths: 1,
+		 		      dateFormat: "yy-mm-dd",
+		 		      onClose: function( selectedDate ) {			    	  
+		 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+		 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+		 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+		 						searchByDate();
+		 			      }
+		 		});
+		 		$("#REGS_DATE_E").datepicker({
+		 		     defaultDate: new Date(),
+		 		      setDate: new Date(),
+		 		      changeMonth: true,
+		 		      numberOfMonths: 1,
+		 		      dateFormat: "yy-mm-dd",
+		 		      onClose: function( selectedDate ) {
+
+		 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
+		 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+		 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+		 			    	   searchByDate();
+		 			      }
+		 		});		
+		 		$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
+		 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
+		 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
+		 }
+			 function searchByDate(){
+			      	var startDate 		= $( "#REGS_DATE_S" ).val() + " 00:00:00";
+					var endDate 		= $( "#REGS_DATE_E" ).val() + " 24:00:00"; 
+					json = {
+								"startdate"   		  : startDate,
+								"enddate" 		  	  : endDate
+					};
+					console.log(JSON.stringify(json));
+					$.ajax({
+						 url: "${pageContext.request.contextPath}/admin/getsearchsellbydate", 
+				    type: 'POST',
+						datatype: 'JSON',
+						data: JSON.stringify(json), 
+						beforeSend: function(xhr) {
+				            xhr.setRequestHeader("Accept", "application/json");
+				            xhr.setRequestHeader("Content-Type", "application/json");
+				        },
+						success: function(data){
+							st="";
+							
+			            	var a = 1;
+			            	var total = 0;
+			            	
+				            for(i=0; i<data.length; i++)	
+					      	{ 
+				            	a = i+1;
+				            	total += data[i].Total ;
+					    	  	st += "<tr>"
+					    	  	st += "<td>" + a + "</td> "
+					    	  	st += "<td>" + data[i].productName + "</td>";
+					    	  	st += "<td>" + data[i].proQty + "</td>";
+					    	  	st += "<td>" + data[i].UnitPrice + "</td>";
+					    	  	st += "<td>" + data[i].Total + "</td>"; 
+					    	  
+					    	}
+				            
+			      			$("#searchDetail").html(st);
+			      			$("#totalPrice").html(total);
+						},
+						error:function(data, status,er){
+							console.log("error: " + data + "status: " + status + "er: ");
+						}
+					}); 
+				 }
 			//$('#datatable').dataTable();
 			 $(document).on("click","#impid", function(){
 				 
