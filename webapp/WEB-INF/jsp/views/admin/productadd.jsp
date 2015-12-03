@@ -130,19 +130,19 @@
                                                         <input class="form-control " id="quantity" name="quantity" type="text" value="0" >
                                                     </div>
                                                 </div> 
-                                                <div class="form-group ">
+                                                <div class="form-group" style="display:none;">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="unitPrice" name="unitPrice" type="text" required="required">
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
+                                                <div class="form-group " style="display:none;">
                                                     <label for="costprice" class="control-label col-lg-2">Cost Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="costPrice" name="costPrice" type="text" required="required">
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
+                                                <div class="form-group " style="display:none;"  >
                                                     <label for="costprice" class="control-label col-lg-2">Sale Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="salePrice" name="salePrice" type="text" required="required">
@@ -383,6 +383,7 @@
     					"unitPrice"   : 0,
     					"costPrice"	  : 0,
     					"salePrice"   : 0,
+    					"unitId"	  : $("#optUnit").val(),
     					//"images"	  : $("#image").files[0]
     				};
     				//console.log(form);

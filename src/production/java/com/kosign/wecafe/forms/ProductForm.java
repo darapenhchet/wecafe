@@ -14,6 +14,7 @@ public class ProductForm {
 	private Long quantity;
 	private Long categoryId;
 	private String imgURL;
+	private Long unitId;
 	private String image;
 
 	public void setProductName(String productName) {
@@ -87,5 +88,14 @@ public class ProductForm {
 	public void setImage(String image){
 		this.image = image;
 	}
+
+	public Long getUnitId() {
+		return unitId;
+	}
+
+	public void setUnitId(Long unitId) {
+		this.unitId = unitId;
+	}
+	
 }
 

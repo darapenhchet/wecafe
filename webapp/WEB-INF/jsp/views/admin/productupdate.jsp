@@ -1,3 +1,4 @@
+<%@page import="com.kosign.wecafe.entities.Unit"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -112,6 +113,18 @@
                                                     			}
                                                     		}
                                                        	%>
+                                       
+                                                       	</select>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="form-group ">
+                                                    <label for="category" class="control-label col-lg-2">Category *</label>
+                                                    <div class="col-lg-10">
+                                                       	<select class="form-control" id="optCategory" name="categoryId" required="required">
+                                                       		<option value="">Please choose your category</option>
+                                                       	
                                        
                                                        	</select>
                                                     </div>

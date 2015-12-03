@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Unit;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.ProductForm;
 import com.kosign.wecafe.services.CategoryService;
@@ -177,6 +178,9 @@ public class ProductController {
 		product.setSalePrice(form.getSalePrice());
 		product.setUnitPrice(form.getUnitPrice());
 		product.setCategory(category);
+		Unit unit = new Unit();
+		unit.setUnitId(form.getUnitId());
+		product.setUnit(unit);
 		//product.setCreatedBy(user);
 		//product.setLastUpdatedBy(user);
 		product.setImage(form.getImage());

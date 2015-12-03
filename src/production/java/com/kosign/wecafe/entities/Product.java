@@ -73,6 +73,10 @@ public class Product implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="cat_id")
 	private Category category ;
+	
+	@ManyToOne
+	@JoinColumn(name="unit_id")
+	private Unit unit;
 
 	@Column(name="img_url")
 	private String image;
@@ -250,7 +254,18 @@ public class Product implements Serializable{
 	public void setImportDetail(Set<ImportDetail> importDetail) {
 		this.importDetail = importDetail;
 	}
-	
-	
 
+
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+	
+	
 }
