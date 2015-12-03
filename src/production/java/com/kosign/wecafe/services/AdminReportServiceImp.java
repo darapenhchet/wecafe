@@ -9,6 +9,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.util.HibernateUtil;
@@ -220,6 +221,13 @@ public class AdminReportServiceImp implements AdminReportService {
 		} finally {
 			session.close();
 		}
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public List<Map> getReportListAllPurchase() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		return null;
 	}
 }

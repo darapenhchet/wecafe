@@ -20,11 +20,15 @@ public class WeCafeBootstrap implements WebApplicationInitializer{
 		 /*container.getServletRegistration("default").addMapping("/resources/*", "*.css", "*.js", "*.png", "*.gif", "*.jpg");*/
 		 
 		 AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		
 		 rootContext.register(RootContextConfiguration.class);
+		 
 		 container.addListener(new ContextLoaderListener(rootContext));
 		 
 		 AnnotationConfigWebApplicationContext servletContext = new AnnotationConfigWebApplicationContext();
+		 
 		 servletContext.register(ServletContextConfiguration.class);
+		 
 		 ServletRegistration.Dynamic dispatcher = container.addServlet("springDispatcher", 
 				 new DispatcherServlet(servletContext));
 		 			

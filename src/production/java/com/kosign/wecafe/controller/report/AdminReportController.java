@@ -36,6 +36,12 @@ public class AdminReportController {
 		return "admin/reportOrder";
 	}
 	
+	@RequestMapping(value="/admin/purchasereport", method=RequestMethod.GET)
+	public String ListReportpurchase(Map<String, Object>model){
+		model.put("reportPurchase", adminReportService.getReportListAllPurchase());
+		return "admin/purchase-report";
+	}
+	
 	@RequestMapping(value="/admin/getsearchsellbydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Map> searchSalebyDate(@RequestBody DateForm dateForm){
 		return adminReportService.getSearchSellbyDate(dateForm);
