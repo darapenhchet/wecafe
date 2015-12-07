@@ -50,4 +50,10 @@ public class AdminReportController {
 	public @ResponseBody List<Map> searchOrderbyDate(@RequestBody DateForm dateForm){
 		return adminReportService.getSearchOrderbyDate(dateForm);
 	}
+	
+	@RequestMapping(value="/admin/beveragestock", method=RequestMethod.GET)
+	public String ListAllBeverageStock(Map<String, Object>model){
+		
+		return "admin/reportbeveragestock";
+	}
 }

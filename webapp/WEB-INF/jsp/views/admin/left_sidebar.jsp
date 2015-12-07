@@ -89,7 +89,7 @@
                                		<li><a href="${pageContext.request.contextPath}/admin/purchasereport">Purchase Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/sellreport">Sell Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/orderreport">Order Reports</a></li>
-                                   <%--  <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Import Reports</a></li> --%>
+                                    <li><a href="${pageContext.request.contextPath}/admin/beveragestock">Beverage Stock Accounting Report</a></li>
                                 </ul>
                             </li>
                             
