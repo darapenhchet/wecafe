@@ -36,25 +36,17 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="product_pro_id_seq", name="product_id")
 	@GeneratedValue(generator="product_id", strategy=GenerationType.SEQUENCE)
 	@Column(name="pro_id")
 	private Long productId;
-	
-	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product",cascade=CascadeType.ALL)
-	//@Column(name = "pro_id")
-	//@ElementCollection(targetClass=OrderDetail.class)
-	/*@ManyToMany(mappedBy="product")
-	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();*/
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product", cascade=CascadeType.ALL)
 	private Set<OrderDetail> orderDetail = new HashSet<OrderDetail>();
 	
 	@OneToMany(fetch = FetchType.LAZY,  mappedBy = "pk1.product", cascade=CascadeType.ALL)
 	private Set<ImportDetail> importDetail = new HashSet<ImportDetail>();
-	
-	
+
 	@Column(name="pro_name")
 	private String productName;
 	
@@ -73,13 +65,18 @@ public class Product implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="cat_id")
 	private Category category ;
-	
-	@ManyToOne
-	@JoinColumn(name="unit_id")
-	private Unit unit;
 
 	@Column(name="img_url")
 	private String image;
+	
+	@Column(name="stock_type")
+	private String stockType;
+	
+	@Column(name="product_type")
+	private String productType;
+	
+	@Column(name="can_sell_holiday")
+	private String can_sell_holiday;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
@@ -103,8 +100,6 @@ public class Product implements Serializable{
 	public Long getProductId() {
 		return productId;
 	}
-	
-	
 
 	public Product() {
 		
@@ -214,7 +209,6 @@ public class Product implements Serializable{
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 	
-
 	public Boolean getStatus() {
 		return status;
 	}
@@ -242,30 +236,37 @@ public class Product implements Serializable{
 	public void setImage(String image) {
 		this.image = image;
 	}
-
-
-
+	
 	public Set<ImportDetail> getImportDetail() {
 		return importDetail;
 	}
-
-
 
 	public void setImportDetail(Set<ImportDetail> importDetail) {
 		this.importDetail = importDetail;
 	}
 
-
-
-	public Unit getUnit() {
-		return unit;
+	public String getStockType() {
+		return stockType;
 	}
 
-
-
-	public void setUnit(Unit unit) {
-		this.unit = unit;
+	public void setStockType(String stockType) {
+		this.stockType = stockType;
 	}
-	
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getCan_sell_holiday() {
+		return can_sell_holiday;
+	}
+
+	public void setCan_sell_holiday(String can_sell_holiday) {
+		this.can_sell_holiday = can_sell_holiday;
+	}
 	
 }

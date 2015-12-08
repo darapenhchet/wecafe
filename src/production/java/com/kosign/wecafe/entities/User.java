@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosign.wecafe.enums.Status;
 
 @Entity
@@ -38,6 +39,7 @@ public class User implements Serializable{
 	private String username;
 	
 	@Column(name="PASSWORD", nullable=false)
+	@JsonIgnore
 	private String password;
 	
 	@Column(name="FIRSTNAME", nullable=false)

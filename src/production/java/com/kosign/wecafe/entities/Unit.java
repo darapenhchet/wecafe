@@ -1,16 +1,10 @@
 package com.kosign.wecafe.entities;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,11 +21,11 @@ public class Unit {
 	@Column(name="qty")
 	private Long qty;
 
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="unit")
-	private Set<Product> product;
-	
 	@Column(name="unit_name")
 	private String unitName;
+	
+	@Column(name="convert_to")
+	private String to;
 
 	public Long getUnitId() {
 		return unitId;
@@ -57,16 +51,12 @@ public class Unit {
 		this.unitName = unitName;
 	}
 
-	public Set<Product> getProduct() {
-		return product;
+	public String getTo() {
+		return to;
 	}
 
-	public void setProduct(Set<Product> product) {
-		this.product = product;
+	public void setTo(String to) {
+		this.to = to;
 	}
-
-	
-	
-	
 	
 }

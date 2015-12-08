@@ -255,6 +255,9 @@
 	  	$(function(){
 	  		setCalendar();
 	  		searchByDate();
+	  		
+		    getAllSales(1, 15, true);
+		    
 		    function getAllSales(pNum, pSize, check){
 		    	var json = {
 			  			"page" :pNum,
@@ -314,10 +317,10 @@
 			    	getAllSales(num,$("#PER_PAGE").val(),false);
 			    }); 
 		    }
+		    
 		    $("#PER_PAGE").change(function(){
 		    	getAllSales(1,$(this).val(),true);
 		    });
-		    getAllSales(1, 15, true);
 		    
 			$("#btnREGS_DATE_S").click(function(){	
 		 		$( "#REGS_DATE_S" ).datepicker("show");		

@@ -21,7 +21,6 @@ import javax.persistence.Table;
 public class Category implements java.io.Serializable{
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@SequenceGenerator(allocationSize=1, initialValue=2, sequenceName="category_cat_id_seq", name="cat_id")
 	@GeneratedValue(generator="cat_id", strategy=GenerationType.SEQUENCE)
 	@Column(name="cat_id")

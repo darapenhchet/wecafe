@@ -103,7 +103,7 @@
                                                        		 	<%
 	                                                       		List<Unit> units = (ArrayList<Unit>)request.getAttribute("units");
 	                                                    		for(Unit unit : units){
-                                                    			out.println("<option value="+unit.getUnitId()+">"+unit.getUnitName()+"</option>");
+                                                    			out.println("<option value="+unit.getUnitId()+">"+unit.getUnitName() +" ("+unit.getQty() + " " + unit.getTo()+")"+"</option>");
                                                     		}
                                                        	%>
                                                        	</select>
@@ -130,19 +130,19 @@
                                                         <input class="form-control " id="quantity" name="quantity" type="text" value="0" >
                                                     </div>
                                                 </div> 
-                                                <div class="form-group" style="display:none;">
+                                                <div class="form-group ">
                                                     <label for="price" class="control-label col-lg-2">Unit Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="unitPrice" name="unitPrice" type="text" required="required">
                                                     </div>
                                                 </div>
-                                                <div class="form-group " style="display:none;">
+                                                <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Cost Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="costPrice" name="costPrice" type="text" required="required">
                                                     </div>
                                                 </div>
-                                                <div class="form-group " style="display:none;"  >
+                                                <div class="form-group ">
                                                     <label for="costprice" class="control-label col-lg-2">Sale Price *</label>
                                                     <div class="col-lg-10">
                                                         <input class="form-control " id="salePrice" name="salePrice" type="text" required="required">
@@ -156,7 +156,6 @@
                                                         <img src="" id="images_sample" name="images_sample" class="img-thumbnail" style="display:none;">
                                                     </div>
                                                 </div>                                                                                            
-
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button class="btn btn-primary waves-effect waves-light" type="submit">Save</button>
@@ -186,117 +185,6 @@
             <!-- ============================================================== -->
             <!-- End Right content here -->
             <!-- ============================================================== -->
-
-
-            <!-- Right Sidebar -->
-            <div class="side-bar right-bar nicescroll">
-                <h4 class="text-center">Chat</h4>
-                <div class="contact-list nicescroll">
-                    <ul class="list-group contacts-list">
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg" alt="">
-                                </div>
-                                <span class="name">Chadengle</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg" alt="">
-                                </div>
-                                <span class="name">Tomaslau</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg" alt="">
-                                </div>
-                                <span class="name">Stillnotdavid</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg" alt="">
-                                </div>
-                                <span class="name">Kurafire</span>
-                                <i class="fa fa-circle online"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg" alt="">
-                                </div>
-                                <span class="name">Shahedk</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg" alt="">
-                                </div>
-                                <span class="name">Adhamdannaway</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg" alt="">
-                                </div>
-                                <span class="name">Ok</span>
-                                <i class="fa fa-circle away"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg" alt="">
-                                </div>
-                                <span class="name">Arashasghari</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg" alt="">
-                                </div>
-                                <span class="name">Joshaustin</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">
-                                <div class="avatar">
-                                    <img src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg" alt="">
-                                </div>
-                                <span class="name">Sortino</span>
-                                <i class="fa fa-circle offline"></i>
-                            </a>
-                            <span class="clearfix"></span>
-                        </li>
-                    </ul>  
-                </div>
-            </div>
-            <!-- /Right-bar -->
 
         </div>
         <!-- END wrapper -->
@@ -383,7 +271,6 @@
     					"unitPrice"   : 0,
     					"costPrice"	  : 0,
     					"salePrice"   : 0,
-    					"unitId"	  : $("#optUnit").val(),
     					//"images"	  : $("#image").files[0]
     				};
     				//console.log(form);
