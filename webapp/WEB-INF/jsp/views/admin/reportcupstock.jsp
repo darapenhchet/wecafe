@@ -157,12 +157,12 @@
                                                     <thead>
                                                         <tr>
 	                                                        <th>#</th>
-	                                                        <th>Customer</th>
+	                                                        <th>Purchase Date</th>
 	                                                        <th>Item</th>
 	                                                        <th>Carried Over</th>
 	                                                        <th>purchase</th>
-	                                                        <th>Sale</th>
-	                                                        <th>Balance</th>
+	                                                        <th>Take Out</th>
+	                                                        <th>In Stock</th>
 	                                                        <th>Remark</th>
 	                                                    </tr>
                                                     </thead>
@@ -264,7 +264,7 @@
 		};
 		console.log(JSON.stringify(json));
 		$.ajax({
-			 url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate", 
+			 url: "${pageContext.request.contextPath}/admin/getsearchCupbydate", 
 	    type: 'POST',
 			datatype: 'JSON',
 			data: JSON.stringify(json), 
@@ -273,7 +273,7 @@
 	            xhr.setRequestHeader("Content-Type", "application/json");
 	        },
 			success: function(data){
-				console.log(data.length);
+				console.log(data);
 				st="";
 				
             	var a = 1;
@@ -286,13 +286,13 @@
 // // 	            	total += data[i].Total ;
 		    	  	st += "<tr>"
 		    	  	st += "<td>" + a + "</td> "
-		    	  	st += "<td>" + data[i][0] + "</td>";
-		    	  	st += "<td>" + data[i][1] + "</td>";
 		    	  	st += "<td>" + data[i][2] + "</td>";
-		    	  	st += "<td>" + data[i][3]+ "</td>"; 
-		    	  	st += "<td>" + data[i][4]+ "</td>"; 
+		    	  	st += "<td>" + data[i][3] + "</td>";
+		    	  	st += "<td>" + data[i][4] + "</td>";
 		    	  	st += "<td>" + data[i][5]+ "</td>"; 
 		    	  	st += "<td>" + data[i][6]+ "</td>"; 
+		    	  	st += "<td>" + data[i][7]+ "</td>"; 
+		    	  	st += "<td>" + data[i][8]+ "</td>"; 
 		    	}
 	            
       			$("#searchDetail").html(st);

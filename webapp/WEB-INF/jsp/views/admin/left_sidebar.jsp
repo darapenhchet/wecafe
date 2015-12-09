@@ -90,6 +90,7 @@
                                     <li><a href="${pageContext.request.contextPath}/admin/sellreport">Sell Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/orderreport">Order Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/beveragestock">Beverage Stock Accounting Report</a></li>
+                                	<li><a href="${pageContext.request.contextPath}/admin/cupstock">Cup Stock</a></li>
                                 </ul>
                             </li>
                             

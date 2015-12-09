@@ -17,4 +17,9 @@ public interface AdminReportService {
 
 	public List<Map> getSearchOrderbyDate(DateForm dateForm);
 	
+	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm);
+	
+	public List<Object[]> getReportListAllCupStockbyDate(DateForm dateForm);
+	
+	
 }
