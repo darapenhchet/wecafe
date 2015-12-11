@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -226,7 +227,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map> getReportListAllPurchase() {
+	public List<ImportProduct> getReportListAllPurchase() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		return null;
 	}
