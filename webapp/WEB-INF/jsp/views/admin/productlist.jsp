@@ -170,7 +170,7 @@
 		</div>
         <script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
 	    	<tr>
-				<td id="PRODUCT_ID">{{= productId}}</td>
+				<td>{{= productId}}</td>
 				<td>{{= productName}}</td>
 				<td style="text-align:right;">{{= quantity}}</td>
 				<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>

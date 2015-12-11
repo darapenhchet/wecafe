@@ -133,7 +133,7 @@
                            </div>
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-							<table id="datatable" class="table table-striped table-bordered hidetable">
+							<table id="datatable" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -158,9 +158,10 @@
 												href="javascript:;" id="btnRemove"><i
 													class="fa fa-trash-o"></i></a></td>
 										</tr>
+										
 									</tbody>
 								</table>
-								<table id="dailytable" class="table table-responsive" >
+								<!-- <table id="dailytable" class="table table-responsive  hidetable" >
     <thead>
 <tr >
             <th rowspan="2">Customer</th>
@@ -304,7 +305,7 @@
           
       </tr>
     </tbody>
-  </table>
+  </table> -->
 							</div>
 						</div>
 					</div>
@@ -414,8 +415,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
 		type="text/javascript"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
+	<script	src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
 		type="text/javascript"></script>
 
 	<!-- CUSTOM JS -->
@@ -596,8 +596,10 @@
 	</script>
 
 	<!-- Examples -->
-	 <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+    
+    
         
         
         
