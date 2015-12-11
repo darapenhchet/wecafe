@@ -264,7 +264,7 @@
 		};
 		console.log(JSON.stringify(json));
 		$.ajax({
-			 url: "${pageContext.request.contextPath}/admin/getsearchsellbydate", 
+			 url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate", 
 	    type: 'POST',
 			datatype: 'JSON',
 			data: JSON.stringify(json), 
@@ -273,6 +273,7 @@
 	            xhr.setRequestHeader("Content-Type", "application/json");
 	        },
 			success: function(data){
+				console.log(data.length);
 				st="";
 				
             	var a = 1;
@@ -280,15 +281,18 @@
             	
 	            for(i=0; i<data.length; i++)	
 		      	{ 
+	            	console.log(data[i]);
 	            	a = i+1;
-	            	total += data[i].Total ;
+// // 	            	total += data[i].Total ;
 		    	  	st += "<tr>"
 		    	  	st += "<td>" + a + "</td> "
-		    	  	st += "<td>" + data[i].productName + "</td>";
-		    	  	st += "<td>" + data[i].proQty + "</td>";
-		    	  	st += "<td>" + data[i].UnitPrice + "</td>";
-		    	  	st += "<td>" + data[i].Total + "</td>"; 
-		    	  
+		    	  	st += "<td>" + data[i][0] + "</td>";
+		    	  	st += "<td>" + data[i][1] + "</td>";
+		    	  	st += "<td>" + data[i][2] + "</td>";
+		    	  	st += "<td>" + data[i][3]+ "</td>"; 
+		    	  	st += "<td>" + data[i][4]+ "</td>"; 
+		    	  	st += "<td>" + data[i][5]+ "</td>"; 
+		    	  	st += "<td>" + data[i][6]+ "</td>"; 
 		    	}
 	            
       			$("#searchDetail").html(st);

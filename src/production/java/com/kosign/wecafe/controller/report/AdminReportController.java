@@ -56,4 +56,21 @@ public class AdminReportController {
 		
 		return "admin/reportbeveragestock";
 	}
+	
+	@RequestMapping(value="/admin/getsearchBeveragebydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Object[]> getsearchBeveragebydate(@RequestBody DateForm dateForm){
+		
+		return adminReportService.getReportListAllBeverageStock(dateForm);
+	}
+	
+	@RequestMapping(value="/admin/cupstock")
+	public String ListAllCupStock(){
+		return "admin/reportcupstock";
+	}
+	
+	@RequestMapping(value="/admin/getsearchCupbydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Object[]> getsearchCupbyday(@RequestBody DateForm dateForm){
+		
+		return adminReportService.getReportListAllCupStockbyDate(dateForm);
+	}
 }
