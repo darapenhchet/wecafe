@@ -52,13 +52,20 @@
  	thead tr th, thead tr td { text-align: center;}
 	tbody tr td { text-align: center; }
 	tfoot td{text-align: center;} 
+	@media screen and (max-width: 600px) {
+		  table td:before {
+		      content: attr(data-label);
+	          float: left;
+	          text-transform: uppercase;
+	         font-weight: bold;
+	      }
+	}
 </style>
 </head>
 
 
 
-<body class="fixed-left-void">
-
+<body>
 	<!-- Begin page -->
 	<div id="wrapper">
 
@@ -287,30 +294,49 @@
 							 	</table>
 							 </div> 
 							 <div class="hidetable" id="tblmonthly">
-							 <table id="tblMonthlySaleReport" class="table table-responsive" >
+							 <div class="table-responsive">
+							 <table id="tblMonthlySaleReport" class="table" >
 							    <thead>
 									<tr >
-							            <th rowspan="2" style="text-align:left">Item</th> 
+							            <th rowspan="2" style="text-align:left; width: 200px;">Item</th> 
 							            <th colspan="2" id="mon1">Jan</th>
 							            <th colspan="2" id="mon2">Feb</th>
 							            <th colspan="2" id="mon3">Mar</th>
 							            <th colspan="2" id="mon4">Apr</th>
 							            <th colspan="2" id="mon5">May</th>
 							            <th colspan="2" id="mon6">Jun</th>
+           					            <th colspan="2" id="mon7">Jul</th>
+							            <th colspan="2" id="mon8">Aug</th>
+							            <th colspan="2" id="mon9">Sep</th>
+							            <th colspan="2" id="mon10">Oct</th>
+							            <th colspan="2" id="mon11">Nov</th>
+							            <th colspan="2" id="mon12">Dec</th>
 							            <th colspan="2">Total</th>
 							      	</tr>
 							      	<tr>
-							            <th>qty</th>
+							            <th>Qty</th>
 							            <th>Amount</th>
-							            <th>qty</th>
+							            <th>Qty</th>
 							            <th>Amount</th>
-							            <th>qty</th>
+							            <th>Qty</th>
 							            <th>Amount</th>
-							            <th>qty</th>
+							            <th>Qty</th>
 							            <th>Amount</th>
-							            <th>qty</th>
+							            <th>Qty</th>
 							            <th>Amount</th>
-							            <th>qty</th>
+							            <th>Qty</th>
+							            <th>Amount</th>
+   							            <th>Qty</th>
+							            <th>Amount</th>
+							            <th>Qty</th>
+							            <th>Amount</th>
+							            <th>Qty</th>
+							            <th>Amount</th>
+							            <th>Qty</th>
+							            <th>Amount</th>
+							            <th>Qty</th>
+							            <th>Amount</th>
+							            <th>Qty</th>
 							            <th>Amount</th>
 							            <th>Total Qty</th>
 							            <th>Total Amount</th>
@@ -333,11 +359,24 @@
 								      		<td id="TOTAL_MAY_AMOUNT"></td>
 								      		<td id="TOTAL_JUN_QTY"></td>
 								      		<td id="TOTAL_JUN_AMOUNT"></td>
+						      				<td id="TOTAL_JUL_QTY"></td>
+								      		<td id="TOTAL_JUL_AMOUNT"></td>
+								      		<td id="TOTAL_AUG_QTY"></td>
+								      		<td id="TOTAL_AUG_AMOUNT"></td>
+								      		<td id="TOTAL_SEP_QTY"></td>
+								      		<td id="TOTAL_SEP_AMOUNT"></td>
+								      		<td id="TOTAL_OCT_QTY"></td>
+								      		<td id="TOTAL_OCT_AMOUNT"></td>
+								      		<td id="TOTAL_NOV_QTY"></td>
+								      		<td id="TOTAL_NOV_AMOUNT"></td>
+								      		<td id="TOTAL_DEC_QTY"></td>
+								      		<td id="TOTAL_DEC_AMOUNT"></td>
 								      		<td id="TOTAL_QTY"></td>
 								      		<td id="TOTAL_AMOUNT"></td>
 								      </tr>
 							    	</tfoot>
 							 	</table>
+							 </div>
 							 </div>
 							 <div id="tblyearly"  class="hidetable">
 							 <table id="yearlytable" class="table table-responsive" >
@@ -476,7 +515,7 @@
 
 	<script id="SALE_MONTHLY_TEMPLATE" type="text/x-jquery-tmpl">
 		<tr>
-			<td style="text-align:left">{{= product}}</td>
+			<td style="text-align:left; width: 100px;">{{= product}}</td>
 			<td>{{= jan_qty}}</td>
 			<td>{{= jan_amount}}</td>
 			<td>{{= feb_qty}}</td>
@@ -489,6 +528,18 @@
 			<td>{{= may_amount}}</td>
 			<td>{{= jun_qty}}</td>
 			<td>{{= jun_amount}}</td>
+			<td>{{= jul_qty}}</td>
+			<td>{{= jul_amount}}</td>
+			<td>{{= aug_qty}}</td>
+			<td>{{= aug_amount}}</td>
+			<td>{{= sep_qty}}</td>
+			<td>{{= sep_amount}}</td>
+			<td>{{= oct_qty}}</td>
+			<td>{{= oct_amount}}</td>
+			<td>{{= nov_qty}}</td>
+			<td>{{= nov_amount}}</td>
+			<td>{{= dec_qty}}</td>
+			<td>{{= dec_amount}}</td>
 			<td>{{= total_qty}}</td>
 			<td>{{= total_amount}}</td>
 		</tr>
@@ -623,12 +674,24 @@
 						$("#tblMonthlySaleReport #TOTAL_MAY_AMOUNT").html(data.total_sales.total_may_amount);
 						$("#tblMonthlySaleReport #TOTAL_JUN_QTY").html(data.total_sales.total_jun_qty);
 						$("#tblMonthlySaleReport #TOTAL_JUN_AMOUNT").html(data.total_sales.total_jun_amount);
+						$("#tblMonthlySaleReport #TOTAL_JUL_QTY").html(data.total_sales.total_jul_qty);
+						$("#tblMonthlySaleReport #TOTAL_JUL_AMOUNT").html(data.total_sales.total_jul_amount);
+						$("#tblMonthlySaleReport #TOTAL_AUG_QTY").html(data.total_sales.total_aug_qty);
+						$("#tblMonthlySaleReport #TOTAL_AUG_AMOUNT").html(data.total_sales.total_aug_amount);
+						$("#tblMonthlySaleReport #TOTAL_SEP_QTY").html(data.total_sales.total_sep_qty);
+						$("#tblMonthlySaleReport #TOTAL_SEP_AMOUNT").html(data.total_sales.total_sep_amount);
+						$("#tblMonthlySaleReport #TOTAL_OCT_QTY").html(data.total_sales.total_oct_qty);
+						$("#tblMonthlySaleReport #TOTAL_OCT_AMOUNT").html(data.total_sales.total_oct_amount);
+						$("#tblMonthlySaleReport #TOTAL_NOV_QTY").html(data.total_sales.total_nov_qty);
+						$("#tblMonthlySaleReport #TOTAL_NOV_AMOUNT").html(data.total_sales.total_nov_amount);
+						$("#tblMonthlySaleReport #TOTAL_DEC_QTY").html(data.total_sales.total_dec_qty);
+						$("#tblMonthlySaleReport #TOTAL_DEC_AMOUNT").html(data.total_sales.total_dec_amount);
 						$("#tblMonthlySaleReport #TOTAL_QTY").html(data.total_sales.total_jun_qty +
 																   data.total_sales.total_feb_qty + 
 																   data.total_sales.total_mar_qty +
 																   data.total_sales.total_apr_qty +
 																   data.total_sales.total_may_qty +
-																   data.total_sales.total_jun_qty  +
+																   data.total_sales.total_jun_qty +
 																   data.total_sales.total_jul_qty +
 																   data.total_sales.total_aug_qty +
 																   data.total_sales.total_sep_qty +
