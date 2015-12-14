@@ -50,9 +50,8 @@
 	.hidetable{ display: none;}
 	/* table{border: 1px solid;} */
  	thead tr th, thead tr td { text-align: center;}
- 	/*
-	tbody tr td { text-align: center; font-size:10px; border-right:1px solid; }
-	#tblfooter td{text-align: center; border-top:1px solid;} */
+	tbody tr td { text-align: center; }
+	tfoot td{text-align: center;} 
 </style>
 </head>
 
@@ -288,7 +287,7 @@
 							 	</table>
 							 </div> 
 							 <div class="hidetable" id="tblmonthly">
-							 <table id="monthlytable" class="table table-responsive" >
+							 <table id="tblMonthlySaleReport" class="table table-responsive" >
 							    <thead>
 									<tr >
 							            <th rowspan="2" style="text-align:left">Item</th> 
@@ -318,46 +317,24 @@
 							      </tr>
 							    </thead> 
 							    	<tbody id="MONTHLY_REPORT">
-							      		<tr>
-								      		<td>Americano</td>
-								      		<td>1</td>
-								      		<td>8$</td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-							      		</tr>
-							      		 
 							    	</tbody>
 							    	<tfoot>
 							    		<tr id="monthlyfooter">
-								 			<td colspan="2">Total</td>      		 
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td>10</td>
-								      		<td>6$</td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
+								 			<td>Total</td>      		 
+								      		<td id="TOTAL_JAN_QTY"></td>
+								      		<td id="TOTAL_JAN_AMOUNT"></td>
+								      		<td id="TOTAL_FEB_QTY"></td>
+								      		<td id="TOTAL_FEB_AMOUNT"></td>
+								      		<td id="TOTAL_MAR_QTY"></td>
+								      		<td id="TOTAL_MAR_AMOUNT"></td>
+								      		<td id="TOTAL_APR_QTY"></td>
+								      		<td id="TOTAL_APR_AMOUNT"></td>
+								      		<td id="TOTAL_MAY_QTY"></td>
+								      		<td id="TOTAL_MAY_AMOUNT"></td>
+								      		<td id="TOTAL_JUN_QTY"></td>
+								      		<td id="TOTAL_JUN_AMOUNT"></td>
+								      		<td id="TOTAL_QTY"></td>
+								      		<td id="TOTAL_AMOUNT"></td>
 								      </tr>
 							    	</tfoot>
 							 	</table>
@@ -439,32 +416,17 @@
 							 </div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-2">
-								<select id="PER_PAGE" class="form-control">
-									<option value="15">15</option>
-									<option value="30">30</option>
-									<option value="50">50</option>
-									<option value="100">100</option>
-								</select>
-							</div>
-							<div id="PAGINATION" class="pull-right">
-							</div>
-						</div>
 					</div>
 					<!-- end: page -->
 				</div>
-										
-					<!-- end Panel -->
+				<!-- end Panel -->
 				</div>
 				<!-- container -->
 			</div>
+			</div>
 			<!-- content -->
-
 			<%@ include file="footer.jsp"%>
-
 		</div>
-
 		<div id="sellDetail" style="display: none;width: 90%;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -643,14 +605,84 @@
                 },
 			    success: function(data) { 
 			    	console.log(data);
-			    	$("tbody#MONTHLY_REPORT").html('');
-					$("#SALE_MONTHLY_TEMPLATE").tmpl(data.sales).appendTo("tbody#MONTHLY_REPORT");
+			    	if(data.sales){
+				    	$("tbody#MONTHLY_REPORT").html('');
+				    	for(var i=0;i<data.sales.length;i++){
+				    		formatMonthlySaleReport(data.sales[i]);
+						}
+						$("#SALE_MONTHLY_TEMPLATE").tmpl(data.sales).appendTo("tbody#MONTHLY_REPORT");
+						$("#tblMonthlySaleReport #TOTAL_JAN_QTY").html(data.total_sales.total_jan_qty);
+						$("#tblMonthlySaleReport #TOTAL_JAN_AMOUNT").html(data.total_sales.total_jan_amount);
+						$("#tblMonthlySaleReport #TOTAL_FEB_QTY").html(data.total_sales.total_feb_qty);
+						$("#tblMonthlySaleReport #TOTAL_FEB_AMOUNT").html(data.total_sales.total_feb_amount);
+						$("#tblMonthlySaleReport #TOTAL_MAR_QTY").html(data.total_sales.total_mar_qty);
+						$("#tblMonthlySaleReport #TOTAL_MAR_AMOUNT").html(data.total_sales.total_mar_amount);
+						$("#tblMonthlySaleReport #TOTAL_APR_QTY").html(data.total_sales.total_apr_qty);
+						$("#tblMonthlySaleReport #TOTAL_APR_AMOUNT").html(data.total_sales.total_apr_amount);
+						$("#tblMonthlySaleReport #TOTAL_MAY_QTY").html(data.total_sales.total_may_qty);
+						$("#tblMonthlySaleReport #TOTAL_MAY_AMOUNT").html(data.total_sales.total_may_amount);
+						$("#tblMonthlySaleReport #TOTAL_JUN_QTY").html(data.total_sales.total_jun_qty);
+						$("#tblMonthlySaleReport #TOTAL_JUN_AMOUNT").html(data.total_sales.total_jun_amount);
+						$("#tblMonthlySaleReport #TOTAL_QTY").html(data.total_sales.total_jun_qty +
+																   data.total_sales.total_feb_qty + 
+																   data.total_sales.total_mar_qty +
+																   data.total_sales.total_apr_qty +
+																   data.total_sales.total_may_qty +
+																   data.total_sales.total_jun_qty  +
+																   data.total_sales.total_jul_qty +
+																   data.total_sales.total_aug_qty +
+																   data.total_sales.total_sep_qty +
+																   data.total_sales.total_oct_qty +
+																   data.total_sales.total_nov_qty +
+																   data.total_sales.total_dec_qty );
+						$("#tblMonthlySaleReport #TOTAL_AMOUNT").html(data.total_sales.total_jun_amount +
+																   data.total_sales.total_feb_amount + 
+																   data.total_sales.total_mar_amount +
+																   data.total_sales.total_apr_amount +
+																   data.total_sales.total_may_amount +
+																   data.total_sales.total_jun_amount  +
+																   data.total_sales.total_jul_amount +
+																   data.total_sales.total_aug_amount +
+																   data.total_sales.total_sep_amount +
+																   data.total_sales.total_oct_amount +
+																   data.total_sales.total_nov_amount +
+																   data.total_sales.total_dec_amount );
+			    	}
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			});
    		}
+   		
+   		function formatMonthlySaleReport(value){
+   			console.log(value);
+	    	value["total_amount"] = value["jan_amount"] + 
+	    							value["feb_amount"] + 
+	    							value["mar_amount"] +
+	    							value["apr_amount"] +
+	    							value["may_amount"] +
+	    							value["jun_amount"] +
+	    							value["jul_amount"] +
+	    							value["aug_amount"] +
+	    							value["sep_amount"] +
+	    							value["oct_amount"] +
+	    							value["nov_amount"] +
+	    							value["dec_amount"] ;
+	    	value["total_qty"] = value["jan_qty"] + 
+								 value["feb_qty"] + 
+								 value["mar_qty"] +
+								 value["apr_qty"] +
+								 value["may_qty"] +
+								 value["jun_qty"] +
+								 value["jul_qty"] +
+								 value["aug_qty"] +
+								 value["sep_qty"] +
+								 value["oct_qty"] +
+								 value["nov_qty"] +
+								 value["dec_qty"]  ;
+	    	
+	    }
    		
    		function settableheader(){
    			var monthOfyear = ['January', 'February', 'Match', 'April', 'May', 'June', 'July','Augest','Septemper', 'October', 'November', 'December'];

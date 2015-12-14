@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -183,8 +184,24 @@ public class SellServiceImpl implements SellService{
 		
 	@Transactional
 	@Override
-	public List<Map<String, Object>> getAllSaleMonthlyReports() {
+	public List<Map<String, Object>> getAllSaleMonthlyReports(Date startDate, Date endDate) {
 		Session session = null;
+		Calendar calStartDate = Calendar.getInstance();
+		calStartDate.setTime(startDate);
+		
+		Calendar calEndDate = Calendar.getInstance();
+		calEndDate.setTime(endDate);
+		
+		Calendar calendar = calStartDate;
+		String[] months = new String[]{"Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+		StringBuilder sb = new StringBuilder();
+		String str="";
+		for(int i=calStartDate.get(Calendar.MONTH) ; i<=calEndDate.get(Calendar.MONTH) ; i++){
+			calendar.add(Calendar.MONTH, i);
+			System.out.println(months[i]);
+			sb.append(months[i] + " INTEGER[]");
+		}
+		
 		try {
 			session = sessionFactory.getCurrentSession();
 			SQLQuery query = 
@@ -210,11 +227,81 @@ public class SellServiceImpl implements SellService{
 										   "	COALESCE(sep[1],0) AS SEP_QTY, " +
 										   "	COALESCE(sep[2],0) AS SEP_AMOUNT, " +
 										   "	COALESCE(oct[1],0) AS OCT_QTY, " +
-										   "	COALESCE(oct[2],0) AS OCTR_AMOUNT, " +
+										   "	COALESCE(oct[2],0) AS OCT_AMOUNT, " +
 										   "	COALESCE(nov[1],0) AS NOV_QTY, " +
 										   "	COALESCE(nov[2],0) AS NOV_AMOUNT, " +
-										   "	COALESCE(DEC[1],0) AS DEC_QTY, " +
-										   "	COALESCE(DEC[2],0) AS DEC_AMOUNT " +
+										   "	COALESCE(dec[1],0) AS DEC_QTY, " +
+										   "	COALESCE(dec[2],0) AS DEC_AMOUNT " +
+										   "FROM " +
+										   "	crosstab ( " +
+										   "	'SELECT ARRAY[users.lastname::text, product.pro_name::text] As row_name " +
+										   "		   ,to_char(import.imp_date, ''mon'')::text As imp_date " +
+										   "		   ,ARRAY[SUM(import_detail.pro_qty), SUM(import_detail.unit_price*import_detail.pro_qty)] AS row " +
+										   "	 FROM product " +
+										   "	 LEFT JOIN import_detail ON product.pro_id = import_detail.pro_id " +
+										   "	 LEFT JOIN import ON import.imp_id = import_detail.imp_id AND date_trunc(''year'',import.imp_date) = date_trunc(''year'',''2015-01-01''::TIMESTAMP) " +   
+										   "	 LEFT JOIN users ON import.user_id = users.id " +
+										   "	 GROUP BY 1,2 " +
+										   "	 ORDER BY 2', " +
+										   "'SELECT to_char(date ''2015-01-01'' + (n || '' month'')::interval, ''mon'') As short_mname " +  
+										   " FROM generate_series(0,11) n' " +
+										   ") AS mthreport ( " +
+										   "row_name TEXT [], " + 
+										   "jan INTEGER[], " +
+										   "feb INTEGER[], " +
+										   "mar INTEGER[], " +
+										   "apr INTEGER[], " +
+										   "may INTEGER[], " +
+										   "jun INTEGER[], " +
+										   "jul INTEGER[], " +
+										   "aug INTEGER[], " +
+										   "sep INTEGER[], " +
+										   "oct INTEGER[], " +
+										   "nov INTEGER[], " +
+										   "dec INTEGER[]) " +
+										   "ORDER BY product;"); 	
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+			return sales;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	@Transactional
+	@Override
+	public Map<String, Object> getAllSaleMonthlyReportsTotal(Date startDate, Date endDate) {
+		Session session = null;
+		try {
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = 
+					session.createSQLQuery("SELECT " +
+										   "	SUM(COALESCE(jan[1],0)) AS TOTAL_JAN_QTY, " +
+										   "	SUM(COALESCE(jan[2],0)) AS TOTAL_JAN_AMOUNT, " +
+										   "	SUM(COALESCE(feb[1],0)) AS TOTAL_FEB_QTY, " + 
+										   "	SUM(COALESCE(feb[2],0)) AS TOTAL_FEB_AMOUNT, " +
+										   "	SUM(COALESCE(mar[1],0)) AS TOTAL_MAR_QTY, " +
+										   "	SUM(COALESCE(mar[2],0)) AS TOTAL_MAR_AMOUNT, " +
+										   "	SUM(COALESCE(apr[1],0)) AS TOTAL_APR_QTY, " +
+										   "	SUM(COALESCE(apr[2],0)) AS TOTAL_APR_AMOUNT, " +
+										   "	SUM(COALESCE(may[1],0)) AS TOTAL_MAY_QTY, " +
+										   "	SUM(COALESCE(may[2],0)) AS TOTAL_MAY_AMOUNT, " +
+										   "	SUM(COALESCE(jun[1],0)) AS TOTAL_JUN_QTY, "+
+										   "	SUM(COALESCE(jun[2],0)) AS TOTAL_JUN_AMOUNT, " +
+										   "	SUM(COALESCE(jul[1],0)) AS TOTAL_JUL_QTY, " +
+										   "	SUM(COALESCE(jul[2],0)) AS TOTAL_JUL_AMOUNT, " +
+										   "	SUM(COALESCE(aug[1],0)) AS TOTAL_AUG_QTY, " +
+										   "	SUM(COALESCE(aug[2],0)) AS TOTAL_AUG_AMOUNT, " +
+										   "	SUM(COALESCE(sep[1],0)) AS TOTAL_SEP_QTY, " +
+										   "	SUM(COALESCE(sep[2],0)) AS TOTAL_SEP_AMOUNT, " +
+										   "	SUM(COALESCE(oct[1],0)) AS TOTAL_OCT_QTY, " +
+										   "	SUM(COALESCE(oct[2],0)) AS TOTAL_OCT_AMOUNT, " +
+										   "	SUM(COALESCE(nov[1],0)) AS TOTAL_NOV_QTY, " +
+										   "	SUM(COALESCE(nov[2],0)) AS TOTAL_NOV_AMOUNT, " +
+										   "	SUM(COALESCE(DEC[1],0)) AS TOTAL_DEC_QTY, " +
+										   "	SUM(COALESCE(DEC[2],0)) AS TOTAL_DEC_AMOUNT " +
 										   "FROM " +
 										   "	crosstab ( " +
 										   "	'SELECT ARRAY[users.lastname::text, product.pro_name::text] As row_name " +
@@ -241,10 +328,9 @@ public class SellServiceImpl implements SellService{
 										   "sep INTEGER[], " +
 										   "oct INTEGER[], " +
 										   "nov INTEGER[], " +
-										   "dec INTEGER[]) " +
-										   "ORDER BY product;"); 	
+										   "dec INTEGER[]) "); 	
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+			Map<String, Object> sales= (Map<String, Object>)query.uniqueResult();
 			return sales;
 		} catch (Exception e) {
 			e.printStackTrace();
