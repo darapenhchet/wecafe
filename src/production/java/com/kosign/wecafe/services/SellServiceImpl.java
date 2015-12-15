@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -186,6 +187,10 @@ public class SellServiceImpl implements SellService{
 	@Override
 	public List<Map<String, Object>> getAllSaleMonthlyReports(Date startDate, Date endDate) {
 		Session session = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		System.out.println(sdf.format(startDate));
+		System.out.println(sdf.format(endDate));
 		Calendar calStartDate = Calendar.getInstance();
 		calStartDate.setTime(startDate);
 		
@@ -193,45 +198,28 @@ public class SellServiceImpl implements SellService{
 		calEndDate.setTime(endDate);
 		
 		Calendar calendar = calStartDate;
-		String[] months = new String[]{"Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+		String[] months = new String[]{"jan","feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
 		StringBuilder sb = new StringBuilder();
-		String str="";
+		StringBuilder sbSelect = new StringBuilder();
 		for(int i=calStartDate.get(Calendar.MONTH) ; i<=calEndDate.get(Calendar.MONTH) ; i++){
 			calendar.add(Calendar.MONTH, i);
 			System.out.println(months[i]);
-			sb.append(months[i] + " INTEGER[]");
+			sbSelect.append("COALESCE("+months[i]+"[1],0) AS "+months[i].toUpperCase()+"_QTY ,");
+			sbSelect.append("COALESCE("+months[i]+"[2],0) AS "+months[i].toUpperCase()+"_AMOUNT ,");
+			sb.append(months[i] + " INTEGER[],");
+			
 		}
+		System.out.println(sb.toString().substring(0, sb.toString().lastIndexOf(",")));
+		
+		System.out.println(calStartDate.getTime());
+		System.out.println(calEndDate.getTime());
+		//System.out.println(calStartDate.getTime());
 		
 		try {
 			session = sessionFactory.getCurrentSession();
 			SQLQuery query = 
 					session.createSQLQuery("SELECT " +
-										   "	mthreport.row_name [ 1 ] AS customer, " +
-										   "	mthreport.row_name [ 2 ] AS product, " +
-										   "	COALESCE(jan[1],0) AS JAN_QTY, " +
-										   "	COALESCE(jan[2],0) AS JAN_AMOUNT, " +
-										   "	COALESCE(feb[1],0) AS FEB_QTY, " + 
-										   "	COALESCE(feb[2],0) AS FEB_AMOUNT, " +
-										   "	COALESCE(mar[1],0) AS MAR_QTY, " +
-										   "	COALESCE(mar[2],0) AS MAR_AMOUNT, " +
-										   "	COALESCE(apr[1],0) AS APR_QTY, " +
-										   "	COALESCE(apr[2],0) AS APR_AMOUNT, " +
-										   "	COALESCE(may[1],0) AS MAY_QTY, " +
-										   "	COALESCE(may[2],0) AS MAY_AMOUNT, " +
-										   "	COALESCE(jun[1],0) AS JUN_QTY, "+
-										   "	COALESCE(jun[2],0) AS JUN_AMOUNT, " +
-										   "	COALESCE(jul[1],0) AS JUL_QTY, " +
-										   "	COALESCE(jul[2],0) AS JUL_AMOUNT, " +
-										   "	COALESCE(aug[1],0) AS AUG_QTY, " +
-										   "	COALESCE(aug[2],0) AS AUG_AMOUNT, " +
-										   "	COALESCE(sep[1],0) AS SEP_QTY, " +
-										   "	COALESCE(sep[2],0) AS SEP_AMOUNT, " +
-										   "	COALESCE(oct[1],0) AS OCT_QTY, " +
-										   "	COALESCE(oct[2],0) AS OCT_AMOUNT, " +
-										   "	COALESCE(nov[1],0) AS NOV_QTY, " +
-										   "	COALESCE(nov[2],0) AS NOV_AMOUNT, " +
-										   "	COALESCE(dec[1],0) AS DEC_QTY, " +
-										   "	COALESCE(dec[2],0) AS DEC_AMOUNT " +
+										   	sbSelect.toString().substring(0, sbSelect.toString().lastIndexOf(",")) +
 										   "FROM " +
 										   "	crosstab ( " +
 										   "	'SELECT ARRAY[users.lastname::text, product.pro_name::text] As row_name " +
@@ -239,15 +227,16 @@ public class SellServiceImpl implements SellService{
 										   "		   ,ARRAY[SUM(import_detail.pro_qty), SUM(import_detail.unit_price*import_detail.pro_qty)] AS row " +
 										   "	 FROM product " +
 										   "	 LEFT JOIN import_detail ON product.pro_id = import_detail.pro_id " +
-										   "	 LEFT JOIN import ON import.imp_id = import_detail.imp_id AND date_trunc(''year'',import.imp_date) = date_trunc(''year'',''2015-01-01''::TIMESTAMP) " +   
+										   "	 LEFT JOIN import ON import.imp_id = import_detail.imp_id AND import.imp_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' " +   
 										   "	 LEFT JOIN users ON import.user_id = users.id " +
 										   "	 GROUP BY 1,2 " +
 										   "	 ORDER BY 2', " +
-										   "'SELECT to_char(date ''2015-01-01'' + (n || '' month'')::interval, ''mon'') As short_mname " +  
-										   " FROM generate_series(0,11) n' " +
+										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +  
+										   /*" FROM generate_series("+calStartDate.get(Calendar.MONTH)+","+calEndDate.get(Calendar.MONTH)+") n' " +*/
+										   " FROM generate_series("+startDate.getMonth()+","+calEndDate.get(Calendar.MONTH)+") n' " +
 										   ") AS mthreport ( " +
-										   "row_name TEXT [], " + 
-										   "jan INTEGER[], " +
+										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"+ 
+										   /*"jan INTEGER[], " +
 										   "feb INTEGER[], " +
 										   "mar INTEGER[], " +
 										   "apr INTEGER[], " +
@@ -258,7 +247,7 @@ public class SellServiceImpl implements SellService{
 										   "sep INTEGER[], " +
 										   "oct INTEGER[], " +
 										   "nov INTEGER[], " +
-										   "dec INTEGER[]) " +
+										   "dec INTEGER[]) " +*/
 										   "ORDER BY product;"); 	
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();

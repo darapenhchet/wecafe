@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		                             .roles("SELLER" ,"ADMIN");
 		*/
 		
-		auth.userDetailsService(userDetailsService);
+		//auth.userDetailsService(userDetailsService);
 		auth.authenticationProvider(authenticationProvider());		
 		
 	}

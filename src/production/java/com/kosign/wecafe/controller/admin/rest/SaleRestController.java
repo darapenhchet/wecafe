@@ -62,9 +62,12 @@ public class SaleRestController {
 			pagination.setTotalPages(pagination.totalPages());
 			map.put("PAGINATION", pagination);
 		*/
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-M-dd");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
+		
+		System.out.println(strStartDate);
+		System.out.println(strEndDate);
 
 		map.put("sales", sellService.getAllSaleMonthlyReports(startDate, endDate));
 		map.put("total_sales", sellService.getAllSaleMonthlyReportsTotal(startDate, endDate));
