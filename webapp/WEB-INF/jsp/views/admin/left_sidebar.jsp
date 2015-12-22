@@ -87,7 +87,8 @@
                                 <a href="#" class="waves-effect"><i class="md md-now-widgets"></i><span> Reports </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                <ul class="list-unstyled">
                                		<li><a href="${pageContext.request.contextPath}/admin/purchasereport">Purchase Reports</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/sellreport">Sell Reports</a></li>
+                                    <%-- <li><a href="${pageContext.request.contextPath}/admin/sellreport">Sell Reports</a></li> --%>
+                                    <li><a href="${pageContext.request.contextPath}/admin/salelist">Sell Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/orderreport">Order Reports</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/beveragestock">Beverage Stock Accounting Report</a></li>
                                 	<li><a href="${pageContext.request.contextPath}/admin/cupstock">Cup Stock</a></li>

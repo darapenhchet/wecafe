@@ -128,7 +128,7 @@ public class SellServiceImpl implements SellService{
 	
 	@Transactional
 	@Override
-	public List<Map<String, Object>> getAllSaleDailyReports() {
+	public List<Map<String, Object>> getAllSaleDailyReports(Date startDate, Date endDate) {
 		Session session = null;
 		try {
 			session = sessionFactory.getCurrentSession();
@@ -178,7 +178,7 @@ public class SellServiceImpl implements SellService{
 	}
 	
 	@Override
-	public List<Map<String, Object>> getAllSaleWeeklyReports() {
+	public List<Map<String, Object>> getAllSaleWeeklyReports(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -219,6 +219,7 @@ public class SellServiceImpl implements SellService{
 			session = sessionFactory.getCurrentSession();
 			SQLQuery query = 
 					session.createSQLQuery("SELECT " +
+										   "row_name[2] As product, " +
 										   	sbSelect.toString().substring(0, sbSelect.toString().lastIndexOf(",")) +
 										   "FROM " +
 										   "	crosstab ( " +
@@ -333,5 +334,25 @@ public class SellServiceImpl implements SellService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Map<String, Object> getAllSaleDailyReportsTotal(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getAllSaleWeeklyReportsTotal(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getAllSaleYearlyReportsTotal() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
+	
+	
 }
