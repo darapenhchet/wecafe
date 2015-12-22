@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.ProductFilter;
 import com.kosign.wecafe.entities.User;
+import com.kosign.wecafe.services.AdminReportService;
 import com.kosign.wecafe.services.ProductService;
 import com.kosign.wecafe.services.UserService;
 
@@ -29,6 +32,8 @@ public class ProductRestController {
 
 	@Autowired
 	ProductService productService;
+	
+	@Inject AdminReportService adminReportService;
 	
 	@Autowired
 	UserService userService;
@@ -42,6 +47,18 @@ public class ProductRestController {
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination",pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+	
+	// TODO: List All Import
+	@RequestMapping(value="/purchasereportdetail", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reportdetail", adminReportService.getListReportDetailPurchase());
+		pagination.setTotalCount(adminReportService.count());
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
 	}
 	
 	// TODO: Get a Product

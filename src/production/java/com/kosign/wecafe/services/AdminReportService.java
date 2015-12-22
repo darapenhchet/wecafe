@@ -12,7 +12,7 @@ public interface AdminReportService {
 	
 	public List<Map> getReportListAllOrderProduct();
 	
-	public List<ImportProduct> getReportListAllPurchase();
+	public List<ImportProduct> getListReportDetailPurchase();
 	
 	public List<Map> getSearchSellbyDate(DateForm dateForm);
 
@@ -21,6 +21,8 @@ public interface AdminReportService {
 	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm);
 	
 	public List<Object[]> getReportListAllCupStockbyDate(DateForm dateForm);
+
+	public Long count();
 	
 	
 }

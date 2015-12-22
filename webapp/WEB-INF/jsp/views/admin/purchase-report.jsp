@@ -14,11 +14,32 @@
 
 <title>KOSIGN WeCafe...</title>
 <style>
-	.hidetable{ display: none;}
-	table{border: 1px solid;}
-	thead tr th { text-align: center; font-size:12px; border: 1px solid;}
-	tbody tr td { text-align: center; border-right:1px solid;}
-	#tblfooter td{text-align: center; border-top:1px solid;}
+a { 
+	cursor: pointer;
+}
+.hidetable {
+	display: none;
+}
+
+  table {
+	border: 1px solid;
+}
+
+thead tr th {
+	text-align: center;
+	font-size: 12px;
+	border: 1px solid;
+}
+
+tbody tr td {
+	text-align: center;
+	border-right: 1px solid;
+} 
+#tblfooter td {
+	text-align: center;
+	border-top: 1px solid;
+} 
+
 </style>
 <!-- Base Css Files -->
 <link
@@ -64,21 +85,20 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-<script	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script> 
+<script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 
- <style>
-       	@media print {
-	    .content-page{
-	    	margin-top:0px;
-	    	margin-left:0px;
-	    }
-	    .content{
-	    	margin-top: 0px; 
-	    	margin-bottom: 0px;
-	    }
-    
-	}  
- </style>
+<style>
+@media print {
+	.content-page {
+		margin-top: 0px;
+		margin-left: 0px;
+	}
+	.content {
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+}
+</style>
 </head>
 
 
@@ -86,448 +106,448 @@
 <body class="fixed-left-void">
 
 	<!-- Begin page -->
-    <div id="wrapper">        
-    
-	     <!-- Top Bar Start -->
-	    <%@ include file="topbar.jsp" %>
-        <!-- Top Bar End -->
+	<div id="wrapper">
+
+		<!-- Top Bar Start -->
+		<%@ include file="topbar.jsp"%>
+		<!-- Top Bar End -->
 
 
-        <!-- ========== Left Sidebar Start ========== -->
-        <%@ include file="left_sidebar.jsp" %>
-        <!-- Left Sidebar End -->
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->                      
-        <div class="content-page">
-            <!-- Start content -->
-            <div class="content" >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <!-- <div class="panel-heading">
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left_sidebar.jsp"%>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<!-- <div class="panel-heading">
                                     <h4>Invoice</h4>
                                 </div> -->
-                                <div class="panel-body">
-                                    <div class="clearfix">
-                                        <div class="pull-left">
-                                            <h2 class="text-right"><%-- <img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic"> --%>
-                                            	
-                                            	<strong>Purchase Information</strong>
-                                            	<small>start from</small> 
-                                            	<small id="purchasemonth"></small>
-                                            </h2> 
-                                        </div>
-                                    </div>
-                                     
-                                        <hr>
-                                    <div class="m-h-50 form-group hidden-print ">                                     
-					            		<div class="col-sm-9">
-					                		<label class="col-sm-1 control-label">Date : </label>
-												<input type="hidden" id="SEND_DT" data-id="SEND_DT" />
-											<div id="sendFrdt" class="date-range col-sm-5"  >
-												<input type="text" readonly="readonly" id="REGS_DATE_S" name="startdate" class="range-start" style="width:100px; text-align: center;">&nbsp;
-												<a href="#none" id="btnREGS_DATE_S"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
-												<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
-												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
-											</div>   
-    									</div>            
-    									<div class="col-sm-3 form-group" >
-											  	<select class="form-control" id="selectreport">
-												    <option value="0">Detail</option>
-												    <option value="1">Daily</option>
-												    <option value="2">Weekly</option>
-												    <option value="3">Monthly</option>
-												    <option value="4">Yearly</option>
-											  </select>  
-    									</div>  
-    									                            		
-                            </div>
-                                    
-                                    <div class="row">
-							<div class="col-md-12 col-sm-12 col-xs-12"> 
-<div class="hidetable" id="tbldaily">
- <table id="dailytable" class="table table-responsive" >
-    <thead>
-		<tr >
-            <th rowspan="2">Customer</th>
-            <th rowspan="2">Item</th> 
-            <th colspan="2" id="day1">1</th>
-            <th colspan="2" id="day2">2</th>
-            <th colspan="2" id="day3">3</th>
-            <th colspan="2" id="day4">4</th>
-            <th colspan="2" id="day5">5</th>
-            <th colspan="2" id="day6">6</th>
-            <th colspan="2" id="day7">7</th> 
-            <th colspan="2">Total</th>
-      	</tr>
-      	<tr>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>Total Qty</th>
-            <th>Total Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      		<td>Malongo</td>
-      		<td>Americano</td>
-      		<td>1</td>
-      		<td>8$</td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      </tr>
-       <tr id="dailyfooter">
- 			<td colspan="2">Total</td>      		 
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td>10</td>
-      		<td>6$</td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      </tr>
-    </tbody>
-  </table>
- </div>
- <div id="tbldetail">
- 	<table id="detailtable" class="table table-responsive" >
-	    <thead>
-			<tr >
-				<th >No</th> 
-	            <th >Customer</th>
-	            <th >Item</th> 
-	            <th >Purchase Date</th>
-	            <th >Purchase By</th>
-	            <th >Total Quantity</th>
-	            <th >Total Amount</th>  
-	      	</tr> 
-	    </thead>
-	    <tbody>
-	    </tbody>
- 	</table>
- </div>
- <div>
- <div class="hidetable" id="tblweekly">
- <table id="weeklytable" class="table table-responsive" >
-    <thead>
-		<tr >
-            <th rowspan="2">Customer</th>
-            <th rowspan="2">Item</th> 
-            <th colspan="2" id="week1">1</th>
-            <th colspan="2" id="week2">2</th>
-            <th colspan="2" id="week3">3</th>
-            <th colspan="2" id="week4">4</th>
-            <th colspan="2" id="week5">5</th>
-            <th colspan="2" id="week6">6</th>
-            <th colspan="2" id="week7">7</th> 
-            <th colspan="2">Total</th>
-      	</tr>
-      	<tr>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>Total Qty</th>
-            <th>Total Amount</th>
-      </tr>
-    </thead> 
-    	<tbody>
-      		<tr>
-	      		<td>Malongo</td>
-	      		<td>Passion</td>
-	      		<td>10</td>
-	      		<td>18$</td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-      		</tr>
-      		 <tr id="weeklyfooter">
- 			<td colspan="2">Total</td>      		 
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td>10</td>
-      		<td>6$</td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      </tr>
-    	</tbody>
- 	</table>
- </div> 
- <div class="hidetable" id="tblmonthly">
- <table id="monthlytable" class="table table-responsive" >
-    <thead>
-		<tr >
-            <th rowspan="2">Customer</th>
-            <th rowspan="2">Item</th> 
-            <th colspan="2" id="mon1">Jan</th>
-            <th colspan="2" id="mon2">Feb</th>
-            <th colspan="2" id="mon3">Mar</th>
-            <th colspan="2" id="mon4">Air</th>
-            <th colspan="2" id="mon5">May</th>
-            <th colspan="2" id="mon6">Jun</th>
-            <th colspan="2" id="mon7">Jul</th> 
-            <th colspan="2">Total</th>
-      	</tr>
-      	<tr>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>Total Qty</th>
-            <th>Total Amount</th>
-      </tr>
-    </thead> 
-    	<tbody>
-      		<tr>
-	      		<td>Malongo</td>
-	      		<td>Americano</td>
-	      		<td>1</td>
-	      		<td>8$</td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-      		</tr>
-      		 <tr id="monthlyfooter">
- 			<td colspan="2">Total</td>      		 
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td>10</td>
-      		<td>6$</td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      </tr>
-    	</tbody>
- 	</table>
- </div>
- <div id="tblyearly"  class="hidetable">
- <table id="yearlytable" class="table table-responsive" >
-    <thead>
-		<tr >
-            <th rowspan="2">Customer</th>
-            <th rowspan="2">Item</th> 
-            <th colspan="2" id="year1">2014</th>
-            <th colspan="2" id="year2">2015</th>
-            <th colspan="2" id="year3">2016</th>
-            <th colspan="2" id="year4">2017</th>
-            <th colspan="2" id="year5">2018</th>
-            <th colspan="2" id="year6">2019</th>
-            <th colspan="2" id="year7">2020</th> 
-            <th colspan="2">Total</th>
-      	</tr>
-      	<tr>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>Total Qty</th>
-            <th>Total Amount</th>
-      </tr>
-    </thead> 
-    	<tbody>
-      		<tr>
-	      		<td>Malongo</td>
-	      		<td>Americano</td>
-	      		<td>1</td>
-	      		<td>8$</td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-	      		<td></td>
-      		</tr>
-      		<tr id="yearlyfooter">
- 			<td colspan="2">Total</td>      		 
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td>10</td>
-      		<td>6$</td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      		<td></td>
-      </tr>
-    	</tbody>
- 	</table>
- </div>
+								<div class="panel-body">
+									<div class="clearfix">
+										<div class="pull-left">
+											<h2 class="text-right">
+												<%-- <img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic"> --%>
+
+												<strong>Purchase Information</strong> <small>start
+													from</small> <small id="purchasemonth"></small>
+											</h2>
+										</div>
+									</div>
+
+									<hr>
+									<div class="m-h-50 form-group hidden-print ">
+										<div class="col-sm-9">
+											<label class="col-sm-1 control-label">Date : </label> <input
+												type="hidden" id="SEND_DT" data-id="SEND_DT" />
+											<div id="sendFrdt" class="date-range col-sm-5">
+												<input type="text" readonly="readonly" id="REGS_DATE_S"
+													name="startdate" class="range-start"
+													style="width: 100px; text-align: center;">&nbsp; <a
+													href="#none" id="btnREGS_DATE_S"><img
+													style="width: 20px; height: 20px;"
+													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+												<input type="text" readonly="readonly" id="REGS_DATE_E"
+													name="stopdate" class="range-end"
+													style="width: 100px; text-align: center;">&nbsp; <a
+													href="#none" id="btnREGS_DATE_E"><img
+													style="width: 20px; height: 20px;"
+													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+											</div>
+										</div>
+										<div class="col-sm-3 form-group">
+											<select class="form-control" id="selectreport">
+												<option value="0">Detail</option>
+												<option value="1">Daily</option>
+												<option value="2">Weekly</option>
+												<option value="3">Monthly</option>
+												<option value="4">Yearly</option>
+											</select>
+										</div>
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<div class="hidetable" id="tbldaily">
+												<table id="dailytable" class="table table-responsive">
+													<thead>
+														<tr>
+															<th rowspan="2">Customer</th>
+															<th rowspan="2">Item</th>
+															<th colspan="2" id="day1">1</th>
+															<th colspan="2" id="day2">2</th>
+															<th colspan="2" id="day3">3</th>
+															<th colspan="2" id="day4">4</th>
+															<th colspan="2" id="day5">5</th>
+															<th colspan="2" id="day6">6</th>
+															<th colspan="2" id="day7">7</th>
+															<th colspan="2">Total</th>
+														</tr>
+														<tr>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>qty</th>
+															<th>Amount</th>
+															<th>Total Qty</th>
+															<th>Total Amount</th>
+														</tr>
+													</thead>
+													<tbody id="tbodydaily">
+														<tr>
+															<td>Malongo</td>
+															<td>Americano</td>
+															<td>1</td>
+															<td>8$</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr id="dailyfooter">
+															<td colspan="2">Total</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td>10</td>
+															<td>6$</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div id="tbldetail">
+												<table id="detailtable" class="table table-responsive">
+													<thead>
+														<tr> 
+															<th>Invoice No</th> 
+															<th>Purchase Date</th>
+															<th>Purchase By</th> 
+															<th>Total Amount</th>
+														</tr>
+													</thead>
+													<tbody id="tbodydetail">
+													</tbody>
+												</table>
+											</div>
+											<div>
+												<div class="hidetable" id="tblweekly">
+													<table id="weeklytable" class="table table-responsive">
+														<thead>
+															<tr>
+																<th rowspan="2">Customer</th>
+																<th rowspan="2">Item</th>
+																<th colspan="2" id="week1">1</th>
+																<th colspan="2" id="week2">2</th>
+																<th colspan="2" id="week3">3</th>
+																<th colspan="2" id="week4">4</th>
+																<th colspan="2" id="week5">5</th>
+																<th colspan="2" id="week6">6</th>
+																<th colspan="2" id="week7">7</th>
+																<th colspan="2">Total</th>
+															</tr>
+															<tr>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>Total Qty</th>
+																<th>Total Amount</th>
+															</tr>
+														</thead>
+														<tbody id="tbodyweekly">
+															<tr>
+																<td>Malongo</td>
+																<td>Passion</td>
+																<td>10</td>
+																<td>18$</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<tr id="weeklyfooter">
+																<td colspan="2">Total</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td>10</td>
+																<td>6$</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="hidetable" id="tblmonthly">
+													<table id="monthlytable" class="table table-responsive">
+														<thead>
+															<tr>
+																<th rowspan="2">Customer</th>
+																<th rowspan="2">Item</th>
+																<th colspan="2" id="mon1">Jan</th>
+																<th colspan="2" id="mon2">Feb</th>
+																<th colspan="2" id="mon3">Mar</th>
+																<th colspan="2" id="mon4">Air</th>
+																<th colspan="2" id="mon5">May</th>
+																<th colspan="2" id="mon6">Jun</th>
+																<th colspan="2" id="mon7">Jul</th>
+																<th colspan="2">Total</th>
+															</tr>
+															<tr>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>Total Qty</th>
+																<th>Total Amount</th>
+															</tr>
+														</thead>
+														<tbody id="tbodymonthly">
+															<tr>
+																<td>Malongo</td>
+																<td>Americano</td>
+																<td>1</td>
+																<td>8$</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<tr id="monthlyfooter">
+																<td colspan="2">Total</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td>10</td>
+																<td>6$</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div id="tblyearly" class="hidetable">
+													<table id="yearlytable" class="table table-responsive">
+														<thead>
+															<tr>
+																<th rowspan="2">Customer</th>
+																<th rowspan="2">Item</th>
+																<th colspan="2" id="year1">2014</th>
+																<th colspan="2" id="year2">2015</th>
+																<th colspan="2" id="year3">2016</th>
+																<th colspan="2" id="year4">2017</th>
+																<th colspan="2" id="year5">2018</th>
+																<th colspan="2" id="year6">2019</th>
+																<th colspan="2" id="year7">2020</th>
+																<th colspan="2">Total</th>
+															</tr>
+															<tr>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>Total Qty</th>
+																<th>Total Amount</th>
+															</tr>
+														</thead>
+														<tbody id="tbodyyearly">
+															<tr>
+																<td>Malongo</td>
+																<td>Americano</td>
+																<td>1</td>
+																<td>8$</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<tr id="yearlyfooter">
+																<td colspan="2">Total</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td>10</td>
+																<td>6$</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<select id="PER_PAGE" class="form-control">
+													<option value="15">15</option>
+													<option value="30">30</option>
+													<option value="50">50</option>
+													<option value="100">100</option>
+												</select>
+											</div>
+											<div id="PAGINATION" class="pull-right"></div>
+										</div>
+										<div class="row" style="border-radius: 0px;">
+											 <div class="hidden-print">
+											<div class="pull-right">
+												<a href="javascrpt:"
+													class="btn btn-inverse waves-effect waves-light"
+													onclick="window.print();"><i class="fa fa-print"></i></a> <a
+													href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
+											</div>
+										</div>
+										</div>
+										<br>
+										
+									</div>
+								</div>
+
 							</div>
+
 						</div>
-			<div class="row">
-				<div class="col-md-2">
-					<select id="PER_PAGE" class="form-control">
-						<option value="15">15</option>
-						<option value="30">30</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-					</select>
+
+
+
+					</div>
+					<!-- container -->
+
 				</div>
-				<div id="PAGINATION" class="pull-right">
-				</div>
+				<!-- content -->
+
+				<%@ include file="footer.jsp"%>
+
 			</div>
-                                    <div class="row" style="border-radius: 0px;">
-                                        <div class="col-md-3 col-md-offset-9">
-                                             <%--<p class="text-right"><b>Sub-total:</b>${total}</p>
-                                            <p class="text-right">Discount: 12.9%</p>
-                                            <p class="text-right">VAT: 12.9%</p> --%>
-                                            <hr>
-                                            <h3 class="text-right" id="totalPrice">${total} Riels</h3>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="hidden-print">
-                                        <div class="pull-right">
-                                            <a href="javascrpt:" class="btn btn-inverse waves-effect waves-light" onclick="window.print();"><i class="fa fa-print"></i></a>
-                                            <a href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-        </div> <!-- container -->
-                           
-            </div> <!-- content -->
-
-             <%@ include file="footer.jsp" %>
-
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Right content here -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- END wrapper -->
-    <!-- ############################################################# -->
-
-
-		<div id="impDetail" style="display: none;width: 90%;">
+			<!-- ============================================================== -->
+			<!-- End Right content here -->
+			<!-- ============================================================== -->
+		</div>
+		<!-- END wrapper -->
+		<!-- ############################################################# --> 
+		<div id="impDetail" style="display: none; width: 90%;">
 			<div class="modal-content">
 				<div class="modal-header">
 
@@ -548,57 +568,256 @@
 								<th>Supplier Name</th>
 							</tr>
 						</thead>
-						<tbody id="impProDetail">
-							
-						</tbody>
-					
-					</table> 
+						<tbody id="impProDetail"> 
+						</tbody> 
+					</table>
 				</div> 
-				<div class="modal-footer" style="height: 80px;">
-						<div align="right">
-							<button class="btn btn-default b-close">Close</button>
-						</div>
+				<div class="modal-footer form-group form-horizontal" style="height: 80px;"> 
+					<div align="right">
+						<label  class="control-label col-lg-1">Total Amount : </label>
+							<div class="col-lg-2">
+									<input class="form-control" id="btotalamount"type="text">
+							</div>
+						<button class="btn btn-default b-close">Close</button>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- ################################################################## -->
-    
-	<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
+
+		<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
 	 
 
         </script>
-    <script>
+		<script>
         var resizefunc = [];
         var ctx = "${pageContext.request.contextPath}";
     </script>
 
-    <!-- jQuery  -->
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
-    <script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
+		<!-- jQuery  -->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
 
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.js"
+			type="text/javascript"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
 
-
-    <!-- CUSTOM JS -->
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+		<!-- CUSTOM JS -->
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+		
+<!-- ============================  tbodydetail  ================================== -->		
+	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
+    	<tr>  
+			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= impId}}</a></td>
+			<td style="text-align:right;">{{= impDate}} </td>
+			<td style="text-align:right;">{{= userId}} ​</td>
+			<td style="text-align:right;">{{= totalamount}} </td>
+		</tr>
+    </script>
+ 
+ <!-- ============================  tbodydaily  ================================== -->		
+	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
+    	<tr>
+			<td>{{= productId}}</td>
+			<td>{{= productName}}</td>
+			<td style="text-align:right;">{{= quantity}}</td>
+			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
+			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td>{{= category.catName}}</td>
+			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
+			<td style="text-align:center;">
+				<span>
+					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
+				</span>
+			</td>
+			<td class="actions" style="text-align:center;">
+				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
+				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
+			</td>
+		</tr>
+    </script>
+ 
+ <!-- ============================  tbodyweekly  ================================== -->		
+	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
+    	<tr>
+			<td>{{= productId}}</td>
+			<td>{{= productName}}</td>
+			<td style="text-align:right;">{{= quantity}}</td>
+			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
+			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td>{{= category.catName}}</td>
+			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
+			<td style="text-align:center;">
+				<span>
+					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
+				</span>
+			</td>
+			<td class="actions" style="text-align:center;">
+				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
+				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
+			</td>
+		</tr>
+    </script>
+ 
+ <!-- ============================  tbodymonthly  ================================== -->		
+	<script id="CONTENT_MONTHLY" type="text/x-jquery-tmpl">
+    	<tr>
+			<td>{{= productId}}</td>
+			<td>{{= productName}}</td>
+			<td style="text-align:right;">{{= quantity}}</td>
+			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
+			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td>{{= category.catName}}</td>
+			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
+			<td style="text-align:center;">
+				<span>
+					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
+				</span>
+			</td>
+			<td class="actions" style="text-align:center;">
+				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
+				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
+			</td>
+		</tr>
+    </script>
+     <!-- ============================  tbodyearly  ================================== -->		
+	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">
+    	<tr>
+			<td>{{= productId}}</td>
+			<td>{{= productName}}</td>
+			<td style="text-align:right;">{{= quantity}}</td>
+			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
+			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
+			<td>{{= category.catName}}</td>
+			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
+			<td style="text-align:center;">
+				<span>
+					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
+				</span>
+			</td>
+			<td class="actions" style="text-align:center;">
+				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
+				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
+			</td>
+		</tr>
+    </script>
+ <!-- ============================================================== -->
  <script>
  var st = "";
  $(document).ready(function(){
-	 
+	var products ={};
+	var check = true;
 	 setCalendar();
 	 searchByDate();
 	 settableheader();
+	 
+	 
+	 listDaily();
+	 listWeekly();
+	 listMonthly();
+	 listYearly();
+	 
+	 products.listDetail = function(currentPage){ 
+		 $.ajax({ 
+			    url: "${pageContext.request.contextPath}/api/admin/products/purchasereportdetail/" , 
+			    type: 'GET', 
+			    data: {
+			    		"currentPage" : currentPage,
+			    		"perPage"     : $("#PER_PAGE").val(),
+			    		"startDate"   : "03/12/2015",
+			    		"endDate"     : "03/12/2015"
+			    },
+				    beforeSend: function(xhr) {
+	               xhr.setRequestHeader("Accept", "application/json");
+	               xhr.setRequestHeader("Content-Type", "application/json");
+	           },
+			    success: function(data) { 
+			    	console.log(data);
+					 if(data.reportdetail.length>0){
+						$("tbody#tbodydetail").html('');
+						
+						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
+					}else{
+						$("tbody#tbodydetail").html('<tr>NO CONTENTS</tr>');
+					}
+			    	if(check){
+			    		products.setPagination(data.pagination.totalPages,1);
+			    		check=false;
+			    	}  
+			    },
+			    error:function(data,status,er) { 
+			        console.log("error: ",data," status: ",status," er:",er);
+			    }
+			}); 
+	 }
+	 
+	 products.setPagination = function(totalPage, currentPage){
+	    	$('#PAGINATION').bootpag({
+		        total: totalPage,
+		        page: currentPage,
+		        maxVisible: 10,
+		        leaps: true,
+		        firstLastUse: true,
+		        first: 'First',
+		        last: 'Last',
+		        wrapClass: 'pagination',
+		        activeClass: 'active',
+		        disabledClass: 'disabled',
+		        nextClass: 'next',
+		        prevClass: 'prev',
+		        lastClass: 'last',
+		        firstClass: 'first'
+		    }).on("page", function(event, currentPage){
+		    	check = false;
+		    	products.findAllProducts(currentPage);
+		    }); 
+		};
+	 products.listDetail(1);
+	 
+	 function listDaily(){
+		 
+	 }
+	 
+	 function listWeekly(){
+		 
+	 }
+	 
+	 function listMonthly(){
+		 
+	 }
+	 
+	 function listYearly(){
+		 
+	 }
+	 
 	 
 	 $("#selectreport").change(function(){
 		 if($(this).val()==0){
@@ -607,6 +826,7 @@
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
+			 products.listDetail(1);
 		 }			 
 		 else if($(this).val()==1){ 
 			 $("#tbldetail").addClass("hidetable");
@@ -640,7 +860,7 @@
 		var mm = moment().isoWeekday(1);
 		mm = moment().weekday(6);
 		console.log(mm.weekday(0).get('date'));
-		$("#purchasemonth").html(monthOfyear[mm.get('month')] +" "+ mm.weekday(0).get('date') +", "+ mm.get('year'));
+		$("#purchasemonth").html(monthOfyear[mm.get('month')] +" "+ mm.weekday(1).get('date') +", "+ mm.get('year'));
 	/* 	$("#purchasemonth").html(monthOfyear[mm.get('month')]);	*/
 		var dd = moment(mm.weekday(0).get('date')).isoWeekday(1);
 		var dayID ="";
@@ -757,14 +977,17 @@
 			    success: function(data) { 
 			    	console.log(data);
 			    	var st= "";
+			    	var amount = 0;
 			       for(i=0; i<data.length; i++){
 			    	   st += "<tr><td>" + (i + 1) + "</td>";
 			    	   st += "<td>" + data[i].proname +"</td>";
 			    	   st += "<td>" + data[i].proqty +"</td>";
 			    	   st += "<td>" + data[i].prounitprice +"</td>";
 			    	   st += "<td>" + data[i].supname +"</td></tr>"
+			    	   amount += data[i].proqty * data[i].prounitprice;
 			       }
 			       $("#impProDetail").html(st);
+			       $("#btotalamount").val(amount);
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -776,7 +999,5 @@
 	 });
  
  </script>
-    
-    
 </body>
 </html>

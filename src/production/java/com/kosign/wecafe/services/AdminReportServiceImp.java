@@ -8,16 +8,23 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
 public class AdminReportServiceImp implements AdminReportService {
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Override
 	public List<Map> getReportListAllSellProduct() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -227,11 +234,36 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<ImportProduct> getReportListAllPurchase() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	public List<ImportProduct> getListReportDetailPurchase() {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM ImportProduct");
+			List<ImportProduct>	importProducts = (List<ImportProduct>)query.list();	
+			return importProducts;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			
+		}
+		
 		return null;
 	}
-
+	
+	@Override
+	@Transactional
+	public Long count(){
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			return (Long) session.createCriteria(ImportProduct.class).setProjection(Projections.rowCount()).uniqueResult();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
+	}
+	
 	@Override
 	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm) {
 		Session session = HibernateUtil.getSessionFactory().openSession();

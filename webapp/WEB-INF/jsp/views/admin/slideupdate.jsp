@@ -115,20 +115,24 @@
 												<label for="productname" class="control-label col-lg-2">Slide
 													Name *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="id" 
-														name="id" type="hidden" value="${slide.id }">
-													<input class=" form-control" id="name" required="required"
-														name="name" type="text"
-														value="${slide.name }" >
+													<input class=" form-control" id="id" name="id"
+														type="hidden" value="${slide.id }"> <input
+														class=" form-control" id="name" required="required"
+														name="name" type="text" value="${slide.name }">
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control " id="images" name="images" type="file" required="required" value="${slide.image}" required="required">
-                                                    <input type="hidden" id="image" name="image" value="${slide.image}" required="required"/>
-													<img src="${pageContext.request.contextPath}/resources/images/products/${slide.image}" width="400px" height="400px" class="img-thumbnail" id="images_sample" required="required" />
+													<input class="form-control " id="images" name="images"
+														type="file" required="required" value="${slide.image}"
+														required="required"> <input type="hidden"
+														id="image" name="image" value="${slide.image}"
+														required="required" /> <img
+														src="${pageContext.request.contextPath}/resources/images/products/${slide.image}"
+														width="400px" height="400px" class="img-thumbnail"
+														id="images_sample" required="required" />
 												</div>
 											</div>
 
@@ -136,7 +140,8 @@
 												<div class="col-lg-offset-2 col-lg-10">
 													<button class="btn btn-success waves-effect waves-light"
 														type="button" id="btnSubmit">Save</button>
-													<button class="btn btn-default waves-effect" id="btncancel" type="button">Cancel</button>
+													<button class="btn btn-default waves-effect" id="btncancel"
+														type="button">Cancel</button>
 												</div>
 											</div>
 										</form>

@@ -96,37 +96,40 @@
 						</div>
 					</div>
 					<div class="panel-body">
-                         <div class="panel-heading">
-                               <!-- <h3 class="panel-title">Product Lists</h3> -->
-						    <form class="form-inline">
-						        <div class="form-group">
-						            <label >Search</label>
-						            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
-						        </div>
-						    </form>
-                           </div>
+						<div class="panel-heading">
+							<!-- <h3 class="panel-title">Product Lists</h3> -->
+							<form class="form-inline">
+								<div class="form-group">
+									<label>Search</label> <input type="text" ng-model="search"
+										class="form-control" placeholder="Search" width="400%">
+								</div>
+							</form>
+						</div>
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-							<table id="datatable" class="table table-striped table-bordered">
+								<table id="datatable" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th>#</th>
 											<th>Invoice ID</th>
 											<th style="text-align: center;">Date</th>
-											<th>Description</th>  
+											<th>Description</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${expenses}" var="expense" varStatus="theCount"> 
+										<c:forEach items="${expenses}" var="expense"
+											varStatus="theCount">
 											<tr>
 												<td>${theCount.count}</td>
-												<td ><a href="javascript:;" id="expid">${expense.expId}</a> </td>												
-												<td >${expense.exp_date}</td>
-												<td>${expense.description }</td>  
+												<td><a href="javascript:;" id="expid">${expense.expId}</a>
+												</td>
+												<td>${expense.exp_date}</td>
+												<td>${expense.description }</td>
 												<td class="actions" style="text-align: center;"><a
 													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/expenseupdate/${expense.expId}"><i	class="fa fa-pencil"></i></a> <a class="on-default remove-row"
+													href="${pageContext.request.contextPath}/admin/expenseupdate/${expense.expId}"><i
+														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
@@ -155,75 +158,79 @@
 				<!-- end Panel -->
 
 			</div>
-				<!-- container -->
-
-			</div>
-			<!-- content -->
-
-			<%@ include file="footer.jsp"%>
+			<!-- container -->
 
 		</div>
+		<!-- content -->
+
+		<%@ include file="footer.jsp"%>
+
+	</div>
 	</div>
 	<!-- END wrapper -->
 
-<!-- ############################################################# -->
+	<!-- ############################################################# -->
 
 
-		<div id="impDetail" style="display: none;width: 80%;">
-			<div class="modal-content">
-				<div class="modal-header">
+	<div id="impDetail" style="display: none; width: 80%;">
+		<div class="modal-content">
+			<div class="modal-header">
 
-					<button type="button" class="close" aria-hidden="true">
-						<span class="button b-close"><span>×</span></span>
-					</button>
-					<h4 class="modal-title">Expense</h4>
+				<button type="button" class="close" aria-hidden="true">
+					<span class="button b-close"><span>×</span></span>
+				</button>
+				<h4 class="modal-title">Expense</h4>
 
-				</div>
-				<div class="modal-body" style="width: 100%;">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Produce Name</th>
-								<th>Qty</th>
-								<th>Unit Price</th>
-								<th>Amount</th>
-								<th>Supplier Name</th>
-								<th>Remark</th>
-							</tr>
-						</thead>
-						<tbody id="impProDetail">							
-						</tbody>
-					</table> 
-						
-					<div class="modal-footer" style="height: 80px;">
-						<div style="float: left;">
-							<div class="form-group form-horizontal">
-                                <label class="control-label col-lg-6">Total Amount</label>
-                                <div class="col-lg-6">
-                                    <input class=" form-control" id="txttotal" type="text" readonly="readonly">
-                                </div>
-                            </div>
+			</div>
+			<div class="modal-body" style="width: 100%;">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Produce Name</th>
+							<th>Qty</th>
+							<th>Unit Price</th>
+							<th>Amount</th>
+							<th>Supplier Name</th>
+							<th>Remark</th>
+						</tr>
+					</thead>
+					<tbody id="impProDetail">
+					</tbody>
+				</table>
+
+				<div class="modal-footer" style="height: 80px;">
+					<div style="float: left;">
+						<div class="form-group form-horizontal">
+							<label class="control-label col-lg-6">Total Amount</label>
+							<div class="col-lg-6">
+								<input class=" form-control" id="txttotal" type="text"
+									readonly="readonly">
+							</div>
 						</div>
-						<div align="right">
-							<button class="btn btn-default b-close">Close</button>
-						</div>
+					</div>
+					<div align="right">
+						<button class="btn btn-default b-close">Close</button>
+					</div>
 				</div>
-				</div> 
 			</div>
 		</div>
+	</div>
 
-		<!-- ################################################################## -->
+	<!-- ################################################################## -->
 
 	<script>
             var resizefunc = [];
             var ctx = "${pageContext.request.contextPath}"
     </script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-    <script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
-    <script src="<c:url value='/resources/scripts/app.js' />"></script>
-    <script src="<c:url value='/resources/scripts/services/import_service.js' />"></script>
-    <script src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
+	<script src="<c:url value='/resources/scripts/app.js' />"></script>
+	<script
+		src="<c:url value='/resources/scripts/services/import_service.js' />"></script>
+	<script
+		src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
 
 	<!-- jQuery  -->
 	<script
@@ -269,7 +276,8 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 	<script type="text/javascript">
 		/* ==============================================
 		Counter Up
@@ -353,10 +361,12 @@
 	</script>
 
 	<!-- Examples -->
-	 <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
-        
-        
-        
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+
+
+
 </body>
 </html>

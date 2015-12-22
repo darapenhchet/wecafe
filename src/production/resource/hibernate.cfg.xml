@@ -21,8 +21,8 @@
 		<property name="format_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- <property name="packagesToScan">com.kosign.wecafe.entities</property> -->
-		<mapping class="com.kosign.wecafe.entities"/>
-		
+		<mapping class="com.kosign.wecafe.entities" />
+
 	</session-factory>
 
 </hibernate-configuration>

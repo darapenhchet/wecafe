@@ -96,18 +96,18 @@
 						</div>
 					</div>
 					<div class="panel-heading">
-                        <!-- <h3 class="panel-title">Product Lists</h3> -->
+						<!-- <h3 class="panel-title">Product Lists</h3> -->
 						<form class="form-inline">
-						    <div class="form-group">
-						        <label >Search</label>
-						        <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
-						    </div>
+							<div class="form-group">
+								<label>Search</label> <input type="text" ng-model="search"
+									class="form-control" placeholder="Search" width="400%">
+							</div>
 						</form>
-                    </div>
+					</div>
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-							<table id="datatable" class="table table-striped table-bordered">
+								<table id="datatable" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -137,23 +137,22 @@
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
 										</c:forEach> --%>
-											<tr dir-paginate="(key,supplier) in suppliers|filter:search|itemsPerPage:perPage|orderBy : supplier.createdDate">
-												<td id="supplierId" style="display : none;">{{supplier.supId}}</td>											
-												<td >{{ key+1}}</td>
-												<td id="supplierName">{{supplier.supplierName }}</td>
-												<td style="text-align: right;">{{supplier.supplierNumber }}
-												</td>
-												<td>{{supplier.supplierEmail }}
-												</td>
-												<td>{{supplier.supplierAddress}}</td>
-												<td class="actions" style="text-align: center;"><a
-													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/viewupdate/{{supplier.supId}}"><i
-														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-													href="javascript:;" id="btnRemove"><i
-														class="fa fa-trash-o"></i></a>
-												</td>
-											</tr>
+										<tr
+											dir-paginate="(key,supplier) in suppliers|filter:search|itemsPerPage:perPage|orderBy : supplier.createdDate">
+											<td id="supplierId" style="display: none;">{{supplier.supId}}</td>
+											<td>{{ key+1}}</td>
+											<td id="supplierName">{{supplier.supplierName }}</td>
+											<td style="text-align: right;">{{supplier.supplierNumber
+												}}</td>
+											<td>{{supplier.supplierEmail }}</td>
+											<td>{{supplier.supplierAddress}}</td>
+											<td class="actions" style="text-align: center;"><a
+												class="on-default edit-row"
+												href="${pageContext.request.contextPath}/admin/viewupdate/{{supplier.supId}}"><i
+													class="fa fa-pencil"></i></a> <a class="on-default remove-row"
+												href="javascript:;" id="btnRemove"><i
+													class="fa fa-trash-o"></i></a></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -163,118 +162,113 @@
 				</div>
 				<!-- end Panel -->
 				<ul class="pagination" id="PER_PAGE">
-                   <li class="active" ng-click="perPage=10"><a href="javascript:;">10</a></li>
-				  <li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-				  <li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-				  <li ng-click="perPage=100"><a href="javascript:;">100</a></li>
+					<li class="active" ng-click="perPage=10"><a
+						href="javascript:;">10</a></li>
+					<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
+					<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
+					<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
 				</ul>
-                <dir-pagination-controls 
-                	max-size="15"  
-                	direction-links="true"
-       				boundary-links="true" 
-       				class="pull-right" >
-   				</dir-pagination-controls>
+				<dir-pagination-controls max-size="15" direction-links="true"
+					boundary-links="true" class="pull-right">
+				</dir-pagination-controls>
 			</div>
-				<!-- container -->
-
-			</div>
-			<!-- content -->
-
-			<%@ include file="footer.jsp"%>
+			<!-- container -->
 
 		</div>
-		<!-- ============================================================== -->
-		<!-- End Right content here -->
-		<!-- ============================================================== -->
+		<!-- content -->
+
+		<%@ include file="footer.jsp"%>
+
+	</div>
+	<!-- ============================================================== -->
+	<!-- End Right content here -->
+	<!-- ============================================================== -->
 
 
-		<!-- Right Sidebar -->
-		<div class="side-bar right-bar nicescroll">
-			<h4 class="text-center">Chat</h4>
-			<div class="contact-list nicescroll">
-				<ul class="list-group contacts-list">
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg"
-									alt="">
-							</div> <span class="name">Chadengle</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg"
-									alt="">
-							</div> <span class="name">Tomaslau</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg"
-									alt="">
-							</div> <span class="name">Stillnotdavid</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg"
-									alt="">
-							</div> <span class="name">Kurafire</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg"
-									alt="">
-							</div> <span class="name">Shahedk</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg"
-									alt="">
-							</div> <span class="name">Adhamdannaway</span> <i
-							class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg"
-									alt="">
-							</div> <span class="name">Ok</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg"
-									alt="">
-							</div> <span class="name">Arashasghari</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg"
-									alt="">
-							</div> <span class="name">Joshaustin</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg"
-									alt="">
-							</div> <span class="name">Sortino</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-				</ul>
-			</div>
+	<!-- Right Sidebar -->
+	<div class="side-bar right-bar nicescroll">
+		<h4 class="text-center">Chat</h4>
+		<div class="contact-list nicescroll">
+			<ul class="list-group contacts-list">
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg"
+								alt="">
+						</div> <span class="name">Chadengle</span> <i
+						class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg"
+								alt="">
+						</div> <span class="name">Tomaslau</span> <i class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg"
+								alt="">
+						</div> <span class="name">Stillnotdavid</span> <i
+						class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg"
+								alt="">
+						</div> <span class="name">Kurafire</span> <i class="fa fa-circle online"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg"
+								alt="">
+						</div> <span class="name">Shahedk</span> <i class="fa fa-circle away"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg"
+								alt="">
+						</div> <span class="name">Adhamdannaway</span> <i
+						class="fa fa-circle away"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg"
+								alt="">
+						</div> <span class="name">Ok</span> <i class="fa fa-circle away"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg"
+								alt="">
+						</div> <span class="name">Arashasghari</span> <i
+						class="fa fa-circle offline"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg"
+								alt="">
+						</div> <span class="name">Joshaustin</span> <i
+						class="fa fa-circle offline"></i>
+				</a> <span class="clearfix"></span></li>
+				<li class="list-group-item"><a href="#">
+						<div class="avatar">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg"
+								alt="">
+						</div> <span class="name">Sortino</span> <i class="fa fa-circle offline"></i>
+				</a> <span class="clearfix"></span></li>
+			</ul>
 		</div>
-		<!-- /Right-bar -->
+	</div>
+	<!-- /Right-bar -->
 
 	</div>
 	<!-- END wrapper -->
@@ -285,11 +279,14 @@
             var resizefunc = [];
             var ctx = "${pageContext.request.contextPath}"
     </script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-    <script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
-    <script src="<c:url value='/resources/scripts/app.js' />"></script>
-    <script src="<c:url value='/resources/scripts/services/supplier_service.js' />"></script>
-    <script src="<c:url value='/resources/scripts/controllers/supplier_controller.js' />"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
+	<script src="<c:url value='/resources/scripts/app.js' />"></script>
+	<script
+		src="<c:url value='/resources/scripts/services/supplier_service.js' />"></script>
+	<script
+		src="<c:url value='/resources/scripts/controllers/supplier_controller.js' />"></script>
 
 	<!-- jQuery  -->
 	<script
@@ -416,7 +413,9 @@
 	</script>
 
 	<!-- Examples -->
-	 <script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 </body>
 </html>

@@ -5,13 +5,12 @@ Styles for the html/body for special modal where we want 3d effects
 Note that we need a container wrapping all content on the page for the 
 perspective effects (not including the modals and the overlay).
 */
-.md-perspective,
-.md-perspective body {
+.md-perspective, .md-perspective body {
 	height: 100%;
 	overflow: hidden;
 }
 
-.md-perspective body  {
+.md-perspective body {
 	background: #fff;
 	-webkit-perspective: 600px;
 	-moz-perspective: 600px;
@@ -51,7 +50,7 @@ perspective effects (not including the modals and the overlay).
 	left: 0;
 	z-index: 9999995;
 	opacity: 0;
-	background: rgba(1,1,1,0.6);
+	background: rgba(1, 1, 1, 0.6);
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
@@ -71,19 +70,23 @@ perspective effects (not including the modals and the overlay).
 	margin: 0 auto;
 	font-family: 'Nunito', sans-serif !important;
 }
+
 .md-content .md-close-btn {
 	position: absolute;
 	top: 10px;
 	right: 5px;
 	z-index: 999999;
 }
-.md-content .md-close-btn a{
+
+.md-content .md-close-btn a {
 	color: #909090;
 	cursor: pointer;
 }
-.md-content .md-close-btn a:hover{
+
+.md-content .md-close-btn a:hover {
 	color: #212121;
 }
+
 .md-content .md-close {
 	font-size: 13px;
 	font-family: 'Nunito', sans-serif !important;
@@ -100,27 +103,26 @@ perspective effects (not including the modals and the overlay).
 	color: #797979;
 }
 
-.md-content > div {
+.md-content>div {
 	padding: 15px 40px 30px;
 	margin: 0;
 	font-weight: 300;
 	font-size: 14px;
 }
 
-.md-content > div p {
+.md-content>div p {
 	margin: 0;
 	padding: 10px 0;
 }
 
-.md-content > div ul {
+.md-content>div ul {
 	margin: 0;
 	padding: 0 0 30px 20px;
 }
 
-.md-content > div ul li {
+.md-content>div ul li {
 	padding: 5px 0;
 }
-
 
 /* Individual modal styles with animations/transitions */
 
@@ -193,8 +195,7 @@ perspective effects (not including the modals and the overlay).
 	opacity: 0;
 }
 
-.md-show.md-effect-4 ~ .md-overlay,
-.md-effect-4 .md-content {
+.md-show.md-effect-4 ~ .md-overlay, .md-effect-4 .md-content {
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
@@ -219,10 +220,10 @@ perspective effects (not including the modals and the overlay).
 	-webkit-transform-style: preserve-3d;
 	-moz-transform-style: preserve-3d;
 	transform-style: preserve-3d;
-	-webkit-transform: translateZ(600px) rotateX(20deg); 
-	-moz-transform: translateZ(600px) rotateX(20deg); 
-	-ms-transform: translateZ(600px) rotateX(20deg); 
-	transform: translateZ(600px) rotateX(20deg); 
+	-webkit-transform: translateZ(600px) rotateX(20deg);
+	-moz-transform: translateZ(600px) rotateX(20deg);
+	-ms-transform: translateZ(600px) rotateX(20deg);
+	transform: translateZ(600px) rotateX(20deg);
 	opacity: 0;
 }
 
@@ -233,7 +234,7 @@ perspective effects (not including the modals and the overlay).
 	-webkit-transform: translateZ(0px) rotateX(0deg);
 	-moz-transform: translateZ(0px) rotateX(0deg);
 	-ms-transform: translateZ(0px) rotateX(0deg);
-	transform: translateZ(0px) rotateX(0deg); 
+	transform: translateZ(0px) rotateX(0deg);
 	opacity: 1;
 }
 
@@ -248,10 +249,10 @@ perspective effects (not including the modals and the overlay).
 	-webkit-transform-style: preserve-3d;
 	-moz-transform-style: preserve-3d;
 	transform-style: preserve-3d;
-	-webkit-transform: translate(30%) translateZ(600px) rotate(10deg); 
+	-webkit-transform: translate(30%) translateZ(600px) rotate(10deg);
 	-moz-transform: translate(30%) translateZ(600px) rotate(10deg);
 	-ms-transform: translate(30%) translateZ(600px) rotate(10deg);
-	transform: translate(30%) translateZ(600px) rotate(10deg); 
+	transform: translate(30%) translateZ(600px) rotate(10deg);
 	opacity: 0;
 }
 
@@ -267,7 +268,7 @@ perspective effects (not including the modals and the overlay).
 }
 
 /* Effect 7:  slide and stick to top */
-.md-effect-7{
+.md-effect-7 {
 	top: 0;
 	-webkit-transform: translateX(-50%);
 	-moz-transform: translateX(-50%);
@@ -418,11 +419,10 @@ perspective effects (not including the modals and the overlay).
 }
 
 .md-show.md-effect-12 ~ .md-overlay {
-	background: rgba(255,255,255,1);
-} 
+	background: rgba(255, 255, 255, 1);
+}
 
-.md-effect-12 .md-content h3,
-.md-effect-12 .md-content {
+.md-effect-12 .md-content h3, .md-effect-12 .md-content {
 	background: transparent;
 }
 
@@ -458,19 +458,77 @@ perspective effects (not including the modals and the overlay).
 	animation: slit .7s forwards ease-out;
 }
 
-@-webkit-keyframes slit {
-	50% { -webkit-transform: translateZ(-250px) rotateY(89deg); opacity: .5; -webkit-animation-timing-function: ease-out;}
-	100% { -webkit-transform: translateZ(0) rotateY(0deg); opacity: 1; }
+@
+-webkit-keyframes slit { 50% {
+	-webkit-transform: translateZ(-250px) rotateY(89deg);
+	opacity: .5;
+	-webkit-animation-timing-function: ease-out;
 }
 
-@-moz-keyframes slit {
-	50% { -moz-transform: translateZ(-250px) rotateY(89deg); opacity: .5; -moz-animation-timing-function: ease-out;}
-	100% { -moz-transform: translateZ(0) rotateY(0deg); opacity: 1; }
+100%
+{
+-webkit-transform
+:
+ 
+translateZ
+(0)
+ 
+rotateY
+(0deg);
+ 
+opacity
+:
+ 
+1;
+}
+}
+@
+-moz-keyframes slit { 50% {
+	-moz-transform: translateZ(-250px) rotateY(89deg);
+	opacity: .5;
+	-moz-animation-timing-function: ease-out;
 }
 
-@keyframes slit {
-	50% { transform: translateZ(-250px) rotateY(89deg); opacity: 1; animation-timing-function: ease-in;}
-	100% { transform: translateZ(0) rotateY(0deg); opacity: 1; }
+100%
+{
+-moz-transform
+:
+ 
+translateZ
+(0)
+ 
+rotateY
+(0deg);
+ 
+opacity
+:
+ 
+1;
+}
+}
+@
+keyframes slit { 50% {
+	transform: translateZ(-250px) rotateY(89deg);
+	opacity: 1;
+	animation-timing-function: ease-in;
+}
+
+100%
+{
+transform
+:
+ 
+translateZ
+(0)
+ 
+rotateY
+(0deg);
+ 
+opacity
+:
+ 
+1;
+}
 }
 
 /* Effect 14:  3D Rotate from bottom */
@@ -539,7 +597,7 @@ perspective effects (not including the modals and the overlay).
 
 /* Effect 16:  Blur */
 .md-show.md-effect-16 ~ .md-overlay {
-	background: rgba(1,1,1,0.6);
+	background: rgba(1, 1, 1, 0.6);
 }
 
 .md-show.md-effect-16 ~ .container {
@@ -556,8 +614,7 @@ perspective effects (not including the modals and the overlay).
 	opacity: 0;
 }
 
-.md-show.md-effect-16 ~ .container,
-.md-effect-16 .md-content {
+.md-show.md-effect-16 ~ .container, .md-effect-16 .md-content {
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
@@ -578,10 +635,10 @@ perspective effects (not including the modals and the overlay).
 	-webkit-transition: -webkit-transform 0.3s;
 	-moz-transition: -moz-transform 0.3s;
 	transition: transform 0.3s;
-}	
+}
 
-.md-show.md-effect-17 ~ .container,
-.md-show.md-effect-17 ~ .md-overlay  {
+.md-show.md-effect-17 ~ .container, .md-show.md-effect-17 ~ .md-overlay
+	{
 	-webkit-transform: rotateX(-2deg);
 	-moz-transform: rotateX(-2deg);
 	-ms-transform: rotateX(-2deg);
@@ -620,14 +677,14 @@ perspective effects (not including the modals and the overlay).
 }
 
 .md-show.md-effect-18 ~ .md-overlay {
-	background: rgba(1,1,1,0.6);
+	background: rgba(1, 1, 1, 0.6);
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
 }
 
-.md-show.md-effect-18 ~ .container,
-.md-show.md-effect-18 ~ .md-overlay {
+.md-show.md-effect-18 ~ .container, .md-show.md-effect-18 ~ .md-overlay
+	{
 	-webkit-transform-style: preserve-3d;
 	-webkit-transform-origin: 0% 50%;
 	-webkit-animation: rotateRightSideFirst 0.5s forwards ease-in;
@@ -639,21 +696,54 @@ perspective effects (not including the modals and the overlay).
 	animation: rotateRightSideFirst 0.5s forwards ease-in;
 }
 
-@-webkit-keyframes rotateRightSideFirst {
-	50% { -webkit-transform: translateZ(-50px) rotateY(5deg); -webkit-animation-timing-function: ease-out; }
-	100% { -webkit-transform: translateZ(-200px); }
+@
+-webkit-keyframes rotateRightSideFirst { 50% {
+	-webkit-transform: translateZ(-50px) rotateY(5deg);
+	-webkit-animation-timing-function: ease-out;
 }
 
-@-moz-keyframes rotateRightSideFirst {
-	50% { -moz-transform: translateZ(-50px) rotateY(5deg); -moz-animation-timing-function: ease-out; }
-	100% { -moz-transform: translateZ(-200px); }
+100%
+{
+-webkit-transform
+:
+ 
+translateZ
+(-200px);
+ 
+}
+}
+@
+-moz-keyframes rotateRightSideFirst { 50% {
+	-moz-transform: translateZ(-50px) rotateY(5deg);
+	-moz-animation-timing-function: ease-out;
 }
 
-@keyframes rotateRightSideFirst {
-	50% { transform: translateZ(-50px) rotateY(5deg); animation-timing-function: ease-out; }
-	100% { transform: translateZ(-200px); }
+100%
+{
+-moz-transform
+:
+ 
+translateZ
+(-200px);
+ 
+}
+}
+@
+keyframes rotateRightSideFirst { 50% {
+	transform: translateZ(-50px) rotateY(5deg);
+	animation-timing-function: ease-out;
 }
 
+100%
+{
+transform
+:
+ 
+translateZ
+(-200px);
+ 
+}
+}
 .md-effect-18 .md-content {
 	-webkit-transform: translateX(200%);
 	-moz-transform: translateX(200%);
@@ -685,8 +775,8 @@ perspective effects (not including the modals and the overlay).
 	transition: all 0.5s;
 }
 
-.md-show.md-effect-19 ~ .container,
-.md-show.md-effect-19 ~ .md-overlay {
+.md-show.md-effect-19 ~ .container, .md-show.md-effect-19 ~ .md-overlay
+	{
 	-webkit-transform-style: preserve-3d;
 	-webkit-transform-origin: 50% 100%;
 	-webkit-animation: OpenTop 0.5s forwards ease-in;
@@ -698,27 +788,27 @@ perspective effects (not including the modals and the overlay).
 	animation: OpenTop 0.5s forwards ease-in;
 }
 
-@-webkit-keyframes OpenTop {
-	50% { 
-		-webkit-transform: rotateX(10deg); 
-		-webkit-animation-timing-function: ease-out; 
-	}
+@
+-webkit-keyframes OpenTop { 50% {
+	-webkit-transform: rotateX(10deg);
+	-webkit-animation-timing-function: ease-out;
 }
 
-@-moz-keyframes OpenTop {
-	50% { 
-		-moz-transform: rotateX(10deg); 
-		-moz-animation-timing-function: ease-out; 
-	}
+}
+@
+-moz-keyframes OpenTop { 50% {
+	-moz-transform: rotateX(10deg);
+	-moz-animation-timing-function: ease-out;
 }
 
-@keyframes OpenTop {
-	50% { 
-		transform: rotateX(10deg); 
-		animation-timing-function: ease-out; 
-	}
+}
+@
+keyframes OpenTop { 50% {
+	transform: rotateX(10deg);
+	animation-timing-function: ease-out;
 }
 
+}
 .md-effect-19 .md-content {
 	-webkit-transform: translateY(-200%);
 	-moz-transform: translateY(-200%);
@@ -739,5 +829,7 @@ perspective effects (not including the modals and the overlay).
 }
 
 @media screen and (max-width: 32em) {
-	body { font-size: 75%; }
+	body {
+		font-size: 75%;
+	}
 }

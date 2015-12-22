@@ -10,9 +10,18 @@
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
 <meta name="author" content="Coderthemes">
 <style>
-	.hidetable{ display: none;}
-	thead tr th { text-align: center; font-size:12px;}
-	tbody tr td { text-align: center;}
+.hidetable {
+	display: none;
+}
+
+thead tr th {
+	text-align: center;
+	font-size: 12px;
+}
+
+tbody tr td {
+	text-align: center;
+}
 </style>
 <link rel="shortcut icon" href="images/favicon_1.ico">
 
@@ -100,40 +109,48 @@
 						</div>
 					</div>
 					<div class="panel-body">
-                         <div class="panel-heading">
-                               <!-- <h3 class="panel-title">Product Lists</h3> -->
-						    <!-- <form class="form-inline">
+						<div class="panel-heading">
+							<!-- <h3 class="panel-title">Product Lists</h3> -->
+							<!-- <form class="form-inline">
 						        <div class="form-group">
 						            <label >Search</label>
 						            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
 						        </div>
 						    </form> -->
-						    <div class="m-h-50 form-group hidden-print ">                                     
-					            		<div class="col-sm-9">
-					                		<label class="col-sm-1 control-label">Date : </label>
-												<input type="hidden" id="SEND_DT" data-id="SEND_DT" />
-											<div id="sendFrdt" class="date-range col-sm-5"  >
-												<input type="text" readonly="readonly" id="REGS_DATE_S" name="startdate" class="range-start" style="width:100px; text-align: center;">&nbsp;
-												<a href="#none" id="btnREGS_DATE_S"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
-												<input type="text" readonly="readonly" id="REGS_DATE_E" name="stopdate" class="range-end" style="width:100px; text-align: center;">&nbsp;
-												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
-											</div>   
-    									</div>            
-    									<div class="col-sm-3 form-group" >
-											  	<select class="form-control" id="sel1">
-												    <option>Detail</option>
-												    <option>Daily</option>
-												    <option>Weekly</option>
-												    <option>Monthly</option>
-												    <option>Yearly</option>
-											  </select>  
-    									</div>  
-    									                            		
-                            </div>
-                           </div>
+							<div class="m-h-50 form-group hidden-print ">
+								<div class="col-sm-9">
+									<label class="col-sm-1 control-label">Date : </label> <input
+										type="hidden" id="SEND_DT" data-id="SEND_DT" />
+									<div id="sendFrdt" class="date-range col-sm-5">
+										<input type="text" readonly="readonly" id="REGS_DATE_S"
+											name="startdate" class="range-start"
+											style="width: 100px; text-align: center;">&nbsp; <a
+											href="#none" id="btnREGS_DATE_S"><img
+											style="width: 20px; height: 20px;"
+											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+										<input type="text" readonly="readonly" id="REGS_DATE_E"
+											name="stopdate" class="range-end"
+											style="width: 100px; text-align: center;">&nbsp; <a
+											href="#none" id="btnREGS_DATE_E"><img
+											style="width: 20px; height: 20px;"
+											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+									</div>
+								</div>
+								<div class="col-sm-3 form-group">
+									<select class="form-control" id="sel1">
+										<option>Detail</option>
+										<option>Daily</option>
+										<option>Weekly</option>
+										<option>Monthly</option>
+										<option>Yearly</option>
+									</select>
+								</div>
+
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-							<table id="datatable" class="table table-striped table-bordered">
+								<table id="datatable" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -144,13 +161,17 @@
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
-									<tbody> 
-										<tr dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
+									<tbody>
+										<tr
+											dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
 											<td>{{key+1}}</td>
-											<td ><a href="javascript:;" id="impid"> {{importproducts.impId}}</a> </td>												
-											<td style="text-align: center;">{{importproducts.impDate | date:'dd-MMMM-yyyy'}}</td>
+											<td><a href="javascript:;" id="impid">
+													{{importproducts.impId}}</a></td>
+											<td style="text-align: center;">{{importproducts.impDate
+												| date:'dd-MMMM-yyyy'}}</td>
 											<td>{{importproducts.userId }}
-											<td style="text-align: right;">{{importproducts.totalAmount }} Riel
+											<td style="text-align: right;">{{importproducts.totalAmount
+												}} Riel
 											<td class="actions" style="text-align: center;"><a
 												class="on-default edit-row"
 												href="${pageContext.request.contextPath}/admin/viewById/{{importproducts.impId}}"><i
@@ -158,7 +179,7 @@
 												href="javascript:;" id="btnRemove"><i
 													class="fa fa-trash-o"></i></a></td>
 										</tr>
-										
+
 									</tbody>
 								</table>
 								<!-- <table id="dailytable" class="table table-responsive  hidetable" >
@@ -314,72 +335,79 @@
 				<!-- end Panel -->
 
 			</div>
-				<!-- container -->
-
-			</div>
-			<!-- content -->
-
-			<%@ include file="footer.jsp"%>
+			<!-- container -->
 
 		</div>
+		<!-- content -->
+
+		<%@ include file="footer.jsp"%>
+
+	</div>
 	</div>
 	<!-- END wrapper -->
 
-<!-- ############################################################# -->
+	<!-- ############################################################# -->
 
 
-		<div id="impDetail" style="display: none;width: 90%;">
-			<div class="modal-content">
-				<div class="modal-header">
+	<div id="impDetail" style="display: none; width: 90%;">
+		<div class="modal-content">
+			<div class="modal-header">
 
-					<button type="button" class="close" aria-hidden="true">
-						<span class="button b-close"><span>×</span></span>
-					</button>
-					<h4 class="modal-title">Import Detail</h4>
+				<button type="button" class="close" aria-hidden="true">
+					<span class="button b-close"><span>×</span></span>
+				</button>
+				<h4 class="modal-title">Import Detail</h4>
 
-				</div>
-				<div class="modal-body" style="width: 100%;">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Produce Name</th>
-								<th>Qty</th>
-								<th>Unit Price</th>
-								<th>Supplier Name</th>
-							</tr>
-						</thead>
-						<tbody id="impProDetail">
-							
-						</tbody>
-					
-					</table> 
-				</div> 
-				<div class="modal-footer" style="height: 80px;">
-						<div align="right">
-							<button class="btn btn-default b-close">Close</button>
-						</div>
+			</div>
+			<div class="modal-body" style="width: 100%;">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Produce Name</th>
+							<th>Qty</th>
+							<th>Unit Price</th>
+							<th>Supplier Name</th>
+						</tr>
+					</thead>
+					<tbody id="impProDetail">
+
+					</tbody>
+
+				</table>
+			</div>
+			<div class="modal-footer" style="height: 80px;">
+				<div align="right">
+					<button class="btn btn-default b-close">Close</button>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- ################################################################## -->
+	<!-- ################################################################## -->
 
 	<script>
             var resizefunc = [];
             var ctx = "${pageContext.request.contextPath}"
     </script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-    <script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
-    <script src="<c:url value='/resources/scripts/app.js' />"></script>
-    <script src="<c:url value='/resources/scripts/services/import_service.js' />"></script>
-    <script src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
+	<script src="<c:url value='/resources/scripts/app.js' />"></script>
+	<script
+		src="<c:url value='/resources/scripts/services/import_service.js' />"></script>
+	<script
+		src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
 
 	<!-- jQuery  -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
-    <script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
 	<%-- <script
 		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script> --%>
 	<script
@@ -415,14 +443,16 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
 		type="text/javascript"></script>
-	<script	src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
 		type="text/javascript"></script>
 
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 	<script type="text/javascript">
 		/* ==============================================
 		Counter Up
@@ -596,12 +626,14 @@
 	</script>
 
 	<!-- Examples -->
-	<script src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
-    
-    
-        
-        
-        
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+
+
+
+
+
 </body>
 </html>

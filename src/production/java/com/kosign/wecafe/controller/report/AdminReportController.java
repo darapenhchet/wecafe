@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.services.AdminReportService;
 
@@ -37,9 +38,15 @@ public class AdminReportController {
 	}
 	
 	@RequestMapping(value="/admin/purchasereport", method=RequestMethod.GET)
-	public String ListReportpurchase(Map<String, Object>model){
-		model.put("reportPurchase", adminReportService.getReportListAllPurchase());
+	public String ListReportpurchase(){
+	//	model.put("reportPurchase", adminReportService.getReportListAllPurchase());
 		return "admin/purchase-report";
+	}
+	
+	@RequestMapping(value="/admin/purchasereportdetail", method=RequestMethod.GET)
+	public @ResponseBody List<ImportProduct> ListReportDetailPurchase(Map<String, Object>model){
+		return adminReportService.getListReportDetailPurchase();
+		
 	}
 	
 	@RequestMapping(value="/admin/getsearchsellbydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)

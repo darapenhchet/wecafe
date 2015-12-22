@@ -115,20 +115,25 @@
 												<label for="productname" class="control-label col-lg-2">Category
 													Name *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="categoryId" 
+													<input class=" form-control" id="categoryId"
 														name="categoryId" type="hidden" value="${category.catId }">
-													<input class=" form-control" id="categoryName" required="required"
-														name="categoryName" type="text"
-														value="${category.catName }" >
+													<input class=" form-control" id="categoryName"
+														required="required" name="categoryName" type="text"
+														value="${category.catName }">
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Image
 													*</label>
 												<div class="col-lg-10">
-													<input class="form-control " id="images" name="images" type="file" required="required" value="${category.img}" required="required">
-                                                    <input type="hidden" id="image" name="image" value="${category.img}" required="required"/>
-													<img src="${pageContext.request.contextPath}/resources/images/products/${category.img}" width="400px" height="400px" class="img-thumbnail" id="images_sample" required="required" />
+													<input class="form-control " id="images" name="images"
+														type="file" required="required" value="${category.img}"
+														required="required"> <input type="hidden"
+														id="image" name="image" value="${category.img}"
+														required="required" /> <img
+														src="${pageContext.request.contextPath}/resources/images/products/${category.img}"
+														width="400px" height="400px" class="img-thumbnail"
+														id="images_sample" required="required" />
 												</div>
 											</div>
 
@@ -136,7 +141,8 @@
 												<div class="col-lg-offset-2 col-lg-10">
 													<button class="btn btn-success waves-effect waves-light"
 														type="button" id="btnSubmit">Save</button>
-													<button class="btn btn-default waves-effect" id="btncancel" type="button">Cancel</button>
+													<button class="btn btn-default waves-effect" id="btncancel"
+														type="button">Cancel</button>
 												</div>
 											</div>
 										</form>
