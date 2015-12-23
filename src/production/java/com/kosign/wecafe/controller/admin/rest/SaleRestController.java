@@ -26,8 +26,8 @@ public class SaleRestController {
 	SellService sellService;
 	
 	@RequestMapping(value="/sales/daily", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getAllSalesDailyReports(@RequestParam(value="start_date") String strStartDate, 
-														   @RequestParam(value="end_date") String strEndDate) throws ParseException{
+	public ResponseEntity<Map<String, Object>> getAllSalesDailyReports(@RequestParam(value="start_date", required=false, defaultValue="2015-12-01") String strStartDate, 
+														   @RequestParam(value="end_date", required=false, defaultValue="2015-12-31") String strEndDate) throws ParseException{
 		Map<String, Object> map = new HashMap<String, Object>();
 		/*
 			Pagination pagination = new Pagination();

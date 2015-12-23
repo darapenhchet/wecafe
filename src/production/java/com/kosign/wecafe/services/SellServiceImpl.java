@@ -134,40 +134,54 @@ public class SellServiceImpl implements SellService{
 			session = sessionFactory.getCurrentSession();
 			SQLQuery query = 
 					session.createSQLQuery(
-							"SELECT daily_sale.pro_name " +
-							"     , daily_sale.col_1 " +
-							"     , daily_sale.col_2 " +
-							"     , daily_sale.col_3 " +
-							"     , daily_sale.col_4 " +
-							"     , daily_sale.col_5 " +
-							"     , daily_sale.col_6 " +
-							"     , daily_sale.col_7 " +
-						    "FROM crosstab('SELECT product.pro_name"
-						    + "                  , A.sale_datetime"
-						    + "					 , A.qty " + 
-							"				FROM product " +
-							"				LEFT JOIN( " +
-							"					SELECT order_detail.pro_id " +
-							"					     , sale_datetime::date " +
-							"						 , SUM(COALESCE(order_detail.pro_qty,0)) AS qty " +
-							"					FROM sale " + 
-							"					LEFT JOIN wecafe_order ON sale.ord_id = wecafe_order.order_id " +
-							"					LEFT JOIN order_detail ON wecafe_order.order_id = order_detail.order_id AND wecafe_order.status=2 " +
-							"					WHERE sale_datetime::date BETWEEN ''2015-12-01'' AND ''2015-12-07'' " +
-							"					GROUP BY 1, 2 " +
-							"					ORDER BY 2 " +
-							"				) A " +
-							"				ON product.pro_id = A.pro_id' , " +
-							"				'SELECT period::date " +
-							"				FROM generate_series(''2015-12-01''::date,''2015-12-07'', ''1 day'' ) AS period;') " +
-							"				AS daily_sale (pro_name TEXT, " +
-							"				col_1 INTEGER, " +
-							"				col_2 INTEGER, " +
-							"				col_3 INTEGER, " +
-							"				col_4 INTEGER, " +
-							"				col_5 INTEGER, " +
-							"				col_6 INTEGER, " +
-							"				col_7 INTEGER); "			); 					
+							"SELECT * " +
+							"FROM crosstab('SELECT product.pro_name,A.sale_datetime, COALEASCEA.qty " + 
+							"		FROM product " +
+							"		LEFT JOIN( " +
+							"			SELECT order_detail.pro_id " +
+							"				 , sale_datetime::date " +
+							"				 , SUM(order_detail.pro_qty) AS qty " +
+							"			FROM sale " + 
+							"			LEFT JOIN wecafe_order ON sale.ord_id = wecafe_order.order_id " +
+							"			LEFT JOIN order_detail ON wecafe_order.order_id = order_detail.order_id AND wecafe_order.status=2 " +
+							"			WHERE sale_datetime::date BETWEEN ''2015-12-01'' AND ''2015-12-31'' " +
+							"			GROUP BY 1, 2 " +
+							"			ORDER BY sale_datetime " +
+							"		) A " +
+							"		ON product.pro_id = A.pro_id " +
+							"		','SELECT period::date FROM generate_series(''2015-12-01''::date,''2015-12-31'', ''1 day'' ) AS period;') " +
+							"		 AS (pro_name TEXT, " +
+							"				 \"1\" INTEGER, " +
+							"				 \"2\" INTEGER, " +
+							"				 \"3\" INTEGER, " +
+							"				 \"4\" INTEGER, " +
+							"				 \"5\" INTEGER, " +
+							"				 \"6\" INTEGER, " +
+							"				 \"7\" INTEGER, " +
+							"				 \"8\" INTEGER, " +
+							"				 \"9\" INTEGER, " +
+							"				 \"10\" INTEGER, " +
+							"				 \"11\" INTEGER, " +
+							"				 \"12\" INTEGER, " +
+							"				 \"13\" INTEGER, " +
+							"				 \"14\" INTEGER, " +
+							"				 \"15\" INTEGER, " +
+							"				 \"16\" INTEGER, " +
+							"				 \"17\" INTEGER, " +
+							"				 \"18\" INTEGER, " +
+							"				 \"19\" INTEGER, " +
+							"				 \"20\" INTEGER, " +
+							"				 \"21\" INTEGER, " +
+							"				 \"22\" INTEGER, " +
+							"				 \"23\" INTEGER, " +
+							"				 \"24\" INTEGER, " +
+							"				 \"25\" INTEGER, " +
+							"				 \"26\" INTEGER, " +
+							"				 \"27\" INTEGER, " +
+							"				 \"28\" INTEGER, " +
+							"				 \"29\" INTEGER, " +
+							"				 \"30\" INTEGER, " +
+							"				 \"31\" INTEGER  );"); 					
 			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 			return sales;
 		} catch (Exception e) {

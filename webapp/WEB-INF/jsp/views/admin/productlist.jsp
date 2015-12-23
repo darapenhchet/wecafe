@@ -221,7 +221,7 @@
 				<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
 				<td style="text-align:center;">
 					<span>
-						<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
+						<a href="javascript:;" class="btn {{= button}} btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
 					</span>
 				</td>
 				<td class="actions" style="text-align:center;">
@@ -289,6 +289,10 @@
 							console.log(data);
 							if(data.products.length>0){
 								$("tbody#CONTENTS").html('');
+								for(var i=0;i<data.products.length;i++){
+									data.products[i]["button"] = "btn-success";
+									products.format(data.products[i]);
+								}
 								$("#CONTENT_TEMPLATE").tmpl(data.products).appendTo("tbody#CONTENTS");
 							}else{
 								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
@@ -304,6 +308,15 @@
     				});
         		};
         		
+        		products.format = function(value){
+        			if(value["status"]==false){
+        				value["status"] = "Inactive";
+        				value["button"] = "btn-danger";
+        			}else{
+        				value["status"] = "Active";
+        				value["button"] = "btn-success";
+        			}
+        		}
         		// TODO: FIND PRODUCT BY ID
         		products.findProductById = function(id){
         			
