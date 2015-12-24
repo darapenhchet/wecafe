@@ -50,16 +50,9 @@ public class ProductRestController {
 	}
 	
 	// TODO: List All Import
-	@RequestMapping(value="/purchasereportdetail", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdetail", adminReportService.getListReportDetailPurchase());
-		pagination.setTotalCount(adminReportService.count());
-		pagination.setTotalPages(pagination.totalPages());
-		map.put("pagination", pagination);
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
-	}
+	
+	
+	
 	
 	// TODO: Get a Product
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)

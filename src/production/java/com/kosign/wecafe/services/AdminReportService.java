@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ public interface AdminReportService {
 	public List<Object[]> getReportListAllCupStockbyDate(DateForm dateForm);
 
 	public Long count();
-	
+
+	public Object getListReportMonthlyPurcase(Date startDate, Date endDate);
+	public Map<String, Object> getAllPurchaseMonthlyReportsTotal(Date startDate, Date endDate);
 	
 }

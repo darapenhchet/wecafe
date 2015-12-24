@@ -756,7 +756,7 @@
    			var dd = moment(mm.weekday(1).get('date')).isoWeekday(1);
    			var dayID ="";
    				for (var i=1; i <8; i++) {
-   					dayID = "#day" + (i);
+   					dayID = "#day" + i;
    					$(dayID).html(mm.weekday(i).get('date'));				
    				};  
    			}
