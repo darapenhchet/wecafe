@@ -187,7 +187,7 @@
 													*</label>
 												<div class="col-lg-10">
 													<input class="form-control " id="images" name="images"
-														type="file" required="required"> <input
+														type="file" > <input
 														type="hidden" id="image" name="image" /> <img src=""
 														id="images_sample" name="images_sample"
 														class="img-thumbnail" style="display: none;">

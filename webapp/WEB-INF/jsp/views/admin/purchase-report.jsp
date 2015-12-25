@@ -357,6 +357,11 @@ tbody tr td {
 																<th colspan="2" id="mon5">May</th>
 																<th colspan="2" id="mon6">Jun</th>
 																<th colspan="2" id="mon7">Jul</th>
+																<th colspan="2" id="mon7">Aug</th>
+																<th colspan="2" id="mon7">Sep</th>
+																<th colspan="2" id="mon7">Oct</th>
+																<th colspan="2" id="mon7">Nov</th>
+																<th colspan="2" id="mon7">Dec</th>
 																<th colspan="2">Total</th>
 															</tr>
 															<tr>
@@ -374,6 +379,16 @@ tbody tr td {
 																<th>Amount</th>
 																<th>qty</th>
 																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th>
+																<th>qty</th>
+																<th>Amount</th> 
 																<th>Total Qty</th>
 																<th>Total Amount</th>
 															</tr>
@@ -598,10 +613,9 @@ tbody tr td {
 		<!-- jQuery  -->
 		<script
 			src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+		
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
 
 		<script
@@ -946,6 +960,7 @@ tbody tr td {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
+			 setCalendar();
 			 products.listDetail(1);
 		 }			 
 		 else if($(this).val()==1){ 
@@ -954,19 +969,26 @@ tbody tr td {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
-			 
+			 setCalendar();
 		 }else if($(this).val()==2){ 
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tblweekly").removeClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
+			 $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
+			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate));
+			 
 		 }else if($(this).val()==3){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").removeClass("hidetable");
-			 $("#tblyearly").addClass("hidetable");
+			 $("#tblyearly").addClass("hidetable");		
+			 var startdate = new Date().getFullYear() + '/01/01';
+			 var stopdate = new Date().getFullYear() + '/12/31'; 
+			 $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
+			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate));
 			 products.listMonthly();
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");

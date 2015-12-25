@@ -145,18 +145,7 @@
 											</div>
 
 
-											<div class="form-group ">
-												<label for="category" class="control-label col-lg-2">Category
-													*</label>
-												<div class="col-lg-10">
-													<select class="form-control" id="optCategory"
-														name="categoryId" required="required">
-														<option value="">Please choose your category</option>
-
-
-													</select>
-												</div>
-											</div>
+										 
 											<%-- <div class="form-group ">
                                                     <label for="quantity" class="control-label col-lg-2">Quantity *</label>
                                                     <div class="col-lg-10">
@@ -194,7 +183,7 @@
 												<label for="costprice" class="control-label col-lg-2">Image</label>
 												<div class="col-lg-10">
 													<input class="form-control " id="images" name="images"
-														type="file" value="${product.image }" required="required">
+														type="file" value="${product.image }">
 													<img id="images_sample" name="images_sample"
 														src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
 														width="400px" height="400px" class="img-thumbnail" /> <input
