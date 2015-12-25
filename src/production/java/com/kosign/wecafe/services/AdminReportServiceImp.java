@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.ImportProduct;
-import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -237,13 +236,36 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<ImportProduct> getListReportDetailPurchase() {
+	public List<Map> getListReportDetailPurchase() {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
 			session.getTransaction().begin();
-			Query query = session.createQuery("FROM ImportProduct");
-			List<ImportProduct>	importProducts = (List<ImportProduct>)query.list();	
+			SQLQuery query = session.createSQLQuery(
+					"SELECT A.imp_id AS purchase_id "
+				 + "   , A.imp_date AS purchase_date "
+				 + "	   , CONCAT(C.lastname, ' ', C.firstname) AS purchase_by "
+				 + "	   , SUM(pro_qty * unit_price) AS purchase_total_amount "
+				 + "	   , '0' AS purchase_type "
+				 + "	FROM import A "
+				 + "	INNER JOIN import_detail B ON A.imp_id = B.imp_id "
+				 + "	LEFT JOIN users C ON C.id = A.user_id "
+				 + "	WHERE EXTRACT(YEAR FROM A.imp_date) = 2015 "
+				 + "	GROUP BY 1,2,3 " 
+				 + "	UNION ALL "
+				 + "	SELECT A.expense_id AS purchase_id "
+					+ "   , A.expense_date AS purchase_date "
+				+ "	   , CONCAT(C.lastname, ' ', C.firstname) AS purchase_by "
+				+ "	   , SUM(B.expense_qty * B.expense_unitprice) AS purhcase_total_amount "
+				+ "	   , '1' AS purchase_type "
+				+ "	FROM tbl_expense A "
+				+ "	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "
+				+ "	LEFT JOIN users C ON A.expense_user_id = C.id "
+							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = 2015 "
+				+ "	GROUP BY 1,2,3 "
+				+ "	ORDER BY 2 DESC;");
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map>	importProducts = (List<Map>)query.list();	
 			return importProducts;
 		}catch(Exception e){
 			e.printStackTrace();

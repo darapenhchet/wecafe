@@ -44,7 +44,7 @@ public class AdminReportController {
 	}
 	
 	@RequestMapping(value="/admin/purchasereportdetail", method=RequestMethod.GET)
-	public @ResponseBody List<ImportProduct> ListReportDetailPurchase(Map<String, Object>model){
+	public @ResponseBody List<Map> ListReportDetailPurchase(Map<String, Object>model){
 		return adminReportService.getListReportDetailPurchase();
 		
 	}
