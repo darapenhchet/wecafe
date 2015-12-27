@@ -236,7 +236,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map> getListReportDetailPurchase() {
+	public List<Map> getListReportDetailPurchaseRest(int byyear) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -250,7 +250,7 @@ public class AdminReportServiceImp implements AdminReportService {
 				 + "	FROM import A "
 				 + "	INNER JOIN import_detail B ON A.imp_id = B.imp_id "
 				 + "	LEFT JOIN users C ON C.id = A.user_id "
-				 + "	WHERE EXTRACT(YEAR FROM A.imp_date) = 2015 "
+				 + "	WHERE EXTRACT(YEAR FROM A.imp_date) = " + byyear
 				 + "	GROUP BY 1,2,3 " 
 				 + "	UNION ALL "
 				 + "	SELECT A.expense_id AS purchase_id "
@@ -261,7 +261,7 @@ public class AdminReportServiceImp implements AdminReportService {
 				+ "	FROM tbl_expense A "
 				+ "	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "
 				+ "	LEFT JOIN users C ON A.expense_user_id = C.id "
-							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = 2015 "
+							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = " + byyear
 				+ "	GROUP BY 1,2,3 "
 				+ "	ORDER BY 2 DESC;");
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -512,4 +512,12 @@ public class AdminReportServiceImp implements AdminReportService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Map> getListReportDetailPurchase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+ 
 	}

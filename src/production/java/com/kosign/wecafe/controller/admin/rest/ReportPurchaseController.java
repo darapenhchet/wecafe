@@ -40,7 +40,7 @@ public class ReportPurchaseController {
 	@RequestMapping(value="/purchasereportdetail", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination){
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdetail", adminReportService.getListReportDetailPurchase());
+		map.put("reportdetail", adminReportService.getListReportDetailPurchaseRest(filter.getByYear()));
 		pagination.setTotalCount(adminReportService.count());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);

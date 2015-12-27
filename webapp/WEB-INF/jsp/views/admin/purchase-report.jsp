@@ -135,15 +135,17 @@ tbody tr td {
 											<h2 class="text-right">
 												<%-- <img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic"> --%>
 
-												<strong>Purchase Information</strong> <small>start
-													from</small> <small id="purchasemonth"></small>
+												<strong>Purchase Information</strong> 
+												<small id="startfrom"></small>
+												<!-- <small>start from</small> <small id="purchasemonth"></small> -->
 											</h2>
 										</div>
 									</div>
 
 									<hr>
 									<div class="m-h-50 form-group hidden-print ">
-										<div class="col-sm-9">
+										<div id="Datelabel" class="col-sm-9 ">
+										<spen id="datelable" class="hidetable">
 											<label class="col-sm-1 control-label">Date : </label> <input
 												type="hidden" id="SEND_DT" data-id="SEND_DT" />
 											<div id="sendFrdt" class="date-range col-sm-5">
@@ -160,6 +162,13 @@ tbody tr td {
 													style="width: 20px; height: 20px;"
 													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
 											</div>
+										</spen>
+										<span id="yearcombo">
+											<select id="selectyear">
+												<option>2014</option>
+												<option>2015</option>
+											</select>
+										</span>
 										</div>
 										<div class="col-sm-3 form-group">
 											<select class="form-control" id="selectreport">
@@ -259,6 +268,7 @@ tbody tr td {
 															<th>Invoice No</th> 
 															<th>Purchase Date</th>
 															<th>Purchase By</th> 
+															<th>Purchase type</th> 
 															<th>Total Amount</th>
 														</tr>
 													</thead>
@@ -646,10 +656,11 @@ tbody tr td {
 <!-- ============================  tbodydetail  ================================== -->		
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
     	<tr>  
-			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= impId}}</a></td>
-			<td style="text-align:right;">{{= impDate}} </td>
-			<td style="text-align:right;">{{= username}} ​</td>
-			<td style="text-align:right;">{{= totalAmount}} </td>
+			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
+			<td style="text-align:right;">{{= purchase_date}} </td>
+			<td style="text-align:right;">{{= purchase_by}} ​</td>
+			<td style="text-align:right;">{{= purchase_type}} ​</td>
+			<td style="text-align:right;">{{= purchase_total_amount}} </td>
 		</tr>
     </script>
  
@@ -765,13 +776,18 @@ tbody tr td {
 	 searchByDate();
 	 settableheader();
 	 
-	 
+/* 	 
 	 listDaily();
 	 listWeekly();
 	  
-	 listYearly();
+	 listYearly(); */
+	 $("#selectyear").change(function(){
+		 products.listDetail(1);
+	 });
 	 
 	 products.listDetail = function(currentPage){ 
+		// var byyear = new Date().getFullYear();
+		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdetail/" , 
 			    type: 'GET', 
@@ -779,7 +795,8 @@ tbody tr td {
 			    		"currentPage" : currentPage,
 			    		"perPage"     : $("#PER_PAGE").val(),
 			    		"startDate"   : "03/12/2015",
-			    		"endDate"     : "03/12/2015"
+			    		"endDate"     : "03/12/2015",
+			    		"byYear" 	  : byyear 
 			    },
 				    beforeSend: function(xhr) {
 	               xhr.setRequestHeader("Accept", "application/json");
@@ -789,10 +806,9 @@ tbody tr td {
 			    	console.log(data);
 					 if(data.reportdetail.length>0){
 						$("tbody#tbodydetail").html('');
-						for(var i=0;i<data.reportdetail.length;i++){
-							data.reportdetail[i]["username"] = "";
+						 for(var i=0;i<data.reportdetail.length;i++){							
 							products.format(data.reportdetail[i]);
-						}
+						} 
 						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
 					}else{
 						$("tbody#tbodydetail").html('<tr>NO CONTENTS</tr>');
@@ -883,7 +899,10 @@ tbody tr td {
 			}); 
 	 }
 	 products.format = function(value){
-		 value["username"] = value["user"]["lastName"] + " " + value["user"]["firstName"];
+		 if(value["purchase_type"] == 0)
+		 		value["purchase_type"] = "Import";
+		 else
+			 	value["purchase_type"] = "Expense";
 	 }
 	 function formatMonthlySaleReport(value){
 			console.log(value);
@@ -961,7 +980,9 @@ tbody tr td {
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
 			 setCalendar();
+			 $("#startfrom").html(" in " +  mm.get('year'));
 			 products.listDetail(1);
+			 
 		 }			 
 		 else if($(this).val()==1){ 
 			 $("#tbldetail").addClass("hidetable");
@@ -1004,8 +1025,10 @@ tbody tr td {
 		var mm = moment().isoWeekday(1);
 		mm = moment().weekday(6);
 		console.log(mm.weekday(0).get('date'));
-		$("#purchasemonth").html(monthOfyear[mm.get('month')] +" "+ mm.weekday(1).get('date') +", "+ mm.get('year'));
-	/* 	$("#purchasemonth").html(monthOfyear[mm.get('month')]);	*/
+		$("#startfrom").html(" in " +  mm.get('year'));
+	/* 	$("#purchasemonth").html(monthOfyear[mm.get('month')]);	
+		$("#startfrom").html("on" + monthOfyear[mm.get('month')] +" "+ mm.weekday(1).get('date') +", "+ mm.get('year'));
+	*/
 		var dd = moment(mm.weekday(0).get('date')).isoWeekday(1);
 		var dayID ="";
 			for (var i=1; i <8; i++) {

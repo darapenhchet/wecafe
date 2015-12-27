@@ -13,6 +13,8 @@ public interface AdminReportService {
 	
 	public List<Map> getReportListAllOrderProduct();
 	
+	public List<Map> getListReportDetailPurchaseRest(int byYear);
+	
 	public List<Map> getListReportDetailPurchase();
 	
 	public List<Map> getSearchSellbyDate(DateForm dateForm);

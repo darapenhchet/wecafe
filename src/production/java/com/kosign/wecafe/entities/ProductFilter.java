@@ -6,6 +6,13 @@ public class ProductFilter {
 	
 	private Date startDate;
 	private Date endDate;
+	private int byYear;
+	public int getByYear() {
+		return byYear;
+	}
+	public void setByYear(int byYear) {
+		this.byYear = byYear;
+	}
 	private int displayType;
 	
 	public Date getStartDate() {
