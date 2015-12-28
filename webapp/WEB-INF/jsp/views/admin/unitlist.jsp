@@ -135,7 +135,7 @@
                                                 <a href="${pageContext.request.contextPath}/admin/category/update/${category.catId}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
                                                 <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
                                             </td>
-                                        </tr>
+                                        </tr> 
                                     </c:forEach> --%>
 									<tr
 										dir-paginate="(key,category) in categories|filter:search|itemsPerPage:perPage|"
