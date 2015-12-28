@@ -63,8 +63,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
+
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <style>
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
@@ -229,25 +232,7 @@
 				</div>
 				<!-- Left and right controls -->
 
-				<%-- <c:forEach items="${products}" var="product">
-								<div class="col-sm-6">
-									<div class="panel panel-default form-group">
-										<div class="panel-body">
-											
-											<div style="float: left;">
-												<img id="img"
-												
-													src="${pageContext.request.contextPath}/resources/images/products/${product.image}">
-													<input type="text" name="" value="${product.productName}" id="pro_nm" style="display: none;">
-												<input type="text" name="" value="${product.productId}" id="pro_id" style="display: none;">
-												${product.productName}
-											</div>
-											
-											<div style="text-align: right;">0.5$</div>
-										</div>
-									</div>
-								</div>
-							</c:forEach> --%>
+		
 				<a class="left carousel-control" href="#myCarousel1" role="button"
 					data-slide="prev"> <span
 					class="glyphicon glyphicon-chevron-left"></span> <span
@@ -457,6 +442,92 @@
 				</div>
 			</div>
 		</div>
+
+
+
+		<div id="form_request_stock"
+			style="display: none; width: 80%; height: auto;">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<button type="button" class="close" aria-hidden="true">
+						<span class="button b-close"><span>×</span></span>
+					</button>
+					<h4 class="modal-title">Form Request Products</h4>
+
+				</div>
+				<div class="modal-body" style="height: auto;">
+					<div class=" form">
+						<form class="cmxform form-horizontal tasi-form" id="signupForm"
+							method="get" action="#" novalidate="novalidate">
+							<div class="form-group ui-widget">
+								<label for="productName" class="control-label col-lg-2">Product
+									Name *</label>
+								<div class="col-lg-10">
+									<input class=" form-control" required="required"
+										id="productName" name="productName" type="text"> <input
+										class="hidebtn" id="proID">
+								</div>
+							</div>
+							<div class="form-group ">
+								<label for="quantity" class="control-label col-lg-2">Qty
+									*</label>
+								<div class="col-lg-10">
+									<input class="form-control " required="required" id="qty"
+										name="qty" type="text">
+								</div>
+							</div>
+
+							<div class="form-group" align="right">
+
+								<button class="btn btn-success waves-effect waves-light"
+									style="width: 100px;" id="addbtn" type="button">Add</button>
+								<button class="btn btn-default waves-effect waves-light"
+									style="width: 100px; margin-right: 10px;" id="canceladd"
+									type="button">Cancel</button>
+							</div>
+						</form>
+						<!-- =================== -->
+						<h5 class="pull-left page-title"># Product List</h5>
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<table id="datatable"
+									class="table table-striped table-bordered dataTable">
+									<thead>
+
+									</thead>
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Product Name</th>
+											<th style="text-align: center;">Qty</th>
+											<th style="text-align: center;">Edit</th>
+										</tr>
+									</thead>
+									<tbody id="tbllistimport">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- =================== -->
+						<div class="form-group" align="right">
+							<button class="btn btn-success waves-effect waves-light"
+								style="width: 100px;" id="savebtn" type="button">Save</button>
+							<button class="btn btn-default waves-effect"
+								style="width: 100px; margin-right: 10px;" id="cencelBtn"
+								type="button">Cancel</button>
+						</div>
+
+					</div>
+					<!-- .form -->
+				</div>
+
+			</div>
+		</div>
+
+
 		<%@ include file="footer.jsp"%>
 
 		<!-- ======================================================================================= -->
@@ -479,6 +550,10 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.scrollTo.min.js"></script>
 	<script
+		src="${pageContext.request.contextPath}/resources/assets/chat/moment-2.2.1.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-sparkline/jquery.sparkline.min.js"></script>
+	<script
 		src="${pageContext.request.contextPath}/resources/assets/jquery-detectmobile/detect.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/fastclick/fastclick.js"></script>
@@ -486,644 +561,1002 @@
 		src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
+
+	<!-- sweet alerts -->
 	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
+
+	<!-- flot Chart -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
+
+	<!-- Counter-up -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
+		type="text/javascript"></script>
 
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-</body>
+
+	<!-- Dashboard -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
+
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+		
+		
+		
+		
+		
+		
+		
+		<!-- Request Stock -->
 <script type="text/javascript">
-    var _orderid = 0;
-    var _productid = 0;
-    var _qty = 0;
-    var _thisRow;
-    $(document).ready(function() {
-        getsizeSession();
-        getordered();
-        $(document).on('keypress', '#qtytxt', function(e) {
-            if ((e.keyCode == 8) || (e.keyCode == 46) || ((e.keyCode >= 37) && (e.keyCode <= 40)))
-                return;
-            var data = String.fromCharCode(e.which);
-            var reg = new RegExp('^[0-9]+$');
-            if (!reg.test(data)) {
-                e.preventDefault();
-            }
-        });
-        $("#btnlistorder").click(function() {
-            getordered();
-        });
-        $('#btncancelorder, #btnconfirmorder').click(function() {
-            if ($(this).attr('id') == 'btncancelorder')
-                var updatestatus = 'cancelOrder/';
-            else
-                var updatestatus = 'confirmOrder/';
-            $.ajax({
-                url: "${pageContext.request.contextPath}/seller/" + updatestatus + _orderid,
-                type: 'GET',
-                dataType: 'JSON',
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                },
-                success: function(data) {
+	/* ==============================================
+	Counter Up
+	=============================================== */
+	jQuery(document)
+			.ready(
+					function($) {
 
-                },
-                error: function(data, status, er) {
-                    console
-                        .log("error: " + data + " status: " + status + " er:" + er);
-                }
-            });
+						var _thisRow;
 
-            $("#totalorder")
-                .html(
-                    $("#totalorder")
-                    .html() - 1);
-        });
+						$(document)
+								.on(
+										'keypress',
+										'#qty',
+										function(e) {
 
-        $('#btncancel').click(function() {
-            clearallsession();
+											if ((e.keyCode == 8)
+													|| (e.keyCode == 46)
+													|| ((e.keyCode >= 37) && (e.keyCode <= 40)))
+												return;
 
-            $('input[name="orderqty"]').val('0');
+											var data = String
+													.fromCharCode(e.which);
+											var reg = new RegExp('^[0-9]+$');
+											if (!reg.test(data)) {
+												e.preventDefault();
+											}
+										});
 
-        });
+						$("#cencelBtn").click(function() {
+							if (confirm("Do you want to cancel?")) {
+								$("#tbllistimport tr").remove();
+							}
+						});
+						$(document).on("click", "#btndelete", function() {
+							$(this).parents("tr").remove();
+						});
 
-        $(document)
-            .on('click', '#cusordered',function() {
-                    _this = $(this);
-                    _orderid = (_this.find("#orderedId").html());
-                    $("#btnconfirmorder").removeClass(
-                        "hidebtn");
-                    $("#btncancelorder").removeClass(
-                        "hidebtn");
-                    $("#btncancel").addClass("hidebtn");
-                    $("#btnconfirm")
-                        .addClass("hidebtn");
-                    $
-                        .ajax({
-                            url: "${pageContext.request.contextPath}/seller/getOrderedDetail/" + _this
-                                .find(
-                                    "#orderedId")
-                                .html(),
-                            type: 'GET',
-                            dataType: 'JSON',
-                            beforeSend: function(
-                                xhr) {
-                                xhr
-                                    .setRequestHeader(
-                                        "Accept",
-                                        "application/json");
-                                xhr
-                                    .setRequestHeader(
-                                        "Content-Type",
-                                        "application/json");
-                            },
-                            success: function(data) {
-                                var st = ""; // var amount = 0;
-                                console.log(data);
-                                for (i = 0; i < data.length; i++) {
-                                    st += "<tr><td style='display: none;'>" + data[i][2].productId + "</td>"
-                                    st += "<td>" + data[i][2].productName + "</td>";
-                                    st += "<td>" + data[i][0].proUnitPrice + "</td>";
-                                    st += "<td>" + data[i][0].proQty + "</td>";
-                                    st += "<td>" + (data[i][0].proUnitPrice * data[i][0].proQty) + "</td>";
-                                    st += "<td>" + data[i][0].proComment + "</td>";
-                                    st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
-                                    //amount += data[i][1].orderAmount;
-                                }
-                                $("#totalamount")
-                                    .val(
-                                        data[0][1].orderAmount);
-                                $("#orderdetail")
-                                    .html(st);
-                                $("#orderID")
-                                    .html(
-                                        data[0][1].orderId);
-                                $("#addtocart")
-                                    .bPopup();
-                            },
-                            error: function(data,
-                                status, er) {
-                                console
-                                    .log("error: " + data + " status: " + status + " er:" + er);
-                            }
-                        });
-                });
+						$("#btn_request_stock").click(function() {
+							searchProduct();
+							$("#form_request_stock").bPopup();
 
-        function listproductorder() {
-            var st = "";
-            var amount = 0;
-            $
-                .ajax({
-                    url: "${pageContext.request.contextPath}/seller/listtocart",
-                    type: 'POST',
-                    dataType: 'JSON',
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader("Accept",
-                            "application/json");
-                        xhr.setRequestHeader(
-                            "Content-Type",
-                            "application/json");
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        for (i = 0; i < data.length; i++) {
-                            st += "<tr><td id='pro_id' style='display: none;'>" + data[i].productId + "</td>"
-                            st += "<td>" + data[i].productName + "</td>";
-                            st += "<td>" + data[i].price + "</td>";
-                            st += "<td>" + data[i].quantity + "</td>";
-                            st += "<td>" + data[i].totalAmount + "</td>";
-                            st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
-                            amount += data[i].totalAmount;
-                        }
-                        $("#totalamount").val(amount);
-                        $("#orderdetail").html(st);
-                    },
-                    error: function(data, stutus, er) {
-                        console.log("error:  " + data + " status: " + status + " er:" + er)
-                    }
-                });
-        }
+						});
 
-        $("#bt_add, #btnCart").click(function() {
-            $("#btncancel").removeClass("hidebtn");
-            $("#btncancelorder").addClass("hidebtn");
-            $("#btnconfirmorder").addClass("hidebtn");
-            $("#btnconfirm").removeClass("hidebtn");
-            listproductorder();
-            $("#addtocart").bPopup();
+						$(document).on(
+								"click",
+								"#btnedit",
+								function() {
 
-        });
+									_thisRow = $(this).parents("tr");
 
-        $(document)
+									$("#productName").val(
+											$(this).parents("tr").children()
+													.eq(3).html());
+									$("#qty").val(
+											$(this).parents("tr").children()
+													.eq(4).html());								
+									$("#addbtn").attr("id", "editbtn");
+								});
+						$(document).on(
+								"click",
+								"#editbtn",
+								function() {
+									_thisRow.children().eq(0).html(
+											$("#proID").val());
+									
+									_thisRow.children().eq(3).html(
+											$("#productName").val());
+									_thisRow.children().eq(4).html(
+											$("#qty").val());									
+									$("#editbtn").attr("id", "addbtn");
+									clear();
+								});
+						$("#canceladd").click(function() {
+							clear();
+							$("#editbtn").attr("id", "addbtn");
 
-        .on(
-            'click',
-            "#btndelete, #btnminus, #btnedit,#cancelbtn",
-            function() {
-                _thisRow = $(this).parents("tr");
-                var st = "";
-                var _url = "";
-                var amount = 0;
-                _this = $(this);
+						});
+						$(document).on("blur", "#productName ,#qty",
+								function() {
 
-                if (_this.html() == "Delete") {
-                    var proId = $(this).parent()
-                        .parent().children()
-                        .eq(0).html();
-                    alert("ppppppp" + proId);
-                    var txt;
-                    var msg = confirm("Do you want to delete Order Numeber" + _orderid + "\nand Product Number " + proId);
-                    if (msg == true) {
-                        $
-                            .ajax({
-                                url: "${pageContext.request.contextPath}/seller/deletedOrderProduct/" + _orderid + "/" + proId,
-                                type: 'GET',
-                                dataType: 'JSON',
-                                beforeSend: function(
-                                    xhr) {
-                                    xhr
-                                        .setRequestHeader(
-                                            "Accept",
-                                            "application/json");
-                                    xhr
-                                        .setRequestHeader(
-                                            "Content-Type",
-                                            "application/json");
-                                },
-                                success: function(
-                                    data) {
-                                    console
-                                        .log(data);
-                                },
-                                error: function(
-                                    data,
-                                    status,
-                                    er) {
-                                    console
-                                        .log("error: " + data + " status: " + status + " er:" + er);
-                                }
-                            });
-                        txt = "Successful";
-                    } else {
-                        // 												        txt = "You pressed Cancel!";
-                    }
-                    document.getElementById("demo").innerHTML = txt;
+									if ($(this).val() == "") {
+										$(this).addClass("borderRed");
+										return;
+									} else
+										$(this).removeClass("borderRed");
+								});
+						$(document)
+								.on(
+										"click",
+										"#addbtn",
+										function() {
+											if ($("#productName").val() == "") {
+												$("#productName").addClass(
+														"borderRed");
+												return;
+											} else
+												$("#productName").removeClass(
+														"borderRed");
+											if ($("#qty").val() == "") {
+												$("#qty").addClass("borderRed");
+												return;
+											} else
+												$("#qty").removeClass(
+														"borderRed");
 
-                } else if (_this.html() == "Edit") {
-                    _productid = $(this).parent()
-                        .parent().children()
-                        .eq(0).html();
-                    var proId = $(this).parent()
-                        .parent().children()
-                        .eq(0).html();
-                    $("#productNm").html(
-                        $(this).parent()
-                        .parent()
-                        .children().eq(
-                            1)
-                        .html());
-                    $("#productprice").html(
-                        $(this).parent()
-                        .parent()
-                        .children().eq(
-                            2)
-                        .html());
-                    $("#qtytxt").val(
-                        $(this).parent()
-                        .parent()
-                        .children().eq(
-                            3)
-                        .html());
-                    $("#procomment").val(
-                        $(this).parent()
-                        .parent()
-                        .children().eq(
-                            5)
-                        .html());
-                    $("#myModal").bPopup();
-                } else if (_this.html() == "Cancel") {
+											var st = "";
+											st += "<tr><td style='display: none;'>"
+													+ $('#proID').val()
+													+ "</td>";
+											st += "<td style='display: none;'>"
+													+ $('#supID').val()
+													+ "</td>";
+											st += "<td>"
+													+ ($("#tbllistimport tr").length + 1)
+													+ "</td>";
+											st += "<td>"
+													+ $("#productName").val()
+													+ "</td>";
+											st += "<td>" + $("#qty").val()
+													+ "</td>";
+											st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+											$("#tbllistimport").append(st);
+											clear();
+										});
 
-                } else
-                    var proId = $(this).parent()
-                        .parent().children()
-                        .html();
+						$('.counter').counterUp({
+							delay : 100,
+							time : 1200
+						});
 
-                // 											$.ajax({
-                // 												_url = "${pageContext.request.contextPath}/seller/removetocart/"+ _orderid + "/"+ proId;
-                // 														url : _url,
-                // 														type : 'POST',
-                // 														dataType : 'JSON',
-                // 														beforeSend : function(
-                // 																xhr) {
-                // 															xhr
-                // 																	.setRequestHeader(
-                // 																			"Accept",
-                // 																			"application/json");
-                // 															xhr
-                // 																	.setRequestHeader(
-                // 																			"Content-Type",
-                // 																			"application/json");
-                // 														},
-                // 														success : function(data) {
+						$("#savebtn")
+								.click(
+										function() {
+											var importDetail = [];
+											if ($('#tbllistimport tr').length == 0) {
+												alert("There is no data was added");
+												return;
+											}
+											$('#tbllistimport tr')
+													.each(
+															function() {
+																json = {
+																	"proId" : ($(
+																			this)
+																			.find(
+																					"td")
+																			.eq(
+																					0)
+																			.html()),
+																	"quantity" : ($(
+																			this)
+																			.find(
+																					"td")
+																			.eq(
+																					4)
+																			.html())
+																	
+																};
+																importDetail
+																		.push(json);
+															});
 
-                // 															if (_this
-                // 																	.parents(
-                // 																			".panel-body")
-                // 																	.find(
-                // 																			"#txtqty")
-                // 																	.val() == 1)
-                // 																_this
-                // 																		.parents(
-                // 																				".panel-body")
-                // 																		.find(
-                // 																				"#txtqty")
-                // 																		.val(
-                // 																				"0");
-                // 															for (i = 0; i < data.length; i++) {
-                // 																if (data[i].quantity >= 1) {
-                // 																	st += "<tr><td style='display: none;'>"
-                // 																			+ data[i].productId
-                // 																			+ "</td>"
-                // 																	st += "<td>"
-                // 																			+ data[i].productName
-                // 																			+ "</td>";
-                // 																	st += "<td>"
-                // 																			+ data[i].price
-                // 																			+ "</td>";
-                // 																	st += "<td>"
-                // 																			+ data[i].quantity
-                // 																			+ "</td>";
-                // 																	st += "<td>"
-                // 																			+ data[i].totalAmount
-                // 																			+ "</td>";
-                // 																	st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
-                // 																	amount += data[i].totalAmount;
-                // 																}
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/admin/addImport",
+														type : 'POST',
+														datatype : 'JSON',
+														data : JSON
+																.stringify(importDetail),
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+															console.log(data);
+															location.href = "${pageContext.request.contextPath}/admin/importlist";
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ "status: "
+																			+ status
+																			+ "er: ");
+														}
+													});
+										});
 
-                // 																if (data[i].productId == proId) {
-                // 																	_this
-                // 																			.parents(
-                // 																					".panel-body")
-                // 																			.find(
-                // 																					"#txtqty")
-                // 																			.val(
-                // 																					data[i].quantity);
-                // 																}
+						function clear() {
+							$("#productName").val("");
+							$("#productName").removeClass("borderRed");
+							$('#proID').val("");
+							$("#qty").val("");
+							$("#qty").removeClass("borderRed");
 
-                // 															}
+						}
 
-                // 															$("#totalamount")
-                // 																	.val(amount);
-                // 															$("#orderdetail")
-                // 																	.html(st);
-                // 															getsizeSession();
-                // 														},
-                // 														error : function(data,
-                // 																status, er) {
-                // 															console.log("error: " + data + " status: "
-                // 																			+ status
-                // 																			+ " er:"
-                // 																			+ er);
-                // 														}
-                // 													});
+						function searchProduct() {
 
-            });
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/seller/searchproduct",
+										type : 'POST',
+										dataType : 'JSON',
+										beforeSend : function(xhr) {
+											xhr.setRequestHeader("Accept",
+													"application/json");
+											xhr.setRequestHeader(
+													"Content-Type",
+													"application/json");
+										},
+										success : function(data) {
+											console.log(data);
+											var availableTags = [];
+											for (i = 0; i < data.length; i++) {
+												availableTags[i] = {
+													"label" : data[i].productName,
+													"dataid" : data[i].productId
+												};
+											}
+											$("#productName")
+													.autocomplete(
+															{
 
-        $("#btnUpdate")
-            .click(
-                function() {
-                    _qty = $("#qtytxt").val();
-                    $
-                        .ajax({
-                            url: "${pageContext.request.contextPath}/seller/updateOrderProduct/" + _orderid + "/" + _productid + "/" + _qty,
-                            type: 'GET',
-                            dataType: 'JSON',
-                            beforeSend: function(
-                                xhr) {
-                                xhr
-                                    .setRequestHeader(
-                                        "Accept",
-                                        "application/json");
-                                xhr
-                                    .setRequestHeader(
-                                        "Content-Type",
-                                        "application/json");
-                            },
-                            success: function(data) {
-                                var subtotal = $(
-                                        "#qtytxt")
-                                    .val() * _thisRow
-                                    .children()
-                                    .eq(
-                                        2)
-                                    .html();
-                                var totalamount = $(
-                                        "#totalamount")
-                                    .val() - _thisRow
-                                    .children()
-                                    .eq(
-                                        4)
-                                    .html();
+																select : function(
+																		event,
+																		ui) {
 
-                                _thisRow
-                                    .children()
-                                    .eq(3)
-                                    .html(
-                                        $(
-                                            "#qtytxt")
-                                        .val());
-                                _thisRow
-                                    .children()
-                                    .eq(4)
-                                    .html(
-                                        subtotal);
-                                _thisRow
-                                    .children()
-                                    .eq(5)
-                                    .html(
-                                        $(
-                                            "#procomment")
-                                        .html());
-                                $("#totalamount")
-                                    .val(
-                                        subtotal + totalamount);
-                            },
-                            error: function(data,
-                                status, er) {
-                                console
-                                    .log("error: " + data + " status: " + status + " er:" + er);
-                            }
-                        });
-                });
-        $(document)
-            .on(
-                'click',
-                '#btnplus',
-                function() {
+																	$("#proID")
+																			.val(
+																					ui.item.dataid);
+																},
+																maxShowItems : 8,
+																source : availableTags
+															});
+										},
+										error : function(data, status, er) {
+											console.log("error: " + data
+													+ " status: " + status
+													+ " er:" + er);
+										}
+									});
 
-                    var proNm = $(this).parents(
-                        ".panel-body").find(
-                        "#pro_nm").val();
-                    var proId = $(this).parents(
-                        ".panel-body").find(
-                        "#pro_id").val();
-                    var price = $(this).parents(
-                        ".panel-body").find(
-                        "#PRICE").html();
-                    var price = $(this).parents(
-                        ".panel-body").find(
-                        "#PRICE").html();
-                    var proqty = 1;
-                    var _this = $(this);
-                    var totalAmount = proqty * price;
-                    console.log(totalAmount);
-                    json = {
-                        "productId": proId,
-                        "productName": proNm,
-                        "price": price,
-                        "quantity": proqty,
-                        "totalAmount": totalAmount
-                    };
-                    $
-                        .ajax({
-                            url: "${pageContext.request.contextPath}/seller/addtocart",
-                            type: 'POST',
-                            datatype: 'JSON',
-                            data: JSON
-                                .stringify(json),
-                            beforeSend: function(
-                                xhr) {
-                                xhr
-                                    .setRequestHeader(
-                                        "Accept",
-                                        "application/json");
-                                xhr
-                                    .setRequestHeader(
-                                        "Content-Type",
-                                        "application/json");
-                            },
-                            success: function(data) {
-                                getsizeSession();
-                                for (i = 0; i < data.length; i++) {
-                                    if (data[i].productId == proId) {
-                                        _this
-                                            .parents(
-                                                ".panel-body")
-                                            .find(
-                                                "#txtqty")
-                                            .val(
-                                                data[i].quantity);
-                                        break;
-                                    }
-                                }
-                            },
-                            error: function(data,
-                                status, er) {
-                                console
-                                    .log("error: " + data + "status: " + status + "er: ");
-                            }
-                        });
-                });
+						}
 
-        $("#btnconfirm")
-            .click(
-                function() {
-                    $
-                        .ajax({
-                            url: "${pageContext.request.contextPath}/seller/insertcartsell",
-                            type: 'POST',
-                            datatype: 'JSON',
-                            data: JSON
-                                .stringify(json),
-                            beforeSend: function(
-                                xhr) {
-                                xhr
-                                    .setRequestHeader(
-                                        "Accept",
-                                        "application/json");
-                                xhr
-                                    .setRequestHeader(
-                                        "Content-Type",
-                                        "application/json");
-                            },
-                            success: function(data) {
-                                clearallsession();
-                                $(
-                                        'input[name="orderqty"]')
-                                    .val('0');
-                            },
-                            error: function(data,
-                                status, er) {
-                                console
-                                    .log("error: " + data + "status: " + status + "er: ");
-                            }
-                        });
-                });
-
-        function getsizeSession() {
-            $.ajax({
-                url: "${pageContext.request.contextPath}/order/listcart",
-                type: 'POST',
-                dataType: 'JSON',
-                /* data: JSON.stringify(json), */
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Accept",
-                        "application/json");
-                    xhr.setRequestHeader(
-                        "Content-Type",
-                        "application/json");
-                },
-                success: function(data) {
-                    $("#totalproduce")
-                        .html(data.length);
-                },
-                error: function(data, status, er) {
-                    console.log("error: " + data + " status: " + status + " er:" + er);
-                }
-            });
-
-        }
-
-        function clearallsession() {
-            $
-                .ajax({
-                    url: "${pageContext.request.contextPath}/order/removeAllFromCart/",
-                    type: 'POST',
-                    dataType: 'JSON',
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader("Accept",
-                            "application/json");
-                        xhr.setRequestHeader(
-                            "Content-Type",
-                            "application/json");
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        getsizeSession();
-                    },
-                    error: function(data, status, er) {
-                        console.log("error: " + data + " status: " + status + " er:" + er);
-                    }
-                });
-            return;
-        }
-
-        function getordered() {
-            $
-                .ajax({
-                    url: "${pageContext.request.contextPath}/seller/getordered",
-                    type: 'POST',
-                    dataType: 'JSON',
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader("Accept",
-                            "application/json");
-                        xhr.setRequestHeader(
-                            "Content-Type",
-                            "application/json");
-                    },
-                    success: function(data) {
-                        st = "";
-                        console.log(data);
-                        $("#totalorder").html(data.length);
-                        for (i = 0; i < data.length; i++) {
-                            st += "<a href='javascript:void(0);' id='cusordered' class='list-group-item'><div class='media'><div class='media-body clearfix'>- <span id='cusName'>" + data[i].customer.username + "</span> (<span id='cusorderqty'>" + data[i].orderQuantity + "</span>)</div></div>"
-                            st += "<div style='display: none;' id='orderedId'>" + data[i].orderId + "</div></a>"
-                        }
-                        $("#listorder").html(st);
-                    },
-                    error: function(data, status, er) {
-                        console.log("error: " + data + " status: " + status + " er:" + er);
-                    }
-                });
-            return;
-
-        }
-
-        var wsURI = "ws://" + document.location.host + "${pageContext.request.contextPath}/notification";
-        if (!("WebSocket" in window)) {
-            console
-                .log("WebSocket is not support on your browser...")
-        } else {
-            console
-                .log("WebSocket is support on your browser...");
-        }
-        var connection = new WebSocket(wsURI);
-        var sendedMessage = "";
-        connection.binaryType = 'arraybuffer';
-
-        connection.onopen = function(event) {
-            onOpen(event);
-        }
-
-        connection.onerror = function(event) {
-            onError(event);
-        }
-
-        connection.onmessage = function(event) {
-            console.log("MESSAGE...")
-            onMessage(event);
-        }
-
-        function onOpen(event) {
-            console.log("CONNECTED...")
-        }
-
-        function onError(event) {
-            console.log(event);
-        }
-
-        function onMessage(event) {
-            console.log(event.data);
-            if (sendedMessage == event.data) {
-                return;
-            }
-            console.log(event.data);
-            if (event.data == "SENT") {
-                getsizeSession();
-                getordered();
-            }
-        }
-    });
+					});
 </script>
+
+
+
+
+
+<script type="text/javascript">
+	var _orderid = 0;
+	var _productid = 0;
+	var _qty = 0;
+	var _thisRow;
+	$(document)
+			.ready(
+					function() {
+						getsizeSession();
+						getordered();
+						$(document)
+								.on(
+										'keypress',
+										'#qtytxt',
+										function(e) {
+											if ((e.keyCode == 8)
+													|| (e.keyCode == 46)
+													|| ((e.keyCode >= 37) && (e.keyCode <= 40)))
+												return;
+											var data = String
+													.fromCharCode(e.which);
+											var reg = new RegExp('^[0-9]+$');
+											if (!reg.test(data)) {
+												e.preventDefault();
+											}
+										});
+						$("#btnlistorder").click(function() {
+							getordered();
+						});
+						$('#btncancelorder, #btnconfirmorder')
+								.click(
+										function() {
+											if ($(this).attr('id') == 'btncancelorder')
+												var updatestatus = 'cancelOrder/';
+											else
+												var updatestatus = 'confirmOrder/';
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/"
+																+ updatestatus
+																+ _orderid,
+														type : 'GET',
+														dataType : 'JSON',
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ " status: "
+																			+ status
+																			+ " er:"
+																			+ er);
+														}
+													});
+
+											$("#totalorder")
+													.html(
+															$("#totalorder")
+																	.html() - 1);
+										});
+
+						$('#btncancel').click(function() {
+							clearallsession();
+
+							$('input[name="orderqty"]').val('0');
+
+						});
+
+						$(document)
+								.on(
+										'click',
+										'#cusordered',
+										function() {
+											_this = $(this);
+											_orderid = (_this
+													.find("#orderedId").html());
+											$("#btnconfirmorder").removeClass(
+													"hidebtn");
+											$("#btncancelorder").removeClass(
+													"hidebtn");
+											$("#btncancel").addClass("hidebtn");
+											$("#btnconfirm")
+													.addClass("hidebtn");
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/getOrderedDetail/"
+																+ _this
+																		.find(
+																				"#orderedId")
+																		.html(),
+														type : 'GET',
+														dataType : 'JSON',
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+															var st = ""; // var amount = 0;
+															console.log(data);
+															for (i = 0; i < data.length; i++) {
+																st += "<tr><td style='display: none;'>"
+																		+ data[i][2].productId
+																		+ "</td>"
+																st += "<td>"
+																		+ data[i][2].productName
+																		+ "</td>";
+																st += "<td>"
+																		+ data[i][0].proUnitPrice
+																		+ "</td>";
+																st += "<td>"
+																		+ data[i][0].proQty
+																		+ "</td>";
+																st += "<td>"
+																		+ (data[i][0].proUnitPrice * data[i][0].proQty)
+																		+ "</td>";
+																st += "<td>"
+																		+ data[i][0].proComment
+																		+ "</td>";
+																st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+																//amount += data[i][1].orderAmount;
+															}
+															$("#totalamount")
+																	.val(
+																			data[0][1].orderAmount);
+															$("#orderdetail")
+																	.html(st);
+															$("#orderID")
+																	.html(
+																			data[0][1].orderId);
+															$("#addtocart")
+																	.bPopup();
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ " status: "
+																			+ status
+																			+ " er:"
+																			+ er);
+														}
+													});
+										});
+
+						function listproductorder() {
+							var st = "";
+							var amount = 0;
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/seller/listtocart",
+										type : 'POST',
+										dataType : 'JSON',
+										beforeSend : function(xhr) {
+											xhr.setRequestHeader("Accept",
+													"application/json");
+											xhr.setRequestHeader(
+													"Content-Type",
+													"application/json");
+										},
+										success : function(data) {
+											console.log(data);
+											for (i = 0; i < data.length; i++) {
+												st += "<tr><td id='pro_id' style='display: none;'>"
+														+ data[i].productId
+														+ "</td>"
+												st += "<td>"
+														+ data[i].productName
+														+ "</td>";
+												st += "<td>" + data[i].price
+														+ "</td>";
+												st += "<td>" + data[i].quantity
+														+ "</td>";
+												st += "<td>"
+														+ data[i].totalAmount
+														+ "</td>";
+												st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+												amount += data[i].totalAmount;
+											}
+											$("#totalamount").val(amount);
+											$("#orderdetail").html(st);
+										},
+										error : function(data, stutus, er) {
+											console.log("error:  " + data
+													+ " status: " + status
+													+ " er:" + er)
+										}
+									});
+						}
+
+						$("#bt_add, #btnCart").click(function() {
+							$("#btncancel").removeClass("hidebtn");
+							$("#btncancelorder").addClass("hidebtn");
+							$("#btnconfirmorder").addClass("hidebtn");
+							$("#btnconfirm").removeClass("hidebtn");
+							listproductorder();
+							$("#addtocart").bPopup();
+
+						});
+
+						$(document)
+
+								.on(
+										'click',
+										"#btndelete, #btnminus, #btnedit,#cancelbtn",
+										function() {
+											_thisRow = $(this).parents("tr");
+											var st = "";
+											var _url = "";
+											var amount = 0;
+											_this = $(this);
+
+											if (_this.html() == "Delete") {
+												var proId = $(this).parent()
+														.parent().children()
+														.eq(0).html();
+												alert("ppppppp" + proId);
+												var txt;
+												var msg = confirm("Do you want to delete Order Numeber"
+														+ _orderid
+														+ "\nand Product Number "
+														+ proId);
+												if (msg == true) {
+													$
+															.ajax({
+																url : "${pageContext.request.contextPath}/seller/deletedOrderProduct/"
+																		+ _orderid
+																		+ "/"
+																		+ proId,
+																type : 'GET',
+																dataType : 'JSON',
+																beforeSend : function(
+																		xhr) {
+																	xhr
+																			.setRequestHeader(
+																					"Accept",
+																					"application/json");
+																	xhr
+																			.setRequestHeader(
+																					"Content-Type",
+																					"application/json");
+																},
+																success : function(
+																		data) {
+																	console
+																			.log(data);
+																},
+																error : function(
+																		data,
+																		status,
+																		er) {
+																	console
+																			.log("error: "
+																					+ data
+																					+ " status: "
+																					+ status
+																					+ " er:"
+																					+ er);
+																}
+															});
+													txt = "Successful";
+												} else {
+													// 												        txt = "You pressed Cancel!";
+												}
+												document.getElementById("demo").innerHTML = txt;
+
+											} else if (_this.html() == "Edit") {
+												_productid = $(this).parent()
+														.parent().children()
+														.eq(0).html();
+												var proId = $(this).parent()
+														.parent().children()
+														.eq(0).html();
+												$("#productNm").html(
+														$(this).parent()
+																.parent()
+																.children().eq(
+																		1)
+																.html());
+												$("#productprice").html(
+														$(this).parent()
+																.parent()
+																.children().eq(
+																		2)
+																.html());
+												$("#qtytxt").val(
+														$(this).parent()
+																.parent()
+																.children().eq(
+																		3)
+																.html());
+												$("#procomment").val(
+														$(this).parent()
+																.parent()
+																.children().eq(
+																		5)
+																.html());
+												$("#myModal").bPopup();
+											} else if (_this.html() == "Cancel") {
+
+											} else
+												var proId = $(this).parent()
+														.parent().children()
+														.html();
+
+									
+										});
+
+						$("#btnUpdate")
+								.click(
+										function() {
+											_qty = $("#qtytxt").val();
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/updateOrderProduct/"
+																+ _orderid
+																+ "/"
+																+ _productid
+																+ "/" + _qty,
+														type : 'GET',
+														dataType : 'JSON',
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+															var subtotal = $(
+																	"#qtytxt")
+																	.val()
+																	* _thisRow
+																			.children()
+																			.eq(
+																					2)
+																			.html();
+															var totalamount = $(
+																	"#totalamount")
+																	.val()
+																	- _thisRow
+																			.children()
+																			.eq(
+																					4)
+																			.html();
+
+															_thisRow
+																	.children()
+																	.eq(3)
+																	.html(
+																			$(
+																					"#qtytxt")
+																					.val());
+															_thisRow
+																	.children()
+																	.eq(4)
+																	.html(
+																			subtotal);
+															_thisRow
+																	.children()
+																	.eq(5)
+																	.html(
+																			$(
+																					"#procomment")
+																					.html());
+															$("#totalamount")
+																	.val(
+																			subtotal
+																					+ totalamount);
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ " status: "
+																			+ status
+																			+ " er:"
+																			+ er);
+														}
+													});
+										});
+						$(document)
+								.on(
+										'click',
+										'#btnplus',
+										function() {
+
+											var proNm = $(this).parents(
+													".panel-body").find(
+													"#pro_nm").val();
+											var proId = $(this).parents(
+													".panel-body").find(
+													"#pro_id").val();
+											var price = $(this).parents(
+													".panel-body").find(
+													"#PRICE").html();
+											var price = $(this).parents(
+													".panel-body").find(
+													"#PRICE").html();
+											var proqty = 1;
+											var _this = $(this);
+											var totalAmount = proqty * price;
+											console.log(totalAmount);
+											json = {
+												"productId" : proId,
+												"productName" : proNm,
+												"price" : price,
+												"quantity" : proqty,
+												"totalAmount" : totalAmount
+											};
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/addtocart",
+														type : 'POST',
+														datatype : 'JSON',
+														data : JSON
+																.stringify(json),
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+															getsizeSession();
+															for (i = 0; i < data.length; i++) {
+																if (data[i].productId == proId) {
+																	_this
+																			.parents(
+																					".panel-body")
+																			.find(
+																					"#txtqty")
+																			.val(
+																					data[i].quantity);
+																	break;
+																}
+															}
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ "status: "
+																			+ status
+																			+ "er: ");
+														}
+													});
+										});
+
+						$("#btnconfirm")
+								.click(
+										function() {
+											$
+													.ajax({
+														url : "${pageContext.request.contextPath}/seller/insertcartsell",
+														type : 'POST',
+														datatype : 'JSON',
+														data : JSON
+																.stringify(json),
+														beforeSend : function(
+																xhr) {
+															xhr
+																	.setRequestHeader(
+																			"Accept",
+																			"application/json");
+															xhr
+																	.setRequestHeader(
+																			"Content-Type",
+																			"application/json");
+														},
+														success : function(data) {
+															clearallsession();
+															$(
+																	'input[name="orderqty"]')
+																	.val('0');
+														},
+														error : function(data,
+																status, er) {
+															console
+																	.log("error: "
+																			+ data
+																			+ "status: "
+																			+ status
+																			+ "er: ");
+														}
+													});
+										});
+
+						function getsizeSession() {
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/order/listcart",
+										type : 'POST',
+										dataType : 'JSON',
+										/* data: JSON.stringify(json), */
+										beforeSend : function(xhr) {
+											xhr.setRequestHeader("Accept",
+													"application/json");
+											xhr.setRequestHeader(
+													"Content-Type",
+													"application/json");
+										},
+										success : function(data) {
+											$("#totalproduce")
+													.html(data.length);
+										},
+										error : function(data, status, er) {
+											console.log("error: " + data
+													+ " status: " + status
+													+ " er:" + er);
+										}
+									});
+
+						}
+
+						function clearallsession() {
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/order/removeAllFromCart/",
+										type : 'POST',
+										dataType : 'JSON',
+										beforeSend : function(xhr) {
+											xhr.setRequestHeader("Accept",
+													"application/json");
+											xhr.setRequestHeader(
+													"Content-Type",
+													"application/json");
+										},
+										success : function(data) {
+											console.log(data);
+											getsizeSession();
+										},
+										error : function(data, status, er) {
+											console.log("error: " + data
+													+ " status: " + status
+													+ " er:" + er);
+										}
+									});
+							return;
+						}
+
+						function getordered() {
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/seller/getordered",
+										type : 'POST',
+										dataType : 'JSON',
+										beforeSend : function(xhr) {
+											xhr.setRequestHeader("Accept",
+													"application/json");
+											xhr.setRequestHeader(
+													"Content-Type",
+													"application/json");
+										},
+										success : function(data) {
+											st = "";
+											console.log(data);
+											$("#totalorder").html(data.length);
+											for (i = 0; i < data.length; i++) {
+												st += "<a href='javascript:void(0);' id='cusordered' class='list-group-item'><div class='media'><div class='media-body clearfix'>- <span id='cusName'>"
+														+ data[i].customer.username
+														+ "</span> (<span id='cusorderqty'>"
+														+ data[i].orderQuantity
+														+ "</span>)</div></div>"
+												st += "<div style='display: none;' id='orderedId'>"
+														+ data[i].orderId
+														+ "</div></a>"
+											}
+											$("#listorder").html(st);
+										},
+										error : function(data, status, er) {
+											console.log("error: " + data
+													+ " status: " + status
+													+ " er:" + er);
+										}
+									});
+							return;
+
+						}
+
+						var wsURI = "ws://"
+								+ document.location.host
+								+ "${pageContext.request.contextPath}/notification";
+						if (!("WebSocket" in window)) {
+							console
+									.log("WebSocket is not support on your browser...")
+						} else {
+							console
+									.log("WebSocket is support on your browser...");
+						}
+						var connection = new WebSocket(wsURI);
+						var sendedMessage = "";
+						connection.binaryType = 'arraybuffer';
+
+						connection.onopen = function(event) {
+							onOpen(event);
+						}
+
+						connection.onerror = function(event) {
+							onError(event);
+						}
+
+						connection.onmessage = function(event) {
+							console.log("MESSAGE...")
+							onMessage(event);
+						}
+
+						function onOpen(event) {
+							console.log("CONNECTED...")
+						}
+
+						function onError(event) {
+							console.log(event);
+						}
+
+						function onMessage(event) {
+							console.log(event.data);
+							if (sendedMessage == event.data) {
+								return;
+							}
+							console.log(event.data);
+							if (event.data == "SENT") {
+								getsizeSession();
+								getordered();
+							}
+						}
+					});
+</script>
+
+
+
+
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script>
+
+
+
+
+
+
+</body>
+
+
 </html>

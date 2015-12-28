@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -597,4 +597,4 @@
     </body>
     <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
   		<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script> 
-</html> --%>
+</html>

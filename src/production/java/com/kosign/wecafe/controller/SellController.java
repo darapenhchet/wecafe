@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
+import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.forms.Cart;
+import com.kosign.wecafe.services.ImportService;
 import com.kosign.wecafe.services.SellProductServiceImpl;
 import com.kosign.wecafe.services.SellProductsService;
 import com.kosign.wecafe.services.SellService;
@@ -34,8 +36,20 @@ public class SellController {
 	
 	@Inject SellService sellService;
 	
+	@Inject ImportService importService;
+	
 	@Autowired
 	UserService userService;
+	
+	@RequestMapping(value="/seller/searchproduct", method=RequestMethod.POST)
+	public @ResponseBody List<Product> searchProductName(){
+		return importService.listAllProduct();
+	}
+	
+	@RequestMapping(value = "/seller/request_products", method = RequestMethod.GET)
+	public String requestProducts(Map<String, Object> model) {
+		return "seller/request_stock";
+	}
 	
 	@RequestMapping(value="/seller")
 	public String listAllProducts(HttpSession session, Map<String, Object> model, Principal principal){

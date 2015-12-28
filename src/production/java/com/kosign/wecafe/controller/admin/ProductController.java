@@ -50,6 +50,12 @@ public class ProductController {
 	
 	@Autowired
 	ServletContext servletContext;
+	
+	
+	@RequestMapping(value = "/admin/approve_products", method = RequestMethod.GET)
+	public String approveProducts(Map<String, Object> model) {
+		return "admin/approve_stock";
+	}
 
 	@RequestMapping(value = "/admin/products", method = RequestMethod.GET)
 	public String listAllProducts(Map<String, Object> model) {

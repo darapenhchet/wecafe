@@ -41,19 +41,6 @@
 						<ul class="dropdown-menu dropdown-menu-lg">
 							<li class="text-center notifi-title">Customer Ordered</li>
 							<li class="list-group" id="listorder">
-								<!-- list item--> <!--  <a href="javascript:void(0);" class="list-group-item">
-                                              <div class="media">
-                                                 <div class="pull-left">
-                                                    <em class="fa fa-user-plus fa-2x text-info"></em>
-                                                 </div>
-                                                 <div class="media-body clearfix">
-                                                    <div class="media-heading">New user registered</div>
-                                                    <p class="m-0">
-                                                       <small>You have 10 unread messages</small>
-                                                    </p>
-                                                 </div>
-                                              </div>
-                                           </a> --> <!-- last list item -->
 
 								<a href="javascript:void(0);" class="list-group-item"> <small>See
 										all notifications</small>
@@ -82,8 +69,8 @@
 						<ul class="dropdown-menu">
 							<li><a href="javascript:void(0)"><i
 									class="md md-face-unlock"></i> Profile</a></li>
-							<li><a href="javascript:void(0)"><i
-									class="md md-settings"></i> Settings</a></li>
+							<li><a href="#" data-target="#"  id="btn_request_stock"><i
+									class="md md-settings"></i>Request Stock</a></li>
 							<!-- <li><a href="javascript:void(0)"><i class="md md-lock"></i> Lock screen</a></li> -->
 							<c:if test="${pageContext.request.userPrincipal.name != null}">
 								<li><a
