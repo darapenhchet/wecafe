@@ -1,4 +1,4 @@
-package com.kosign.wecafe.controller.admin;
+/*package com.kosign.wecafe.controller.admin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,3 +54,4 @@ public class RequestTakeOut {
 		return null;
 	}
 }
+*/

@@ -15,6 +15,16 @@ public interface AdminReportService {
 	
 	public List<Map> getListReportDetailPurchaseRest(int byYear);
 	
+	public List<Map> getListReportDailyPurchaseRest(Date startdate);
+	
+	public List<Map> getListReportWeeklyPurchaseRest(int byYear);
+	
+	public Object getListReportMonthlyPurcase(Date startDate, Date endDate);
+	
+	public Map<String, Object> getAllPurchaseMonthlyReportsTotal(Date startDate, Date endDate);
+	
+	public List<Map> getListReportYearlyPurchaseRest(int byYear);
+	
 	public List<Map> getListReportDetailPurchase();
 	
 	public List<Map> getSearchSellbyDate(DateForm dateForm);
@@ -26,8 +36,6 @@ public interface AdminReportService {
 	public List<Object[]> getReportListAllCupStockbyDate(DateForm dateForm);
 
 	public Long count();
-
-	public Object getListReportMonthlyPurcase(Date startDate, Date endDate);
-	public Map<String, Object> getAllPurchaseMonthlyReportsTotal(Date startDate, Date endDate);
+ 
 	
 }

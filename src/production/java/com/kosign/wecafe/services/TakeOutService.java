@@ -1,4 +1,4 @@
-package com.kosign.wecafe.services;
+/*package com.kosign.wecafe.services;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +17,4 @@ public interface TakeOutService {
 	public Boolean updateTakeOut(List<ImportForm> importform, Long id);
 	public Boolean deleteTakeOut(List<ImportForm> importform, Long id);
 	
-}
+}*/

@@ -144,7 +144,7 @@ tbody tr td {
 
 									<hr>
 									<div class="m-h-50 form-group hidden-print ">
-										<div id="Datelabel" class="col-sm-9 ">
+										<div class="col-sm-9 ">
 										<spen id="datelable" class="hidetable">
 											<label class="col-sm-1 control-label">Date : </label> <input
 												type="hidden" id="SEND_DT" data-id="SEND_DT" />
@@ -154,19 +154,17 @@ tbody tr td {
 													style="width: 100px; text-align: center;">&nbsp; <a
 													href="#none" id="btnREGS_DATE_S"><img
 													style="width: 20px; height: 20px;"
-													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
-												<input type="text" readonly="readonly" id="REGS_DATE_E"
-													name="stopdate" class="range-end"
-													style="width: 100px; text-align: center;">&nbsp; <a
-													href="#none" id="btnREGS_DATE_E"><img
-													style="width: 20px; height: 20px;"
-													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png">
+													</a><span id="EDate">&nbsp;~&nbsp;
+												<input type="text" readonly="readonly" id="REGS_DATE_E"	name="stopdate" class="range-end" style="width: 100px; text-align: center;">&nbsp; 
+												<a href="#none" id="btnREGS_DATE_E"><img style="width: 20px; height: 20px;" src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+													</span>
 											</div>
 										</spen>
 										<span id="yearcombo">
 											<select id="selectyear">
-												<option>2014</option>
-												<option>2015</option>
+												<option value="2014">2014</option>
+												<option value="2015">2015</option>
 											</select>
 										</span>
 										</div>
@@ -188,76 +186,16 @@ tbody tr td {
 												<table id="dailytable" class="table table-responsive">
 													<thead>
 														<tr>
-															<th rowspan="2">Customer</th>
-															<th rowspan="2">Item</th>
-															<th colspan="2" id="day1">1</th>
-															<th colspan="2" id="day2">2</th>
-															<th colspan="2" id="day3">3</th>
-															<th colspan="2" id="day4">4</th>
-															<th colspan="2" id="day5">5</th>
-															<th colspan="2" id="day6">6</th>
-															<th colspan="2" id="day7">7</th>
-															<th colspan="2">Total</th>
-														</tr>
-														<tr>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>qty</th>
-															<th>Amount</th>
-															<th>Total Qty</th>
-															<th>Total Amount</th>
-														</tr>
+															<th>Customer</th>
+															<th>Item</th>
+															<th>Qty</th>
+															<th>Unit Price</th>
+															<th>Purchase By</th>
+															<th>Purchase Type</th>
+															<th>Total</th> 
+														</tr> 
 													</thead>
 													<tbody id="tbodydaily">
-														<tr>
-															<td>Malongo</td>
-															<td>Americano</td>
-															<td>1</td>
-															<td>8$</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr id="dailyfooter">
-															<td colspan="2">Total</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td>10</td>
-															<td>6$</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -786,7 +724,9 @@ tbody tr td {
 	 });
 	 
 	 products.listDetail = function(currentPage){ 
-		// var byyear = new Date().getFullYear();
+		var defaultyear = new Date().getFullYear();
+		$('select#selectyear option[value="'+defaultyear+'"]').attr("selected",true);
+		
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdetail/" , 
@@ -817,6 +757,40 @@ tbody tr td {
 			    		products.setPagination(data.pagination.totalPages,1);
 			    		check=false;
 			    	}  
+			    },
+			    error:function(data,status,er) { 
+			        console.log("error: ",data," status: ",status," er:",er);
+			    }
+			}); 
+	 }
+	 products.listDaily = function(currentPage){
+		 $.ajax({ 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdaily/" , 
+			    type: 'GET', 
+			    data: {
+			    		"currentPage" : currentPage,
+			    		"perPage"     : $("#PER_PAGE").val(),
+			    		"startDate"   : $("#REGS_DATE_S").val()			    		 
+			    },
+				    beforeSend: function(xhr) {
+	               xhr.setRequestHeader("Accept", "application/json");
+	               xhr.setRequestHeader("Content-Type", "application/json");
+	           },
+			    success: function(data) { 
+			    	console.log(data);
+				/* 	 if(data.reportdetail.length>0){
+						$("tbody#tbodydetail").html('');
+						 for(var i=0;i<data.reportdetail.length;i++){							
+							products.format(data.reportdetail[i]);
+						} 
+						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
+					}else{
+						$("tbody#tbodydetail").html('<tr>NO CONTENTS</tr>');
+					}
+			    	if(check){
+			    		products.setPagination(data.pagination.totalPages,1);
+			    		check=false;
+			    	}   */
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: ",data," status: ",status," er:",er);
@@ -955,9 +929,7 @@ tbody tr td {
 		};
 	 products.listDetail(1);
 	 
-	 function listDaily(){
-		 
-	 }
+
 	 
 	 function listWeekly(){
 		 
@@ -980,7 +952,10 @@ tbody tr td {
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
 			 setCalendar();
-			 $("#startfrom").html(" in " +  mm.get('year'));
+			 
+			 $("#startfrom").html(" in " +  new Date().getFullYear());
+			 $("#yearcombo").removeClass("hidetable");
+			 $("#datelable").addClass("hidetable");
 			 products.listDetail(1);
 			 
 		 }			 
@@ -990,7 +965,14 @@ tbody tr td {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
+			 
+			 $("#yearcombo").addClass("hidetable");
+			 $("#datelable").removeClass("hidetable");
+			 $("#EDate").addClass("hidetable");
 			 setCalendar();
+			 
+			 products.listDaily(1);
+			 
 		 }else if($(this).val()==2){ 
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tbldaily").addClass("hidetable");

@@ -1,4 +1,4 @@
-package com.kosign.wecafe.services;
+/*package com.kosign.wecafe.services;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -80,3 +80,4 @@ public class TakeOutServiceImp implements TakeOutService {
 	
 	 
 }
+*/

@@ -1,4 +1,4 @@
-package com.kosign.wecafe.entities;
+/*package com.kosign.wecafe.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,3 +13,4 @@ public class TakeOut {
 	
 //	private 
 }
+*/
