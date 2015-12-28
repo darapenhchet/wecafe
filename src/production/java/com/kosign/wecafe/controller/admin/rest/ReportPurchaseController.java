@@ -48,9 +48,11 @@ public class ReportPurchaseController {
 		
 	}
 	@RequestMapping(value="/purchasereportdaily", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getpurchasereportdaily(ProductFilter filter, Pagination pagination){
+	public ResponseEntity<Map<String, Object>> getpurchasereportdaily(@RequestParam(value="startDate") String strStartDate, Pagination pagination) throws ParseException{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdetail", adminReportService.getListReportDailyPurchaseRest(filter.getStartDate()));
+		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(startDate));
 		pagination.setTotalCount(adminReportService.count());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);

@@ -522,7 +522,9 @@ public class AdminReportServiceImp implements AdminReportService {
 	@Override
 	@Transactional
 	public List<Map> getListReportDailyPurchaseRest(Date startdate) {
-
+	//	String Startdate[] =startdate.toString().split("/");
+	//	String purchaseDate = Startdate[2] + "-" + Startdate[1] + "-" + Startdate[0];
+		
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -538,10 +540,10 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " SUM(B.pro_qty * B.unit_price) AS purchase_total_amount, '0' AS purchase_type "
 					+ " FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id LEFT JOIN users C ON C.id = A.user_id LEFT JOIN supplier D ON D.sup_id = B.sup_id "
 					+ " 						LEFT JOIN product E on E.pro_id = B.pro_id"
-					+ " WHERE A.imp_date = " + startdate
-					+ " GROUP BY 1,2,3,4,5,6,7 "
-	+ " UNION ALL  	"
-	+ " SELECT 	A.expense_id AS purchase_id  , "
+					+ " WHERE A.imp_date = '" + startdate
+					+ "' GROUP BY 1,2,3,4,5,6,7 "
+					+ " UNION ALL  	"
+					+ " SELECT 	A.expense_id AS purchase_id  , "
 					+ " A.expense_date AS purchase_date  ,"
 					+ " CONCAT(C.lastname, ' ', C.firstname) AS purchase_by,"
 					+ " B.customer As supplier_name,"
@@ -552,8 +554,8 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " '1' AS purchase_type"
 					+ " FROM tbl_expense A "
 					+ " 	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.expense_user_id = C.id "
-					+ " 				WHERE A.expense_date = " + startdate
-					+ " GROUP BY 1,2,3,4,5,6,7 "
+					+ " 				WHERE A.expense_date = '" + startdate
+					+ "' GROUP BY 1,2,3,4,5,6,7 "
 					+ " ORDER BY 2 DESC;");
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	importProducts = (List<Map>)query.list();	

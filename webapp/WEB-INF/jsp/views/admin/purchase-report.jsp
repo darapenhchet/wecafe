@@ -605,23 +605,13 @@ tbody tr td {
  <!-- ============================  tbodydaily  ================================== -->		
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
-			<td>{{= productId}}</td>
-			<td>{{= productName}}</td>
-			<td style="text-align:right;">{{= quantity}}</td>
-			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
-			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
-			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
-			<td>{{= category.catName}}</td>
-			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
-			<td style="text-align:center;">
-				<span>
-					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
-				</span>
-			</td>
-			<td class="actions" style="text-align:center;">
-				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
-				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
-			</td>
+			<td>{{= supplier_name}}</td>
+			<td>{{= product_name}}</td>
+			<td>{{= product_qty}}</td>
+			<td>{{= pro_unit_price}}</td>
+			<td>{{= purchase_by}}​</td>
+			<td>{{= purchase_type}}</td>
+			<td>{{= purchase_total_amount}}</td>
 		</tr>
     </script>
  
@@ -763,7 +753,7 @@ tbody tr td {
 			    }
 			}); 
 	 }
-	 products.listDaily = function(currentPage){
+	 products.listDaily = function(currentPage){ 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdaily/" , 
 			    type: 'GET', 
@@ -778,19 +768,19 @@ tbody tr td {
 	           },
 			    success: function(data) { 
 			    	console.log(data);
-				/* 	 if(data.reportdetail.length>0){
-						$("tbody#tbodydetail").html('');
-						 for(var i=0;i<data.reportdetail.length;i++){							
-							products.format(data.reportdetail[i]);
-						} 
-						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
+				 	 if(data.reportdaily.length>0){
+						$("tbody#tbodydaily").html('');
+						   for(var i=0;i<data.reportdaily.length;i++){							
+							products.format(data.reportdaily[i]);
+						}   
+						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily");
 					}else{
-						$("tbody#tbodydetail").html('<tr>NO CONTENTS</tr>');
+						$("tbody#tbodydaily").html('<tr>NO CONTENTS</tr>');
 					}
 			    	if(check){
 			    		products.setPagination(data.pagination.totalPages,1);
 			    		check=false;
-			    	}   */
+			    	}   
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: ",data," status: ",status," er:",er);
