@@ -570,8 +570,45 @@ public class AdminReportServiceImp implements AdminReportService {
 	}
 
 	@Override
-	public List<Map> getListReportWeeklyPurchaseRest(int byYear) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public List<Map> getListReportWeeklyPurchaseRest(Date startdate, Date enddate) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.getTransaction().begin();
+			SQLQuery query = session.createSQLQuery(
+					"SELECT A.imp_date AS purchase_date , "					 
+					+ " D.sup_name As supplier_name, "
+					+ " E.pro_name As product_name, "
+					+ " sum(B.pro_qty) As product_qty, "
+					+ " B.unit_price As pro_unit_price, "
+					+ " SUM(B.pro_qty * B.unit_price) AS purchase_total_amount, '0' AS purchase_type  "
+					+ " FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id LEFT JOIN users C ON C.id = A.user_id LEFT JOIN supplier D ON D.sup_id = B.sup_id  "
+					+ "  						LEFT JOIN product E on E.pro_id = B.pro_id "
+					+ " WHERE A.imp_date BETWEEN '2015-12-24' And '2015-12-30' "
+					+ "  GROUP BY 1,2,3,5 "
+				    + " UNION ALL   "
+					+ " SELECT A.expense_date AS purchase_date  , "
+					+ " B.customer As supplier_name, "
+					+ " B.expense_description As product_name, "
+					+ " sum(B.expense_qty) As product_qty, "
+					+ " B.expense_unitprice as pro_unit_price, "
+					+ " SUM(B.expense_qty * B.expense_unitprice) AS purhcase_total_amount,  "
+					+ " '1' AS purchase_type "
+					+ " FROM tbl_expense A  "
+					+ "  	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.expense_user_id = C.id  "
+					+ "  				WHERE A.expense_date BETWEEN '2015-12-24' And '2015-12-30' "
+					+ "  GROUP BY 1,2,3,5 "
+					+ " ORDER BY 2 DESC;"); 
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map>	importProducts = (List<Map>)query.list();	
+			return importProducts;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			
+		}
+		
 		return null;
 	}
 

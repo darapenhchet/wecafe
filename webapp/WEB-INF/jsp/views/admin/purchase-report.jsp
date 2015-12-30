@@ -249,46 +249,7 @@ tbody tr td {
 																<th>Total Amount</th>
 															</tr>
 														</thead>
-														<tbody id="tbodyweekly">
-															<tr>
-																<td>Malongo</td>
-																<td>Passion</td>
-																<td>10</td>
-																<td>18$</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
-															<tr id="weeklyfooter">
-																<td colspan="2">Total</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td>10</td>
-																<td>6$</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
+														<tbody id="tbodyweekly"> 
 														</tbody>
 													</table>
 												</div>
@@ -624,23 +585,10 @@ tbody tr td {
  <!-- ============================  tbodyweekly  ================================== -->		
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
-			<td>{{= productId}}</td>
-			<td>{{= productName}}</td>
-			<td style="text-align:right;">{{= quantity}}</td>
-			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
-			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
-			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
-			<td>{{= category.catName}}</td>
-			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
-			<td style="text-align:center;">
-				<span>
-					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
-				</span>
-			</td>
-			<td class="actions" style="text-align:center;">
-				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
-				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
-			</td>
+			<td>{{= supplier_name}}</td>
+			<td>{{= product_name}}</td>
+			<td>{{= product_qty}}</td>
+			<td>{{= purchase_total_amount}}</td>
 		</tr>
     </script>
  
@@ -799,6 +747,44 @@ tbody tr td {
 			    }
 			}); 
 	 }
+	 products.listWeekly = function(currentPage){
+		  
+		 var json = {
+	   				"start_date" : $("#REGS_DATE_S").val(),
+	   				"end_date"   : $("#REGS_DATE_E").val()
+			};$.ajax({ 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportweekly/", 
+			    type: 'GET',  
+			    data: json, 
+			    beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+			    success: function(data) { 
+			    	console.log(data);
+			    	if(data.reportweekly.length>0){
+						$("tbody#tbodyweekly").html('');
+						   for(var i=0;i<data.reportweekly.length;i++){							
+							products.format(data.reportweekly[i]);
+						}   
+						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
+						/* var tblside= $('#tbodyweekly > tbody >tr').length;
+						var alltotal = 0;
+						
+						for(var i =0;i < tblside; i++)	
+							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(6).html());
+						$("#allTotalAmount").val(alltotal); */
+					}else{
+						$("tbody#tbodydaily").html("");
+						$("#allTotalAmount").val('');
+					}
+			    },	
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			}); 
+		 
+	 }
 	 products.listMonthly = function(){
 		 var json = {
 	   				"start_date" : $("#REGS_DATE_S").val(),
@@ -929,22 +915,7 @@ tbody tr td {
 		    	products.findAllProducts(currentPage);
 		    }); 
 		};
-	 products.listDetail(1);
-	 
-
-	 
-	 function listWeekly(){
-		 
-	 }
-	 
-	 function listMonthly(){
-		 
-	 }
-	 
-	 function listYearly(){
-		 
-	 }
-	 
+	 products.listDetail(1); 
 	 
 	 $("#selectreport").change(function(){
 		 if($(this).val()==0){
@@ -977,6 +948,7 @@ tbody tr td {
 			 products.listDaily(1);
 			 
 		 }else if($(this).val()==2){ 
+			 
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tblweekly").removeClass("hidetable");
@@ -989,6 +961,8 @@ tbody tr td {
 			 
 			 setCalendar();
 			 settableheader();
+			 
+			 products.listWeekly(1);
 			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
 			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
 			 
