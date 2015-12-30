@@ -221,13 +221,13 @@ tbody tr td {
 															<tr>
 																<th rowspan="2">Customer</th>
 																<th rowspan="2">Item</th>
-																<th colspan="2" id="week1">1</th>
-																<th colspan="2" id="week2">2</th>
-																<th colspan="2" id="week3">3</th>
-																<th colspan="2" id="week4">4</th>
-																<th colspan="2" id="week5">5</th>
-																<th colspan="2" id="week6">6</th>
-																<th colspan="2" id="week7">7</th>
+																<th colspan="2" id="week1"></th>
+																<th colspan="2" id="week2"></th>
+																<th colspan="2" id="week3"></th>
+																<th colspan="2" id="week4"></th>
+																<th colspan="2" id="week5"></th>
+																<th colspan="2" id="week6"></th>
+																<th colspan="2" id="week7"></th>
 																<th colspan="2">Total</th>
 															</tr>
 															<tr>
@@ -472,6 +472,12 @@ tbody tr td {
 													<option value="100">100</option>
 												</select>
 											</div>
+											<div class="col-md-10 form-horizontal" align="right">
+												<label  class="control-label col-md-9">Total Amount : </label>
+													<div class="col-md-3">
+															<input class="form-control" readonly="readonly" id="allTotalAmount" type="text">
+													</div>												
+											</div>
 											<div id="PAGINATION" class="pull-right"></div>
 										</div>
 										<div class="row" style="border-radius: 0px;">
@@ -702,8 +708,8 @@ tbody tr td {
 	var check = true;
 	 setCalendar();
 	 searchByDate();
-	 settableheader();
 	 
+	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
 /* 	 
 	 listDaily();
 	 listWeekly();
@@ -714,9 +720,7 @@ tbody tr td {
 	 });
 	 
 	 products.listDetail = function(currentPage){ 
-		var defaultyear = new Date().getFullYear();
-		$('select#selectyear option[value="'+defaultyear+'"]').attr("selected",true);
-		
+		//var defaultyear = new Date().getFullYear();		
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdetail/" , 
@@ -774,13 +778,21 @@ tbody tr td {
 							products.format(data.reportdaily[i]);
 						}   
 						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily");
+						var tblside= $('#dailytable > tbody >tr').length;
+						var alltotal = 0;
+						
+						for(var i =0;i < tblside; i++)	
+							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(6).html());
+						$("#allTotalAmount").val(alltotal);
 					}else{
-						$("tbody#tbodydaily").html('<tr>NO CONTENTS</tr>');
+						$("tbody#tbodydaily").html("");
+						$("#allTotalAmount").val('');
 					}
 			    	if(check){
 			    		products.setPagination(data.pagination.totalPages,1);
 			    		check=false;
-			    	}   
+			    	} 
+			    	 
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: ",data," status: ",status," er:",er);
@@ -941,11 +953,12 @@ tbody tr td {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
-			 setCalendar();
+			// setCalendar();
 			 
-			 $("#startfrom").html(" in " +  new Date().getFullYear());
+			// $("#startfrom").html(" in " +  new Date().getFullYear());
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
+			 
 			 products.listDetail(1);
 			 
 		 }			 
@@ -969,8 +982,15 @@ tbody tr td {
 			 $("#tblweekly").removeClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
-			 $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
-			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate));
+			 
+			 $("#yearcombo").addClass("hidetable");
+			 $("#datelable").removeClass("hidetable");
+			 $("#EDate").removeClass("hidetable");	
+			 
+			 setCalendar();
+			 settableheader();
+			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
+			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
 			 
 		 }else if($(this).val()==3){
 			 $("#tbldaily").addClass("hidetable");
@@ -994,19 +1014,25 @@ tbody tr td {
 	 
 	function settableheader(){
 		var monthOfyear = ['January', 'February', 'Match', 'April', 'May', 'June', 'July','Augest','Septemper', 'October', 'November', 'December'];
-		var mm = moment().isoWeekday(1);
-		mm = moment().weekday(6);
-		console.log(mm.weekday(0).get('date'));
-		$("#startfrom").html(" in " +  mm.get('year'));
-	/* 	$("#purchasemonth").html(monthOfyear[mm.get('month')]);	
+		//var mm = moment().isoWeekday(1);
+		//var mm= moment($("#REGS_DATE_S").val());
+		//mm = moment().weekday(6);
+		//console.log(mm.weekday(0).get('date'));
+		/* 	$("#startfrom").html(" in " +  mm.get('year'));
+		$("#purchasemonth").html(monthOfyear[mm.get('month')]);	
 		$("#startfrom").html("on" + monthOfyear[mm.get('month')] +" "+ mm.weekday(1).get('date') +", "+ mm.get('year'));
 	*/
-		var dd = moment(mm.weekday(0).get('date')).isoWeekday(1);
+	//	var dd = moment(mm.weekday(0).get('date')).isoWeekday(1);
+	 
+		var dd = 0;
 		var dayID ="";
-			for (var i=1; i <8; i++) {
-				dayID = "#day" + i;
-				$(dayID).html(mm.weekday(i).get('date'));				
-			};  
+		
+			for (var i=0; i <7; i++) {
+				dayID = "#week" + (i+1);
+				dd=	moment($("#REGS_DATE_S").val()).add(i, 'days').get('date');
+				$(dayID).html(dd);
+			}; 
+			 
 		}
 	 
 	 function searchByDate(){
@@ -1082,6 +1108,18 @@ tbody tr td {
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+	 						if($("#EDate").hasClass("hidetable"))
+	 							{
+	 							
+	 								products.listDaily(1);
+	 							}	 							
+	 						else
+	 							{
+	 								settableheader();
+	 								$("#REGS_DATE_E").datepicker('setDate', moment($("#REGS_DATE_S").val()).add(6, 'days').format('YYYY-MM-DD'));
+	 								//products.listweekly(1);
+	 							}
+	 							
 	 						searchByDate();
 	 			      }
 	 		});
@@ -1096,10 +1134,15 @@ tbody tr td {
 	 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
-	 			    	   searchByDate();
+	 						$("#REGS_DATE_S").datepicker('setDate', moment($("#REGS_DATE_E").val()).subtract(6, 'days').format('YYYY-MM-DD'));
+	 						settableheader();
+	 						searchByDate();
 	 			      }
-	 		});		
-	 		$("#REGS_DATE_S").datepicker('setDate', moment ().format('YYYY-MM-DD'));
+	 		});	
+	 		if($("#EDate").hasClass("hidetable"))
+	 			$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
+	 		else
+	 			$("#REGS_DATE_S").datepicker('setDate', moment().subtract(6, 'days').format('YYYY-MM-DD'));
 	 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
