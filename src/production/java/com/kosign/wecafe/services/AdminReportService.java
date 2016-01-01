@@ -17,7 +17,7 @@ public interface AdminReportService {
 	
 	public List<Map> getListReportDailyPurchaseRest(Date startdate);
 	
-	public List<Map> getListReportWeeklyPurchaseRest(Date startdate, Date enddate);
+	public Object getListReportWeeklyPurchaseRest(Date startdate, Date enddate);
 	
 	public Object getListReportMonthlyPurcase(Date startDate, Date endDate);
 	

@@ -571,45 +571,100 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map> getListReportWeeklyPurchaseRest(Date startdate, Date enddate) {
-		Session session = null;
-		try{
-			session = sessionFactory.getCurrentSession();
-			session.getTransaction().begin();
-			SQLQuery query = session.createSQLQuery(
-					"SELECT A.imp_date AS purchase_date , "					 
-					+ " D.sup_name As supplier_name, "
-					+ " E.pro_name As product_name, "
-					+ " sum(B.pro_qty) As product_qty, "
-					+ " B.unit_price As pro_unit_price, "
-					+ " SUM(B.pro_qty * B.unit_price) AS purchase_total_amount, '0' AS purchase_type  "
-					+ " FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id LEFT JOIN users C ON C.id = A.user_id LEFT JOIN supplier D ON D.sup_id = B.sup_id  "
-					+ "  						LEFT JOIN product E on E.pro_id = B.pro_id "
-					+ " WHERE A.imp_date BETWEEN '2015-12-24' And '2015-12-30' "
-					+ "  GROUP BY 1,2,3,5 "
-				    + " UNION ALL   "
-					+ " SELECT A.expense_date AS purchase_date  , "
-					+ " B.customer As supplier_name, "
-					+ " B.expense_description As product_name, "
-					+ " sum(B.expense_qty) As product_qty, "
-					+ " B.expense_unitprice as pro_unit_price, "
-					+ " SUM(B.expense_qty * B.expense_unitprice) AS purhcase_total_amount,  "
-					+ " '1' AS purchase_type "
-					+ " FROM tbl_expense A  "
-					+ "  	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.expense_user_id = C.id  "
-					+ "  				WHERE A.expense_date BETWEEN '2015-12-24' And '2015-12-30' "
-					+ "  GROUP BY 1,2,3,5 "
-					+ " ORDER BY 2 DESC;"); 
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-			List<Map>	importProducts = (List<Map>)query.list();	
-			return importProducts;
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			
-		}
+	public List<Map<String, Object>> getListReportWeeklyPurchaseRest(Date startdate, Date enddate) {		
+	Session session = null;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	Calendar calStartDate = Calendar.getInstance();
+	calStartDate.setTime(startdate);
+	
+	Calendar calEndDate = Calendar.getInstance();
+	calEndDate.setTime(enddate);
+	
+	Calendar calendar = calStartDate;
+	String[] months = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
+	StringBuilder sb = new StringBuilder();
+	StringBuilder sbSelect = new StringBuilder();
+	
+	
+	for(int i=0 ; i<7 ; i++){
+		//calendar.add(Calendar.DATE, i);
+		 
+		//System.out.println("Month ==== " + months[i]);
+		 
+		sbSelect.append("COALESCE("+months[i]+"[1],0) AS "+months[i].toUpperCase()+"_QTY ,");
+		sbSelect.append("COALESCE("+months[i]+"[2],0) AS "+months[i].toUpperCase()+"_AMOUNT ,");
+		sb.append(months[i] + " INTEGER[],"); 
 		
-		return null;
+	}
+	System.out.println(sb.toString().substring(0, sb.toString().lastIndexOf(",")));
+	
+	System.out.println(calStartDate.getTime());
+	System.out.println(calEndDate.getTime());
+	try {
+		session = sessionFactory.getCurrentSession();
+		SQLQuery query = 
+				session.createSQLQuery("SELECT " +
+									   "mthreport.row_name [ 1 ] AS customer, " +
+									   "mthreport.row_name [ 2 ] AS pro_name, " + 
+									   "COALESCE(day1[1],0) AS day1_QTY, " +
+									   "COALESCE(day1[2],0) AS day1_AMOUNT, " +
+									   "COALESCE(day2[1],0) AS day2_QTY, " +
+									   "COALESCE(day2[2],0) AS day2_AMOUNT, " +
+									   "COALESCE(day3[1],0) AS day3_QTY, " +
+									   "COALESCE(day3[2],0) AS day3_AMOUNT, " +
+									   "COALESCE(day4[1],0) AS day4_QTY, " +
+									   "COALESCE(day4[2],0) AS day4_AMOUNT, " +
+									   "COALESCE(day5[1],0) AS day5_QTY," +
+									   "COALESCE(day5[2],0) AS day5_AMOUNT," +
+									   "COALESCE(day6[1],0) AS day6_QTY," +
+									   "COALESCE(day6[2],0) AS day6_AMOUNT," +
+									   "COALESCE(day7[1],0) AS day7_QTY," +
+									   "COALESCE(day7[2],0) AS day7_AMOUNT" +									    
+									   " FROM " +
+									   "	crosstab ( " +
+									   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
+									   "		   ,to_char(A.imp_date, ''DD'')::text As imp_date " +
+									   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price)] AS row " +
+									   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
+									   "	 LEFT JOIN users C ON C.id = A.user_id " +
+									   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   
+									   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE A.imp_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+									   "	 GROUP BY 1,2 " +
+									   " UNION ALL " +
+									   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
+									   " ,to_char(A.expense_date, ''DD'')::text As imp_date " +
+									   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
+									   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
+									   " LEFT JOIN users C ON A.expense_user_id = C.id " +
+									   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+									   " GROUP BY 1,2 " +
+									   "	 ORDER BY 2', " +
+									   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
+									   " FROM generate_series(0,6) n;' " +
+									   ") AS mthreport ( " +
+									   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
+									   /*  "jan INTEGER[], " +
+									   "feb INTEGER[], " +
+									   "mar INTEGER[], " +
+									   "apr INTEGER[], " +
+									   "may INTEGER[], " +
+									   "jun INTEGER[], " +
+									   "jul INTEGER[], " +
+									   "aug INTEGER[], " +
+									   "sep INTEGER[], " +
+									   "oct INTEGER[], " +
+									   "nov INTEGER[], " +
+									   "dec INTEGER[]) " +*/
+									   ); 	
+		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+		List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+		return sales;
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println(e.getMessage());
+	}
+	return null;
 	}
 
 	@Override

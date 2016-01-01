@@ -165,6 +165,8 @@ tbody tr td {
 											<select id="selectyear">
 												<option value="2014">2014</option>
 												<option value="2015">2015</option>
+												<option value="2016">2016</option>
+												
 											</select>
 										</span>
 										</div>
@@ -585,16 +587,29 @@ tbody tr td {
  <!-- ============================  tbodyweekly  ================================== -->		
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
-			<td>{{= supplier_name}}</td>
-			<td>{{= product_name}}</td>
-			<td>{{= product_qty}}</td>
-			<td>{{= purchase_total_amount}}</td>
+			<td>{{= customer}}</td>
+			<td>{{= pro_name}}</td>
+			<td>{{= day1_qty}}</td>
+			<td>{{= day1_amount}}</td>
+			<td>{{= day2_qty}}</td>
+			<td>{{= day2_amount}}</td>
+			<td>{{= day3_qty}}</td>
+			<td>{{= day3_amount}}</td>
+			<td>{{= day4_qty}}</td>
+			<td>{{= day4_amount}}</td>
+			<td>{{= day5_qty}}</td>
+			<td>{{= day5_amount}}</td>
+			<td>{{= day6_qty}}</td>
+			<td>{{= day6_amount}}</td>
+			<td>{{= day7_qty}}</td>
+			<td>{{= day7_amount}}</td>
+			<td>{{= total_qty}}</td>
+			<td>{{= total_amount}}</td>
 		</tr>
     </script>
  
  <!-- ============================  tbodymonthly  ================================== -->		
-	<script id="CONTENT_MONTHLY" type="text/x-jquery-tmpl">
-    	<tr>
+	<script id="CONTENT_MONTHLY" type="text/x-jquery-tmpl">    
 			<tr>
 			<td>{{= customer}}</td>
 			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
@@ -760,7 +775,7 @@ tbody tr td {
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-			    success: function(data) { 
+			    success: function(data) {
 			    	console.log(data);
 			    	if(data.reportweekly.length>0){
 						$("tbody#tbodyweekly").html('');
@@ -768,12 +783,22 @@ tbody tr td {
 							products.format(data.reportweekly[i]);
 						}   
 						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
-						/* var tblside= $('#tbodyweekly > tbody >tr').length;
-						var alltotal = 0;
-						
-						for(var i =0;i < tblside; i++)	
-							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(6).html());
-						$("#allTotalAmount").val(alltotal); */
+						var tblrowsize= $('#weeklytable > tbody >tr').length; 
+						var all_total_amount = 0;					 
+						 for(var i =0;i < tblrowsize; i++)	
+							 {
+							 	var total_qty = 0;
+								var total_amount = 0;
+							 for(var j=1; j<8 ; j++)
+								 {
+								 	total_amount += parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j + 1)).html());
+								 	total_qty +=  parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j)).html());
+								 }
+							 $("#weeklytable tbody").children().eq(i).children().eq(16).html(total_qty);
+							 $("#weeklytable tbody").children().eq(i).children().eq(17).html(total_amount);
+							 all_total_amount += total_amount;
+							 }	
+						$("#allTotalAmount").val(all_total_amount);
 					}else{
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
