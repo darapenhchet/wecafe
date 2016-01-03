@@ -719,15 +719,30 @@ tbody tr td {
 			    	    if(data.reportmonthly){
 				    	$("#monthlytable tbody").html('');
 				    	var st = "";
-				    	for(var i=0;i<data.reportmonthly.length;i++){
+				    	/* var days = new Array(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());				    	
+				    	for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++)
+		    			{
+				    		days[j] = new Array(2);
+				    		days[j][0] = "day" + (j+1) + "_qty";
+				    		days[j][1] = "day" + (j+1) + "_amount";
+				    		 
+		    			} */
+				    	 
+					    	for(var i=0;i<data.reportmonthly.length;i++){
+					    	var total_qty = 0;
+					    	var total_amount = 0;
 				    		st += "<tr>";
 				    		st += "<td>" + data.reportmonthly[i].customer + "</td>";
 				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
-				    		for(var j=1; j<=(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++)
+				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++)
 				    			{
-				    				st += "<td>" + data.reportmonthly[i].day + j + "_qty</td>";
-				    				st += "<td>" + data.reportmonthly[i].day + j + "_amount</td>";
+				    				st += "<td>" + data.reportmonthly[i].day1_qty + "</td>";
+				    				st += "<td>" + data.reportmonthly[i].day1_amount + "</td>";
+				    				total_qty += data.reportmonthly[i].day1_qty;
+				    				total_amount += data.reportmonthly[i].day1_amount;
 				    			}
+				    		st += "<td>" + total_qty + "</td>";
+				    		st += "<td>" + total_amount + "</td>";
 				    		st += "</tr>";
 						}
 				    	$("#monthlytable tbody").html(st);
