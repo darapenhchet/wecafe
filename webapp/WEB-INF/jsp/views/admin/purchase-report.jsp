@@ -161,12 +161,27 @@ tbody tr td {
 													</span>
 											</div>
 										</spen>
+										<span id="monthcombo" class="hidetable">
+											<select id="selectmonth">
+												<option value="0">January</option>
+												<option value="1">February</option>
+												<option value="2">March</option>
+												<option value="3">April</option>
+												<option value="4">May</option>
+												<option value="5">June</option>
+												<option value="6">July</option>
+												<option value="7">August</option>
+												<option value="8">September</option>
+												<option value="9">October</option>
+												<option value="10">November</option>
+												<option value="11">December</option>
+											</select>
+										</span>
 										<span id="yearcombo">
 											<select id="selectyear">
 												<option value="2014">2014</option>
 												<option value="2015">2015</option>
-												<option value="2016">2016</option>
-												
+												<option value="2016">2016</option>												
 											</select>
 										</span>
 										</div>
@@ -255,8 +270,16 @@ tbody tr td {
 														</tbody>
 													</table>
 												</div>
-												<div class="hidetable" id="tblmonthly">
-													<table id="monthlytable" class="table table-responsive">
+												<div id="tblmonthly" class="hidetable  table-responsive">
+													<table id="monthlytable" class="table">
+														<thead id="tbl_header_month"> 
+														</thead>
+														<tbody id="tbodymonthly"> 
+														</tbody>
+													</table>
+												</div>
+												<div class="hidetable table-responsive" id="tblyearly">
+													<table id="yearlytable" class="table table-responsive">
 														<thead>
 															<tr>
 																<th rowspan="2">Customer</th>
@@ -304,126 +327,11 @@ tbody tr td {
 																<th>Total Amount</th>
 															</tr>
 														</thead>
-														<tbody id="tbodymonthly">
-															<tr>
-																<td>Malongo</td>
-																<td>Americano</td>
-																<td>1</td>
-																<td>8$</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
-															<tr id="monthlyfooter">
-																<td colspan="2">Total</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td>10</td>
-																<td>6$</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
+														<tbody id="tbodyyearly"> 
 														</tbody>
 													</table>
 												</div>
-												<div id="tblyearly" class="hidetable">
-													<table id="yearlytable" class="table table-responsive">
-														<thead>
-															<tr>
-																<th rowspan="2">Customer</th>
-																<th rowspan="2">Item</th>
-																<th colspan="2" id="year1">2014</th>
-																<th colspan="2" id="year2">2015</th>
-																<th colspan="2" id="year3">2016</th>
-																<th colspan="2" id="year4">2017</th>
-																<th colspan="2" id="year5">2018</th>
-																<th colspan="2" id="year6">2019</th>
-																<th colspan="2" id="year7">2020</th>
-																<th colspan="2">Total</th>
-															</tr>
-															<tr>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>Total Qty</th>
-																<th>Total Amount</th>
-															</tr>
-														</thead>
-														<tbody id="tbodyyearly">
-															<tr>
-																<td>Malongo</td>
-																<td>Americano</td>
-																<td>1</td>
-																<td>8$</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
-															<tr id="yearlyfooter">
-																<td colspan="2">Total</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td>10</td>
-																<td>6$</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
+												
 											</div>
 										</div>
 										<div class="row">
@@ -607,9 +515,11 @@ tbody tr td {
 			<td>{{= total_amount}}</td>
 		</tr>
     </script>
- 
  <!-- ============================  tbodymonthly  ================================== -->		
-	<script id="CONTENT_MONTHLY" type="text/x-jquery-tmpl">    
+
+
+ <!-- ============================  tbodyyearly  ================================== -->		
+	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr>
 			<td>{{= customer}}</td>
 			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
@@ -641,29 +551,7 @@ tbody tr td {
 			<td>{{= total_amount}}</td>
 		</tr>
     </script>
-     <!-- ============================  tbodyearly  ================================== -->		
-	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">
-    	<tr>
-			<td>{{= productId}}</td>
-			<td>{{= productName}}</td>
-			<td style="text-align:right;">{{= quantity}}</td>
-			<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
-			<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
-			<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
-			<td>{{= category.catName}}</td>
-			<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
-			<td style="text-align:center;">
-				<span>
-					<a href="javascript:;" class="btn btn-success btn-sm waves-effect" type="button" id="btnStatus">{{= status}}</a>
-				</span>
-			</td>
-			<td class="actions" style="text-align:center;">
-				<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
-				<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
-			</td>
-		</tr>
-    </script>
- <!-- ============================================================== -->
+   <!-- ============================================================== -->   
  <script>
  var st = "";
  $(document).ready(function(){
@@ -679,9 +567,13 @@ tbody tr td {
 	  
 	 listYearly(); */
 	 $("#selectyear").change(function(){
+		 setheadermonthly();
 		 products.listDetail(1);
 	 });
-	 
+	 $("#selectmonth").change(function(){ 
+		 setheadermonthly();
+		 products.listMonthly();
+	 });
 	 products.listDetail = function(currentPage){ 
 		//var defaultyear = new Date().getFullYear();		
 		var byyear = $("#selectyear").val(); 
@@ -762,8 +654,7 @@ tbody tr td {
 			    }
 			}); 
 	 }
-	 products.listWeekly = function(currentPage){
-		  
+	 products.listWeekly = function(currentPage){ 
 		 var json = {
 	   				"start_date" : $("#REGS_DATE_S").val(),
 	   				"end_date"   : $("#REGS_DATE_E").val()
@@ -810,11 +701,12 @@ tbody tr td {
 			}); 
 		 
 	 }
-	 products.listMonthly = function(){
+	 products.listMonthly = function(){ 
+		 
 		 var json = {
-	   				"start_date" : $("#REGS_DATE_S").val(),
-	   				"end_date"   : $("#REGS_DATE_E").val()
-			};$.ajax({ 
+	   				"start_date" : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-01",
+	   				"end_date"   : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-" + (new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate())
+			};$.ajax({
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportmonthly/", 
 			    type: 'GET',  
 			    data: json, 
@@ -824,60 +716,69 @@ tbody tr td {
                 },
 			    success: function(data) { 
 			    	console.log(data);
-			    	  if(data.reportmonth){
-				    	$("tbody#tbodymonthly").html('');
-				    	for(var i=0;i<data.reportmonth.length;i++){
-				    		formatMonthlySaleReport(data.reportmonth[i]);
+			    	    if(data.reportmonthly){
+				    	$("#monthlytable tbody").html('');
+				    	var st = "";
+				    	for(var i=0;i<data.reportmonthly.length;i++){
+				    		st += "<tr>";
+				    		st += "<td>" + data.reportmonthly[i].customer + "</td>";
+				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
+				    		for(var j=1; j<=(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++)
+				    			{
+				    				st += "<td>" + data.reportmonthly[i].day + j + "_qty</td>";
+				    				st += "<td>" + data.reportmonthly[i].day + j + "_amount</td>";
+				    			}
+				    		st += "</tr>";
 						}
-						$("#CONTENT_MONTHLY").tmpl(data.reportmonth).appendTo("tbody#tbodymonthly");/* 
-						$("#tblMonthlySaleReport #TOTAL_JAN_QTY").html(data.total_sales.total_jan_qty);
-						$("#tblMonthlySaleReport #TOTAL_JAN_AMOUNT").html(data.total_sales.total_jan_amount);
-						$("#tblMonthlySaleReport #TOTAL_FEB_QTY").html(data.total_sales.total_feb_qty);
-						$("#tblMonthlySaleReport #TOTAL_FEB_AMOUNT").html(data.total_sales.total_feb_amount);
-						$("#tblMonthlySaleReport #TOTAL_MAR_QTY").html(data.total_sales.total_mar_qty);
-						$("#tblMonthlySaleReport #TOTAL_MAR_AMOUNT").html(data.total_sales.total_mar_amount);
-						$("#tblMonthlySaleReport #TOTAL_APR_QTY").html(data.total_sales.total_apr_qty);
-						$("#tblMonthlySaleReport #TOTAL_APR_AMOUNT").html(data.total_sales.total_apr_amount);
-						$("#tblMonthlySaleReport #TOTAL_MAY_QTY").html(data.total_sales.total_may_qty);
-						$("#tblMonthlySaleReport #TOTAL_MAY_AMOUNT").html(data.total_sales.total_may_amount);
-						$("#tblMonthlySaleReport #TOTAL_JUN_QTY").html(data.total_sales.total_jun_qty);
-						$("#tblMonthlySaleReport #TOTAL_JUN_AMOUNT").html(data.total_sales.total_jun_amount);
-						$("#tblMonthlySaleReport #TOTAL_JUL_QTY").html(data.total_sales.total_jul_qty);
-						$("#tblMonthlySaleReport #TOTAL_JUL_AMOUNT").html(data.total_sales.total_jul_amount);
-						$("#tblMonthlySaleReport #TOTAL_AUG_QTY").html(data.total_sales.total_aug_qty);
-						$("#tblMonthlySaleReport #TOTAL_AUG_AMOUNT").html(data.total_sales.total_aug_amount);
-						$("#tblMonthlySaleReport #TOTAL_SEP_QTY").html(data.total_sales.total_sep_qty);
-						$("#tblMonthlySaleReport #TOTAL_SEP_AMOUNT").html(data.total_sales.total_sep_amount);
-						$("#tblMonthlySaleReport #TOTAL_OCT_QTY").html(data.total_sales.total_oct_qty);
-						$("#tblMonthlySaleReport #TOTAL_OCT_AMOUNT").html(data.total_sales.total_oct_amount);
-						$("#tblMonthlySaleReport #TOTAL_NOV_QTY").html(data.total_sales.total_nov_qty);
-						$("#tblMonthlySaleReport #TOTAL_NOV_AMOUNT").html(data.total_sales.total_nov_amount);
-						$("#tblMonthlySaleReport #TOTAL_DEC_QTY").html(data.total_sales.total_dec_qty);
-						$("#tblMonthlySaleReport #TOTAL_DEC_AMOUNT").html(data.total_sales.total_dec_amount);
-						$("#tblMonthlySaleReport #TOTAL_QTY").html(data.total_sales.total_jun_qty +
-																   data.total_sales.total_feb_qty + 
-																   data.total_sales.total_mar_qty +
-																   data.total_sales.total_apr_qty +
-																   data.total_sales.total_may_qty +
-																   data.total_sales.total_jun_qty +
-																   data.total_sales.total_jul_qty +
-																   data.total_sales.total_aug_qty +
-																   data.total_sales.total_sep_qty +
-																   data.total_sales.total_oct_qty +
-																   data.total_sales.total_nov_qty +
-																   data.total_sales.total_dec_qty );
-						$("#tblMonthlySaleReport #TOTAL_AMOUNT").html(data.total_sales.total_jun_amount +
-																   data.total_sales.total_feb_amount + 
-																   data.total_sales.total_mar_amount +
-																   data.total_sales.total_apr_amount +
-																   data.total_sales.total_may_amount +
-																   data.total_sales.total_jun_amount  +
-																   data.total_sales.total_jul_amount +
-																   data.total_sales.total_aug_amount +
-																   data.total_sales.total_sep_amount +
-																   data.total_sales.total_oct_amount +
-																   data.total_sales.total_nov_amount +
-																   data.total_sales.total_dec_amount ); */
+				    	$("#monthlytable tbody").html(st);
+				    }    
+			    },	
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			}); 
+	 }
+	 products.listYearly = function(){
+		 var json = {
+	   				"start_date" : $("#REGS_DATE_S").val(),
+	   				"end_date"   : $("#REGS_DATE_E").val()
+			};$.ajax({ 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportyearly/", 
+			    type: 'GET',  
+			    data: json, 
+			    beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+			    success: function(data) { 
+			    	console.log(data);
+			    	  if(data.reportyear){
+				    	$("tbody#tbodyyearly").html('');
+				    	var st = "";
+				    	for(var i=0;i<data.reportyear.length;i++){
+				    		st += "<tr>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].pro_name + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+				    		st += "<td>" +data.reportyear[i].customer + "</td>";
+						}
 			    	}  
 			    },	
 			    error:function(data,status,er) { 
@@ -953,6 +854,7 @@ tbody tr td {
 			 
 			// $("#startfrom").html(" in " +  new Date().getFullYear());
 			 $("#yearcombo").removeClass("hidetable");
+			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 
 			 products.listDetail(1);
@@ -966,6 +868,7 @@ tbody tr td {
 			 $("#tblyearly").addClass("hidetable");
 			 
 			 $("#yearcombo").addClass("hidetable");
+			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").addClass("hidetable");
 			 setCalendar();
@@ -983,7 +886,7 @@ tbody tr td {
 			 $("#yearcombo").addClass("hidetable");
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").removeClass("hidetable");	
-			 
+			 $("#monthcombo").addClass("hidetable");
 			 setCalendar();
 			 settableheader();
 			 
@@ -996,11 +899,15 @@ tbody tr td {
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").removeClass("hidetable");
-			 $("#tblyearly").addClass("hidetable");		
-			 var startdate = new Date().getFullYear() + '/01/01';
-			 var stopdate = new Date().getFullYear() + '/12/31'; 
-			 $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
-			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate));
+			 $("#tblyearly").addClass("hidetable");	
+			 
+			 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
+			 $('select#selectmonth option[value="'+new Date().getMonth()+'"]').attr("selected",true);			 
+			 $("#yearcombo").removeClass("hidetable");
+			 $("#datelable").addClass("hidetable");
+			 $("#monthcombo").removeClass("hidetable");
+			 
+			 setheadermonthly();
 			 products.listMonthly();
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");
@@ -1008,8 +915,32 @@ tbody tr td {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").removeClass("hidetable");
+			 var startdate = new Date().getFullYear() + '/01/01';
+			 var stopdate = new Date().getFullYear() + '/12/31'; 
+			 $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
+			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate));
+			 products.listYearly();
 		 }		 
 	 });
+	function setheadermonthly(){
+		
+		var st = "";
+			st += "<tr>";
+			st += "<th rowspan='2'>Customer</th>";
+			st += "<th rowspan='2'>Item</th>";
+		for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
+			{			
+			st += "<th colspan='2'>" + (1+i) + "</th>";
+			}
+			st += "<th colspan='2'>Total</th></tr><tr>";		
+			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
+			{			
+			st += "<th>qty</th><th>Amount</th>";
+			}	
+			st += "<th>Total Qty</th><th>Total Amount</th></tr>";	
+			$("#tbl_header_month").html(st);
+			
+	}
 	 
 	function settableheader(){
 		var monthOfyear = ['January', 'February', 'Match', 'April', 'May', 'June', 'July','Augest','Septemper', 'October', 'November', 'December'];

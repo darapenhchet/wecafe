@@ -70,11 +70,24 @@ public class ReportPurchaseController {
 		pagination.setTotalCount(adminReportService.count());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
+	}
+	@RequestMapping(value="/purchasereportmonthly", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportmonthly(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 
+			Pagination pagination) throws ParseException{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = simpleDateFormat.parse(strStartDate);
+		Date endDate = simpleDateFormat.parse(strEndDate);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reportmonthly", adminReportService.getListReportMonthlyPurchaseRest(startDate, endDate));
+		pagination.setTotalCount(adminReportService.count());
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
-	@RequestMapping(value="/purchasereportmonthly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getpurchasereportmonthly(
+	@RequestMapping(value="/purchasereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(
 			   @RequestParam(value="start_date") String strStartDate, 
 			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
 		
@@ -86,11 +99,10 @@ public class ReportPurchaseController {
 		System.out.println(strStartDate);
 		System.out.println(strEndDate);
 		
-		map.put("reportmonth", adminReportService.getListReportMonthlyPurcase(startDate, endDate));
+		map.put("reportyear", adminReportService.getListReportYearlyPurcase(startDate, endDate));
 		 
-		map.put("total_reportmonth", adminReportService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-	 
+		map.put("total_reportyear", adminReportService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 		
 	}
 }

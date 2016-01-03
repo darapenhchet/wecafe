@@ -346,7 +346,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Transactional
 	@Override
-	public List<Map<String, Object>> getListReportMonthlyPurcase(Date startDate, Date endDate) {
+	public List<Map<String, Object>> getListReportYearlyPurcase(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -670,6 +670,96 @@ public class AdminReportServiceImp implements AdminReportService {
 	@Override
 	public List<Map> getListReportYearlyPurchaseRest(int byYear) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Object getListReportMonthlyPurchaseRest(Date startdate, Date enddate) {
+		Session session = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Calendar calStartDate = Calendar.getInstance();
+		calStartDate.setTime(startdate);
+		
+		Calendar calEndDate = Calendar.getInstance();
+		calEndDate.setTime(enddate);
+		System.out.println("Enddate = " + calEndDate.get(Calendar.DAY_OF_MONTH));
+		System.out.println("start Date = " + calStartDate.get(Calendar.DAY_OF_MONTH));
+		
+		String[] months = new String[calEndDate.get(Calendar.DAY_OF_MONTH)];
+		for(int i=0;i<calEndDate.get(Calendar.DAY_OF_MONTH);i++)
+		{
+			months[i] = "day" + (i+1);
+		}
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sbSelect = new StringBuilder();
+		
+		
+		for(int i=0 ; i<calEndDate.get(Calendar.DAY_OF_MONTH) ; i++){
+			//calendar.add(Calendar.DATE, i);
+			 
+			//System.out.println("Month ==== " + months[i]);
+			 
+			sbSelect.append("COALESCE("+months[i]+"[1],0) AS "+months[i].toUpperCase()+"_QTY ,");
+			sbSelect.append("COALESCE("+months[i]+"[2],0) AS "+months[i].toUpperCase()+"_AMOUNT ,");
+			sb.append(months[i] + " INTEGER[],"); 
+			
+		}
+		System.out.println(sb.toString().substring(0, sb.toString().lastIndexOf(",")));
+		
+		System.out.println(calStartDate.getTime());
+		System.out.println(calEndDate.getTime());
+		  
+		try {
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = 
+					session.createSQLQuery("SELECT " +
+										   "mthreport.row_name [ 1 ] AS customer, " +
+										   "mthreport.row_name [ 2 ] AS pro_name, " + sbSelect.toString().substring(0, sbSelect.toString().lastIndexOf(",")) +									    
+										   " FROM " +
+										   "	crosstab ( " +
+										   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
+										   "		   ,to_char(A.imp_date, ''DD'')::text As imp_date " +
+										   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price)] AS row " +
+										   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
+										   "	 LEFT JOIN users C ON C.id = A.user_id " +
+										   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   
+										   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE A.imp_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+										   "	 GROUP BY 1,2 " +
+										   " UNION ALL " +
+										   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
+										   " ,to_char(A.expense_date, ''DD'')::text As imp_date " +
+										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
+										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
+										   " LEFT JOIN users C ON A.expense_user_id = C.id " +
+										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+										   " GROUP BY 1,2 " +
+										   "	 ORDER BY 2', " +
+										   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
+										   " FROM generate_series(1,"+ calEndDate.get(Calendar.DAY_OF_MONTH) +") n;' " +
+										   ") AS mthreport ( " +
+										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
+										   /*  "jan INTEGER[], " +
+										   "feb INTEGER[], " +
+										   "mar INTEGER[], " +
+										   "apr INTEGER[], " +
+										   "may INTEGER[], " +
+										   "jun INTEGER[], " +
+										   "jul INTEGER[], " +
+										   "aug INTEGER[], " +
+										   "sep INTEGER[], " +
+										   "oct INTEGER[], " +
+										   "nov INTEGER[], " +
+										   "dec INTEGER[]) " +*/
+										   ); 	
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+			return sales;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
 
