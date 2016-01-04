@@ -17,6 +17,10 @@ public class UnitController {
 	@RequestMapping(value="/admin/unitlist")
 	public String getListAllUnit(Map<String, Object>model){
 		model.put("units", unitService.getAllUnits());
-		return "admin/unilist";
+		return "admin/unitlist";
+	}
+	@RequestMapping(value="/admin/unitadd")
+	public String setunit(Map<String, Object>model){ 
+		return "admin/unitadd";
 	}
 }

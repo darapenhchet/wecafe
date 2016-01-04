@@ -115,20 +115,18 @@
 										<th>#</th>
 										<th>Unit Name</th>
 										<th>QTY</th>
+										<th>Type</th>
 										<th style="text-align: center;">Actions</th>
 									</tr>
 								</thead>
 								<tbody>
-									<%-- <c:forEach items="${categories}" var="category" varStatus="theCount">
+									<c:forEach items="${units}" var="unit" varStatus="theCount">
                                         <tr class="gradeX">
-                                            <td id="CATEGORY_ID" style="display : none;">${category.catId}</td>
+                                            <td id="unitId" style="display : none;">${unit.unitId}</td>
                                             <td >${theCount.count }</td>
-                                            <td>${category.catName }</td>
-                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/${category.img }" class="img-thumbnail" alt="${category.catName}" width="30px" height="30px" /></td>
-                                            <td>${category.createdBy.lastName } ${category.createdBy.firstName }</td>
-                                            <td>${category.createdDate}</td>
-                                            <td>${category.lastUpdatedBy.lastName } ${category.lastUpdatedBy.firstName }</td>
-                                            <td>${category.lastUpdatedDate}</td>
+                                            <td>${unit.unitName }</td> 
+                                            <td>${unit.qty}</td>
+                                            <td>${unit.to}</td>
                                             <td style="text-align:center;" class="actions">
                                                 <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                                 <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
@@ -136,28 +134,7 @@
                                                 <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr> 
-                                    </c:forEach> --%>
-									<tr
-										dir-paginate="(key,category) in categories|filter:search|itemsPerPage:perPage|"
-										class="gradeX">
-										<td id="CATEGORY_ID" style="display: none;">{{category.catId}}</td>
-										<td>{{key+1 }}</td>
-										<td>{{category.catName }}</td>
-										<td style="text-align: center;"><img
-											src="${pageContext.request.contextPath}/resources/images/products/{{category.img }}"
-											class="img-thumbnail" alt="" width="30px" height="30px" /></td>
-										<td>{{category.createdBy.lastName }}
-											{{category.createdBy.firstName }}</td>
-										<td style="text-align: center;" class="actions"><a
-											href="#" class="hidden on-editing save-row"><i
-												class="fa fa-save"></i></a> <a href="#"
-											class="hidden on-editing cancel-row"><i
-												class="fa fa-times"></i></a> <a
-											href="${pageContext.request.contextPath}/admin/category/update/{{category.catId}}"
-											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-											<a class="on-default remove-row" href="javascript:;"
-											id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
-									</tr>
+                                    </c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -189,95 +166,6 @@
 		<!-- End Right content here -->
 		<!-- ============================================================== -->
 
-
-		<!-- Right Sidebar -->
-		<div class="side-bar right-bar nicescroll">
-			<h4 class="text-center">Chat</h4>
-			<div class="contact-list nicescroll">
-				<ul class="list-group contacts-list">
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg"
-									alt="">
-							</div> <span class="name">Chadengle</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg"
-									alt="">
-							</div> <span class="name">Tomaslau</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg"
-									alt="">
-							</div> <span class="name">Stillnotdavid</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg"
-									alt="">
-							</div> <span class="name">Kurafire</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg"
-									alt="">
-							</div> <span class="name">Shahedk</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg"
-									alt="">
-							</div> <span class="name">Adhamdannaway</span> <i
-							class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg"
-									alt="">
-							</div> <span class="name">Ok</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg"
-									alt="">
-							</div> <span class="name">Arashasghari</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg"
-									alt="">
-							</div> <span class="name">Joshaustin</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg"
-									alt="">
-							</div> <span class="name">Sortino</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-				</ul>
-			</div>
-		</div>
-		<!-- /Right-bar -->
-
 	</div>
 	<!-- END wrapper -->
 
@@ -286,7 +174,7 @@
 	<script>
             var resizefunc = [];
             var ctx = "${pageContext.request.contextPath}"
-        </script>
+    </script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
@@ -334,37 +222,8 @@
 
 	<script type="text/javascript">
     	$(function(){
-	    	$(document).on('click','#btnRemove',function(){
-				var id = $(this).parents("tr").find("#CATEGORY_ID").html();
-				if(confirm("Do you want to delete that category?")){
-					$.ajax({ 
-					    url: "${pageContext.request.contextPath}/admin/category/delete/"+id, 
-					    type: 'POST', 
-					    dataType: 'JSON', 
-					    //data: JSON.stringify(json), 
-					    beforeSend: function(xhr) {
-		                    xhr.setRequestHeader("Accept", "application/json");
-		                    xhr.setRequestHeader("Content-Type", "application/json");
-		                },
-					    success: function(data) { 
-					        if(data){
-					        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
-					        	location.href="${pageContext.request.contextPath}/admin/categorylist";
-					        }else{
-					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
-					        }
-					    },
-					    error:function(data,status,er) { 
-					        console.log("error: "+data+" status: "+status+" er:"+er);
-					    }
-					});
-					
-				}
-			});
-	    	$("#PER_PAGE li").click(function(){
-   			 	$('#PER_PAGE li.active').removeClass('active');
-   			 	$(this).addClass('active');
-   			});
+	     
+	     
     	});
     	</script>
 </body>

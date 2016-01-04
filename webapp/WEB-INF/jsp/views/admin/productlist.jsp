@@ -379,11 +379,45 @@
         		products.findAllProducts(1);
         		
         		$(document).on('click','#btnRemove',function(){
-        			var id = $(this).data("id");
+        			
+        			 var id = $(this).data("id");
         			$("#modalMessage").bPopup();
-        			$("#btnOK").data("id", $(this).data("id"));
+        			$("#btnOK").data("id", $(this).data("id")); 
+        			
         		});       		
-        		
+        		$(document).on('click','#btnStatus',function(){
+      			
+               			      			var id= $(this).parents("tr").children().eq(0).html() ;
+        			         			var _this = $(this);
+        			       				$.ajax({ 
+        			        				    url: "${pageContext.request.contextPath}/admin/product/status/"+id, 
+        			       				    type: 'POST', 
+        			       				    dataType: 'JSON', 
+        			        				    //data: JSON.stringify(json), 
+        			        				    beforeSend: function(xhr) {
+        			        	                    xhr.setRequestHeader("Accept", "application/json");
+        			        	                    xhr.setRequestHeader("Content-Type", "application/json");
+        			        	                },
+        			       				    success: function(data) { 
+        			      				        if(data){
+        			        				        	if(_this.hasClass('btn-success')){
+        			       				        		_this.removeClass('btn-success');
+        			       				        		_this.addClass('btn-danger');
+        			        				        		_this.html('Inactive');
+        			       				        	}else if(_this.hasClass('btn-danger')){
+        			      				        		_this.removeClass('btn-danger');
+        			       				        		_this.addClass('btn-success');
+        			     				        		_this.html('Active');
+        			      				        	}
+        			      				        }else{
+        			     				        	alert('YOU HAVE ERRORS WHEN CHANGING THE STATUS.');
+        			       				        }
+        			        				    },
+        			       				    error:function(data,status,er) { 
+        			       				        console.log("error: "+data+" status: "+status+" er:"+er);
+        			       				    }
+        			       				});
+        			        		});
         		$("#btnOK").click(function(){
         			$("#modalMessage").bPopup().close();
         			products.deleteProductById($(this).data("id"));
