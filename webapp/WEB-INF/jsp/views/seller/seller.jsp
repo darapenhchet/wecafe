@@ -95,7 +95,11 @@
 .hidebtn {
 	display: none;
 }
+.borderRed {
+	border-color: red;
+}
 </style>
+
 </head>
 <body>
 
@@ -461,29 +465,29 @@
 						<form class="cmxform form-horizontal tasi-form" id="signupForm"
 							method="get" action="#" novalidate="novalidate">
 							<div class="form-group ui-widget">
-								<label for="productName" class="control-label col-lg-2">Product
+								<label for="product_name" class="control-label col-lg-2">Product
 									Name *</label>
 								<div class="col-lg-10">
 									<input class=" form-control" required="required"
-										id="productName" name="productName" type="text"> <input
-										class="hidebtn" id="proID">
+										id="product_name" name="product_name" type="text"> 
+										<input class="hidebtn" id="product_id">
 								</div>
 							</div>
 							<div class="form-group ">
 								<label for="quantity" class="control-label col-lg-2">Qty
 									*</label>
 								<div class="col-lg-10">
-									<input class="form-control " required="required" id="qty"
-										name="qty" type="text">
+									<input class="form-control " required="required" id="product_qty"
+										name="product_qty" type="text">
 								</div>
 							</div>
 
 							<div class="form-group" align="right">
 
 								<button class="btn btn-success waves-effect waves-light"
-									style="width: 100px;" id="addbtn" type="button">Add</button>
+									style="width: 100px;" id="btn_add" type="button">Add</button>
 								<button class="btn btn-default waves-effect waves-light"
-									style="width: 100px; margin-right: 10px;" id="canceladd"
+									style="width: 100px; margin-right: 10px;" id="btn_cancel_add"
 									type="button">Cancel</button>
 							</div>
 						</form>
@@ -514,9 +518,9 @@
 						<!-- =================== -->
 						<div class="form-group" align="right">
 							<button class="btn btn-success waves-effect waves-light"
-								style="width: 100px;" id="savebtn" type="button">Save</button>
+								style="width: 100px;" id="btn_save" type="button">Save</button>
 							<button class="btn btn-default waves-effect"
-								style="width: 100px; margin-right: 10px;" id="cencelBtn"
+								style="width: 100px; margin-right: 10px;" id="btn_cancel_save"
 								type="button">Cancel</button>
 						</div>
 
@@ -614,13 +618,8 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 		
-		
-		
-		
-		
-		
-		
-		<!-- Request Stock -->
+
+<!-- Request Stock -->
 <script type="text/javascript">
 	/* ==============================================
 	Counter Up
@@ -630,106 +629,65 @@
 					function($) {
 
 						var _thisRow;
+						
+						//Check qty for input only number
+						
+						$("#product_qty").keypress(function(e){
+							checkOnlyNumber(e);
+						});
 
-						$(document)
-								.on(
-										'keypress',
-										'#qty',
-										function(e) {
-
-											if ((e.keyCode == 8)
-													|| (e.keyCode == 46)
-													|| ((e.keyCode >= 37) && (e.keyCode <= 40)))
-												return;
-
-											var data = String
-													.fromCharCode(e.which);
-											var reg = new RegExp('^[0-9]+$');
-											if (!reg.test(data)) {
-												e.preventDefault();
-											}
-										});
-
-						$("#cencelBtn").click(function() {
+						//Click button save cancel
+						$("#btn_cancel_save").click(function() {
 							if (confirm("Do you want to cancel?")) {
 								$("#tbllistimport tr").remove();
 							}
 						});
-						$(document).on("click", "#btndelete", function() {
-							$(this).parents("tr").remove();
+						
+						//Click cancel add to list
+						$("#btn_cancel_add").click(function() {
+							clear();
+							$("#btn_update").html("Add");
+							$("#btn_update").attr("id", "btn_add");
 						});
-
+						
+						
+						//Click request stock
 						$("#btn_request_stock").click(function() {
 							searchProduct();
 							$("#form_request_stock").bPopup();
 
 						});
-
-						$(document).on(
-								"click",
-								"#btnedit",
+						
+						
+						
+						$(document).on("blur", "#product_name ,#product_qty",
 								function() {
-
-									_thisRow = $(this).parents("tr");
-
-									$("#productName").val(
-											$(this).parents("tr").children()
-													.eq(3).html());
-									$("#qty").val(
-											$(this).parents("tr").children()
-													.eq(4).html());								
-									$("#addbtn").attr("id", "editbtn");
-								});
-						$(document).on(
-								"click",
-								"#editbtn",
-								function() {
-									_thisRow.children().eq(0).html(
-											$("#proID").val());
-									
-									_thisRow.children().eq(3).html(
-											$("#productName").val());
-									_thisRow.children().eq(4).html(
-											$("#qty").val());									
-									$("#editbtn").attr("id", "addbtn");
-									clear();
-								});
-						$("#canceladd").click(function() {
-							clear();
-							$("#editbtn").attr("id", "addbtn");
-
-						});
-						$(document).on("blur", "#productName ,#qty",
-								function() {
-
 									if ($(this).val() == "") {
 										$(this).addClass("borderRed");
 										return;
 									} else
 										$(this).removeClass("borderRed");
-								});
+						});
+						
 						$(document)
 								.on(
 										"click",
-										"#addbtn",
+										"#btn_add",
 										function() {
-											if ($("#productName").val() == "") {
-												$("#productName").addClass(
-														"borderRed");
+											if ($("#product_name").val() == "") {
+												$("#product_name").addClass("borderRed");
 												return;
 											} else
-												$("#productName").removeClass(
-														"borderRed");
-											if ($("#qty").val() == "") {
-												$("#qty").addClass("borderRed");
+												$("#product_name").removeClass("borderRed");
+											if ($("#product_qty").val() == "") {
+												$("#product_qty").addClass("borderRed");
 												return;
 											} else
-												$("#qty").removeClass(
-														"borderRed");
+												$("#product_qty").removeClass("borderRed");
 
 											var st = "";
 											st += "<tr><td style='display: none;'>"
-													+ $('#proID').val()
+													+ $('#product_id').val()
 													+ "</td>";
 											st += "<td style='display: none;'>"
 													+ $('#supID').val()
@@ -738,11 +696,11 @@
 													+ ($("#tbllistimport tr").length + 1)
 													+ "</td>";
 											st += "<td>"
-													+ $("#productName").val()
+													+ $("#product_name").val()
 													+ "</td>";
-											st += "<td>" + $("#qty").val()
+											st += "<td>" + $("#product_qty").val()
 													+ "</td>";
-											st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+											st += "<td><a href= 'javascript:;' id='btn_edit'>Edit</a> | <a href='javascript:;' id='btn_delete'>Delete</a></td></tr>";
 											$("#tbllistimport").append(st);
 											clear();
 										});
@@ -752,7 +710,7 @@
 							time : 1200
 						});
 
-						$("#savebtn")
+						$("#btn_save")
 								.click(
 										function() {
 											var importDetail = [];
@@ -819,11 +777,11 @@
 										});
 
 						function clear() {
-							$("#productName").val("");
-							$("#productName").removeClass("borderRed");
-							$('#proID').val("");
-							$("#qty").val("");
-							$("#qty").removeClass("borderRed");
+							$("#product_name").val("");
+							$("#product_name").removeClass("borderRed");
+							$('#product_id').val("");
+							$("#product_qty").val("");
+							$("#product_qty").removeClass("borderRed");
 
 						}
 
@@ -850,7 +808,7 @@
 													"dataid" : data[i].productId
 												};
 											}
-											$("#productName")
+											$("#product_name")
 													.autocomplete(
 															{
 
@@ -858,7 +816,7 @@
 																		event,
 																		ui) {
 
-																	$("#proID")
+																	$("#product_id")
 																			.val(
 																					ui.item.dataid);
 																},
@@ -874,8 +832,63 @@
 									});
 
 						}
+						
+						//Edit list
+						$(document).on(
+								"click",
+								"#btn_edit",
+								function() {
+
+									_thisRow = $(this).parents("tr");
+
+									$("#product_name").val(
+											$(this).parents("tr").children()
+													.eq(3).html());
+									$("#product_qty").val(
+											$(this).parents("tr").children()
+													.eq(4).html());	
+									$("#btn_add").html("Update");
+									$("#btn_add").attr("id", "btn_update");
+								});
+						$(document).on(
+								"click",
+								"#btn_update",
+								function() {
+									_thisRow.children().eq(0).html(
+											$("#product_id").val());
+									
+									_thisRow.children().eq(3).html(
+											$("#product_name").val());
+									_thisRow.children().eq(4).html(
+											$("#product_qty").val());	
+									$("#btn_update").html("Add");
+									$("#btn_update").attr("id", "btn_add");
+									
+									clear();
+								});
+						
+						//Click delete from list
+						$(document).on("click", "#btn_delete", function() {
+							$(this).parents("tr").remove();
+						});
 
 					});
+	
+	
+	function checkOnlyNumber(e){
+		if ((e.keyCode == 8)
+				|| (e.keyCode == 46)
+				|| ((e.keyCode >= 37) && (e.keyCode <= 40)))
+			return;
+
+		var data = String
+				.fromCharCode(e.which);
+		var reg = new RegExp('^[0-9]+$');
+		if (!reg.test(data)) {
+			e.preventDefault();
+		}
+	}
+	
 </script>
 
 

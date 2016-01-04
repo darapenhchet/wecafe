@@ -56,17 +56,7 @@ public class importProductController {
 	public @ResponseBody Boolean saveImpProduct(@RequestBody List<ImportForm> importForm)	{
 		ImportDetail importDetails = new ImportDetail();
 		System.out.println(importForm.size());
-		try {
-			/*
-			 * Product product = productService.findProductById(importForm.getProId());
-		    //Supplier supplier = supplierService.findSupplierById(importForm.getSupplierId());
-			importDetails.setProduct(product);
-			
-			importDetails.setProQty(importForm.getQuantity());
-			importDetails.setUnitPrice(importForm.getUnitPrice());
-			importDetails.setProStatus(true);
-			importDetails.setSupId(importForm.getSupplierId());
-			;*/
+		try {			
 			return importService.saveImportPro(importForm);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
