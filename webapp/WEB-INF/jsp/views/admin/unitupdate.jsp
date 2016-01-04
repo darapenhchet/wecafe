@@ -65,10 +65,10 @@
 
 
 
-<body class="fixed-left-void" ng-app="wecafe">
+<body class="fixed-left-void">
 
 	<!-- Begin page -->
-	<div id="wrapper" ng-controller="CategoryController as controller">
+	<div id="wrapper">
 
 		<!-- Top Bar Start -->
 		<%@ include file="topbar.jsp"%>
@@ -92,69 +92,74 @@
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4 class="pull-left page-title">Unit List</h4>
+							<h4 class="pull-left page-title">Update Unit</h4>
 						</div>
 					</div>
+					<!-- Form-validation -->
+					<div class="row">
 
+						<div class="col-sm-12">
+							<div class="panel panel-default">
+								<!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
+								<div class="panel-body">
+									<div class=" form">
+									<c:forEach items="${findunit}" var="findunits" varStatus="theCount">
+										<form class="cmxform form-horizontal tasi-form"
+											id="frmAddCategory" method="POST" action="#">
+											
+											
+											<input type="hidden" id="unitId" value="${unit.unitId }">
+											<div class="form-group ">
+												<label for="productname" class="control-label col-lg-2">Unit
+													Name *</label>
+												<div class="col-lg-10">
+													<input class=" form-control" id="unitname" value="${unit.unitName }"
+														name="unitName" type="text" required="required">
+												</div>
+											</div>
+											<div class="form-group ">
+												<label for="productname" class="control-label col-lg-2">Qty *</label>
+												<div class="col-lg-10">
+													<input class=" form-control" id="unitqty" value="${unit.qty}"
+														name="unitqty" type="text" required="required">
+												</div>
+											</div>
+											<div class="form-group ">
+												<label for="productname" class="control-label col-lg-2">Type *</label>
+												<div class="col-lg-10">
+													<input class=" form-control" id="unittype" value="${unit.to}"
+														name="unittype" type="text" required="required">
+												</div>
+											</div> 
+											<div class="form-group">
+												<div class="col-lg-offset-2 col-lg-10">
+													<button class="btn btn-success waves-effect waves-light"
+														type="button" id="btnSubmit">Update</button>
+													<button class="btn btn-default waves-effect" type="button" id="btncancel">Cancel</button>
+												</div>
+											</div>
+											
+										</form>
+										</c:forEach>
+									</div>
+									<!-- .form -->
 
-					<div class="panel">
-						<div class="panel-heading">
-							<!-- <h3 class="panel-title">Product Lists</h3> -->
-							<form class="form-inline">
-								<div class="form-group">
-									<label>Search</label> <input type="text" ng-model="search"
-										class="form-control" placeholder="Search" width="400%">
 								</div>
-							</form>
+								<!-- panel-body -->
+							</div>
+							<!-- panel -->
 						</div>
-						<div class="panel-body">
-							<table class="table table-bordered table-striped"
-								id="datatable-editable">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Unit Name</th>
-										<th>QTY</th>
-										<th>Type</th>
-										<th style="text-align: center;">Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${units}" var="unit" varStatus="theCount">
-                                        <tr class="gradeX">
-                                            <td id="unitId" style="display : none;">${unit.unitId}</td>
-                                            <td >${theCount.count }</td>
-                                            <td>${unit.unitName }</td> 
-                                            <td>${unit.qty}</td>
-                                            <td>${unit.to}</td>
-                                            <td style="text-align:center;" class="actions">
-                                                <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                                                <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                                <a href="${pageContext.request.contextPath}/admin/updateunit/${unit.unitId}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
-                                            </td>
-                                        </tr> 
-                                    </c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<!-- end: page -->
+						<!-- col -->
 
 					</div>
-					<!-- end Panel -->
-					<ul class="pagination" id="PER_PAGE">
-						<li class="active" ng-click="perPage=10"><a
-							href="javascript:;">10</a></li>
-						<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-						<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-						<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-					</ul>
-					<dir-pagination-controls max-size="15" direction-links="true"
-						boundary-links="true" class="pull-right">
-					</dir-pagination-controls>
+					<!-- End row -->
+
+
 
 				</div>
 				<!-- container -->
+
+
 
 			</div>
 			<!-- content -->
@@ -162,10 +167,6 @@
 			<%@ include file="footer.jsp"%>
 
 		</div>
-		<!-- ============================================================== -->
-		<!-- End Right content here -->
-		<!-- ============================================================== -->
-
 	</div>
 	<!-- END wrapper -->
 
@@ -173,16 +174,7 @@
 
 	<script>
             var resizefunc = [];
-            var ctx = "${pageContext.request.contextPath}"
-    </script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
-	<script src="<c:url value='/resources/scripts/app.js' />"></script>
-	<script
-		src="<c:url value='/resources/scripts/services/category_service.js' />"></script>
-	<script
-		src="<c:url value='/resources/scripts/controllers/category_controller.js' />"></script>
+        </script>
 
 	<!-- jQuery  -->
 	<script
@@ -220,11 +212,43 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+
 	<script type="text/javascript">
-    	$(function(){
-	     
-	     
-    	});
-    	</script>
+    		$(function(){
+    			$("#btncancel").click(function(){
+    				location.href="${pageContext.request.contextPath}/admin/unitlist";
+    			});
+    			$("#btnSubmit").click(function(e){
+    				e.preventDefault();
+    				$("#frmAddCategory").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/addnewunit",
+    					dataType: 'JSON', 
+    					type: 'POST',
+    					success: function(data) { 
+    						console.log(data);
+     				        if(data){
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	location.href="${pageContext.request.contextPath}/admin/unitlist";
+     				        }else{
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
+    				});
+    			});    		
+    		});
+    </script>
 </body>
 </html>

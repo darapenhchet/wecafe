@@ -57,11 +57,12 @@ public class RequestStockDetail implements Serializable{
 	
 	@Transient
 	public ImportProduct getImportProduct(){
-		return pk1.getImportProduct();
+		return null;
+	//	return pk1.getImportProduct();
 	}
 
 	public void setImportProduct(ImportProduct importProduct){
-		this.pk1.setImportProduct(importProduct);
+	//	this.pk1.setImportProduct(importProduct);
 	}
 
 }
