@@ -567,8 +567,13 @@ tbody tr td {
 	  
 	 listYearly(); */
 	 $("#selectyear").change(function(){
-		 setheadermonthly();
-		 products.listDetail(1);
+		 
+		 if($("#selectmonth").hasClass("hidetable")){
+			 products.listDetail(1);
+		 }else{
+			 setheadermonthly();
+			 products.listMonthly();
+		 }
 	 });
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
@@ -919,6 +924,7 @@ tbody tr td {
 			 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
 			 $('select#selectmonth option[value="'+new Date().getMonth()+'"]').attr("selected",true);			 
 			 $("#yearcombo").removeClass("hidetable");
+			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 $("#monthcombo").removeClass("hidetable");
 			 
@@ -931,9 +937,9 @@ tbody tr td {
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").removeClass("hidetable");
 			 var startdate = new Date().getFullYear() + '/01/01';
-			 var stopdate = new Date().getFullYear() + '/12/31'; 
-			 $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
-			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate));
+			 var stopdate = new Date().getFullYear() + '/12/31';
+
+			 $("#selectmonth").addClass("hidetable");
 			 products.listYearly();
 		 }		 
 	 });
