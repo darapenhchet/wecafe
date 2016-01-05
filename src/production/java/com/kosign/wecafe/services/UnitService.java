@@ -10,4 +10,6 @@ public interface UnitService {
 	public List<Unit> getAllUnits();
 	public Boolean addNewUnit(Unit unit);
 	public Unit findUnit(Long unitid);
+	public Unit findUnitByID(Long unitid);
+	public Boolean updateUnit(Unit unit);
 }

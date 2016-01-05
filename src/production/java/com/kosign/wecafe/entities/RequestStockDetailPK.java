@@ -1,4 +1,4 @@
-package com.kosign.wecafe.entities;
+/*package com.kosign.wecafe.entities;
 
 import java.io.Serializable;
 
@@ -10,9 +10,9 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class RequestStockDetailPK implements Serializable{
 
-	/**
+	*//**
 	 * 
-	 */
+	 *//*
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -39,3 +39,4 @@ public class RequestStockDetailPK implements Serializable{
 	}
 
 }
+*/

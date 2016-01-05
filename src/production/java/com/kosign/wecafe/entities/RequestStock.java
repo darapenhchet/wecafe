@@ -1,4 +1,4 @@
-package com.kosign.wecafe.entities;
+/*package com.kosign.wecafe.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -30,9 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name="request_stock")
 public class RequestStock implements Serializable{
 
-	/**
-	 * 
-	 */
+	 
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -48,12 +46,12 @@ public class RequestStock implements Serializable{
 	@Column(name="app_by",nullable=true)
 	private Long appBy;
 	
-/*	@OneToMany(fetch = FetchType.LAZY,  mappedBy = "pk1.product", cascade=CascadeType.ALL)
-	private Set<RequestStockDetail> requestStockDetail = new HashSet<RequestStockDetail>();*/
+	@OneToMany(fetch = FetchType.LAZY,  mappedBy = "pk1.product", cascade=CascadeType.ALL)
+	private Set<RequestStockDetail> requestStockDetail = new HashSet<RequestStockDetail>();
 	
-/*	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id")
-	private User requestBy;*/
+	private User requestBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="req_date",nullable=true)
@@ -64,3 +62,4 @@ public class RequestStock implements Serializable{
 	private Date approveDate;
 	
 }
+*/

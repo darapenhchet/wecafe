@@ -1,18 +1,18 @@
 package com.kosign.wecafe.controller.admin;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Unit;
 import com.kosign.wecafe.forms.UnitForm;
 import com.kosign.wecafe.services.UnitService;
@@ -34,12 +34,22 @@ public class UnitController {
 		return "admin/unitadd";
 	}
 	
-	@RequestMapping(value="/admin/updateunit/{unitid}",method = RequestMethod.GET)
+	@RequestMapping(value="/admin/updateunit/{unitid}", method = RequestMethod.GET)
 	public String updateunit(@PathVariable("unitid") Long unitids ,Map<String, Object>model){
 		System.out.println(" unitids = " + unitids);
-		model.put("findunit", unitService.findUnit(unitids));		
+		model.put("findunit", unitService.findUnit(unitids));	
 		
 		return "admin/unitupdate";
+	}
+	
+	@RequestMapping(value="/admin/unitupdate", method = RequestMethod.POST)
+	public @ResponseBody Boolean unitupdate(UnitForm form ,Map<String, Object>model){ 
+		 Unit unit = unitService.findUnitByID(form.getUnitId());
+		 unit.setUnitName(form.getUnitName());
+		 unit.setQty(form.getUnitqty());
+		 unit.setTo(form.getUnittype());
+	        
+			return unitService.updateUnit(unit);
 	}
 	
 	@RequestMapping(value="/admin/addnewunit", method=RequestMethod.POST)

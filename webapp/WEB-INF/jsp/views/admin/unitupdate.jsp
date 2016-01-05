@@ -103,31 +103,29 @@
 								<!-- <div class="panel-heading"><h3 class="panel-title">Form Add Product</h3></div> -->
 								<div class="panel-body">
 									<div class=" form">
-									<c:forEach items="${findunit}" var="findunits" varStatus="theCount">
+									<%-- <c:forEach items="${findunit}" var="findunits" varStatus="theCount"> --%>
 										<form class="cmxform form-horizontal tasi-form"
-											id="frmAddCategory" method="POST" action="#">
-											
-											
-											<input type="hidden" id="unitId" value="${unit.unitId }">
+											id="frmAddCategory" method="POST" action="#">											
+											<input type="hidden" id="unitId" name="unitId" value="${findunit.unitId }">
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Unit
 													Name *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="unitname" value="${unit.unitName }"
+													<input class=" form-control" id="unitname" value="${findunit.unitName }"
 														name="unitName" type="text" required="required">
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Qty *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="unitqty" value="${unit.qty}"
+													<input class=" form-control" id="unitqty" value="${findunit.qty}"
 														name="unitqty" type="text" required="required">
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="productname" class="control-label col-lg-2">Type *</label>
 												<div class="col-lg-10">
-													<input class=" form-control" id="unittype" value="${unit.to}"
+													<input class=" form-control" id="unittype" value="${findunit.to}"
 														name="unittype" type="text" required="required">
 												</div>
 											</div> 
@@ -140,7 +138,7 @@
 											</div>
 											
 										</form>
-										</c:forEach>
+										<%-- </c:forEach> --%>
 									</div>
 									<!-- .form -->
 
@@ -231,16 +229,16 @@
     			$("#btnSubmit").click(function(e){
     				e.preventDefault();
     				$("#frmAddCategory").ajaxSubmit({
-    					url: "${pageContext.request.contextPath}/admin/addnewunit",
+    					url: "${pageContext.request.contextPath}/admin/unitupdate",
     					dataType: 'JSON', 
     					type: 'POST',
     					success: function(data) { 
     						console.log(data);
      				        if(data){
-     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	alert('YOU HAVE BEEN UPDATEED SUCCESSFULLY.');
      				        	location.href="${pageContext.request.contextPath}/admin/unitlist";
      				        }else{
-     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
+     				        	alert('YOU HAVE ERRORS WHEN UPDATE NEW CATEGORY.');
      				        }
      				    },
      				    error:function(data,status,er) { 

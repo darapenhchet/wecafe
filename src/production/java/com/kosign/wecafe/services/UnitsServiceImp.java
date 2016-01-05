@@ -1,13 +1,12 @@
 package com.kosign.wecafe.services;
 
+import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,10 +58,36 @@ public class UnitsServiceImp implements UnitService {
 		try{
 			return sessionFactory.getCurrentSession().get(Unit.class, unitid);
 		}catch(Exception ex){
+			System.out.println("Error at FIND UNIT");
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	@Transactional
+	public Unit findUnitByID(Long unitid) {
+		try{
+			return sessionFactory.getCurrentSession().get(Unit.class, unitid);
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Boolean updateUnit(Unit unit) {
+		try{			 
+			sessionFactory.getCurrentSession().update(unit);
+			return true;
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+		return false;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.kosign.wecafe.entities;
+/*package com.kosign.wecafe.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -66,3 +66,4 @@ public class RequestStockDetail implements Serializable{
 	}
 
 }
+*/
