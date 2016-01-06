@@ -400,25 +400,32 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "COALESCE(sep[1],0) AS SEP_QTY, " +
 										   "COALESCE(sep[2],0) AS SEP_AMOUNT, " +
 										   "COALESCE(oct[1],0) AS OCT_QTY, " +
-										   "COALESCE(oct[2],0) AS OCTR_AMOUNT, " +
+										   "COALESCE(oct[2],0) AS OCT_AMOUNT, " +
 										   "COALESCE(nov[1],0) AS NOV_QTY, " +
 										   "COALESCE(nov[2],0) AS NOV_AMOUNT, " +
 										   "COALESCE(DEC[1],0) AS DEC_QTY, " +
 										   "COALESCE(DEC[2],0) AS DEC_AMOUNT " +  
 										   "FROM " +
 										   "	crosstab ( " +
-										   "	'SELECT ARRAY[users.lastname::text, product.pro_name::text] As row_name " +
-										   "		   ,to_char(import.imp_date, ''mon'')::text As imp_date " +
-										   "		   ,ARRAY[SUM(import_detail.pro_qty), SUM(import_detail.unit_price*import_detail.pro_qty)] AS row " +
-										   "	 FROM product " +
-										   "	 LEFT JOIN import_detail ON product.pro_id = import_detail.pro_id " +
-										   "	 LEFT JOIN import ON import.imp_id = import_detail.imp_id AND import.imp_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' " +   
-										   "	 LEFT JOIN users ON import.user_id = users.id " +
+										   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
+										   "		   ,to_char(A.imp_date, ''mon'')::text As imp_date " +
+										   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price*B.pro_qty)] AS row " +
+										   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
+										   "	 LEFT JOIN users C ON C.id = A.user_id LEFT JOIN supplier D ON D.sup_id = B.sup_id" +
+										   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE A.imp_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' " +
 										   "	 GROUP BY 1,2 " +
+										   " UNION ALL "+
+										   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name "+
+										   " ,to_char(A.expense_date, ''mon'')::text As imp_date "+
+										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row "+
+										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "+
+										   " LEFT JOIN users C ON A.expense_user_id = C.id "+
+										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
+										   " GROUP BY 1,2 "+
 										   "	 ORDER BY 2', " +
 										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +  
 										   /*" FROM generate_series("+calStartDate.get(Calendar.MONTH)+","+calEndDate.get(Calendar.MONTH)+") n' " +*/
-										   " FROM generate_series("+startDate.getMonth()+","+calEndDate.get(Calendar.MONTH)+") n' " +
+										   " FROM generate_series(0,11) n' " +
 										   ") AS mthreport ( " +
 										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
 										   /*"jan INTEGER[], " +
@@ -737,7 +744,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " GROUP BY 1,2 " +
 										   "	 ORDER BY 2', " +
 										   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
-										   " FROM generate_series(1,"+ calEndDate.get(Calendar.DAY_OF_MONTH) +") n;' " +
+										   " FROM generate_series(0,"+ (calEndDate.get(Calendar.DAY_OF_MONTH) -1) +") n;' " +
 										   ") AS mthreport ( " +
 										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
 										   /*  "jan INTEGER[], " +
@@ -753,8 +760,11 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "nov INTEGER[], " +
 										   "dec INTEGER[]) " +*/
 										   ); 	
+			System.out.println("SQQQQQQQL" + query.toString());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+			List<Map<String, Object>> sales = (List<Map<String, Object>>)query.list();
+//			System.out.println("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO");
+//			System.out.println(sales);
 			return sales;
 		} catch (Exception e) {
 			e.printStackTrace();

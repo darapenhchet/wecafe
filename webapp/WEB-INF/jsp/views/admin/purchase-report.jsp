@@ -227,7 +227,7 @@ tbody tr td {
 															<th>Total Amount</th>
 														</tr>
 													</thead>
-													<tbody id="tbodydetail">
+													<tbody id="tbodydetail"> 
 													</tbody>
 												</table>
 											</div>
@@ -566,20 +566,36 @@ tbody tr td {
 	 listWeekly();
 	  
 	 listYearly(); */
-	 $("#selectyear").change(function(){
-		 
-		 if($("#selectmonth").hasClass("hidetable")){
+	 $("#selectyear").change(function(){/* 		 
+		 if($("#monthcombo").hasClass("hidetable")){
+			 if($("#selectreport").val()==4){
+		 	 products.listMonth();		
+	 			}else				 
 			 products.listDetail(1);
 		 }else{
 			 setheadermonthly();
 			 products.listMonthly();
+		 } */
+	
+		 switch($("#selectreport").val()){
+			 case '0': 
+				 products.listDetail(1); 
+				 break;
+				 
+			 case '3':
+				 products.listMonthly(1); 
+				 break;
+				 
+			 case '4':
+				 products.listYear(); 
+				 break;
 		 }
 	 });
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
 		 products.listMonthly();
 	 });
-	 products.listDetail = function(currentPage){ 
+	 products.listDetail = function(currentPage){
 		//var defaultyear = new Date().getFullYear();		
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
@@ -599,13 +615,13 @@ tbody tr td {
 			    success: function(data) { 
 			    	console.log(data);
 					 if(data.reportdetail.length>0){
-						$("tbody#tbodydetail").html('');
+					$("tbody#tbodydetail").html('');
 						 for(var i=0;i<data.reportdetail.length;i++){							
 							products.format(data.reportdetail[i]);
 						} 
 						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
 					}else{
-						$("tbody#tbodydetail").html('<tr>NO CONTENTS</tr>');
+						$("tbody#tbodydetail").html(''); 
 					}
 			    	if(check){
 			    		products.setPagination(data.pagination.totalPages,1);
@@ -696,7 +712,7 @@ tbody tr td {
 							 }	
 						$("#allTotalAmount").val(all_total_amount);
 					}else{
-						$("tbody#tbodydaily").html("");
+						$("tbody#tbodyweekly").html("");
 						$("#allTotalAmount").val('');
 					}
 			    },	
@@ -732,20 +748,20 @@ tbody tr td {
 				    		days[j][1] = "day" + (j+1) + "_amount";
 				    		 
 		    			} */
-				    	 
+				    	
 					    	for(var i=0;i<data.reportmonthly.length;i++){
-					    	var total_qty = 0;
-					    	var total_amount = 0;
+					    	var total_qty = 0, total_amount = 0;
 				    		st += "<tr>";
-				    		st += "<td>" + data.reportmonthly[i].customer + "</td>";
+				    		st +="<td>" + data.reportmonthly[i].customer + "</td>";
 				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
-				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++)
-				    			{
-				    				st += "<td>" + data.reportmonthly[i].day1_qty + "</td>";
-				    				st += "<td>" + data.reportmonthly[i].day1_amount + "</td>";
+				    		
+				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
+				    				console.log('day' + (j+1) + '_qty');
+				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_qty'] + "</td>";
+				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_amount'] + "</td>";
 				    				total_qty += data.reportmonthly[i].day1_qty;
 				    				total_amount += data.reportmonthly[i].day1_amount;
-				    			}
+				    		}
 				    		st += "<td>" + total_qty + "</td>";
 				    		st += "<td>" + total_amount + "</td>";
 				    		st += "</tr>";
@@ -760,8 +776,8 @@ tbody tr td {
 	 }
 	 products.listYearly = function(){
 		 var json = {
-	   				"start_date" : $("#REGS_DATE_S").val(),
-	   				"end_date"   : $("#REGS_DATE_E").val()
+	   				"start_date" : $("#selectyear").val() + "-01-01",
+	   				"end_date"   : $("#selectyear").val() + "-12-31"
 			};$.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportyearly/", 
 			    type: 'GET',  
@@ -771,35 +787,17 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) { 
+			    	var total_amount = 0;
 			    	console.log(data);
-			    	  if(data.reportyear){
+			    	if(data.reportyear){
 				    	$("tbody#tbodyyearly").html('');
-				    	var st = "";
 				    	for(var i=0;i<data.reportyear.length;i++){
-				    		st += "<tr>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].pro_name + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-				    		st += "<td>" +data.reportyear[i].customer + "</td>";
-						}
-			    	}  
+				    	formatMonthlySaleReport(data.reportyear[i]);
+				    	total_amount += data.reportyear[i].total_amount;
+				    	}
+			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");			    	  
+			    	}
+			    	$("#allTotalAmount").val(total_amount);
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -1068,7 +1066,8 @@ tbody tr td {
 	 							{
 	 								settableheader();
 	 								$("#REGS_DATE_E").datepicker('setDate', moment($("#REGS_DATE_S").val()).add(6, 'days').format('YYYY-MM-DD'));
-	 								//products.listweekly(1);
+	 								products.listWeekly(1);
+	 								 
 	 							}
 	 							
 	 						searchByDate();
@@ -1088,6 +1087,7 @@ tbody tr td {
 	 						$("#REGS_DATE_S").datepicker('setDate', moment($("#REGS_DATE_E").val()).subtract(6, 'days').format('YYYY-MM-DD'));
 	 						settableheader();
 	 						searchByDate();
+	 						products.listWeekly(1);
 	 			      }
 	 		});	
 	 		if($("#EDate").hasClass("hidetable"))
