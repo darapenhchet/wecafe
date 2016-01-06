@@ -220,7 +220,7 @@ tbody tr td {
 												<table id="detailtable" class="table table-responsive">
 													<thead>
 														<tr> 
-															<th>#</th>
+															 
 															<th>Invoice No</th> 
 															<th>Date</th>
 															<th>Sell By</th>  
@@ -578,7 +578,7 @@ tbody tr td {
 		 setheadermonthly();
 		 products.listMonthly();
 	 });
-	 products.listDetail = function(currentPage){		
+	 products.listDetail = function(currentPage){	
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/saledetail/" , 

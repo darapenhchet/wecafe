@@ -29,31 +29,15 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 			session = sessionFactory.getCurrentSession();
 			session.getTransaction().begin();
 			SQLQuery query = session.createSQLQuery(
-					"SELECT A.imp_id AS purchase_id "
-				 + "   , A.imp_date AS purchase_date "
-				 + "	   , CONCAT(C.lastname, ' ', C.firstname) AS purchase_by "
-				 + "	   , SUM(pro_qty * unit_price) AS purchase_total_amount "
-				 + "	   , '0' AS purchase_type "
-				 + "	FROM import A "
-				 + "	INNER JOIN import_detail B ON A.imp_id = B.imp_id "
-				 + "	LEFT JOIN users C ON C.id = A.user_id "
-				 + "	WHERE EXTRACT(YEAR FROM A.imp_date) = " + byyear
-				 + "	GROUP BY 1,2,3 " 
-				 + "	UNION ALL "
-				 + "	SELECT A.expense_id AS purchase_id "
-					+ "   , A.expense_date AS purchase_date "
-				+ "	   , CONCAT(C.lastname, ' ', C.firstname) AS purchase_by "
-				+ "	   , SUM(B.expense_qty * B.expense_unitprice) AS purhcase_total_amount "
-				+ "	   , '1' AS purchase_type "
-				+ "	FROM tbl_expense A "
-				+ "	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "
-				+ "	LEFT JOIN users C ON A.expense_user_id = C.id "
-							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = " + byyear
-				+ "	GROUP BY 1,2,3 "
-				+ "	ORDER BY 2 DESC;");
+					"SELECT A.sale_id "
+				 + "   , B.username "
+				 + "	   , to_char(A.sale_datetime, 'YYYY-mm-dd') as sale_date "
+				 + "	   , A.total_amount from sale A "
+				 + "	   , INNER JOIN users B on A.user_id = B.id "
+				 + "	where EXTRACT(YEAR FROM A.sale_datetime) = " + byyear);
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-			List<Map>	importProducts = (List<Map>)query.list();	
-			return importProducts;
+			List<Map>	saleProducts = (List<Map>)query.list();	
+			return saleProducts;
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
