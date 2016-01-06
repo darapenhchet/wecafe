@@ -271,8 +271,7 @@ public class AdminReportServiceImp implements AdminReportService {
 			e.printStackTrace();
 		}finally {
 			
-		}
-		
+		}		
 		return null;
 	}
 	

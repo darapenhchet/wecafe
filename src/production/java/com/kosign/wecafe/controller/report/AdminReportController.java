@@ -43,6 +43,12 @@ public class AdminReportController {
 		return "admin/purchase-report";
 	}
 	
+	@RequestMapping(value="/admin/sale_report", method=RequestMethod.GET)
+	public String ListSaleReport(){
+	//	model.put("reportPurchase", adminReportService.getReportListAllPurchase());
+		return "admin/sale_report";
+	}
+	
 	@RequestMapping(value="/admin/purchasereportdetail", method=RequestMethod.GET)
 	public @ResponseBody List<Map> ListReportDetailPurchase(Map<String, Object>model){
 		return adminReportService.getListReportDetailPurchase();
