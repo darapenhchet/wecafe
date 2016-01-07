@@ -409,7 +409,7 @@ tbody tr td {
 				</div> 
 				<div class="modal-footer form-group form-horizontal" style="height: 80px;"> 
 					<div align="right">
-						<label  class="control-label col-lg-1">Total Amount : </label>
+						<label  class="control-label col-lg-2">Total Amount : </label>
 							<div class="col-lg-2">
 									<input class="form-control" id="btotalamount"type="text">
 							</div>

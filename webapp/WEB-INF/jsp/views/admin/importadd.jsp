@@ -609,6 +609,7 @@
             	}
                 
                 function searchProduct(){
+                	 
     				$.ajax({ 
     				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
     				    type: 'POST', 
@@ -618,7 +619,7 @@
     	                    xhr.setRequestHeader("Content-Type", "application/json");
     	                },
     				    success: function(data) { 
-    				       //console.log(data); 
+    				       console.log(data); 
     				       var availableTags=[];
     				       for(i=0; i<data.length; i++)
 		   						{							
