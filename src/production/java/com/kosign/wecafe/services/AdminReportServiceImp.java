@@ -631,7 +631,7 @@ public class AdminReportServiceImp implements AdminReportService {
 									   "	crosstab ( " +
 									   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
 									   "		   ,to_char(A.imp_date, ''DD'')::text As imp_date " +
-									   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price)] AS row " +
+									   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price*B.pro_qty)] AS row " +
 									   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
 									   "	 LEFT JOIN users C ON C.id = A.user_id " +
 									   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   
@@ -727,7 +727,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "	crosstab ( " +
 										   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
 										   "		   ,to_char(A.imp_date, ''DD'')::text As imp_date " +
-										   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price)] AS row " +
+										   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price*B.pro_qty)] AS row " +
 										   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
 										   "	 LEFT JOIN users C ON C.id = A.user_id " +
 										   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   

@@ -587,7 +587,7 @@ tbody tr td {
 				 break;
 				 
 			 case '4':
-				 products.listYear(); 
+				 products.listYearly(); 
 				 break;
 		 }
 	 });
@@ -740,15 +740,7 @@ tbody tr td {
 			    	    if(data.reportmonthly){
 				    	$("#monthlytable tbody").html('');
 				    	var st = "";
-				    	/* var days = new Array(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());				    	
-				    	for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++)
-		    			{
-				    		days[j] = new Array(2);
-				    		days[j][0] = "day" + (j+1) + "_qty";
-				    		days[j][1] = "day" + (j+1) + "_amount";
-				    		 
-		    			} */
-				    	
+				    	var total_all = 0;
 					    	for(var i=0;i<data.reportmonthly.length;i++){
 					    	var total_qty = 0, total_amount = 0;
 				    		st += "<tr>";
@@ -759,14 +751,16 @@ tbody tr td {
 				    				console.log('day' + (j+1) + '_qty');
 				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_qty'] + "</td>";
 				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_amount'] + "</td>";
-				    				total_qty += data.reportmonthly[i].day1_qty;
-				    				total_amount += data.reportmonthly[i].day1_amount;
+				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty'];
+				    				total_amount += data.reportmonthly[i]['day' + (j+1) + '_amount'];
 				    		}
 				    		st += "<td>" + total_qty + "</td>";
 				    		st += "<td>" + total_amount + "</td>";
 				    		st += "</tr>";
+				    		total_all += total_amount;
 						}
 				    	$("#monthlytable tbody").html(st);
+				    	$("#allTotalAmount").val(total_all);
 				    }    
 			    },	
 			    error:function(data,status,er) { 
