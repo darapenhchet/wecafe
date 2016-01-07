@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -321,6 +322,32 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	@Transactional
 	public Map<String, Object> getAllSaleMonthlyReportsTotal(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public List<Map> listAllsaleDetail(Long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.getTransaction().begin();
+			Query query = session.createSQLQuery("SELECT A.total_amount, "
+					+ "B.pro_qty, "
+					+ "B.pro_unit_price, "
+					+ "C.pro_name, B.pro_qty*B.pro_unit_price as amount "
+					+ "FROM sale A INNER JOIN order_detail B on A.ord_id = B.order_id "
+					+ "LEFT JOIN product C ON B.pro_id = C.pro_id "
+					+ "WHERE A.sale_id = " + id);
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map> saleDetails = query.list();
+			return saleDetails;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.getStackTrace();
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
+		}
 		return null;
 	}
 

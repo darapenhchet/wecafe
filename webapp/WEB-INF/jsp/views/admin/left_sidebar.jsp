@@ -70,7 +70,7 @@
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ion-social-usd"></i><span> Sale </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/salelist">Sale List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/sale_report">Sale List</a></li>
                                     <%-- <li><a href="${pageContext.request.contextPath}/admin/saleadd">Add Sale</a></li> --%>
                                 </ul>
                             </li>

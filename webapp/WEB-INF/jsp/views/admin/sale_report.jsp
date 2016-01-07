@@ -389,7 +389,7 @@ tbody tr td {
 					<button type="button" class="close" aria-hidden="true">
 						<span class="button b-close"><span>×</span></span>
 					</button>
-					<h4 class="modal-title">Import Detail</h4>
+					<h4 class="modal-title">Sale Detail</h4>
 
 				</div>
 				<div class="modal-body" style="width: 100%;">
@@ -399,8 +399,8 @@ tbody tr td {
 								<th>#</th>
 								<th>Produce Name</th>
 								<th>Qty</th>
-								<th>Unit Price</th>
-								<th>Supplier Name</th>
+								<th>Unit Price</th> 
+								<th>Total Amount</th>
 							</tr>
 						</thead>
 						<tbody id="impProDetail"> 
@@ -630,7 +630,7 @@ tbody tr td {
 						var alltotal = 0;
 						
 						for(var i =0;i < tblside; i++)	
-							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(6).html());
+							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(3).html());
 						$("#allTotalAmount").val(alltotal);
 					}else{
 						$("tbody#tbodydaily").html("");
@@ -1060,27 +1060,26 @@ tbody tr td {
 	 $(document).on("click","#saleid", function(){
 		 
 		   $.ajax({ 
-			    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/getsaledetail/" + $(this).html() , 
 			    type: 'POST', 
 			    dataType: 'JSON', 
 			    beforeSend: function(xhr) {
                   xhr.setRequestHeader("Accept", "application/json");
                   xhr.setRequestHeader("Content-Type", "application/json");
               },
-			    success: function(data) { 
-			    	console.log(data);
-			    	var st= "";
+			    success: function(data) {
+			    	console.log(data);  
+			     	var st= "";
 			    	var amount = 0;
-			       for(i=0; i<data.length; i++){
+			       for(i=0; i<data.saleDetail.length; i++){
 			    	   st += "<tr><td>" + (i + 1) + "</td>";
-			    	   st += "<td>" + data[i].proname +"</td>";
-			    	   st += "<td>" + data[i].proqty +"</td>";
-			    	   st += "<td>" + data[i].prounitprice +"</td>";
-			    	   st += "<td>" + data[i].supname +"</td></tr>"
-			    	   amount += data[i].proqty * data[i].prounitprice;
+			    	   st += "<td>" + data.saleDetail[i].pro_name +"</td>";
+			    	   st += "<td>" + data.saleDetail[i].pro_qty +"</td>";
+			    	   st += "<td>" + data.saleDetail[i].pro_unit_price +"</td>";
+			    	   st += "<td>" + data.saleDetail[i].amount +"</td></tr>"			    	   
 			       }
 			       $("#impProDetail").html(st);
-			       $("#btotalamount").val(amount);
+			       $("#btotalamount").val(data.saleDetail[0].total_amount);  
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);

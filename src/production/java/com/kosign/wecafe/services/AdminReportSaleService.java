@@ -11,5 +11,6 @@ public interface AdminReportSaleService {
 	public Object getListReportMonthlySaleRest(Date startDate, Date endDate);
 	public Object getListReportYearlySale(Date startDate, Date endDate);	
 	public Map<String, Object> getAllSaleMonthlyReportsTotal(Date startDate, Date endDate);	
+	public List<Map> listAllsaleDetail(Long id);
 	public Long count();
 }
