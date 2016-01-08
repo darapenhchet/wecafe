@@ -19,11 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.ImportDetail;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.RequestStockDetail;
 import com.kosign.wecafe.forms.Cart;
+import com.kosign.wecafe.forms.ImportForm;
+import com.kosign.wecafe.forms.RequestForm;
 import com.kosign.wecafe.services.ImportService;
+import com.kosign.wecafe.services.RequestService;
 import com.kosign.wecafe.services.SellProductServiceImpl;
 import com.kosign.wecafe.services.SellProductsService;
 import com.kosign.wecafe.services.SellService;
@@ -37,9 +42,23 @@ public class SellController {
 	@Inject SellService sellService;
 	
 	@Inject ImportService importService;
+	@Inject RequestService requestService;
 	
 	@Autowired
 	UserService userService;
+	
+	@RequestMapping(value="/seller/request_product", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Boolean saveRequestProduct(@RequestBody List<RequestForm> requestForm)	{
+		RequestStockDetail requestDetail = new RequestStockDetail();
+		System.out.println("request size================="+requestForm.size());
+		try {			
+			return requestService.saveRequestPro(requestForm);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 	@RequestMapping(value="/seller/searchproduct", method=RequestMethod.POST)
 	public @ResponseBody List<Product> searchProductName(){

@@ -714,12 +714,13 @@
 						$("#btn_save")
 								.click(
 										function() {
-											var importDetail = [];
+											var requestDetail = [];
 											if ($('#tbllistimport tr').length == 0) {
 												alert("There is no data was added");
 												return;
 											}
 											$('#tbllistimport tr')
+											
 													.each(
 															function() {
 																json = {
@@ -730,7 +731,7 @@
 																			.eq(
 																					0)
 																			.html()),
-																	"quantity" : ($(
+																	"proQty" : ($(
 																			this)
 																			.find(
 																					"td")
@@ -739,17 +740,16 @@
 																			.html())
 																	
 																};
-																importDetail
-																		.push(json);
+																console.log(json);
+																requestDetail.push(json);
 															});
 
 											$
 													.ajax({
-														url : "${pageContext.request.contextPath}/admin/addImport",
+														url : "${pageContext.request.contextPath}/seller/request_product",
 														type : 'POST',
 														datatype : 'JSON',
-														data : JSON
-																.stringify(importDetail),
+														data : JSON.stringify(requestDetail),
 														beforeSend : function(
 																xhr) {
 															xhr
@@ -763,7 +763,7 @@
 														},
 														success : function(data) {
 															console.log(data);
-															location.href = "${pageContext.request.contextPath}/admin/importlist";
+															//location.href = "${pageContext.request.contextPath}/admin/importlist";
 														},
 														error : function(data,
 																status, er) {

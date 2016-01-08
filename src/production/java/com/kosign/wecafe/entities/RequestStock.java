@@ -1,12 +1,10 @@
-/*package com.kosign.wecafe.entities;
+package com.kosign.wecafe.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,51 +13,119 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="request_stock")
 public class RequestStock implements Serializable{
-
-	 
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="req_id_seq", name="req_id")
+	@SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="req_stock_id", name="req_id")
 	@GeneratedValue(generator="req_id", strategy=GenerationType.SEQUENCE)
+	@Column(name="req_id")
+	private long reqId;
 	
-	@Column(name="req_id", nullable=false)
-	private Long reqID;
-	
-	@Column(name="req_by",nullable=true)
-	private Long reqBy;
-	
-	@Column(name="app_by",nullable=true)
-	private Long appBy;
-	
-	@OneToMany(fetch = FetchType.LAZY,  mappedBy = "pk1.product", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk1.requestStock", cascade=CascadeType.ALL)
 	private Set<RequestStockDetail> requestStockDetail = new HashSet<RequestStockDetail>();
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
-	private User requestBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="req_date",nullable=true)
-	private Date requestDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="app_date",nullable=true)
-	private Date approveDate;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="use_id")
+	private User userRequest;	
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="app_id")
+	private User userApprove;	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="req_date")
+	private Date reqDate = new Date();
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="app_date")
+	private Date appDate = new Date();
+	
+	@Column(name="status")
+	private Boolean status;
+
+	public long getReqId() {
+		return reqId;
+	}
+
+	public void setReqId(long reqId) {
+		this.reqId = reqId;
+	}
+
+	public Set<RequestStockDetail> getRequestStockDetail() {
+		return requestStockDetail;
+	}
+
+	public void setRequestStockDetail(Set<RequestStockDetail> requestStockDetail) {
+		this.requestStockDetail = requestStockDetail;
+	}
+
+	public User getUserRequest() {
+		return userRequest;
+	}
+
+	public void setUserRequest(User userRequest) {
+		this.userRequest = userRequest;
+	}
+
+	public User getUserApprove() {
+		return userApprove;
+	}
+
+	public void setUserApprove(User userApprove) {
+		this.userApprove = userApprove;
+	}
+
+	public Date getReqDate() {
+		return reqDate;
+	}
+
+	public void setReqDate(Date reqDate) {
+		this.reqDate = reqDate;
+	}
+
+	public Date getAppDate() {
+		return appDate;
+	}
+
+	public void setAppDate(Date appDate) {
+		this.appDate = appDate;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "RequestStock [reqId=" + reqId + ", requestStockDetail=" + requestStockDetail + ", userRequest="
+				+ userRequest + ", userApprove=" + userApprove + ", reqDate=" + reqDate + ", appDate=" + appDate
+				+ ", status=" + status + "]";
+	}
+	
+	
+
+
 }
-*/
