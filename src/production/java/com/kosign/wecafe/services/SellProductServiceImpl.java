@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kosign.wecafe.entities.Order;
 import com.kosign.wecafe.entities.OrderDetail;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.RequestStock;
 import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.Cart;
@@ -75,6 +76,21 @@ public class SellProductServiceImpl implements SellProductsService {
 		} finally {
 			session.close();
 		}
+		return null;
+	}
+	@Override
+	@Transactional
+	public List<RequestStock> getRequestStock() {
+		Session session = null;
+		try {
+			session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("From RequestStock Where status ='t'");
+			List<RequestStock> requestStock = query.list();
+			return requestStock;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			
+		} 
 		return null;
 	}
 

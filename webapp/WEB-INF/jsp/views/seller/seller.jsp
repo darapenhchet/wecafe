@@ -614,7 +614,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
 
-	<!-- Todo -->
+	<!-- bpopup -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 		
@@ -762,7 +762,9 @@
 																			"application/json");
 														},
 														success : function(data) {
-															console.log(data);
+															alert("Successfully requested");
+															clear();
+															$("#tbllistimport tr").remove();
 															//location.href = "${pageContext.request.contextPath}/admin/importlist";
 														},
 														error : function(data,

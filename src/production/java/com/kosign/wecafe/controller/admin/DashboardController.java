@@ -26,6 +26,7 @@ public class DashboardController {
 	public String dashboard(Map<String, Object> model){
 		model.put("TOTAL_SALES", sellerService.getAllSellCount());
 		model.put("NEW_ORDERS", sellProductService.getOrdered().size());
+		model.put("REQUEST_STOCK", sellProductService.getRequestStock().size());
 		model.put("TOTAL_USERS", userService.getAllUsers().size());
 		return "admin/dashboard";
 	}

@@ -122,12 +122,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-sm-6 col-lg-3">
+						<div class="col-md-6 col-sm-6 col-lg-3" style="cursor: pointer;" id="request_stock">
 							<div class="mini-stat clearfix bx-shadow">
 								<span class="mini-stat-icon bg-purple"><i
 									class="ion-ios7-cart"></i></span>
 								<div class="mini-stat-info text-right text-muted">
-									<span class="counter">${NEW_ORDERS }</span> New Orders
+									<span class="counter">${REQUEST_STOCK }</span> New Request
 								</div>
 							</div>
 						</div>
@@ -158,7 +158,7 @@
 	</div>
 	<!-- END wrapper -->
 
-
+	<%@ include file="requeststocklist.jsp"%>
 
 	<script>
 		var resizefunc = [];
@@ -215,6 +215,20 @@
 	<!-- Todo -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+		
+	<!-- bpopup -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+		
+	<script type="text/javascript">
+	
+		$(function(){
+			$("#request_stock").click(function() {
+				$("#request_stock_list").bPopup();
+			});
+			
+		});
+	</script>
 
 </body>
 </html>
