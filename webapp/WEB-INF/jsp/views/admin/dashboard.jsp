@@ -224,10 +224,45 @@
 	
 		$(function(){
 			$("#request_stock").click(function() {
+				get_request_stock_detail();
 				$("#request_stock_list").bPopup();
 			});
 			
 		});
+		
+		function get_request_stock_detail(){			
+ 			$.ajax({
+ 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id=", 
+				 type: 'POST',
+ 				datatype: 'JSON',
+ 				beforeSend: function(xhr) {
+ 		            xhr.setRequestHeader("Accept", "application/json");
+ 		            xhr.setRequestHeader("Content-Type", "application/json");
+ 		        },
+ 				success: function(data){
+ 					console.log(data);
+ 					if(data!=""){
+ 						var result="";
+ 						$(data).each(function(i,v){
+ 							result+="<tr>"
+ 										+"<td>"+v.req_id+"</td>"
+ 										+"<td>"+v.pro_id+"</td>"
+ 										+"<td>"+v.pro_name+"</td>"
+ 										+"<td>"+v.pro_qty+"</td>"
+ 										+"<td>"+v.remain_qty+"</td>"
+ 										+"<td>"+v.stock_qty+"</td>"
+ 										+"<td>"+v.firstname +" "+v.lastname+"</td>"
+ 										+"<td>"+v.req_date+"</td>"
+ 									+"</tr>";
+ 						});
+ 						$("#request_stock_info").html(result);
+ 					}
+ 				},
+ 				error:function(data, status,er){
+ 					console.log("error: " + data + "status: " + status + "er: ");
+ 				}
+ 			});    
+		}
 	</script>
 
 </body>

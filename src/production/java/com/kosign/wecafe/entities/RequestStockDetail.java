@@ -34,12 +34,35 @@ public class RequestStockDetail implements Serializable{
 	@Column(name = "pro_qty")
 	private long proQty; 
 	
+	@Column(name = "remain_qty")
+	private long remainQty; 
+	
 	public long getProQty() {
 		return proQty;
 	}
 
 	public void setProQty(long proQty) {
 		this.proQty = proQty;
+	}
+
+	public RequestStockDetailPK getPk1() {
+		return pk1;
+	}
+
+	public void setPk1(RequestStockDetailPK pk1) {
+		this.pk1 = pk1;
+	}
+
+	public long getRemainQty() {
+		return remainQty;
+	}
+
+	public void setRemainQty(long remainQty) {
+		this.remainQty = remainQty;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Transient

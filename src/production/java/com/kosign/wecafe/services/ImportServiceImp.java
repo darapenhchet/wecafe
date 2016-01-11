@@ -32,66 +32,6 @@ public class ImportServiceImp implements ImportService {
 	
 	@Autowired SessionFactory sessionFactory;
 	
-//	@Override
-//	public List<Map> listAllImportProduct() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		try {
-//			session.getTransaction().begin();
-//			/*Query query = session.createQuery("SELECT new Map(io.proQty as proQty ,product.productName as productName, ip.userId as userId"
-//					+ "							 )"
-//					+ "FROM ImportDetail io "
-//					+ "INNER JOIN io.pk1.product product "
-//					+ "INNER JOIN io.pk1.importProduct ip ");
-//			Query query = session.createQuery("SELECT new Map("
-//					+ "io.proQty as proQty"
-//					+ ",ip.impId as impId"
-//					+ ", io.unitPrice as unitPrice"
-//					+ ", io.proStatus as status"
-//					+ ",product.productName as productName"
-//					+ ",ip.userId as userId"
-//					+ ",sp.supplierName as supplierName)"
-//					+ "FROM ImportDetail io "
-//					+ "INNER JOIN io.pk1.product product "
-//					+ "INNER JOIN io.pk1.importProduct ip "
-//					+ "INNER JOIN io.supplier sp"
-//					);*/
-//			
-///*			Query query = session.createQuery("SELECT new Map("
-//					+ "io.proQty as proQty"
-//					+ ",ip.impId as impId"
-//					+ ", io.unitPrice as unitPrice"
-//					+ ", io.proStatus as status"
-//					+ ",product.productName as productName"
-//					+ ", product.productId as productId"
-//					+ ",ip.userId as userId"
-//					+ ",ip.impDate as impDate"
-//					+ ",ip.totalAmount as totalAmount)"
-//					+ "FROM ImportDetail io "
-//					+ "INNER JOIN io.pk1.product product "
-//					+ "INNER JOIN io.pk1.importProduct ip "
-//					
-////					+ "INNER JOIN io.supplier sp "
-////					+ "WHERE ip.impId = ? "
-//					);*/
-//			Query query = session.createQuery("FROM ImportProduct");
-//			
-//			List<Map> importProducts = (ArrayList<Map>)query.list();
-//			System.out.println("products.size()" + importProducts.size());
-////			for(Map Product : importProducts){
-////				
-////				
-////			}
-//			return importProducts;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println(e.getMessage());
-//			session.getTransaction().rollback();
-//		}finally {
-//			session.close();
-//		}
-//		
-//		return null;
-//	}
 	@Override
 	@Transactional
 	public List<ImportProduct> listAllImportProduct() {
@@ -166,38 +106,31 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	@Override
-	public List<Product> listAllProduct() {
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	@Transactional
+	public List<Product> listAllProduct() {		
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.getTransaction().begin();
 			Query query = session.createQuery("FROM Product");
 			List<Product> products = query.list(); 
 			 return products; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			session.getTransaction().rollback();
-		}finally {
-			session.close();
 		}
 		return null;
 	}
 
 	@Override
+	@Transactional
 	public List<Supplier> listAllSupplier() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.getTransaction().begin();
 			Query query = session.createQuery("FROM Supplier");
 			 List<Supplier> suppliers= query.list();
 			 return suppliers; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			session.getTransaction().rollback();
-		}finally {
-			session.close();
 		}
 		return null;
 	}
@@ -285,25 +218,10 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	@Override
+	@Transactional
 	public List<Map> findById(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			
-//			Query query = session.createQuery("SELECT new Map("
-//					+ "io.proQty as proQty"
-//					+ ",ip.impId as impId"
-//					+ ", io.unitPrice as unitPrice"
-//					+ ", io.proStatus as status"
-//					+ ",product.productName as productName"
-//					+ ", product.productId as productId"
-//					+ ",ip.userId as userId"
-//					+ ",sp.supplierName as supplierName)"
-//					+ "FROM ImportDetail io "
-//					+ "INNER JOIN io.pk1.product product "
-//					+ "INNER JOIN io.pk1.importProduct ip "
-//					+ "INNER JOIN io.supplier sp "
-//					+ "WHERE ip.impId = ? "
-//					);
 			Query query = session.createQuery("Select new Map("
 					+ "p.productName as proname,"
 					+ "impdetail.proQty as proqty,"
@@ -311,14 +229,10 @@ public class ImportServiceImp implements ImportService {
 					+ "impdetail.supplier.supplierName as supname)"
 					+ " FROM ImportDetail impdetail" 
 					+ " INNER JOIN impdetail.pk1.product  p"
-					+ " WHERE impdetail.pk1.importProduct.impId= ? ");
-			
-			query.setParameter(0, id);
-			
-			List<Map> importProducts = (List<Map>)query.list();
-			
-			return importProducts;
-			
+					+ " WHERE impdetail.pk1.importProduct.impId= ? ");			
+			query.setParameter(0, id);			
+			List<Map> importProducts = (List<Map>)query.list();			
+			return importProducts;			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -326,10 +240,10 @@ public class ImportServiceImp implements ImportService {
 		return null;
 	}
 	
+	@Transactional
 	public List<Map> listAllImportDetail(Long id){
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.getTransaction().begin();
 			Query query = session.createQuery("Select new Map("
 											+ "p.productName as proname,"
 											+ "p.productId as proid,"
@@ -342,24 +256,20 @@ public class ImportServiceImp implements ImportService {
 											+ " WHERE impdetail.pk1.importProduct.impId= ? ");
 			query.setParameter(0, id);
 			List<Map> importDetails = query.list();
-			session.getTransaction().commit();
 			return importDetails;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.getStackTrace();
-			session.getTransaction().rollback();
-		}finally {
-			session.close();
 		}
 		return null;
 	}
 	@Override
+	@Transactional
 	public Boolean deleteImportPro(List<ImportForm> importform, Long id ) {
 
 		Session session = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			session.getTransaction().begin();
+			session = sessionFactory.getCurrentSession();
 			Query query = session.createQuery("FROM ImportDetail ID"
 											+ " Where ID.pk1.importProduct.impId = ? "
 											+ " and ID.pk1.product.productId = ? ");
@@ -371,15 +281,9 @@ public class ImportServiceImp implements ImportService {
 			//System.out.println("importdetail : " + importdetail);
 			
 			session.delete(importdetail);
-			session.beginTransaction().commit();
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			session.close();
 		}
-		
 		return true;
 	}
  

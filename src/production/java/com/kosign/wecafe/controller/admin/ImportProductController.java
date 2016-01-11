@@ -22,7 +22,7 @@ import com.kosign.wecafe.services.ProductService;
 import com.kosign.wecafe.services.SupplierService;
 
 @Controller
-public class importProductController {
+public class ImportProductController {
 	
 	@Inject ImportService importService;
 	

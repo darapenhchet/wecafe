@@ -461,7 +461,7 @@
 
 				</div>
 				<div class="modal-body" style="height: auto;">
-					<div class=" form">
+					<div class=" form">					
 						<form class="cmxform form-horizontal tasi-form" id="signupForm"
 							method="get" action="#" novalidate="novalidate">
 							<div class="form-group ui-widget">
@@ -474,11 +474,19 @@
 								</div>
 							</div>
 							<div class="form-group ">
-								<label for="quantity" class="control-label col-lg-2">Qty
+								<label for="quantity" class="control-label col-lg-2">Request Qty
 									*</label>
 								<div class="col-lg-10">
 									<input class="form-control " required="required" id="product_qty"
 										name="product_qty" type="text">
+								</div>
+							</div>
+							<div class="form-group ">
+								<label for="quantity" class="control-label col-lg-2">In Stock
+									*</label>
+								<div class="col-lg-10">
+									<input class="form-control " required="required" id="remain_qty"
+										name="remain_qty" type="text">
 								</div>
 							</div>
 
@@ -504,7 +512,8 @@
 										<tr>
 											<th>#</th>
 											<th>Product Name</th>
-											<th style="text-align: center;">Qty</th>
+											<th style="text-align: center;">Request Qty</th>
+											<th style="text-align: center;">In Stock</th>
 											<th style="text-align: center;">Edit</th>
 										</tr>
 									</thead>
@@ -632,9 +641,10 @@
 						
 						//Check qty for input only number
 						
-						$("#product_qty").keypress(function(e){
+						$("#product_qty,#remain_qty").keypress(function(e){
 							checkOnlyNumber(e);
 						});
+						
 
 						//Click button save cancel
 						$("#btn_cancel_save").click(function() {
@@ -661,7 +671,7 @@
 						
 						
 						
-						$(document).on("blur", "#product_name ,#product_qty",
+						$(document).on("blur", "#product_name ,#product_qty,#remain_qty",
 								function() {
 									if ($(this).val() == "") {
 										$(this).addClass("borderRed");
@@ -685,6 +695,11 @@
 												return;
 											} else
 												$("#product_qty").removeClass("borderRed");
+											if ($("#remain_qty").val() == "") {
+												$("#remain_qty").addClass("borderRed");
+												return;
+											} else
+												$("#remain_qty").removeClass("borderRed");
 
 											var st = "";
 											st += "<tr><td style='display: none;'>"
@@ -700,6 +715,8 @@
 													+ $("#product_name").val()
 													+ "</td>";
 											st += "<td>" + $("#product_qty").val()
+													+ "</td>";
+											st += "<td>" + $("#remain_qty").val()
 													+ "</td>";
 											st += "<td><a href= 'javascript:;' id='btn_edit'>Edit</a> | <a href='javascript:;' id='btn_delete'>Delete</a></td></tr>";
 											$("#tbllistimport").append(st);
@@ -737,7 +754,8 @@
 																					"td")
 																			.eq(
 																					4)
-																			.html())
+																			.html()),
+																	"remainQty" : ($(this).find("td").eq(5).html()),
 																	
 																};
 																console.log(json);
@@ -785,6 +803,8 @@
 							$('#product_id').val("");
 							$("#product_qty").val("");
 							$("#product_qty").removeClass("borderRed");
+							$("#remain_qty").val("");
+							$("#remain_qty").removeClass("borderRed");
 
 						}
 
@@ -845,6 +865,9 @@
 									$("#product_qty").val(
 											$(this).parents("tr").children()
 													.eq(4).html());	
+									$("#remain_qty").val(
+											$(this).parents("tr").children()
+													.eq(5).html());	
 									$("#btn_add").html("Update");
 									$("#btn_add").attr("id", "btn_update");
 								});
@@ -859,6 +882,8 @@
 											$("#product_name").val());
 									_thisRow.children().eq(4).html(
 											$("#product_qty").val());	
+									_thisRow.children().eq(5).html(
+											$("#remain_qty").val());	
 									$("#btn_update").html("Add");
 									$("#btn_update").attr("id", "btn_add");
 									

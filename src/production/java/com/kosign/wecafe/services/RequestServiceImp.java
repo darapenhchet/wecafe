@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +44,6 @@ public class RequestServiceImp implements RequestService {
 		return userName;
 	}
 	
-	@Override
-	public List<ImportProduct> listAllImportProduct() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	@Transactional
@@ -53,7 +51,6 @@ public class RequestServiceImp implements RequestService {
 
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.getTransaction().begin();
 			//1. save import product 
 			RequestStock requestStock = new RequestStock();
 			requestStock.setStatus(true);
@@ -68,7 +65,8 @@ public class RequestServiceImp implements RequestService {
 				product.setProductId(requestForm.get(i).getProId());					
 				requestDetail.setProduct(product);			
 				requestDetail.setRequestStock(requestStock);				
-				requestDetail.setProQty(requestForm.get(i).getProQty());									
+				requestDetail.setProQty(requestForm.get(i).getProQty());		
+				requestDetail.setRemainQty(requestForm.get(i).getRemainQty());
 				requestStock.getRequestStockDetail().add(requestDetail);
 				
 				//session.save(requestDetail);				
@@ -82,39 +80,52 @@ public class RequestServiceImp implements RequestService {
 			session.save(requestStock);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}finally {
 		}
 		return null;
 	}
 
 	@Override
-	public List<Product> listAllProduct() {
-		// TODO Auto-generated method stub
+	@Transactional
+	public List<Map> listRequestDetail(String id){
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			String sql="SELECT rs.req_id,pro.pro_id,pro.pro_name,rsd.pro_qty,rsd.remain_qty,firstname,lastname,rs.req_date,pro.qty stock_qty "
+					+ "FROM "
+					+ "request_stock rs, request_stock_detail  rsd,users use,product pro "
+					+ "WHERE 1=1 "
+					+ "and rs.req_id=rsd.req_id "
+					+ "and rs.use_id=use.id "
+					+ "and rsd.pro_id=pro.pro_id "
+					+ "and rs.status='t' "
+					+ "and CAST(rs.req_id as TEXT) LIKE ? Order By rs.req_id DESC";
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);		
+			query.setParameter(0, "%"+id+"%");
+			List<Map> requestDetails = query.list();
+			return requestDetails;
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
 		return null;
 	}
-
+	
 	@Override
-	public List<Supplier> listAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean updateRequestPro(List<RequestForm> requestForm, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Map> listAllRequestDetail(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean deleteRequestPro(List<RequestForm> requestForm, Long id) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public List<RequestStock> listRequestStock(){
+		
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM RequestStock");
+			List<RequestStock>	requestStock = (List<RequestStock>)query.list();	
+			return requestStock;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			
+		}
+		
 		return null;
 	}
 
