@@ -60,9 +60,17 @@ public class User implements Serializable{
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
-	/*@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-	private List<ImportProduct> importproduct = new ArrayList<>();*/
-	
+//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL,mappedBy="user")
+//	private Set<Expense> Expense ;//= new HashSet<Product>();
+//	
+//	public Set<Expense> getExpense() {
+//		return Expense;
+//	}
+//
+//	public void setExpense(Set<Expense> expense) {
+//		Expense = expense;
+//	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
 	private Date createdDate = new Date();

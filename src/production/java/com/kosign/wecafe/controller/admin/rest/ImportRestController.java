@@ -29,7 +29,7 @@ public class ImportRestController {
 	public Map<String, Object> getAllCategories(){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("PAGINATION","PAGINATION");
-		map.put("IMPORTS", importService.listAllImportProduct());
+		//map.put("IMPORTS", importService.listAllImportProduct());
 		return map;
 	}
 }

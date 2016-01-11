@@ -136,7 +136,7 @@ tbody tr td {
 											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
 									</div>
 								</div>
-								<div class="col-sm-3 form-group">
+								<!-- <div class="col-sm-3 form-group">
 									<select class="form-control" id="sel1">
 										<option>Detail</option>
 										<option>Daily</option>
@@ -144,7 +144,7 @@ tbody tr td {
 										<option>Monthly</option>
 										<option>Yearly</option>
 									</select>
-								</div>
+								</div> -->
 
 							</div>
 						</div>
@@ -161,8 +161,8 @@ tbody tr td {
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr
+									<tbody id="CONTENTS">
+										<%-- <tr
 											dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
 											<td>{{key+1}}</td>
 											<td><a href="javascript:;" id="impid">
@@ -178,156 +178,29 @@ tbody tr td {
 													class="fa fa-pencil"></i></a> <a class="on-default remove-row"
 												href="javascript:;" id="btnRemove"><i
 													class="fa fa-trash-o"></i></a></td>
-										</tr>
+										</tr> --%>
 
 									</tbody>
 								</table>
-								<!-- <table id="dailytable" class="table table-responsive  hidetable" >
-    <thead>
-<tr >
-            <th rowspan="2">Customer</th>
-            <th rowspan="2">Item</th>
-
-            <th colspan="2">1</th>
-            <th colspan="2">2</th>
-            <th colspan="2">3</th>
-            <th colspan="2">4</th>
-            <th colspan="2">5</th>
-            <th colspan="2">6</th>
-            <th colspan="2">7</th>
-            <th colspan="2">8</th>
-            <th colspan="2">9</th>
-            <th colspan="2">10</th>
-            <th colspan="2">11</th>
-            <th colspan="2">12</th> 
-            <th colspan="2">Total</th>
-      </tr>
-      <tr>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>qty</th>
-            <th>Amount</th>
-            <th>Total Qty</th>
-            <th>Total Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-			<td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-           
-      </tr>
-      <tr>
-        <td>A</td>
-        <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-<td>A</td>
-            <td>A</td>
-            
-      </tr>
-      <tr>
-      <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-            <td>A</td>
-<td>A</td>
-            <td>A</td>
-          
-      </tr>
-    </tbody>
-  </table> -->
+								
 							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<select id="PER_PAGE" class="form-control">
+									<option value="15">15</option>
+									<option value="30">30</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</div>
+							<div class="col-md-10 form-horizontal" align="right">
+								<label  class="control-label col-md-9">Total Amount : </label>
+									<div class="col-md-3">
+											<input class="form-control" readonly="readonly" id="allTotalAmount" type="text">
+									</div>												
+							</div>
+							<div id="PAGINATION" class="pull-right"></div>
 						</div>
 					</div>
 
@@ -398,7 +271,7 @@ tbody tr td {
 		src="<c:url value='/resources/scripts/services/import_service.js' />"></script>
 	<script
 		src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
-
+	
 	<!-- jQuery  -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -450,18 +323,38 @@ tbody tr td {
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
+	<tr>
+		<td>{{= importDetail}} </td>
+		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
+		<td>{{= impDate}}</td>
+		<td>{{= user.firstName +' '+ user.lastName}} </td>
+		<td>{{= totalAmount}}</td>  
+		<td class="actions" style="text-align: center;">
+			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/viewById/{{= impId}}">
+			<i class="fa fa-pencil"></i></a> <a class="on-default remove-row" href="javascript:;" id="btnRemove">
+			<i class="fa fa-trash-o"></i></a>
+		</td>
+	</tr>
+</script>
 	<script type="text/javascript">
+
 		/* ==============================================
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-			 searchProduct();
-			 searchSupplier();
+			
+			var check = true;
+			var order = 1;
+			// searchProduct();
+			// searchSupplier();
 			 setCalendar();
-			 searchByDate();
+			// searchByDate();
+			 
+			 getimportlist(1); 
 			 $("#btnREGS_DATE_S").click(function(){	
 		 			$( "#REGS_DATE_S" ).datepicker("show");		
 		 			
@@ -484,10 +377,10 @@ tbody tr td {
 		 		      numberOfMonths: 1,
 		 		      dateFormat: "yy-mm-dd",
 		 		      onClose: function( selectedDate ) {			    	  
-		 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+		 			    	    /* alculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
 		 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 		 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
-		 						searchByDate();
+		 						getimportlist(1);
 		 			      }
 		 		});
 		 		$("#REGS_DATE_E").datepicker({
@@ -499,14 +392,15 @@ tbody tr td {
 		 		      onClose: function( selectedDate ) {
 
 		 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
-		 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
+		 			    	   /*  calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
 		 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
-		 			    	   searchByDate();
+		 			    	 getimportlist(1);
 		 			      }
 		 		});		
-		 		$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
-		 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
+		 		
+		 		$("#REGS_DATE_S").datepicker('setDate', moment().subtract(30, 'days').format('YYYY-MM-DD'));
 		 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
+		 		//$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 		 }
 			 function searchByDate(){
 			      	var startDate 		= $( "#REGS_DATE_S" ).val() + " 00:00:00";
@@ -553,8 +447,7 @@ tbody tr td {
 					}); 
 				 }
 			//$('#datatable').dataTable();
-			 $(document).on("click","#impid", function(){
-				 
+			 $(document).on("click","#impid", function(){ 
 				   $.ajax({ 
 					    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
 					    type: 'POST', 
@@ -582,6 +475,53 @@ tbody tr td {
 				 
 				  $("#impDetail").bPopup();  
 			 });
+			 function getimportlist(currentPage){
+				 var json = {
+						 	"currentPage" : currentPage,
+				    		"perPage"     : $("#PER_PAGE").val(),
+			   				"start_date" : $("#REGS_DATE_S").val(),
+			   				"end_date"   : $("#REGS_DATE_E").val()
+					};$.ajax({
+					 url: "${pageContext.request.contextPath}/admin/getimportlist/",
+					 type: 'GET',
+					 data: json, 
+					    beforeSend: function(xhr) {
+		                    xhr.setRequestHeader("Accept", "application/json");
+		                    xhr.setRequestHeader("Content-Type", "application/json");
+		                },
+					 success: function(data){
+						 console.log(data);
+						 if(data.imports.length>0){ 
+							  order = 1;
+								$("tbody#CONTENTS").html('');					
+								for(i=0; i<data.imports.length;i++)
+									{
+										format(data.imports[i]); 
+									}
+								$("#CONTENT_Importlist").tmpl(data.imports).appendTo("tbody#CONTENTS");
+								$("#allTotalAmount").val(data.total_amount[0].total_amount);
+							}else{
+								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("#allTotalAmount").val("");
+							}
+					    	if(check){
+					    		setPagination(data.pagination.totalPages,1);
+					    		check=false;
+					    	}
+					 },
+					 error:function(data,status,er){
+						 console.log("error: "+data+" status: "+status+" er: "+ er);
+					 } 
+				 });
+			 }
+			 format = function(value){
+				 		value["impDate"] =(value["impDate"]).substring(0, 10);
+				 		value["importDetail"] = order++;
+			 }
+			 $("#PER_PAGE").change(function(){
+     			check = true;
+     			getimportlist(1);
+ 		    });
 			function searchSupplier(){
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
@@ -621,7 +561,27 @@ tbody tr td {
 				});
 				
 			}
-		
+		setPagination = function(totalPage, currentPage){
+	    	$('#PAGINATION').bootpag({
+		        total: totalPage,
+		        page: currentPage,
+		        maxVisible: 10,
+		        leaps: true,
+		        firstLastUse: true,
+		        first: 'First',
+		        last: 'Last',
+		        wrapClass: 'pagination',
+		        activeClass: 'active',
+		        disabledClass: 'disabled',
+		        nextClass: 'next',
+		        prevClass: 'prev',
+		        lastClass: 'last',
+		        firstClass: 'first'
+		    }).on("page", function(event, currentPage){
+		    	check = false;
+		    	getimportlist(currentPage);
+		    }); 
+		};
 		});
 	</script>
 

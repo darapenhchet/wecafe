@@ -1,6 +1,7 @@
 package com.kosign.wecafe.services;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +9,15 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.ImportDetail;
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
 import com.kosign.wecafe.entities.User;
@@ -32,9 +40,93 @@ public class ImportServiceImp implements ImportService {
 	
 	@Autowired SessionFactory sessionFactory;
 	
+//	@Override
+//	public List<Map> listAllImportProduct() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		try {
+//			session.getTransaction().begin();
+//			/*Query query = session.createQuery("SELECT new Map(io.proQty as proQty ,product.productName as productName, ip.userId as userId"
+//					+ "							 )"
+//					+ "FROM ImportDetail io "
+//					+ "INNER JOIN io.pk1.product product "
+//					+ "INNER JOIN io.pk1.importProduct ip ");
+//			Query query = session.createQuery("SELECT new Map("
+//					+ "io.proQty as proQty"
+//					+ ",ip.impId as impId"
+//					+ ", io.unitPrice as unitPrice"
+//					+ ", io.proStatus as status"
+//					+ ",product.productName as productName"
+//					+ ",ip.userId as userId"
+//					+ ",sp.supplierName as supplierName)"
+//					+ "FROM ImportDetail io "
+//					+ "INNER JOIN io.pk1.product product "
+//					+ "INNER JOIN io.pk1.importProduct ip "
+//					+ "INNER JOIN io.supplier sp"
+//					);*/
+//			
+///*			Query query = session.createQuery("SELECT new Map("
+//					+ "io.proQty as proQty"
+//					+ ",ip.impId as impId"
+//					+ ", io.unitPrice as unitPrice"
+//					+ ", io.proStatus as status"
+//					+ ",product.productName as productName"
+//					+ ", product.productId as productId"
+//					+ ",ip.userId as userId"
+//					+ ",ip.impDate as impDate"
+//					+ ",ip.totalAmount as totalAmount)"
+//					+ "FROM ImportDetail io "
+//					+ "INNER JOIN io.pk1.product product "
+//					+ "INNER JOIN io.pk1.importProduct ip "
+//					
+////					+ "INNER JOIN io.supplier sp "
+////					+ "WHERE ip.impId = ? "
+//					);*/
+//			Query query = session.createQuery("FROM ImportProduct");
+//			
+//			List<Map> importProducts = (ArrayList<Map>)query.list();
+//			System.out.println("products.size()" + importProducts.size());
+////			for(Map Product : importProducts){
+////				
+////				
+////			}
+//			return importProducts;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println(e.getMessage());
+//			session.getTransaction().rollback();
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return null;
+//	}
+	
+
 	@Override
 	@Transactional
-	public List<ImportProduct> listAllImportProduct() {
+	public List<ImportProduct> listAllImportProduct(Pagination pagination, Date startDate, Date endDate) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(ImportProduct.class );
+			//criteria.addOrder(Order.desc("createdDate"));
+			criteria.add(Restrictions.between("impDate", startDate, endDate));
+			criteria.setFirstResult(pagination.offset());
+			criteria.setMaxResults(pagination.getPerPage());
+			
+			List<ImportProduct>	importProducts = (List<ImportProduct>)criteria.list();	
+			return importProducts;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			
+		}		
+		return null;
+	}
+	
+/*	@Override
+	@Transactional
+	public List<ImportProduct> listAllImportProduct(Pagination pagination) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -46,10 +138,9 @@ public class ImportServiceImp implements ImportService {
 			e.printStackTrace();
 		}finally {
 			
-		}
-		
+		}		
 		return null;
-	}
+	}*/ 
 	@Override
 	@Transactional
 	public Boolean saveImportPro(List<ImportForm> importform) { 
@@ -106,31 +197,38 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	@Override
-	@Transactional
-	public List<Product> listAllProduct() {		
-		Session session = sessionFactory.getCurrentSession();
+	public List<Product> listAllProduct() {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+			session.getTransaction().begin();
 			Query query = session.createQuery("FROM Product");
 			List<Product> products = query.list(); 
 			 return products; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
 		}
 		return null;
 	}
 
 	@Override
-	@Transactional
 	public List<Supplier> listAllSupplier() {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+			session.getTransaction().begin();
 			Query query = session.createQuery("FROM Supplier");
 			 List<Supplier> suppliers= query.list();
 			 return suppliers; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
 		}
 		return null;
 	}
@@ -218,10 +316,25 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	@Override
-	@Transactional
 	public List<Map> findById(Long id) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+			
+//			Query query = session.createQuery("SELECT new Map("
+//					+ "io.proQty as proQty"
+//					+ ",ip.impId as impId"
+//					+ ", io.unitPrice as unitPrice"
+//					+ ", io.proStatus as status"
+//					+ ",product.productName as productName"
+//					+ ", product.productId as productId"
+//					+ ",ip.userId as userId"
+//					+ ",sp.supplierName as supplierName)"
+//					+ "FROM ImportDetail io "
+//					+ "INNER JOIN io.pk1.product product "
+//					+ "INNER JOIN io.pk1.importProduct ip "
+//					+ "INNER JOIN io.supplier sp "
+//					+ "WHERE ip.impId = ? "
+//					);
 			Query query = session.createQuery("Select new Map("
 					+ "p.productName as proname,"
 					+ "impdetail.proQty as proqty,"
@@ -229,10 +342,14 @@ public class ImportServiceImp implements ImportService {
 					+ "impdetail.supplier.supplierName as supname)"
 					+ " FROM ImportDetail impdetail" 
 					+ " INNER JOIN impdetail.pk1.product  p"
-					+ " WHERE impdetail.pk1.importProduct.impId= ? ");			
-			query.setParameter(0, id);			
-			List<Map> importProducts = (List<Map>)query.list();			
-			return importProducts;			
+					+ " WHERE impdetail.pk1.importProduct.impId= ? ");
+			
+			query.setParameter(0, id);
+			
+			List<Map> importProducts = (List<Map>)query.list();
+			
+			return importProducts;
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -240,10 +357,10 @@ public class ImportServiceImp implements ImportService {
 		return null;
 	}
 	
-	@Transactional
 	public List<Map> listAllImportDetail(Long id){
-		Session session = sessionFactory.getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+			session.getTransaction().begin();
 			Query query = session.createQuery("Select new Map("
 											+ "p.productName as proname,"
 											+ "p.productId as proid,"
@@ -256,20 +373,24 @@ public class ImportServiceImp implements ImportService {
 											+ " WHERE impdetail.pk1.importProduct.impId= ? ");
 			query.setParameter(0, id);
 			List<Map> importDetails = query.list();
+			session.getTransaction().commit();
 			return importDetails;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.getStackTrace();
+			session.getTransaction().rollback();
+		}finally {
+			session.close();
 		}
 		return null;
 	}
 	@Override
-	@Transactional
 	public Boolean deleteImportPro(List<ImportForm> importform, Long id ) {
 
 		Session session = null;
 		try {
-			session = sessionFactory.getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.getTransaction().begin();
 			Query query = session.createQuery("FROM ImportDetail ID"
 											+ " Where ID.pk1.importProduct.impId = ? "
 											+ " and ID.pk1.product.productId = ? ");
@@ -281,10 +402,47 @@ public class ImportServiceImp implements ImportService {
 			//System.out.println("importdetail : " + importdetail);
 			
 			session.delete(importdetail);
+			session.beginTransaction().commit();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}finally {
+			session.close();
+		} 
 		return true;
+	}
+
+	@Override
+	@Transactional
+	public Long count() {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			return (Long) session.createCriteria(ImportProduct.class).setProjection(Projections.rowCount()).uniqueResult();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
+	}
+
+	@Override
+	@Transactional
+	public Object getTotalAmount(Date startDate, Date endDate) {
+		Session session = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try{
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = session.createSQLQuery("SELECT sum(B.pro_qty* unit_price) as total_amount"
+					+ " FROM import A INNER JOIN import_detail B on A.imp_id = B.imp_id "
+					+ " WHERE A.imp_date BETWEEN '" + sdf.format(startDate) + "' and '" + sdf.format(endDate) + "'");
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+			return sales;
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0;
 	}
  
 	 

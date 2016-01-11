@@ -1,17 +1,20 @@
 package com.kosign.wecafe.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.kosign.wecafe.entities.ImportDetail;
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
 import com.kosign.wecafe.forms.ImportForm;
 
 public interface ImportService {
 
-	public List<ImportProduct> listAllImportProduct();
+	public List<ImportProduct> listAllImportProduct(Pagination pagination, Date startDate, Date endDate );
+	 
 //	public List<Map> listAllImportProduct();
 	public Boolean saveImportPro(List<ImportForm> importForm);
 	public List<Product> listAllProduct();
@@ -21,5 +24,7 @@ public interface ImportService {
 	public List<Map> findById(Long id);
 	public List<Map> listAllImportDetail(Long id);
 	Boolean deleteImportPro(List<ImportForm> importform, Long id);
-	
+	public Long count();
+
+	public Object getTotalAmount(Date startDate, Date endDate);
 }

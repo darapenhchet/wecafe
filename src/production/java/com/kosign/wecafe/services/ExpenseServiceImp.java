@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -7,18 +8,22 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Expense;
 import com.kosign.wecafe.entities.ExpenseDetail;
 import com.kosign.wecafe.entities.ImportDetail;
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.Supplier;
 import com.kosign.wecafe.entities.User;
@@ -28,6 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
 @Service
 public class ExpenseServiceImp implements ExpenseService {
@@ -36,18 +44,24 @@ public class ExpenseServiceImp implements ExpenseService {
 	
 	@Override
 	@Transactional
-	public List<Expense> listAllExpense() {
+	public List<Expense> listAllExpense(Pagination pagination, Date startDate, Date endDate) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("FROM Expense");
-			List<Expense>	expense = (List<Expense>)query.list();	
-			return expense;
+			Criteria criteria = session.createCriteria(Expense.class );
+			//criteria.addOrder(Order.desc("createdDate"));
+			criteria.add(Restrictions.between("exp_date", startDate, endDate));
+			criteria.setFirstResult(pagination.offset());
+			criteria.setMaxResults(pagination.getPerPage());
+			
+			List<Expense>	expenseProducts = (List<Expense>)criteria.list();	
+							
+			return expenseProducts;
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
 			
-		}
+		}		
 		return null;
 	}
 
@@ -161,5 +175,39 @@ public class ExpenseServiceImp implements ExpenseService {
 			}finally {			
 			}
 		return false;
+	}
+
+	@Override
+	@Transactional
+	public Long count() {
+
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			return (Long) session.createCriteria(Expense.class).setProjection(Projections.rowCount()).uniqueResult();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
+	}
+
+	@Override
+	@Transactional
+	public Object getTotalAmount(Date startDate, Date endDate) {
+
+		Session session = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try{
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = session.createSQLQuery("SELECT sum(B.expense_qty* B.expense_unitprice) as total_amount"
+					+ " FROM tbl_expense A INNER JOIN tbl_expense_detail B on A.expense_id = B.expense_id "
+					+ " WHERE A.expense_date BETWEEN '" + sdf.format(startDate) + "' and '" + sdf.format(endDate) + "'");
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
+			return sales;
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0;
 	}
 }

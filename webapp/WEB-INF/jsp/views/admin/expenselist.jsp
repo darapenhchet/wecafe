@@ -98,12 +98,42 @@
 					<div class="panel-body">
 						<div class="panel-heading">
 							<!-- <h3 class="panel-title">Product Lists</h3> -->
-							<form class="form-inline">
+							<!-- <form class="form-inline">
 								<div class="form-group">
 									<label>Search</label> <input type="text" ng-model="search"
 										class="form-control" placeholder="Search" width="400%">
 								</div>
-							</form>
+							</form> -->
+							<div class="m-h-50 form-group hidden-print ">
+								<div class="col-sm-9">
+									<label class="col-sm-1 control-label">Date : </label> <input
+										type="hidden" id="SEND_DT" data-id="SEND_DT" />
+									<div id="sendFrdt" class="date-range col-sm-5">
+										<input type="text" readonly="readonly" id="REGS_DATE_S"
+											name="startdate" class="range-start"
+											style="width: 100px; text-align: center;">&nbsp; <a
+											href="#none" id="btnREGS_DATE_S"><img
+											style="width: 20px; height: 20px;"
+											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+										<input type="text" readonly="readonly" id="REGS_DATE_E"
+											name="stopdate" class="range-end"
+											style="width: 100px; text-align: center;">&nbsp; <a
+											href="#none" id="btnREGS_DATE_E"><img
+											style="width: 20px; height: 20px;"
+											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+									</div>
+								</div>
+								<!-- <div class="col-sm-3 form-group">
+									<select class="form-control" id="sel1">
+										<option>Detail</option>
+										<option>Daily</option>
+										<option>Weekly</option>
+										<option>Monthly</option>
+										<option>Yearly</option>
+									</select>
+								</div> -->
+
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
@@ -113,12 +143,13 @@
 											<th>#</th>
 											<th>Invoice ID</th>
 											<th style="text-align: center;">Date</th>
-											<th>Description</th>
+											<th>Name</th>
+											<th style="text-align: right;">Total Amount</th>
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${expenses}" var="expense"
+									<tbody id="CONTENTS">
+										<%-- <c:forEach items="${expenses}" var="expense"
 											varStatus="theCount">
 											<tr>
 												<td>${theCount.count}</td>
@@ -133,24 +164,28 @@
 													href="javascript:;" id="btnRemove"><i
 														class="fa fa-trash-o"></i></a></td>
 											</tr>
-										</c:forEach>
-										<%-- <tr dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
-											<td>{{key+1}}</td>
-											<td ><a href="javascript:;" id="impid"> {{importproducts.impId}}</a> </td>												
-											<td style="text-align: center;">{{importproducts.impDate | date:'dd-MMMM-yyyy'}}</td>
-											<td>{{importproducts.userId }}</td>
-											<td></td>
-											<td style="text-align: right;">{{importproducts.totalAmount }} Riel
-											<td class="actions" style="text-align: center;"><a
-												class="on-default edit-row"
-												href="${pageContext.request.contextPath}/admin/viewById/{{importproducts.impId}}"><i
-													class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-												href="javascript:;" id="btnRemove"><i
-													class="fa fa-trash-o"></i></a></td>
-										</tr> --%>
+										</c:forEach> --%>
+										 
 									</tbody>
 								</table>
 							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<select id="PER_PAGE" class="form-control">
+									<option value="15">15</option>
+									<option value="30">30</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</div>
+							<div class="col-md-10 form-horizontal" align="right">
+								<label  class="control-label col-md-9">Total Amount : </label>
+									<div class="col-md-3">
+											<input class="form-control" readonly="readonly" id="allTotalAmount" type="text">
+									</div>												
+							</div>
+							<div id="PAGINATION" class="pull-right"></div>
 						</div>
 					</div>
 
@@ -235,6 +270,11 @@
 	<!-- jQuery  -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css">
+	
 	<script
 		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
@@ -273,18 +313,81 @@
 		type="text/javascript"></script>
 
 	<!-- CUSTOM JS -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+		<script id="CONTENT_Expenselist" type="text/x-jquery-tmpl">
+	<tr>
+		<td>{{= importDetail}} </td>
+		<td ><a herf="javascript:" style="cursor:pointer" id="expid">{{= expId}}</a></td>
+		<td>{{= exp_date}}</td>
+		<td>{{= exp_user_id}} </td>
+		<td>{{= totalAmount}}</td>  
+		<td class="actions" style="text-align: center;">
+			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/expenseupdate/{{= expId}}">
+			<i class="fa fa-pencil"></i></a> <a class="on-default remove-row" href="javascript:;" id="btnRemove">
+			<i class="fa fa-trash-o"></i></a>
+		</td>
+	</tr>
+</script>
+	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 	<script type="text/javascript">
 		/* ==============================================
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
+			var check=true;
+			setCalendar(); 
+			getListExpense(1);
+				function getListExpense(currentPage){
+					 var json = {
+							 	"currentPage" : currentPage,
+					    		"perPage"     : $("#PER_PAGE").val(),
+				   				"start_date" : $("#REGS_DATE_S").val(),
+				   				"end_date"   : $("#REGS_DATE_E").val()
+						};$.ajax({
+						 url: "${pageContext.request.contextPath}/admin/getexpenselist/",
+						 type: 'GET',
+						 data: json, 
+						    beforeSend: function(xhr) {
+			                    xhr.setRequestHeader("Accept", "application/json");
+			                    xhr.setRequestHeader("Content-Type", "application/json");
+			                },
+						 success: function(data){
+							 console.log(data);
+							  if(data.expense.length>0){
+								  order = 1;
+									$("tbody#CONTENTS").html('');					
+									for(i=0; i<data.expense.length;i++)
+										{
+											format(data.expense[i]); 
+										}
+									$("#CONTENT_Expenselist").tmpl(data.expense).appendTo("tbody#CONTENTS");
+									$("#allTotalAmount").val(data.total_amount[0].total_amount);
+								}else{
+									$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+									$("#allTotalAmount").val("");
+								}
+						    	if(check){
+						    		setPagination(data.pagination.totalPages,1);
+						    		check=false;
+						    	}  
+						 },
+						 error:function(data,status,er){
+							 console.log("error: "+data+" status: "+status+" er: "+ er);
+						 } 
+					 });
+			}
+		format = function(value){
+			 		value["exp_date"] =(value["exp_date"]).substring(0, 10);
+			 		value["importDetail"] = order++;
+		 }
+		 $("#PER_PAGE").change(function(){
+ 			check = true;
+ 			getListExpense(1);
+		    });
 		 
-			 $(document).on("click","#expid", function(){ 
+			 $(document).on("click","#expid", function(){
 		 		   $.ajax({ 
 					    url: "${pageContext.request.contextPath}/admin/getexpensedetail/" + $(this).html() , 
 					    type: 'GET', 
@@ -316,6 +419,39 @@
 				 
 				  $("#impDetail").bPopup();  
 			 });
+			 function setCalendar(){		
+			 		$("#REGS_DATE_S").datepicker({
+			 		      defaultDate: new Date(),
+			 		      setDate: new Date(),
+			 		      changeMonth: true,
+			 		      numberOfMonths: 1,
+			 		      dateFormat: "yy-mm-dd",
+			 		      onClose: function( selectedDate ) {			    	  
+			 			    	    /* alculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
+			 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+			 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+			 						getListExpense(1);
+			 			      }
+			 		});
+			 		$("#REGS_DATE_E").datepicker({
+			 		     defaultDate: new Date(),
+			 		      setDate: new Date(),
+			 		      changeMonth: true,
+			 		      numberOfMonths: 1,
+			 		      dateFormat: "yy-mm-dd",
+			 		      onClose: function( selectedDate ) {
+
+			 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
+			 			    	   /*  calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
+			 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+			 			    	 getListExpense(1);
+			 			      }
+			 		});		
+			 		
+			 		$("#REGS_DATE_S").datepicker('setDate', moment().subtract(30, 'days').format('YYYY-MM-DD'));
+			 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
+			 		//$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
+			 }
 			 /*
 			function searchSupplier(){
 				$.ajax({ 
@@ -356,6 +492,27 @@
 				});
 				
 			} */
+			 setPagination = function(totalPage, currentPage){
+			    	$('#PAGINATION').bootpag({
+				        total: totalPage,
+				        page: currentPage,
+				        maxVisible: 10,
+				        leaps: true,
+				        firstLastUse: true,
+				        first: 'First',
+				        last: 'Last',
+				        wrapClass: 'pagination',
+				        activeClass: 'active',
+				        disabledClass: 'disabled',
+				        nextClass: 'next',
+				        prevClass: 'prev',
+				        lastClass: 'last',
+				        firstClass: 'first'
+				    }).on("page", function(event, currentPage){
+				    	check = false;
+				    	getListExpense(currentPage);
+				    }); 
+				};
 		
 		});
 	</script>

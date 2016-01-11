@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -83,5 +85,13 @@ public class Expense implements Serializable{
 	public String toString() {
 		return "ID = " + this.expId + " DESCRIPTION = " + this.description + " Date = " + this.exp_date;
 	}
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private User user;
+	 
+	@Formula("(SELECT  coalesce(SUM(o.expense_qty*o.expense_unitprice),0) FROM tbl_expense_detail o WHERE o.expense_id=expense_id)")
+	@Column(name = "total_Amount")
+	private long totalAmount;
 }
 

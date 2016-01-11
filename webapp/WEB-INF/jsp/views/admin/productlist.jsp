@@ -285,7 +285,7 @@
     	                    xhr.setRequestHeader("Accept", "application/json");
     	                    xhr.setRequestHeader("Content-Type", "application/json");
     	                },
-    				    success: function(data) { 
+    				    success: function(data) {
 							console.log(data);
 							if(data.products.length>0){
 								$("tbody#CONTENTS").html('');
