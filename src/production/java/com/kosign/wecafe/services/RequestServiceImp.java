@@ -1,6 +1,7 @@
 package com.kosign.wecafe.services;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,13 +12,16 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.RequestStock;
 import com.kosign.wecafe.entities.RequestStockDetail;
@@ -31,6 +35,28 @@ public class RequestServiceImp implements RequestService {
 	@Inject UserService userService;
 	
 	@Autowired SessionFactory sessionFactory;
+	
+	
+	@Override
+	@Transactional
+	public int count(String id){
+		Session session = null;
+		int rowCount=0;
+		try{
+			String sql="SELECT count(rsd.req_id) as cnt FROM request_stock rs, request_stock_detail rsd "
+					+ "WHERE rs.req_id=rsd.req_id and rs.status='t' "
+					+ "and CAST(rs.req_id as TEXT) LIKE ?";
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);		
+			query.setParameter(0,"%"+id+"%");
+			HashMap<String,Object> result=(HashMap<String, Object>)query.uniqueResult();
+			rowCount=Integer.parseInt(result.get("cnt").toString());			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return rowCount;
+	}
 
 	private String getPrincipal() {
 		String userName = null;
@@ -86,7 +112,7 @@ public class RequestServiceImp implements RequestService {
 
 	@Override
 	@Transactional
-	public List<Map> listRequestDetail(String id){
+	public List<Map> listRequestDetail(String id,Pagination pagination ){
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			String sql="SELECT rs.req_id,pro.pro_id,pro.pro_name,rsd.pro_qty,rsd.remain_qty,firstname,lastname,rs.req_date,pro.qty stock_qty "
@@ -101,6 +127,8 @@ public class RequestServiceImp implements RequestService {
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);		
 			query.setParameter(0, "%"+id+"%");
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
 			List<Map> requestDetails = query.list();
 			return requestDetails;
 		} catch (Exception e) {
@@ -111,19 +139,17 @@ public class RequestServiceImp implements RequestService {
 	
 	@Override
 	@Transactional
-	public List<RequestStock> listRequestStock(){
+	public List<Map> listRequestStock(){
 		
-		Session session = null;
-		try{
-			session = sessionFactory.getCurrentSession();
-			session.getTransaction().begin();
-			Query query = session.createQuery("FROM RequestStock");
-			List<RequestStock>	requestStock = (List<RequestStock>)query.list();	
-			return requestStock;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			String sql="Select req_id From request_stock Where status='t' Order By req_id DESC";
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);		
+			List<Map> requestDetails = query.list();
+			return requestDetails;
 		}catch(Exception e){
 			e.printStackTrace();
-		}finally {
-			
 		}
 		
 		return null;

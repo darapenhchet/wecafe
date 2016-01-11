@@ -219,43 +219,103 @@
 	<!-- bpopup -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<!-- Pageination -->
+		<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 		
 	<script type="text/javascript">
-	
+		var req_id="";
+		var check = true;
+		var products = {};
 		$(function(){
-			$("#request_stock").click(function() {
-				get_request_stock_detail();
-				$("#request_stock_list").bPopup();
+	
+			$("#request_stock").click(function() {		
+				get_request_stock_detail("",1);
+				 $('#request_stock_list').bPopup();
+			});
+			$("#req_no").change(function(){
+				req_id=$(this).val();			
+				get_request_stock_detail(req_id,1);
 			});
 			
 		});
 		
-		function get_request_stock_detail(){			
+		function setPagination(totalPage, currentPage){
+	    	$('#PAGINATION').bootpag({
+		        total: totalPage,
+		        page: currentPage,
+		        maxVisible:10,
+		        leaps: true,
+		        firstLastUse: true,
+		        first: 'First',
+		        last: 'Last',
+		        wrapClass: 'pagination',
+		        activeClass: 'active',
+		        disabledClass: 'disabled',
+		        nextClass: 'next',
+		        prevClass: 'prev',
+		        lastClass: 'last',
+		        firstClass: 'first'
+		    }).on("page", function(event, currentPage){
+		    	check = false;
+		    	get_request_stock_detail(req_id,currentPage);
+		    }); 
+		};
+			
+		function get_request_stock_detail(id,currentPage){		
+			var result="",result1=""; 	
  			$.ajax({
- 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id=", 
+ 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id="+id, 
 				 type: 'POST',
+				 data: {
+			    		"currentPage" :currentPage,
+			    		"perPage"     :10
+				    },
  				datatype: 'JSON',
  				beforeSend: function(xhr) {
  		            xhr.setRequestHeader("Accept", "application/json");
  		            xhr.setRequestHeader("Content-Type", "application/json");
  		        },
- 				success: function(data){
- 					console.log(data);
- 					if(data!=""){
- 						var result="";
- 						$(data).each(function(i,v){
+ 				success: function(v){
+ 				//	console.log(data);
+ 					if(v!=""){
+ 										
+ 						$("#req_no").html("");
+ 						for(var i=0;i<v.RSD.length;i++){
  							result+="<tr>"
- 										+"<td>"+v.req_id+"</td>"
- 										+"<td>"+v.pro_id+"</td>"
- 										+"<td>"+v.pro_name+"</td>"
- 										+"<td>"+v.pro_qty+"</td>"
- 										+"<td>"+v.remain_qty+"</td>"
- 										+"<td>"+v.stock_qty+"</td>"
- 										+"<td>"+v.firstname +" "+v.lastname+"</td>"
- 										+"<td>"+v.req_date+"</td>"
- 									+"</tr>";
- 						});
+									+"<td>"+v.RSD[i].req_id+"</td>"
+									+"<td>"+v.RSD[i].pro_id+"</td>"
+									+"<td>"+v.RSD[i].pro_name+"</td>"
+									+"<td>"+v.RSD[i].pro_qty+"</td>"
+									+"<td>"+v.RSD[i].remain_qty+"</td>"
+									+"<td>"+v.RSD[i].stock_qty+"</td>"
+									+"<td>"+v.RSD[i].firstname +" "+v.RSD[i].lastname+"</td>"
+									+"<td>"+v.RSD[i].req_date+"</td>"
+								+"</tr>";
+ 						}
+ 						
  						$("#request_stock_info").html(result);
+ 						
+ 						$("#req_no").prepend("<option value=''>--Select Approve--</option><option value='0'>Approve All</option>");
+ 						for(var i=0;i<v.RS.length;i++){
+ 						
+ 							var req_id1=v.RS[i].req_id;
+ 							var selected = "";
+ 							
+ 							if (req_id1 == req_id) {
+ 								selected = "selected";
+ 							}
+ 							
+ 							result1+= "<option value='" + req_id1 + "'" + selected+ "> " + req_id1 + " </option>";
+ 						}
+ 						req_id="";
+ 						$("#req_no").append(result1);
+ 						
+ 						if(check){
+				    		setPagination(v.pagination.totalPages,currentPage);
+				    		check=false;
+				    	}
+ 						
  					}
  				},
  				error:function(data, status,er){
