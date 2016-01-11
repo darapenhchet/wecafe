@@ -71,7 +71,8 @@ public class ExpenseServiceImp implements ExpenseService {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("from ExpenseDetail where expense_id=" + id);
+		//	Query query = session.createQuery("from ExpenseDetail ED INNER JOIN ED.expense where ED.expense.expId=" + id);
+			Query query = session.createQuery("from ExpenseDetail where expense.expId=" + id);
 			List<ExpenseDetail>	expensedetail = (List<ExpenseDetail>)query.list();	
 			return expensedetail;
 		}catch(Exception e){
@@ -92,7 +93,9 @@ public class ExpenseServiceImp implements ExpenseService {
 			Expense expense = new Expense();
 			expense.setExp_date(new Date());
 			User user = userService.findUserByUsername(getPrincipal());
-			expense.setExp_user_id(user.getId());
+			//expense.setExp_user_id(user.getId());
+			
+			expense.setExp_user(user);
 			
 			for(int i=0; i < expenseForm.size();i++){
 				ExpenseDetail expensedetail = new ExpenseDetail();

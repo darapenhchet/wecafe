@@ -31,13 +31,13 @@ public class Expense implements Serializable{
 	}
 
 
-	public long getExp_user_id() {
+	/*public long getExp_user_id() {
 		return exp_user_id;
 	}
 
 	public void setExp_user_id(long exp_user_id) {
 		this.exp_user_id = exp_user_id;
-	}
+	}*/
 
 	public Date getExp_date() {
 		return exp_date;
@@ -75,9 +75,36 @@ public class Expense implements Serializable{
 		this.expenseDetails = expenseDetails;
 	} 
 
-	@Column(name="expense_user_id")
-	private long exp_user_id;
+	/*@Column(name="expense_user_id")
+	private long exp_user_id;*/
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="exp_user_id")
+	private User exp_user;
 	
+	public User getExp_user() {
+		return exp_user;
+	}
+
+	public void setExp_user(User exp_user) {
+		this.exp_user = exp_user;
+	}
+
+/*	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}*/
+
+	public long getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(long totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
 	@OneToMany(mappedBy="expense", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Set<ExpenseDetail> expenseDetails = new HashSet<ExpenseDetail>();
 	
@@ -86,9 +113,9 @@ public class Expense implements Serializable{
 		return "ID = " + this.expId + " DESCRIPTION = " + this.description + " Date = " + this.exp_date;
 	}
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+/*	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
-	private User user;
+	private User user;*/
 	 
 	@Formula("(SELECT  coalesce(SUM(o.expense_qty*o.expense_unitprice),0) FROM tbl_expense_detail o WHERE o.expense_id=expense_id)")
 	@Column(name = "total_Amount")
