@@ -185,7 +185,7 @@ public class ExpenseServiceImp implements ExpenseService {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			return (Long) session.createCriteria(Expense.class).setProjection(Projections.rowCount()).uniqueResult();
+			return (Long) session.createCriteria(Expense.class).setProjection(Projections.rowCount()).uniqueResult();  
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

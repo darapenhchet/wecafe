@@ -49,7 +49,9 @@ public class ExpesneController {
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("expense", expenseService.listAllExpense(pagination, startDate,endDate));
-		map.put("total_amount", expenseService.getTotalAmount(startDate, endDate));
+		map.put("total_amount", expenseService.getTotalAmount(startDate, endDate));		
+
+	//	System.out.println("total_amount = " + map.get("expense"));
 		pagination.setTotalCount(expenseService.count());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination",pagination);

@@ -260,7 +260,7 @@ public class AdminReportServiceImp implements AdminReportService {
 				+ "	   , '1' AS purchase_type "
 				+ "	FROM tbl_expense A "
 				+ "	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "
-				+ "	LEFT JOIN users C ON A.expense_user_id = C.id "
+				+ "	LEFT JOIN users C ON A.exp_user_id = C.id "
 							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = " + byyear
 				+ "	GROUP BY 1,2,3 "
 				+ "	ORDER BY 2 DESC;");
@@ -418,7 +418,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " ,to_char(A.expense_date, ''mon'')::text As imp_date "+
 										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row "+
 										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "+
-										   " LEFT JOIN users C ON A.expense_user_id = C.id "+
+										   " LEFT JOIN users C ON A.exp_user_id = C.id "+
 										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
 										   " GROUP BY 1,2 "+
 										   "	 ORDER BY 2', " +
@@ -559,7 +559,7 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " SUM(B.expense_qty * B.expense_unitprice) AS purhcase_total_amount, "
 					+ " '1' AS purchase_type"
 					+ " FROM tbl_expense A "
-					+ " 	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.expense_user_id = C.id "
+					+ " 	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.exp_user_id = C.id "
 					+ " 				WHERE A.expense_date = '" + startdate
 					+ "' GROUP BY 1,2,3,4,5,6,7 "
 					+ " ORDER BY 2 DESC;");
@@ -642,7 +642,7 @@ public class AdminReportServiceImp implements AdminReportService {
 									   " ,to_char(A.expense_date, ''DD'')::text As imp_date " +
 									   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
 									   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
-									   " LEFT JOIN users C ON A.expense_user_id = C.id " +
+									   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 									   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 									   " GROUP BY 1,2 " +
 									   "	 ORDER BY 2', " +
@@ -738,7 +738,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " ,to_char(A.expense_date, ''DD'')::text As imp_date " +
 										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
 										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
-										   " LEFT JOIN users C ON A.expense_user_id = C.id " +
+										   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 										   " GROUP BY 1,2 " +
 										   "	 ORDER BY 2', " +

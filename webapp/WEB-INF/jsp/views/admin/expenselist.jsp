@@ -309,7 +309,7 @@
 		<td>{{= importDetail}} </td>
 		<td ><a herf="javascript:" style="cursor:pointer" id="expid">{{= expId}}</a></td>
 		<td>{{= exp_date}}</td>
-		<td>{{= exp_user_id}} </td>
+		<td>{{= exp_user.firstName + ' ' + exp_user.lastName}} </td>
 		<td>{{= totalAmount}}</td>  
 		<td class="actions" style="text-align: center;">
 			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/expenseupdate/{{= expId}}">
