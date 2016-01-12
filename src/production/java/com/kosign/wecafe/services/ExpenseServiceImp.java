@@ -93,10 +93,8 @@ public class ExpenseServiceImp implements ExpenseService {
 			Expense expense = new Expense();
 			expense.setExp_date(new Date());
 			User user = userService.findUserByUsername(getPrincipal());
-			//expense.setExp_user_id(user.getId());
-			
-			expense.setExp_user(user);
-			
+			//expense.setExp_user_id(user.getId()); 
+			expense.setExp_user(user); 
 			for(int i=0; i < expenseForm.size();i++){
 				ExpenseDetail expensedetail = new ExpenseDetail();
 				expensedetail.setExp_qty(expenseForm.get(i).getQuantity());

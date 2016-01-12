@@ -59,36 +59,24 @@
         <![endif]-->
 
 <script
-	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-
-</head>
-
-
-
-<body class="fixed-left" ng-app="wecafe">
-
+	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script> 
+</head> 
+<body class="fixed-left" ng-app="wecafe"> 
 	<!-- Begin page -->
-	<div id="wrapper" ng-controller="ImportController as controller">
-
+	<div id="wrapper" ng-controller="ImportController as controller"> 
 		<!-- Top Bar Start -->
 		<%@ include file="topbar.jsp"%>
-		<!-- Top Bar End -->
-
-
+		<!-- Top Bar End --> 
 		<!-- ========== Left Sidebar Start ========== -->
 		<%@ include file="left_sidebar.jsp"%>
-		<!-- Left Sidebar End -->
-
-
-
+		<!-- Left Sidebar End --> 
 		<!-- ============================================================== -->
 		<!-- Start right Content here -->
 		<!-- ============================================================== -->
 		<div class="content-page">
 			<!-- Start content -->
 			<div class="content">
-				<div class="container">
-
+				<div class="container"> 
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
@@ -452,6 +440,13 @@
 			 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 			 		//$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 			 }
+			 $("#btnREGS_DATE_S").click(function(){	
+		 			$( "#REGS_DATE_S" ).datepicker("show");		
+		 			
+		 		});		
+		 	$("#btnREGS_DATE_E").click(function(){
+		 			$( "#REGS_DATE_E" ).datepicker("show");			
+		 		});
 			 /*
 			function searchSupplier(){
 				$.ajax({ 
