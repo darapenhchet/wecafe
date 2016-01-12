@@ -70,13 +70,13 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public Boolean saveUser(User user) {
 		try{
-			System.out.println(user.getPassword());
+			System.out.println("user.getPassword" + user.getPassword());
 			user.setCreatedBy(this.findUserByUsername(getPrincipal()));
 			user.setCreatedDate(new Date());
 			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
 			user.setLastUpdatedDate(new Date());
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			sessionFactory.getCurrentSession().save(user);
+			/*sessionFactory.getCurrentSession().save(user);*/
 			return true;
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

@@ -55,7 +55,7 @@ public class importProductController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("imports", importService.listAllImportProduct(pagination, startDate,endDate));
 		map.put("total_amount", importService.getTotalAmount(startDate, endDate));
-		pagination.setTotalCount(importService.count());
+		pagination.setTotalCount(importService.count(startDate, endDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination",pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

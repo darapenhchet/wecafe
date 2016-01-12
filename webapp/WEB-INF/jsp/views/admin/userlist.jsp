@@ -125,6 +125,7 @@
 										<th>First Name</th>
 										<th>Email</th>
 										<th>Username</th>
+										<th>Type</th>
 										<th>Created By</th>
 										<th>Created Date</th>
 										<th>Updated By</th>
@@ -134,43 +135,6 @@
 									</tr>
 								</thead>
 								<tbody>
-									<%--                                     <c:forEach items="{{users}" var="user">
-                                        <tr class="gradeX">
-                                        	<td id="USER_ID">{{user.id }
-                                            <td>{{user.lastName }</td>
-                                            <td>{{user.firstName }</td>
-                                            <td>{{user.email }</td>
-                                            <td>{{user.username }</td>
-                                            <td>{{user.createdBy.lastName } {{user.createdBy.firstName }</td>
-                                            <td>{{user.createdDate }</td>
-                                            <td>{{user.lastUpdatedBy.lastName } {{user.lastUpdatedBy.firstName }</td>
-                                            <td>{{user.lastUpdatedDate }</td>
-                                            <td style="text-align:center;">
-                                      			<c:choose>
-                                      				<c:when test="${user.status == 'ACTIVE'}">
-                                      					<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
-                                      				</c:when>
-                                      				<c:when test="${user.status == 'INACTIVE'}">
-                                      					<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a>
-                                      				</c:when>
-                                      				<c:when test="${user.status == 'DELETED'}">
-                                      					<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
-                                      				</c:when>
-                                      				<c:when test="${user.status == 'LOCKED'}">
-                                      					<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a>
-                                      				</c:when>
-                                      			</c:choose>
-                                      			</td>
-											</td>
-                                            <td class="actions" style="width:10%;">
-                                                <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                                                <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                                <a href="${pageContext.request.contextPath}/admin/user/{{user.id}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="on-default remove-row" id="btnDeleteUser"><i class="fa fa-trash-o"></i></a>
-                                                <a href="#" class="on-default remove-row" id="btnChangePassword"><i class="fa fa-cog fa-fw"></i></a>
-                                            </td>
-                                        </tr>
-                                       </c:forEach> --%>
 									<tr
 										dir-paginate="(key,user) in users|filter:search|itemsPerPage:perPage|orderBy : user.createdDate">
 										<td id="USER_ID">{{user.id }}
@@ -178,6 +142,7 @@
 										<td>{{user.firstName }}</td>
 										<td>{{user.email }}</td>
 										<td>{{user.username }}</td>
+										<td>{{user.userRoles[0].type }}</td>
 										<td>{{user.createdBy.lastName }}
 											{{user.createdBy.firstName }}</td>
 										<td>{{user.createdDate | date:'dd-MMMM-yyyy'}}</td>

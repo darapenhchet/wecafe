@@ -24,7 +24,7 @@ public interface ImportService {
 	public List<Map> findById(Long id);
 	public List<Map> listAllImportDetail(Long id);
 	Boolean deleteImportPro(List<ImportForm> importform, Long id);
-	public Long count();
+	public Long count(Date startDate, Date endDate);
 
 	public Object getTotalAmount(Date startDate, Date endDate);
 }

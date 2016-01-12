@@ -160,8 +160,8 @@
 													*</label>
 												<div class="col-lg-10">
 													<select class="form-control" id="gender" name="gender">
-														<option value="M">Male</option>
-														<option value="F">Female</option>
+														<option value="Male">Male</option>
+														<option value="Female">Female</option>
 													</select>
 												</div>
 											</div>
@@ -328,7 +328,7 @@
     					"password"	: $("#password").val(),
     					"firstName" : $("#firstName").val(),
     					"lastName"  : $("#lastName").val(),
-    					//"gender"    : $("#gender").val()
+    					"gender"    : $("#gender").val(),
     					"email"	    : $("#email").val(),
     					"status"    : 1, //$("#status").val(),
     					"userRoles": [

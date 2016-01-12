@@ -415,11 +415,14 @@ public class ImportServiceImp implements ImportService {
 
 	@Override
 	@Transactional
-	public Long count() {
+	public Long count(Date startDate, Date endDate) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			return (Long) session.createCriteria(ImportProduct.class).setProjection(Projections.rowCount()).uniqueResult();
+			// NO CONDITION HEHE the condition neng jes tae sqt hehe search sin hehe or you can use the sql SELECT COUNT
+			return (Long) session.createCriteria(ImportProduct.class)
+								 .add(Restrictions.between("impDate", startDate, endDate))
+								 .setProjection(Projections.rowCount()).uniqueResult();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
