@@ -62,6 +62,13 @@
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+	
+	<style type="text/css">
+			.out_stock{
+				text-decoration:line-through;
+				color:red;
+			}
+	</style>
 
 </head>
 
@@ -247,6 +254,36 @@
 			
 		});
 		
+		function edit_qty(qty,obj){	
+			var qty=$(obj).parent().siblings("#pro_qty").html();
+			$(obj).parent().siblings("#pro_qty").html("<input type='text' value='"+qty+"' class='form-control'>");
+			$(obj).parent().find("#icon_edit").hide();
+			$(obj).parent().find("#icon_save").show();
+		
+		}
+		
+		function update_qty(qty,obj){		
+			
+			var qty=0, stock_qty=0;		
+			
+			$(obj).parent().find("#icon_edit").show();
+			$(obj).parent().find("#icon_save").hide();
+			qty=parseInt($(obj).parent().siblings("#pro_qty").find("input").val());
+			stock_qty=parseInt($(obj).parent().siblings("#stock_qty").html());
+			$(obj).parent().siblings("#pro_qty").find("input").remove() ;	
+			$(obj).parent().siblings("#pro_qty").html(qty);
+						
+			if(qty > stock_qty){
+			
+				$(obj).parent().parent().css("color","red");
+			}else{
+			
+				$(obj).parent().parent().css("color","#797979");
+			}
+			
+			
+		}
+		
 		function approve_request(){
 			var products=[];
 			$('#request_stock_info tr').each(function() {
@@ -318,17 +355,34 @@
  					if(v!=""){
  										
  						$("#req_no").html("");
+ 						
  						for(var i=0;i<v.RSD.length;i++){
- 							result+="<tr>"
+ 							
+ 							var pro_qty=v.RSD[i].pro_qty;							
+ 							var qty_stock=v.RSD[i].stock_qty;
+ 							var out_stock_style="";
+ 							if(pro_qty > qty_stock ){
+ 								out_stock_style="color:red";								
+ 							}
+ 							
+ 							result+="<tr style="+out_stock_style+">"
 									+"<td>"+v.RSD[i].req_id+"</td>"
 									+"<td>"+v.RSD[i].pro_id+"</td>"
 									+"<td>"+v.RSD[i].pro_name+"</td>"
-									+"<td>"+v.RSD[i].pro_qty+"</td>"
+									+"<td id='pro_qty'>"+pro_qty+"</td>"
 									+"<td>"+v.RSD[i].remain_qty+"</td>"
-									+"<td>"+v.RSD[i].stock_qty+"</td>"
+									+"<td id='stock_qty'>"+qty_stock+"</td>"
 									+"<td>"+v.RSD[i].firstname +" "+v.RSD[i].lastname+"</td>"
 									+"<td>"+v.RSD[i].req_date+"</td>"
+									+"<td>"
+									+"<a id='icon_save' style='display: none;' href='#none' onclick='return update_qty("+ pro_qty +",this)'>"
+									+ "<span  class='glyphicon glyphicon-save'></span></a>"
+									+ "&nbsp;"
+									+ "<a id='icon_edit'  href='#none' onclick='return edit_qty("+ pro_qty +",this)'>"
+									+ "<span class='glyphicon glyphicon-pencil'></span></a></td>"
 								+"</tr>";
+								
+ 							
  						}
  						
  						$("#request_stock_info").html(result);

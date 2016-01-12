@@ -39,6 +39,7 @@
 							<th>Qty In Stock</th>
 							<th>Requested By</th>
 							<th>Request Date</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody id="request_stock_info">
