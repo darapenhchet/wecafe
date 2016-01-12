@@ -36,7 +36,7 @@ public class OrderDetail implements java.io.Serializable{
 	@GeneratedValue
 	@Column(name="id")
 	private Long OrderDetailId;*/
-	
+	 
 /*	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="pro_id")
 	private Product product;
