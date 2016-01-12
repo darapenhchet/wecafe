@@ -17,6 +17,6 @@ public interface RequestService {
 	public Boolean saveRequestPro(List<RequestForm> requestForm);
 	public List<Map>  listRequestDetail(String reqId,Pagination pagination);
 	List<Map> listRequestStock();
-	int count(String id);
+	Long count(String id);
 	Boolean approveRequest(List<RequestForm> requestForm);
 }

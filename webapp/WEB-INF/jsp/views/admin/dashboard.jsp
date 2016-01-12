@@ -46,6 +46,9 @@
 <link
 	href="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.min.css"
 	rel="stylesheet">
+	
+<!-- bootstrap switch  -->
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap-switch.min.css"rel="stylesheet">
 
 <!-- Custom Files -->
 <link href="${pageContext.request.contextPath}/resources/css/helper.css"
@@ -64,10 +67,7 @@
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 	
 	<style type="text/css">
-			.out_stock{
-				text-decoration:line-through;
-				color:red;
-			}
+			.out_stock{};
 	</style>
 
 </head>
@@ -176,6 +176,11 @@
 		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	
+	<!-- Bootstrap switch -->
+		<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap-switch.min.js"></script>	
+	
 	<script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/wow.min.js"></script>
@@ -229,15 +234,50 @@
 	<!-- Pageination -->
 		<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	
+
 		
 	<script type="text/javascript">
 		var req_id="";
 		var check = true;
 		var products = {};
+		var st=0;
 		$(function(){
 			
-			$("#btn_approve").click(function() {		
-				approve_request();
+			$("#out_of_stock").change(function(){
+			
+				$('tbody tr').each(function(){
+					if($("#out_of_stock").val()=="out"){
+					 if ($(this).attr('style').indexOf('color:red') !== -1){
+						    $(this).show();	
+						    st=1;
+					}else{					 
+							 $(this).hide();
+						}
+					}else{
+						$(this).show();
+						st=0;
+					}						
+				});
+			});
+			
+			$("#btn_approve").click(function() {	
+				$('tbody tr').each(function(){
+					 if ($(this).attr('style').indexOf('color:red') !== -1){
+						 alert("Please check some product qty is out of stock"); 
+						 return false ;
+					}else{
+						if($("#out_of_stock").val()=="all"){
+							approve_request();	
+							return false;
+						}else{
+							alert("Please select show all");
+							return false ;
+						}
+
+					}
+				});
+				
 			});
 	
 			$("#request_stock").click(function() {		
@@ -246,8 +286,10 @@
 			});
 			
 			$("#req_no").change(function(){
+				$("#out_of_stock option[value='all']").prop("selected",true);	
 				req_id=$(this).val();			
 				get_request_stock_detail(req_id,1);
+								
 			});
 			
 			
@@ -273,14 +315,13 @@
 			$(obj).parent().siblings("#pro_qty").find("input").remove() ;	
 			$(obj).parent().siblings("#pro_qty").html(qty);
 						
-			if(qty > stock_qty){
-			
+			if(qty > stock_qty){			
 				$(obj).parent().parent().css("color","red");
+				$("tbody").addClass("out_stock");
 			}else{
-			
 				$(obj).parent().parent().css("color","#797979");
+				$("tbody").removeClass("out_stock");
 			}
-			
 			
 		}
 		
@@ -306,7 +347,10 @@
 		            xhr.setRequestHeader("Content-Type", "application/json");
 		        },
 				success: function(data){
-					if(data==true)get_request_stock_detail("",1);
+					if(data==true){
+						alert("Request has successfully approved");
+						get_request_stock_detail("",1);				
+					};
 				},
 				error:function(data, status,er){
 					console.log("error: " + data + "status: " + status + "er: ");
@@ -362,7 +406,8 @@
  							var qty_stock=v.RSD[i].stock_qty;
  							var out_stock_style="";
  							if(pro_qty > qty_stock ){
- 								out_stock_style="color:red";								
+ 								out_stock_style="color:red";	
+ 								$("tbody").addClass("out_stock");
  							}
  							
  							result+="<tr style="+out_stock_style+">"

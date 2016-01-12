@@ -70,9 +70,9 @@ public class RequestServiceImp implements RequestService {
 	
 	@Override
 	@Transactional
-	public int count(String id){
+	public Long count(String id){
 		Session session = null;
-		int rowCount=0;
+		long rowCount=0;
 		try{
 			String sql="SELECT count(rsd.req_id) as cnt FROM request_stock rs, request_stock_detail rsd "
 					+ "WHERE rs.req_id=rsd.req_id and rs.status='t' "
@@ -82,7 +82,7 @@ public class RequestServiceImp implements RequestService {
 			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);		
 			query.setParameter(0,"%"+id+"%");
 			HashMap<String,Object> result=(HashMap<String, Object>)query.uniqueResult();
-			rowCount=Integer.parseInt(result.get("cnt").toString());			
+			rowCount=Long.parseLong(result.get("cnt").toString());			
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
