@@ -228,17 +228,54 @@
 		var check = true;
 		var products = {};
 		$(function(){
+			
+			$("#btn_approve").click(function() {		
+				approve_request();
+			});
 	
 			$("#request_stock").click(function() {		
 				get_request_stock_detail("",1);
 				 $('#request_stock_list').bPopup();
 			});
+			
 			$("#req_no").change(function(){
 				req_id=$(this).val();			
 				get_request_stock_detail(req_id,1);
 			});
 			
+			
+			
 		});
+		
+		function approve_request(){
+			var products=[];
+			$('#request_stock_info tr').each(function() {
+						json = {
+							"reqId" : ($(this).find("td").eq(0).html()),
+							"proId" : ($(this).find("td").eq(1).html()),
+							"proQty" : ($(this).find("td").eq(3).html())						
+						};
+						console.log(json);
+						products.push(json);
+					});
+
+			$.ajax({
+				 url: "${pageContext.request.contextPath}/admin/approve_request", 
+				 type: 'POST',
+				 data : JSON.stringify(products),
+				datatype: 'JSON',
+				beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+				success: function(data){
+					if(data==true)get_request_stock_detail("",1);
+				},
+				error:function(data, status,er){
+					console.log("error: " + data + "status: " + status + "er: ");
+				}
+			});
+		}
 		
 		function setPagination(totalPage, currentPage){
 	    	$('#PAGINATION').bootpag({
@@ -296,7 +333,7 @@
  						
  						$("#request_stock_info").html(result);
  						
- 						$("#req_no").prepend("<option value=''>--Select Approve--</option><option value='0'>Approve All</option>");
+ 						$("#req_no").prepend("<option value='0'>Approve All</option>");
  						for(var i=0;i<v.RS.length;i++){
  						
  							var req_id1=v.RS[i].req_id;
@@ -304,6 +341,9 @@
  							
  							if (req_id1 == req_id) {
  								selected = "selected";
+ 							}
+ 							if (req_id ==0 ) {
+ 								$("#req_no option[value='0']").attr("selected","selected");
  							}
  							
  							result1+= "<option value='" + req_id1 + "'" + selected+ "> " + req_id1 + " </option>";

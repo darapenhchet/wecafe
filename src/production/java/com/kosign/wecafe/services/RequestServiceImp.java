@@ -36,6 +36,37 @@ public class RequestServiceImp implements RequestService {
 	
 	@Autowired SessionFactory sessionFactory;
 	
+	@Override
+	@Transactional
+	public Boolean approveRequest(List<RequestForm> requestForm) {
+
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			
+			
+			for(int i=0; i < requestForm.size();i++){		
+				//1. save import product 
+				RequestStock requestStock = session.get(RequestStock.class,requestForm.get(i).getReqId());
+				requestStock.setStatus(false);
+				requestStock.setAppDate(new Date());
+				User user = userService.findUserByUsername(getPrincipal());
+				requestStock.setUserApprove(user);
+								
+				RequestStockDetail requestDetail = new RequestStockDetail();
+				Product products  = session.get(Product.class, requestForm.get(i).getProId());		
+				products.setQuantity(products.getQuantity() - requestForm.get(i).getProQty());
+				
+				session.update(products);
+				session.update(requestStock);
+			}
+	
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	
 	@Override
 	@Transactional
@@ -80,6 +111,7 @@ public class RequestServiceImp implements RequestService {
 			//1. save import product 
 			RequestStock requestStock = new RequestStock();
 			requestStock.setStatus(true);
+			requestStock.setReqDate(new Date());
 			User user = userService.findUserByUsername(getPrincipal());
 			requestStock.setUserRequest(user);
 		
@@ -95,13 +127,6 @@ public class RequestServiceImp implements RequestService {
 				requestDetail.setRemainQty(requestForm.get(i).getRemainQty());
 				requestStock.getRequestStockDetail().add(requestDetail);
 				
-				//session.save(requestDetail);				
-				/*//3. update product (stock)
-				Product products  = session.get(Product.class, requestDetail.getProduct().getProductId());
-				System.out.println("requestDetail.getProduct().getProductId()" + products.getQuantity());
-				products.setQuantity(products.getQuantity() + requestForm.get(i).getQuantity() );
-				System.out.println("product.getQuantity()" +  requestForm.get(i).getQuantity());
-				session.update(products);*/
 			}
 			session.save(requestStock);
 		} catch (Exception e) {

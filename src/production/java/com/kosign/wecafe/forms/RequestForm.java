@@ -1,7 +1,8 @@
 package com.kosign.wecafe.forms;
 
 public class RequestForm {
-
+	
+	private long reqId;
 	private long proId;
 	private long proQty;
 	private long remainQty;
@@ -25,9 +26,16 @@ public class RequestForm {
 	public void setRemainQty(long remainQty) {
 		this.remainQty = remainQty;
 	}
+	public long getReqId() {
+		return reqId;
+	}
+	public void setReqId(long reqId) {
+		this.reqId = reqId;
+	}
 	@Override
 	public String toString() {
-		return "RequestForm [proId=" + proId + ", proQty=" + proQty + ", remainQty=" + remainQty + "]";
+		return "RequestForm [reqId=" + reqId + ", proId=" + proId + ", proQty=" + proQty + ", remainQty=" + remainQty
+				+ "]";
 	}
 	
 	

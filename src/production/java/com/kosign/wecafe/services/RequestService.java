@@ -18,4 +18,5 @@ public interface RequestService {
 	public List<Map>  listRequestDetail(String reqId,Pagination pagination);
 	List<Map> listRequestStock();
 	int count(String id);
+	Boolean approveRequest(List<RequestForm> requestForm);
 }

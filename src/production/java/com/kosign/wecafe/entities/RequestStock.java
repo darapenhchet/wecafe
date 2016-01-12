@@ -47,13 +47,13 @@ public class RequestStock implements Serializable{
 	@JoinColumn(name="app_id")
 	private User userApprove;	
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="req_date")
-	private Date reqDate = new Date();
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="req_date")
+	private Date reqDate ;
+	
+	
 	@Column(name="app_date")
-	private Date appDate = new Date();
+	private Date appDate ;
 	
 	@Column(name="status")
 	private Boolean status;
