@@ -304,6 +304,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 		<script id="CONTENT_Expenselist" type="text/x-jquery-tmpl">
 	<tr>
 		<td>{{= importDetail}} </td>
@@ -351,7 +352,7 @@
 											format(data.expense[i]); 
 										}
 									$("#CONTENT_Expenselist").tmpl(data.expense).appendTo("tbody#CONTENTS");
-									$("#allTotalAmount").val(data.total_amount[0].total_amount);
+									$("#allTotalAmount").val(numeral(data.total_amount[0].total_amount).format('0,0'));
 								}else{
 									$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
 									$("#allTotalAmount").val("");
@@ -368,6 +369,7 @@
 			}
 		format = function(value){
 			 		value["exp_date"] =(value["exp_date"]).substring(0, 10);
+			 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');	
 			 		value["importDetail"] = order++;
 		 }
 		 $("#PER_PAGE").change(function(){
@@ -390,14 +392,14 @@
 					       for(i=0; i<data.length; i++){
 					    	   st += "<tr><td>" + (i + 1) + "</td>";
 					    	   st += "<td>" + data[i].exp_description +"</td>";
-					    	   st += "<td>" + data[i].exp_qty +"</td>";
-					    	   st += "<td>" + data[i].exp_unitprice +"</td>";
-					    	   st += "<td>" + (data[i].exp_unitprice * data[i].exp_qty) +"</td>";
+					    	   st += "<td>" + numeral(data[i].exp_qty).format('0,0') +"</td>";
+					    	   st += "<td>" + numeral(data[i].exp_unitprice).format('0,0') +"</td>";
+					    	   st += "<td>" + numeral((data[i].exp_unitprice * data[i].exp_qty)).format('0,0') +"</td>";
 					    	   st += "<td>" + data[i].customer +"</td>";
 					    	   st += "<td>" + data[i].remark +"</td></tr>"; 
 					    	   amount += (data[i].exp_unitprice * data[i].exp_qty);
 					       }
-					       $("#txttotal").val(amount);
+					       $("#txttotal").val(numeral(amount).format('0,0'));
 					       $("#impProDetail").html(st); 
 					    },
 					    error:function(data,status,er) { 

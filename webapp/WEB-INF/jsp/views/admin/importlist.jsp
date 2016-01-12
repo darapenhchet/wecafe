@@ -250,10 +250,19 @@ tbody tr td {
 				</table>
 			</div>
 			<div class="modal-footer" style="height: 80px;">
-				<div align="right">
-					<button class="btn btn-default b-close">Close</button>
+					<div style="float: left;">
+						<div class="form-group form-horizontal">
+							<label class="control-label col-lg-6">Total Amount</label>
+							<div class="col-lg-6">
+								<input class=" form-control" id="txttotal" type="text"
+									readonly="readonly">
+							</div>
+						</div>
+					</div>
+					<div align="right">
+						<button class="btn btn-default b-close">Close</button>
+					</div>
 				</div>
-			</div>
 		</div>
 	</div>
 
@@ -326,6 +335,7 @@ tbody tr td {
 <script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 	<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
 	<tr>
 		<td>{{= importDetail}} </td>
@@ -447,7 +457,7 @@ tbody tr td {
 					}); 
 				 }
 			//$('#datatable').dataTable();
-			 $(document).on("click","#impid", function(){ 
+			 $(document).on("click","#impid", function(){
 				   $.ajax({ 
 					    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
 					    type: 'POST', 
@@ -458,14 +468,17 @@ tbody tr td {
 		                },
 					    success: function(data) { 
 					    	console.log(data);
+					    	var	amount = 0;
 					    	var st= "";
 					       for(i=0; i<data.length; i++){
 					    	   st += "<tr><td>" + (i + 1) + "</td>";
 					    	   st += "<td>" + data[i].proname +"</td>";
-					    	   st += "<td>" + data[i].proqty +"</td>";
-					    	   st += "<td>" + data[i].prounitprice +"</td>";
-					    	   st += "<td>" + data[i].supname +"</td></tr>"
+					    	   st += "<td>" + numeral( data[i].proqty).format('0,0') +"</td>";
+					    	   st += "<td>" + numeral(data[i].prounitprice).format('0,0') +"</td>";
+					    	   st += "<td>" + data[i].supname +"</td></tr>";
+					    	   amount += (data[i].prounitprice * data[i].proqty);
 					       }
+					       $("#txttotal").val(numeral(amount).format('0,0'));
 					       $("#impProDetail").html(st);
 					    },
 					    error:function(data,status,er) { 
@@ -499,7 +512,7 @@ tbody tr td {
 										format(data.imports[i]); 
 									}
 								$("#CONTENT_Importlist").tmpl(data.imports).appendTo("tbody#CONTENTS");
-								$("#allTotalAmount").val(data.total_amount[0].total_amount);
+								$("#allTotalAmount").val(numeral(data.total_amount[0].total_amount).format('0,0'));
 							}else{
 								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
 								$("#allTotalAmount").val("");
@@ -515,6 +528,7 @@ tbody tr td {
 				 });
 			 }
 			 format = function(value){
+				 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');				 		
 				 		value["impDate"] =(value["impDate"]).substring(0, 10);
 				 		value["importDetail"] = order++;
 			 }

@@ -45,30 +45,10 @@
 	rel="stylesheet">
 
 <!-- Custom Files -->
-<link href="${pageContext.request.contextPath}/resources/css/helper.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/helper.css"	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css"	rel="stylesheet" type="text/css" />
+<script	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-<script
-	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-<script
-	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 </head>
 <body class="fixed-left-void" ng-app="wecafe">
 	<!-- Begin page -->
@@ -261,7 +241,7 @@
 		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
-
+	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
@@ -309,6 +289,11 @@
         		};
         		
         		products.format = function(value){
+        			value["quantity"] = numeral(value["quantity"]).format('0,0');
+        			value["costPrice"] = numeral(value["costPrice"]).format('0,0');
+        			value["salePrice"] = numeral(value["salePrice"]).format('0,0');
+        			value["unitPrice"] = numeral(value["unitPrice"]).format('0,0'); 
+        			
         			if(value["status"]==false){
         				value["status"] = "Inactive";
         				value["button"] = "btn-danger";

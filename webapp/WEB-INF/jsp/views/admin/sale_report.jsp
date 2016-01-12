@@ -460,6 +460,7 @@ tbody tr td {
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 		<!-- CUSTOM JS -->
+		<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 		
@@ -588,7 +589,7 @@ tbody tr td {
 					  if(data.reportdetail.length>0){
 					$("tbody#tbodydetail").html('');
 						 for(var i=0;i<data.reportdetail.length;i++){							
-							sales.format(data.reportdetail[i]);
+							sales.formatDetail(data.reportdetail[i]);
 						} 
 						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
 					}else{
@@ -620,18 +621,16 @@ tbody tr td {
 	           },
 			    success: function(data) { 
 			    	console.log(data);
+			    	var alltotal = 0;
 				 	 if(data.reportdaily.length>0){
 						$("tbody#tbodydaily").html('');
-						   for(var i=0;i<data.reportdaily.length;i++){							
-							sales.format(data.reportdaily[i]);
+						   for(var i=0;i<data.reportdaily.length;i++){	
+							alltotal += data.reportdaily[i].total_amount; 
+							sales.formatDaily(data.reportdaily[i]);
+							
 						}   
-						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily");
-						var tblside= $('#dailytable > tbody >tr').length;
-						var alltotal = 0;
-						
-						for(var i =0;i < tblside; i++)	
-							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(3).html());
-						$("#allTotalAmount").val(alltotal);
+						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily"); 
+						$("#allTotalAmount").val(numeral(alltotal).format('0,0'));
 					}else{
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
@@ -661,28 +660,29 @@ tbody tr td {
                 },
 			    success: function(data) {
 			    	console.log(data);
+			    	var all_total_amount = 0;
+			    	var total_qty = 0, subtotal_qty = new Array(data.reportweekly.length);
+					var total_amount = 0, subtotal_amount = new Array(data.reportweekly.length);
 			    	if(data.reportweekly.length>0){
 						$("tbody#tbodyweekly").html('');
-						   for(var i=0;i<data.reportweekly.length;i++){						
-							sales.format(data.reportweekly[i]);
+						   for(var i=0;i<data.reportweekly.length;i++){
+							   total_qty = 0;
+							   total_amount = 0;
+							   for(var j =0; j<7;j++){
+								   total_qty += data.reportweekly[i]['day' + (j+1) + '_qty'];
+								   total_amount += data.reportweekly[i]['day' + (j+1) + '_amount'];
+								sales.formatWeekly(data.reportweekly[i], (j+1)); 
+							} 
+							   subtotal_qty[i] = numeral(total_qty).format('0,0');
+							   subtotal_amount[i] = numeral(total_amount).format('0,0');
+							   all_total_amount += total_amount;
 						}   
-						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
-						var tblrowsize= $('#weeklytable > tbody >tr').length; 
-						var all_total_amount = 0;					 
-						 for(var i =0;i < tblrowsize; i++)	
-							 {
-							 	var total_qty = 0;
-								var total_amount = 0;
-							 for(var j=1; j<8 ; j++)
-								 {
-								 	total_amount += parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j)).html());
-								 	total_qty +=  parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j -1 )).html());
-								 }
-							 $("#weeklytable tbody").children().eq(i).children().eq(15).html(total_qty);
-							 $("#weeklytable tbody").children().eq(i).children().eq(16).html(total_amount);
-							 all_total_amount += total_amount;
-							 }	
-						$("#allTotalAmount").val(all_total_amount);
+						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly"); 
+						for(var i=0;i<data.reportweekly.length;i++){
+						   $("#tbodyweekly").children().eq(i).children().eq(15).html(subtotal_qty[i]);
+						   $("#tbodyweekly").children().eq(i).children().eq(16).html(subtotal_amount[i]);
+						} 
+						$("#allTotalAmount").val(numeral(all_total_amount).format('0,0'));
 					}else{
 						$("tbody#tbodyweekly").html("");
 						$("#allTotalAmount").val('');
@@ -717,18 +717,18 @@ tbody tr td {
 				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
 				    		
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
-				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_qty'] + "</td>";
-				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_amount'] + "</td>";
+				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
+				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
 				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty'];
 				    				total_amount += data.reportmonthly[i]['day' + (j+1) + '_amount'];
 				    		}
-				    		st += "<td>" + total_qty + "</td>";
-				    		st += "<td>" + total_amount + "</td>";
+				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>";
 				    		total_all += total_amount;
 						}
 				    	$("#monthlytable tbody").html(st);
-				    	$("#allTotalAmount").val(total_all);
+				    	$("#allTotalAmount").val(numeral(total_all).format('0,0'));
 				    }    
 			    },	
 			    error:function(data,status,er) { 
@@ -755,26 +755,37 @@ tbody tr td {
 				    	$("tbody#tbodyyearly").html('');
 				    	for(var i=0;i<data.reportyear.length;i++){
 				    	formatMonthlySaleReport(data.reportyear[i]);
-				    	total_amount += data.reportyear[i].total_amount;
+				    	total_amount += parseInt(data.reportyear[i].total_amount.replace(',',''));
 				    	}
 			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");			    	  
 			    	}
-			    	$("#allTotalAmount").val(total_amount);
+			    	$("#allTotalAmount").val(numeral(total_amount).format('0,0'));
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			}); 
 	 } 
-	 sales.format = function(value){
+	 sales.formatDetail = function(value){
+		 value["total_amount"] = numeral(value["total_amount"]).format('0,0');
 		 if(value["purchase_type"] == 0)
 		 		value["purchase_type"] = "Import";
 		 else
 			 	value["purchase_type"] = "Expense";
 	 }
+	 sales.formatDaily = function(value){
+		 value["total_amount"] = numeral(value["total_amount"]).format('0,0');
+		 value["pro_unit_price"] = numeral(value["pro_unit_price"]).format('0,0');
+		 value["product_qty"] = numeral(value["product_qty"]).format('0,0'); 
+	 }
+	 sales.formatWeekly = function(value, j){
+		 value['day' +(j) + '_qty'] = numeral(value['day' +(j) + '_qty']).format('0,0'); 
+		 value['day' +(j) + '_amount'] = numeral(value['day' +(j) + '_amount']).format('0,0'); 
+	 } 
 	 function formatMonthlySaleReport(value){
 			console.log(value);
-	    	value["total_amount"] = value["jan_amount"] + 
+			
+	    	value["total_amount"] = numeral(value["jan_amount"] + 
 	    							value["feb_amount"] + 
 	    							value["mar_amount"] +
 	    							value["apr_amount"] +
@@ -785,8 +796,8 @@ tbody tr td {
 	    							value["sep_amount"] +
 	    							value["oct_amount"] +
 	    							value["nov_amount"] +
-	    							value["dec_amount"] ;
-	    	value["total_qty"] = value["jan_qty"] + 
+	    							value["dec_amount"]).format('0,0') ;
+	    	value["total_qty"] = numeral(value["jan_qty"] + 
 								 value["feb_qty"] + 
 								 value["mar_qty"] +
 								 value["apr_qty"] +
@@ -797,7 +808,32 @@ tbody tr td {
 								 value["sep_qty"] +
 								 value["oct_qty"] +
 								 value["nov_qty"] +
-								 value["dec_qty"]  ;
+								 value["dec_qty"]).format('0,0')  ;
+	    	value["jan_amount"] = numeral(value["jan_amount"]).format('0,0');
+	    	value["feb_amount"] = numeral(value["feb_amount"]).format('0,0');
+			value["mar_amount"] = numeral(value["mar_amount"]).format('0,0');
+			value["apr_amount"] = numeral(value["apr_amount"]).format('0,0');
+			value["may_amount"] = numeral(value["may_amount"]).format('0,0');
+			value["jun_amount"] = numeral(value["jun_amount"]).format('0,0');
+			value["jul_amount"] = numeral(value["jul_amount"]).format('0,0');
+			value["aug_amount"] = numeral(value["aug_amount"]).format('0,0');
+			value["sep_amount"] = numeral(value["sep_amount"]).format('0,0');
+			value["oct_amount"] = numeral(value["oct_amount"]).format('0,0');
+			value["nov_amount"] = numeral(value["nov_amount"]).format('0,0');
+			value["dec_amount"] = numeral(value["dec_amount"]).format('0,0');
+			value["jan_qty"] =  numeral(value["jan_qty"]).format('0,0');
+			value["feb_qty"] =  numeral(value["feb_qty"]).format('0,0');
+			value["mar_qty"] = numeral(value["mar_qty"]).format('0,0');
+			value["apr_qty"] = numeral(value["apr_qty"]).format('0,0');
+			value["may_qty"] = numeral(value["may_qty"]).format('0,0');
+			value["jun_qty"] = numeral(value["jun_qty"]).format('0,0');
+			value["jul_qty"] = numeral(value["jul_qty"]).format('0,0');
+			value["aug_qty"] = numeral(value["aug_qty"]).format('0,0');
+			value["sep_qty"] = numeral(value["sep_qty"]).format('0,0');
+			value["oct_qty"] = numeral(value["oct_qty"]).format('0,0');
+			value["nov_qty"] = numeral(value["nov_qty"]).format('0,0');
+			value["dec_qty"] = numeral(value["dec_qty"]).format('0,0');
+			
 	    	
 	    }
 	 sales.setPagination = function(totalPage, currentPage){
