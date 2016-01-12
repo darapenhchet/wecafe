@@ -19,7 +19,7 @@
 
 <title>KOSIGN WeCafe...</title>
 
-<!-- Base Css Files -->
+<!-- Base Css Files --> 
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet" />
