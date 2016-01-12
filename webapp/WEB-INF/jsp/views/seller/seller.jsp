@@ -700,7 +700,18 @@
 												return;
 											} else
 												$("#remain_qty").removeClass("borderRed");
-
+											
+											var isAdded=false;
+											
+											$('#tbllistimport tr').each(function() {
+												var pro_name=$(this).find("td").eq(3).html()
+													if($("#product_name").val()==pro_name){
+														alert("Product is already added");
+														isAdded=true ;
+													}
+											});
+											
+											if(isAdded==false){
 											var st = "";
 											st += "<tr><td style='display: none;'>"
 													+ $('#product_id').val()
@@ -721,6 +732,7 @@
 											st += "<td><a href= 'javascript:;' id='btn_edit'>Edit</a> | <a href='javascript:;' id='btn_delete'>Delete</a></td></tr>";
 											$("#tbllistimport").append(st);
 											clear();
+											}
 										});
 
 						$('.counter').counterUp({
