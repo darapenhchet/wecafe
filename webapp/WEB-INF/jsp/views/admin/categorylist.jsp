@@ -175,13 +175,13 @@
 
 					</div>
 					<!-- end Panel -->
-					<ul class="pagination" id="PER_PAGE">
+					 <ul class="pagination" id="PER_PAGE">
 						<li class="active" ng-click="perPage=10"><a
 							href="javascript:;">10</a></li>
 						<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
 						<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
 						<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-					</ul>
+					</ul>  
 					<dir-pagination-controls max-size="15" direction-links="true"
 						boundary-links="true" class="pull-right">
 					</dir-pagination-controls>

@@ -568,7 +568,7 @@ tbody tr td {
 		 setheadermonthly();
 		 sales.listMonthly();
 	 });
-	 sales.listDetail = function(currentPage){	
+	 sales.listDetail = function(currentPage){
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/saledetail/" , 

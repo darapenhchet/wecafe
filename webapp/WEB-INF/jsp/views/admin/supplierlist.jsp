@@ -142,8 +142,7 @@
 											<td id="supplierId" style="display: none;">{{supplier.supId}}</td>
 											<td>{{ key+1}}</td>
 											<td id="supplierName">{{supplier.supplierName }}</td>
-											<td style="text-align: right;">{{supplier.supplierNumber
-												}}</td>
+											<td style="text-align: right;">{{supplier.supplierNumber }}</td>
 											<td>{{supplier.supplierEmail }}</td>
 											<td>{{supplier.supplierAddress}}</td>
 											<td class="actions" style="text-align: center;"><a

@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +12,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,26 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 
 	@Override
 	@Transactional
+	public Long countDetail(int year) throws ParseException{
+		String startDate = year +"-01-01";
+		String endDate = year + "-12-31";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startdate = simpleDateFormat.parse(startDate);
+		Date enddate = simpleDateFormat.parse(endDate);
+		Session session = null;
+		try{ 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(Sale.class)
+					.add(Restrictions.between("saleDatetime", startdate ,enddate ))
+					.setProjection(Projections.rowCount()).uniqueResult(); 
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
+	}
+
+	@Override
+	@Transactional
 	public Long count(){
 		Session session = null;
 		try{ 
@@ -62,7 +84,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 		}
 		return 0L;
 	}
-
+	
 	@Override
 	@Transactional
 	public List<Map> getListReportDailySaleRest(Date startdate) {
@@ -350,5 +372,24 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 		}
 		return null;
 	}
+
+	@Override
+	@Transactional
+	public Long countDaily(Date dateTime) {
+		Session session = null; 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(Sale.class)
+					.add(Restrictions.like("saleDatetime", dateTime ))
+					.setProjection(Projections.rowCount()).uniqueResult();   
+	}
+/*	@Override
+	@Transactional
+	public Long countWeekly(Date startDate,Date endDate) {
+		Session session = null; 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(Sale.class)
+					.add(Restrictions.between("saleDatetime", startDate, endDate))
+					.setProjection(Projections.rowCount()).uniqueResult();   
+	}*/
 
 }

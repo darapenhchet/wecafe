@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService{
 		try{
 			session = sessionFactory.getCurrentSession();
 			Criteria criteria = session.createCriteria(Product.class);
-			criteria.addOrder(Order.desc("createdDate"));
+			criteria.addOrder(Order.asc("productId"));
 			criteria.setFirstResult(pagination.offset());
 			criteria.setMaxResults(pagination.getPerPage());
 			List<Product> products = (List<Product>)criteria.list();

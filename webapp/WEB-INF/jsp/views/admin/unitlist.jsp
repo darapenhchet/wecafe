@@ -134,7 +134,24 @@
                                                 <!-- <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a> -->
                                             </td>
                                         </tr> 
-                                    </c:forEach>
+                                    </c:forEach> 
+                                    <%-- <tr	dir-paginate="(key,unit) in units|filter:search|itemsPerPage:perPage|orderBy : unit.unitName"
+										class="gradeX">
+										<td id="unitId" style="display: none;">{{unit.unitId}}</td>
+										<td>{{key+1 }}</td>  
+										<td>{{unit.unitName }}</td> 
+										<td>{{unit.qty }}</td>
+										<td>{{unit.to }}</td>
+										<td style="text-align: center;" class="actions"><a
+											href="#" class="hidden on-editing save-row"><i
+												class="fa fa-save"></i></a> <a href="#"
+											class="hidden on-editing cancel-row"><i
+												class="fa fa-times"></i></a> <a
+											href="${pageContext.request.contextPath}/admin/updateunit/{{unit.unitId}}"
+											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+											<a class="on-default remove-row" href="javascript:;"
+											id="btnRemove"><i class="fa fa-trash-o"></i></a></td> 
+									</tr>--%>
 								</tbody>
 							</table>
 						</div>
@@ -143,14 +160,13 @@
 					</div>
 					<!-- end Panel -->
 					<ul class="pagination" id="PER_PAGE">
-						<li class="active" ng-click="perPage=10"><a
+						<li class="active" ng-click="perPage=2"><a
 							href="javascript:;">10</a></li>
-						<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-						<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-						<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-					</ul>
-					<dir-pagination-controls max-size="15" direction-links="true"
-						boundary-links="true" class="pull-right">
+						<li ng-click="perPage=4"><a href="javascript:;">15</a></li>
+						<li ng-click="perPage=6"><a href="javascript:;">50</a></li>
+						<li ng-click="perPage=8"><a href="javascript:;">100</a></li>
+					</ul> 
+					<dir-pagination-controls max-size="15" direction-links="true" boundary-links="true" class="pull-right">
 					</dir-pagination-controls>
 
 				</div>
