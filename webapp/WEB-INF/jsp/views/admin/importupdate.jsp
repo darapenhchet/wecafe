@@ -459,8 +459,7 @@
             	 $("#savebtn").click(function(){ 
                  	var importDetail = [];
                  		$('#tbllistimport tr').each(function(){
-                 			json ={
-                 						
+                 			json ={ 
                  						"proId"				: ($(this).find("td").eq(0).html()),
                  						"quantity" 		 	:($(this).find("td").eq(3).html()),
                  						"unitPrice"		    :($(this).find("td").eq(4).html()),

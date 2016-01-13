@@ -180,12 +180,14 @@ public class ExpenseServiceImp implements ExpenseService {
 
 	@Override
 	@Transactional
-	public Long count() {
+	public Long count(Date startDate, Date endDate) {
 
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			return (Long) session.createCriteria(Expense.class).setProjection(Projections.rowCount()).uniqueResult();  
+			return (Long) session.createCriteria(Expense.class)
+					.add(Restrictions.between("exp_date", startDate, endDate))
+					.setProjection(Projections.rowCount()).uniqueResult();  
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

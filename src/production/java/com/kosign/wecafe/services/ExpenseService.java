@@ -18,7 +18,7 @@ public interface ExpenseService {
 	public   List<ExpenseDetail> listExpenseDetail(Long id) ;
 	public Boolean saveExpense(List<ExpenseForm> expenseForm);
 	public Boolean updateExpense(List<ExpenseForm> expenseform, Long id);
-	public Long count();
+	public Long count(Date startDate, Date endDate);
 
 	public Object getTotalAmount(Date startDate, Date endDate);
 }

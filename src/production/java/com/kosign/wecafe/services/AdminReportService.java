@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,9 @@ public interface AdminReportService {
 	public List<Map> getSearchOrderbyDate(DateForm dateForm);	
 	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm);	
 	public List<Object[]> getReportListAllCupStockbyDate(DateForm dateForm);
+	public Long countDetail(int year) throws ParseException;
+	public Long countDaily(Date dateTime);
 	public Long count();
-	
  
 	
 }

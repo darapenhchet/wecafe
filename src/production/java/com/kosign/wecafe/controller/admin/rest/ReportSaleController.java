@@ -41,10 +41,10 @@ public class ReportSaleController {
 	UserService userService;
 	
 	@RequestMapping(value="/saledetail", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination){
+	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination) throws ParseException{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reportdetail", adminReportSaleService.getListReportDetailSaleRest(filter.getByYear()));
-		pagination.setTotalCount(adminReportSaleService.count());
+		pagination.setTotalCount(adminReportSaleService.countDetail(filter.getByYear()));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
@@ -56,11 +56,10 @@ public class ReportSaleController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reportdaily", adminReportSaleService.getListReportDailySaleRest(startDate));
-		pagination.setTotalCount(adminReportSaleService.count());
+		pagination.setTotalCount(adminReportSaleService.countDaily(startDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 	}
 	@RequestMapping(value="/salereportweekly", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportweekly(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 

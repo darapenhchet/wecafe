@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,12 +13,15 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kosign.wecafe.entities.Expense;
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -277,17 +281,44 @@ public class AdminReportServiceImp implements AdminReportService {
 	
 	@Override
 	@Transactional
-	public Long count(){
+	public Long countDetail(int year) throws ParseException{
+		String startDate = year +"-01-01";
+		String endDate = year + "-12-31";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startdate = simpleDateFormat.parse(startDate);
+		Date enddate = simpleDateFormat.parse(endDate);
 		Session session = null;
-		try{
+		try{ 
 			session = sessionFactory.getCurrentSession();
-			return (Long) session.createCriteria(ImportProduct.class).setProjection(Projections.rowCount()).uniqueResult();
+			  Long impCount = (Long) session.createCriteria(ImportProduct.class)
+					.add(Restrictions.between("impDate", startdate ,enddate ))
+					.setProjection(Projections.rowCount()).uniqueResult(); 
+			  Long expCount = (Long) session.createCriteria(Expense.class)
+					.add(Restrictions.between("exp_date", startdate ,enddate ))
+					.setProjection(Projections.rowCount()).uniqueResult();
+			return (impCount + expCount);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 		return 0L;
 	}
 	
+	@Override
+	@Transactional
+	public Long countDaily(Date dateTime) {
+		Session session = null; 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(ImportProduct.class)
+					.add(Restrictions.like("impDate", dateTime ))
+					.setProjection(Projections.rowCount()).uniqueResult();   
+	}
+	@Override
+	@Transactional
+	public Long count() {
+		Session session = null; 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(ImportProduct.class).setProjection(Projections.rowCount()).uniqueResult();   
+	}
 	@Override
 	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm) {
 		Session session = HibernateUtil.getSessionFactory().openSession();

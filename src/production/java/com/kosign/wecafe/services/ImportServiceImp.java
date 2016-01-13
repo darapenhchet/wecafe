@@ -111,6 +111,7 @@ public class ImportServiceImp implements ImportService {
 			Criteria criteria = session.createCriteria(ImportProduct.class );
 			//criteria.addOrder(Order.desc("createdDate"));
 			criteria.add(Restrictions.between("impDate", startDate, endDate));
+			criteria.addOrder( Order.desc("impDate") );
 			criteria.setFirstResult(pagination.offset());
 			criteria.setMaxResults(pagination.getPerPage());
 			
@@ -249,61 +250,61 @@ public class ImportServiceImp implements ImportService {
 	@Transactional
 	public Boolean updateImportPro(List<ImportForm> importForms, Long id) {
 	    try {
+	    	//select importprodut by id
 			ImportProduct importProduct = sessionFactory.getCurrentSession().get(ImportProduct.class, id);
-			Set<ImportDetail> importDetails = importProduct.getImportDetail();
 			
-			System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());
+			Set<ImportDetail> importDetails = importProduct.getImportDetail();		
 			
-			for(ImportDetail importDetail : importDetails){
+			System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());			
+			
+				for(ImportDetail importDetail : importDetails){
+				//select product by id
 				Product product = sessionFactory.getCurrentSession().get(Product.class, importDetail.getProduct().getProductId());
+				//update qty in product table 
 				product.setQuantity(product.getQuantity() - importDetail.getProQty());
 				product.setLastUpdatedDate(new Date());
 				product.setLastUpdatedBy(userService.findUserByUsername(getPrincipal()));
-				/*sessionFactory.getCurrentSession().flush();
-				sessionFactory.getCurrentSession().clear();*/
+				//--sessionFactory.getCurrentSession().flush();
+				//--sessionFactory.getCurrentSession().clear();
 				sessionFactory.getCurrentSession().update(product);
 				//importProduct.getImportDetail().remove(importDetail);
-				//sessionFactory.getCurrentSession().evict(product);
-				
+				//sessionFactory.getCurrentSession().evict(product);				
 				System.out.println("PRODUCT ID = " + product.getProductId());
 				//session.delete(importDetail);
-			}
-			
-			importProduct.getImportDetail().clear();
-					
+			}			
+			importProduct.getImportDetail().clear();					
 			//importProduct.setImportDetail(new HashSet<ImportDetail>());
 			sessionFactory.getCurrentSession().update(importProduct);
 		/*	sessionFactory.getCurrentSession().flush();
-			sessionFactory.getCurrentSession().clear();*/
-			
-			//sessionFactory.getCurrentSession().evict(importProduct);
-												
+			sessionFactory.getCurrentSession().clear();*/			
+			//sessionFactory.getCurrentSession().evict(importProduct);	 
 			for(ImportForm importForm : importForms){
-				ImportDetail importDetail = new ImportDetail();
+				ImportDetail importDetail = new ImportDetail(); 
 				Product product = sessionFactory.getCurrentSession().get(Product.class, importForm.getProId());
+				
 				importDetail.setImportProduct(importProduct);
 				importDetail.setProduct(product);
 				importDetail.setSupplier(sessionFactory.getCurrentSession().get(Supplier.class, importForm.getSupplierId()));
 				importDetail.setUnitPrice(importForm.getUnitPrice());
 				importDetail.setProQty(importForm.getQuantity());
-				importDetail.setProStatus(true);
+				importDetail.setProStatus(true);				
 				
 				product.setUnitPrice(new BigDecimal(importForm.getUnitPrice()));
 				product.setQuantity(product.getQuantity()+importForm.getQuantity());
-				//sessionFactory.getCurrentSession().flush();
-				//sessionFactory.getCurrentSession().clear();
-				sessionFactory.getCurrentSession().update(product);
 				
-				importProduct.getImportDetail().add(importDetail);
-				System.out.println("PRODUCT QTY = " + importForm.getQuantity());
-				System.out.println("PRODUCT = " + importForm.getProId());
+				sessionFactory.getCurrentSession().flush();
+				sessionFactory.getCurrentSession().clear();
+				sessionFactory.getCurrentSession().update(product);
+			
+				importProduct.getImportDetail().add(importDetail); 
+				 
 			}
 			System.out.println("IMPORT DETAIL SIZE=" + importProduct.getImportDetail().size());
 			
 			//sessionFactory.getCurrentSession().flush();
 			//sessionFactory.getCurrentSession().clear();
 			sessionFactory.getCurrentSession().update(importProduct);
-			//session.getTransaction().commit();
+			//session.getTransaction().commit(); 
 			return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
