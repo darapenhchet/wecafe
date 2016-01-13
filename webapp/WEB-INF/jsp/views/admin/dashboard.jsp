@@ -382,7 +382,7 @@
 				"proQty" : pro_qty,
 				"remainQty" : remain_qty
 			}
-			
+			//
 			$.ajax({
 				 url: "${pageContext.request.contextPath}/admin/update_req_qty", 
 				 type: 'POST',
