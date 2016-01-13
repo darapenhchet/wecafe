@@ -308,77 +308,6 @@
 		</div>
 
 
-
-
-
-
-
-		<!-- ############################################################# -->
-		<!-- 
-		<div id="myModal"  style="display: none;"  style="display: none;" 
-			style="left: 321px; position: absolute; top: 827.182px; z-index: 9999; opacity: 1;">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" aria-hidden="true">
-							<span class="button b-close"><span>×</span></span>
-						</button>
-						<h4 class="modal-title" id="title"></h4>
-					</div>
-					<div class="modal-body form-horizontal" style="height: 290px;">
-
-						<div class="col-sm-4">
-							<img id="imgpath" style="width: 150px; height: 250px;"
-								src="/WeCafe/resources/images/products/6e5f3438-bfbd-43e8-a3d8-be6a12619187.gif">
-						</div>
-						<div class="col-sm-8 container">
-							<div class="form-group">
-								<label class="control-label col-sm-3">Price :</label>
-								<div class="col-sm-9">
-									<label class="control-label col-sm-3" id="price">2500.00</label>
-								</div>
-								<div style="display: none;" id="proid">34</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-3" for="proqty">Qty :</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" maxlength="30"
-										id="proqty">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-3" id="comment" for="txtcomment">Comment:</label>
-								<div class="col-sm-9">
-									<textarea id="procomment" cols="33" rows="4"
-										style="resize: none;"></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer" style="height: 80px; overflow: auto;">
-						<button type="button" class="btn btn-default" id="btnAddToCart">
-							<span class="button b-close"><span>Add to cart</span></span>
-						</button>
-						<button type="button" class="btn btn-default hidebtn" id="btnok">
-							<span class="button b-close"><span>Ok</span></span>
-						</button>
-						<button type="button" class="btn btn-primary" id="btn_buy">
-							<span class="button b-close"><span>Buy</span></span>
-						</button>
-						<button type="button" class="btn btn-default hidebtn"
-							id="btncancelup">
-							<span class="button b-close"><span>Cancel</span></span>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
-
-		<!-- ############################################################# -->
-
-
-
 		<!-- ############################################################# -->
 
 		<div id="addtocart" style="display: none;" style="width: 80%;">
@@ -446,10 +375,101 @@
 				</div>
 			</div>
 		</div>
+		
+<!-- Modal -->
+<div class="modal fade" id="form_request_stock" role="dialog " >
+	<div class="modal-dialog modal-lg" style="width: 80%">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Form Request</h4>
+			</div>
+			<div class="modal-body">
+				<div class=" form">					
+						<form class="cmxform form-horizontal tasi-form" id="signupForm"
+							method="get" action="#" novalidate="novalidate">
+							<div class="form-group ui-widget">
+								<label for="product_name" class="control-label col-lg-2">Product
+									Name *</label>
+								<div class="col-lg-10">
+									<input class=" form-control" required="required"
+										id="product_name" name="product_name" type="text"> 
+										<input class="hidebtn" id="product_id">
+								</div>
+							</div>
+							<div class="form-group ">
+								<label for="quantity" class="control-label col-lg-2">Request Qty
+									*</label>
+								<div class="col-lg-10">
+									<input class="form-control " required="required" id="product_qty"
+										name="product_qty" type="text">
+								</div>
+							</div>
+							<div class="form-group ">
+								<label for="quantity" class="control-label col-lg-2">In Stock
+									*</label>
+								<div class="col-lg-10">
+									<input class="form-control " required="required" id="remain_qty"
+										name="remain_qty" type="text">
+								</div>
+							</div>
+
+							<div class="form-group" align="right">
+
+								<button class="btn btn-success waves-effect waves-light"
+									style="width: 100px;" id="btn_add" type="button">Add</button>
+								<button class="btn btn-default waves-effect waves-light"
+									style="width: 100px; margin-right: 10px;" id="btn_cancel_add"
+									type="button">Cancel</button>
+							</div>
+						</form>
+						<!-- =================== -->
+						<h5 class="pull-left page-title"># Product List</h5>
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<table id="datatable"
+									class="table table-striped table-bordered dataTable">
+									<thead>
+
+									</thead>
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Product Name</th>
+											<th style="text-align: center;">Request Qty</th>
+											<th style="text-align: center;">In Stock</th>
+											<th style="text-align: center;">Edit</th>
+										</tr>
+									</thead>
+									<tbody id="tbllistimport">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- =================== -->
+						<div class="form-group" align="right">
+							<button class="btn btn-success waves-effect waves-light"
+								style="width: 100px;" id="btn_save" type="button">Save</button>
+							<button class="btn btn-default waves-effect"
+								style="width: 100px; margin-right: 10px;" id="btn_cancel_save"
+								type="button">Cancel</button>
+						</div>
+
+					</div>
+					<!-- .form -->
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 
-		<div id="form_request_stock"
+		<div id="form_request_stock1"
 			style="display: none; width: 80%; height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -650,7 +670,7 @@
 						$("#btn_cancel_save").click(function() {
 							if (confirm("Do you want to cancel?")) {
 								$("#tbllistimport tr").remove();
-								$("#form_request_stock").bPopup().close();
+								//$("#form_request_stock").bPopup().close();
 							}
 						});
 						
@@ -665,7 +685,8 @@
 						//Click request stock
 						$("#btn_request_stock").click(function() {
 							searchProduct();
-							$("#form_request_stock").bPopup();
+							$('#form_request_stock').modal();
+							//$("#form_request_stock").bPopup();
 
 						});
 						
@@ -793,6 +814,7 @@
 														},
 														success : function(data) {
 															alert("Successfully requested");
+															$('#form_request_stock').modal('hide');
 															clear();
 															$("#tbllistimport tr").remove();
 															//location.href = "${pageContext.request.contextPath}/admin/importlist";

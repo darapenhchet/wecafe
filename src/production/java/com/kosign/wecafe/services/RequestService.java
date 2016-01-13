@@ -15,6 +15,7 @@ import com.kosign.wecafe.forms.RequestForm;
 public interface RequestService {
 
 	public Boolean saveRequestPro(List<RequestForm> requestForm);
+	public Boolean updateReqQty(RequestForm requestForm);
 	public List<Map>  listRequestDetail(String reqId,Pagination pagination);
 	List<Map> listRequestStock();
 	Long count(String id);

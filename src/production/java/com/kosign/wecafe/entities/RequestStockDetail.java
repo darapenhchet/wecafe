@@ -37,6 +37,8 @@ public class RequestStockDetail implements Serializable{
 	@Column(name = "remain_qty")
 	private long remainQty; 
 	
+
+	
 	public long getProQty() {
 		return proQty;
 	}

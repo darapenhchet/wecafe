@@ -56,19 +56,44 @@
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
+
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-	
-	<style type="text/css">
-			.out_stock{};
-	</style>
+
+<style>
+	.out_stock{
+			color: :red;
+	};
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+	width: 70%;
+	margin: auto;
+}
+
+.panel-body:hover {
+	cursor: pointer;
+}
+
+.panel-body img {
+	width: 80px;
+	height: 100px;
+}
+
+#addtocart {
+	width: 80%;
+}
+
+.modal-content {
+	border-radius: 0;
+}
+
+.hidebtn {
+	display: none;
+}
+.borderRed {
+	border-color: red;
+}
+</style>
 
 </head>
 
@@ -96,8 +121,8 @@
 		<!-- ========== Left Sidebar Start ========== -->
 		<%@ include file="left_sidebar.jsp"%>
 		<!-- Left Sidebar End -->
-
-
+		
+		
 
 		<!-- ============================================================== -->
 		<!-- Start right Content here -->
@@ -106,7 +131,7 @@
 			<!-- Start content -->
 			<div class="content">
 				<div class="container">
-
+					
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
@@ -150,10 +175,13 @@
 						</div>
 					</div>
 					<!-- End row-->
+					
 				</div>
 
 			</div>
 			<!-- content -->
+			
+	
 
 			<%@ include file="footer.jsp"%>
 
@@ -165,7 +193,10 @@
 	</div>
 	<!-- END wrapper -->
 
+	
+	
 	<%@ include file="requeststocklist.jsp"%>
+	
 
 	<script>
 		var resizefunc = [];
@@ -231,24 +262,37 @@
 	<!-- bpopup -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
-	<!-- Pageination -->
+<%-- 	<!-- Pageination -->
 		<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script> --%>
 	
-
+<!-- Pageination -->
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.simplePagination.js"></script>
 		
 	<script type="text/javascript">
 		var req_id="";
 		var check = true;
 		var products = {};
 		var st=0;
+		var data=[];
 		$(function(){
 			
-			$("#out_of_stock").change(function(){
+			$("#PAGINATION").pagination({
+				items: 10,
+				itemsOnPage:10,
+				cssStyle: 'light-theme',
+				edges:3,
+				displayedPages:3,
+				currentPage:1,
+				onPageClick:pageingClick
+			});
 			
+			$("#out_of_stock").change(function(){
+				
 				$('tbody tr').each(function(){
+					
 					if($("#out_of_stock").val()=="out"){
-					 if ($(this).attr('style').indexOf('color:red') !== -1){
+					 if ($(this).hasClass("out_stock")){
 						    $(this).show();	
 						    st=1;
 					}else{					 
@@ -261,83 +305,146 @@
 				});
 			});
 			
-			$("#btn_approve").click(function() {	
-				$('tbody tr').each(function(){
-					 if ($(this).attr('style').indexOf('color:red') !== -1){
-						 alert("Please check some product qty is out of stock"); 
-						 return false ;
-					}else{
-						if($("#out_of_stock").val()=="all"){
-							approve_request();	
-							return false;
+			$("#btn_approve").click(function() {
+				var error=false;
+				if($("#req_no").val()!=0){
+					$('tbody tr').each(function(){	
+						 if ($(this).hasClass("out_stock")){
+							 alert("Please check some product qty is out of stock"); 
+							 error=true;
+							 return false;
+						 }
+					});
+					if(error==false){
+						  if($("#out_of_stock").val()=="all"){		
+							 approve_request();																						
 						}else{
 							alert("Please select show all");
-							return false ;
 						}
-
 					}
-				});
-				
+				}else{
+					alert("Please select approve");
+					
+				}
+					
 			});
 	
-			$("#request_stock").click(function() {		
-				get_request_stock_detail("",1);
-				 $('#request_stock_list').bPopup();
+			$("#request_stock").click(function() {	
+					
+				get_request_stock_detail(1);
+				$('#request_stock_list').modal() ;
+				
 			});
 			
 			$("#req_no").change(function(){
+				
+				($(this).val()==0?$("#out_of_stock").hide():$("#out_of_stock").show());			
 				$("#out_of_stock option[value='all']").prop("selected",true);	
 				req_id=$(this).val();			
-				get_request_stock_detail(req_id,1);
+				get_request_stock_detail(1);
 								
-			});
-			
-			
+			});			
 			
 		});
 		
-		function edit_qty(qty,obj){	
+		function pageingClick(pageN,event){
+			get_request_stock_detail(pageN);
+		}
+		
+		function edit_qty(qty,remain_qty,obj){	
 			var qty=$(obj).parent().siblings("#pro_qty").html();
 			$(obj).parent().siblings("#pro_qty").html("<input type='text' value='"+qty+"' class='form-control'>");
+			$(obj).parent().siblings("#remain_qty").html("<input type='text' value='"+remain_qty+"' class='form-control'>");
 			$(obj).parent().find("#icon_edit").hide();
 			$(obj).parent().find("#icon_save").show();
 		
 		}
 		
-		function update_qty(qty,obj){		
+		function update_qty(req_id,pro_id,obj){		
 			
-			var qty=0, stock_qty=0;		
+			var pro_qty=0, remain_qty=0;		
 			
 			$(obj).parent().find("#icon_edit").show();
+			
 			$(obj).parent().find("#icon_save").hide();
-			qty=parseInt($(obj).parent().siblings("#pro_qty").find("input").val());
-			stock_qty=parseInt($(obj).parent().siblings("#stock_qty").html());
-			$(obj).parent().siblings("#pro_qty").find("input").remove() ;	
-			$(obj).parent().siblings("#pro_qty").html(qty);
-						
-			if(qty > stock_qty){			
-				$(obj).parent().parent().css("color","red");
-				$("tbody").addClass("out_stock");
-			}else{
-				$(obj).parent().parent().css("color","#797979");
-				$("tbody").removeClass("out_stock");
+			
+			pro_qty=parseInt($(obj).parent().siblings("#pro_qty").find("input").val());
+			
+			remain_qty=parseInt($(obj).parent().siblings("#remain_qty").find("input").val());
+			
+			$(obj).parent().siblings("#pro_qty").find("input").remove() ;
+			
+			$(obj).parent().siblings("#remain_qty").find("input").remove() ;		
+			
+			var input={
+				"reqId" :req_id,
+				"proId" :pro_id,
+				"proQty" : pro_qty,
+				"remainQty" : remain_qty
 			}
 			
+			$.ajax({
+				 url: "${pageContext.request.contextPath}/admin/update_req_qty", 
+				 type: 'POST',
+				 data:JSON.stringify(input),
+				datatype: 'JSON',
+				beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+				success: function(data){
+					if(data==true)get_request_stock_detail(1);
+				},
+				error:function(data, status,er){
+					console.log("error: " + data + "status: " + status + "er: ");
+				}
+			});    
+			
+		
+			/* $("tbody tr").each(function(){
+				if(qty > stock_qty){			
+					$(obj).parent().parent().css("color","red");
+					$(this).addClass("out_stock");
+				}else{
+					$(obj).parent().parent().css("color","#797979");
+					$(this).removeClass("out_stock");
+				}
+			}); */
 		}
 		
 		function approve_request(){
+			
 			var products=[];
-			$('#request_stock_info tr').each(function() {
+			var pro_qty=0;pro_id=0,req_id=0;
+			
+			for(var i=0;i<data.RSD.length;i++){					
+				 pro_qty=data.RSD[i].pro_qty;							
+				 pro_id=data.RSD[i].pro_id;
+			}
+			
+			for(var i=0;i<data.RS.length;i++){			
+			  req_id=data.RS[i].req_id;				
+			}
+			var json = {
+					"reqId" : req_id,
+					"proId" : pro_id,
+					"proQty" :pro_qty					
+			};
+			
+			console.log(json);
+			products.push(json);
+			
+			
+			/* $('#request_stock_info tr').each(function() {
 						json = {
 							"reqId" : ($(this).find("td").eq(0).html()),
 							"proId" : ($(this).find("td").eq(1).html()),
 							"proQty" : ($(this).find("td").eq(3).html())						
 						};
-						console.log(json);
 						products.push(json);
-					});
+					}); */
 
-			$.ajax({
+			/* $.ajax({
 				 url: "${pageContext.request.contextPath}/admin/approve_request", 
 				 type: 'POST',
 				 data : JSON.stringify(products),
@@ -349,90 +456,77 @@
 				success: function(data){
 					if(data==true){
 						alert("Request has successfully approved");
-						get_request_stock_detail("",1);				
+						get_request_stock_detail(1);				
 					};
 				},
 				error:function(data, status,er){
 					console.log("error: " + data + "status: " + status + "er: ");
 				}
-			});
+			}); */
 		}
-		
-		function setPagination(totalPage, currentPage){
-	    	$('#PAGINATION').bootpag({
-		        total: totalPage,
-		        page: currentPage,
-		        maxVisible:10,
-		        leaps: true,
-		        firstLastUse: true,
-		        first: 'First',
-		        last: 'Last',
-		        wrapClass: 'pagination',
-		        activeClass: 'active',
-		        disabledClass: 'disabled',
-		        nextClass: 'next',
-		        prevClass: 'prev',
-		        lastClass: 'last',
-		        firstClass: 'first'
-		    }).on("page", function(event, currentPage){
-		    	check = false;
-		    	get_request_stock_detail(req_id,currentPage);
-		    }); 
-		};
 			
-		function get_request_stock_detail(id,currentPage){		
+		function get_request_stock_detail(currentPage){
+			
 			var result="",result1=""; 	
+			var input={
+					"currentPage" :currentPage,
+		    		"perPage"     :10		
+			}
  			$.ajax({
- 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id="+id, 
+ 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id="+req_id, 
 				 type: 'POST',
-				 data: {
-			    		"currentPage" :currentPage,
-			    		"perPage"     :10
-				    },
+				 data:JSON.stringify(input),
  				datatype: 'JSON',
  				beforeSend: function(xhr) {
  		            xhr.setRequestHeader("Accept", "application/json");
  		            xhr.setRequestHeader("Content-Type", "application/json");
  		        },
  				success: function(v){
- 				//	console.log(data);
+ 					data=v;
  					if(v!=""){
  										
  						$("#req_no").html("");
+ 						
+ 						$("#PAGINATION").html("");
+
+ 						$("#PAGINATION").pagination('updateItems',v.pagination.totalCount);
  						
  						for(var i=0;i<v.RSD.length;i++){
  							
  							var pro_qty=v.RSD[i].pro_qty;							
  							var qty_stock=v.RSD[i].stock_qty;
+ 							var remain_qty=v.RSD[i].remain_qty;
+ 							var req_id=v.RSD[i].req_id;
+ 							var pro_id=v.RSD[i].pro_id;
  							var out_stock_style="";
+ 							var classOutStock="";
  							if(pro_qty > qty_stock ){
  								out_stock_style="color:red";	
- 								$("tbody").addClass("out_stock");
+ 								classOutStock="out_stock";
  							}
  							
- 							result+="<tr style="+out_stock_style+">"
-									+"<td>"+v.RSD[i].req_id+"</td>"
-									+"<td>"+v.RSD[i].pro_id+"</td>"
+ 							result+="<tr style='"+out_stock_style+"'  class='"+classOutStock+"'>"
+									+"<td>"+req_id+"</td>"
+									+"<td>"+pro_id+"</td>"
 									+"<td>"+v.RSD[i].pro_name+"</td>"
 									+"<td id='pro_qty'>"+pro_qty+"</td>"
-									+"<td>"+v.RSD[i].remain_qty+"</td>"
+									+"<td id='remain_qty'>"+remain_qty+"</td>"
 									+"<td id='stock_qty'>"+qty_stock+"</td>"
 									+"<td>"+v.RSD[i].firstname +" "+v.RSD[i].lastname+"</td>"
 									+"<td>"+v.RSD[i].req_date+"</td>"
 									+"<td>"
-									+"<a id='icon_save' style='display: none;' href='#none' onclick='return update_qty("+ pro_qty +",this)'>"
+									+"<a id='icon_save' style='display: none;' href='#none' onclick='return update_qty("+req_id+","+pro_id+",this)'>"
 									+ "<span  class='glyphicon glyphicon-save'></span></a>"
 									+ "&nbsp;"
-									+ "<a id='icon_edit'  href='#none' onclick='return edit_qty("+ pro_qty +",this)'>"
+									+ "<a id='icon_edit'  href='#none' onclick='return edit_qty("+ pro_qty +","+remain_qty+",this)'>"
 									+ "<span class='glyphicon glyphicon-pencil'></span></a></td>"
-								+"</tr>";
-								
+								+"</tr>";							
  							
  						}
  						
  						$("#request_stock_info").html(result);
  						
- 						$("#req_no").prepend("<option value='0'>Approve All</option>");
+ 						$("#req_no").prepend("<option value='0'>---Select approve-----</option>");
  						for(var i=0;i<v.RS.length;i++){
  						
  							var req_id1=v.RS[i].req_id;
@@ -449,12 +543,7 @@
  						}
  						req_id="";
  						$("#req_no").append(result1);
- 						
- 						if(check){
-				    		setPagination(v.pagination.totalPages,currentPage);
-				    		check=false;
-				    	}
- 						
+			
  					}
  				},
  				error:function(data, status,er){
