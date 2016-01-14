@@ -28,7 +28,7 @@ public class ImageRestController {
 		String filename = "";
         Map<String, Object> map = new HashMap<String, Object>();
 		if (!file.isEmpty()) {
-            try {
+            try { 
             	filename = file.getOriginalFilename();
                 byte[] bytes = file.getBytes();
                 UUID uuid = UUID.randomUUID();
