@@ -270,7 +270,7 @@
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.simplePagination.js"></script>
 		
 	<script type="text/javascript">
-		var request_id=0;
+		var request_id="";
 		var check = true;
 		var products = {};
 		var st=0;
@@ -346,6 +346,7 @@
 		function pageingClick(pageN,event){
 			currentPage=pageN;
 			get_request_stock_detail(pageN);
+			$("#out_of_stock option[value='all']").prop("selected",true);
 		}
 		
 		function edit_qty(qty,remain_qty,obj){	
@@ -429,7 +430,8 @@
 				success: function(data){
 					if(data==true){
 						alert("Request has successfully approved");
-						get_request_stock_detail(1);				
+						get_request_stock_detail(1);			
+						$("#out_of_stock option[value='all']").prop("selected",true);
 					};
 				},
 				error:function(data, status,er){
@@ -502,16 +504,18 @@
  						$("#req_no").prepend("<option value='0'>---Select Approve--</option>");
  						for(var i=0;i<v.RS.length;i++){
  						
- 							var req_id1=v.RS[i].req_id;
- 							
- 							var selected = ""; 													
+ 							var req_id1=v.RS[i].req_id;										
  												
  							result1+= "<option value='" + req_id1 + "'> " + req_id1 + " </option>";
  						}						
  						
+ 					
+ 						
  						$("#req_no").append(result1);
  						
  						$("#req_no option[value="+request_id+"]").attr("selected","selected");	
+ 						
+ 						request_id="";
  						 
  					}
  				},
