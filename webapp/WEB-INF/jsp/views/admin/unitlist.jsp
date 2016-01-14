@@ -100,12 +100,24 @@
 					<div class="panel">
 						<div class="panel-heading">
 							<!-- <h3 class="panel-title">Product Lists</h3> -->
-							<form class="form-inline">
-								<div class="form-group">
-									<label>Search</label> <input type="text" ng-model="search"
-										class="form-control" placeholder="Search" width="400%">
+							<div class="row">
+								<!-- <h3 class="panel-title">Product Lists</h3> -->
+								<div class="col-md-8">
+									<form class="form-inline">
+										<div class="form-group">
+											<label>Search</label> <input type="text"
+												class="form-control" placeholder="Search" width="400%">
+										</div>
+										
+									</form>
+								</div>	
+									
+										<div class="col-md-2 pull-right">
+										<button id="btn_add_unit" class="btn btn-primary">Add
+											Unit</button>
+										</div>
+								
 								</div>
-							</form>
 						</div>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped"
@@ -186,6 +198,9 @@
 	<!-- END wrapper -->
 
 
+	<!-- ========== Include category add ========== -->
+	<%@ include file="unitadd.jsp"%>
+
 
 	<script>
             var resizefunc = [];
@@ -232,15 +247,92 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
-	<!-- CUSTOM JS -->
+		<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notify.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
+
+	<!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>	
 
 	<script type="text/javascript">
+	var isAdded=false;
     	$(function(){
-	     
+    		
+			$("#btnSubmit").click(function(e){
+				e.preventDefault();
+				
+				if($("#unitname").val()==""){
+					alert("Unitname is required");
+					return;
+				}
+				if($("#unitqty").val()==""){
+					alert("Unitqty is required");
+					return;
+				}
+				if($("#unittype").val()==""){
+					alert("Unittype is required");
+					return;
+				}
+				
+				$("#frmAddCategory").ajaxSubmit({
+					url: "${pageContext.request.contextPath}/admin/addnewunit",
+					dataType: 'JSON', 
+					type: 'POST',
+					success: function(data) { 
+						console.log(data);
+ 				        if(data){
+ 				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+ 				        	isAdded=true;
+ 				        }else{
+ 				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
+ 				        }
+ 				    },
+ 				    error:function(data,status,er) { 
+ 				        console.log("error: "+data+" status: "+status+" er:"+er);
+ 				    }
+				});
+			});    		
+    		
+		//Category Add
+	    	
+	    	$('#form_add_unit').on('hidden.bs.modal', function (event) {
+	    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/unitlist";
+			})
+    		
+    		$("#btn_cancel").click(function(){
+    			$('#form_add_unit').modal('hide');
+    			
+    		});
+        		
+			$("#btn_add_unit").click(function(){    	
+				clearFormUnit();
+				$('#form_add_unit').modal({
+					"backdrop":"static"
+				}) ;
+			});	
 	     
     	});
+    	function clearFormUnit(){
+    		$("#unitname").val("");
+    		$("#unitqty").val("");
+    		$("#unittype").val("");
+    	}
     	</script>
 </body>
 </html>

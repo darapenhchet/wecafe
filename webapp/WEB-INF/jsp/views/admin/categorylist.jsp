@@ -353,9 +353,27 @@
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-		
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notify.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
+
+	<!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>	
 	
-	<!-- ========== Include product add ========== -->
+	<!-- ========== Include category add ========== -->
 	<%@ include file="categoryadd.jsp"%>
 
 	<script type="text/javascript">
@@ -395,8 +413,6 @@
 	    	
 	    	
 	    	//Category Add
-	    	
-	    	//Form Add Product
 	    	
 	    	$('#form_add_category').on('hidden.bs.modal', function (event) {
 	    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/categorylist";
