@@ -685,7 +685,9 @@
 						//Click request stock
 						$("#btn_request_stock").click(function() {
 							searchProduct();
-							$('#form_request_stock').modal();
+							$('#form_request_stock').modal({
+								"backdrop":"static"
+							});
 							//$("#form_request_stock").bPopup();
 
 						});

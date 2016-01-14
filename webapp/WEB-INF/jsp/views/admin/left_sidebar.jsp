@@ -30,14 +30,18 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ion-ios7-cart"></i><span> Product </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="ion-ios7-cart"></i><span>Product MG</span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/products">Product List</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/productadd">Add Product</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/products">Product </a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/categorylist">Category</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/unitlist">Unit </a></li>
+                                     <li><a href="${pageContext.request.contextPath}/admin/importlist">Import </a></li>
+                                   
+                                   <!--<li><a href="${pageContext.request.contextPath}/admin/productadd">Add Product</a></li> --> 
                                 </ul>
                             </li>
 
-                            <li>
+                           <!--<li>
                                 <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Unit </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/unitlist">Unit List</a></li>
@@ -59,7 +63,7 @@
                                     <li><a href="${pageContext.request.contextPath}/admin/importlist">Import List</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/importadd">Add Import</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
   							<li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="fa fa-shopping-cart"></i> <span> Expense </span> <span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">

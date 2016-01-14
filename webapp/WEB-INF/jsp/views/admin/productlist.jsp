@@ -82,13 +82,21 @@
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<!-- <h3 class="panel-title">Product Lists</h3> -->
+								<div class="row">
+								<!-- <h3 class="panel-title">Product Lists</h3> -->
+								<div class="col-md-8">
 									<form class="form-inline">
 										<div class="form-group">
 											<label>Search</label> <input type="text"
 												class="form-control" placeholder="Search" width="400%">
 										</div>
+										
 									</form>
+								</div>									
+										<div class="col-md-2 pull-right">
+										<button id="btn_add_product" class="btn btn-primary">Add
+											Product</button>
+										</div>								
 								</div>
 								<div class="panel-body">
 									<div class="row">
@@ -190,6 +198,10 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- ========== Include product add ========== -->
+	<%@ include file="productadd.jsp"%>
+	
 	<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
 	    	<tr>
 				<td>{{= productId}}</td>
@@ -244,10 +256,38 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
+	
+	<!-- Product Add -->
+	
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notify.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
+
+	<!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>	
 	<script>
+            var resizefunc = [];
+     </script>
+	
+	
+	<script>
+	var isAdded=false;
         	$(function(){
         		var products = {};
         		var check = true;
@@ -367,7 +407,7 @@
         		
         		$(document).on('click','#btnRemove',function(){
         			
-        			 var id = $(this).data("id");
+        			var id = $(this).data("id");
         			$("#modalMessage").bPopup();
         			$("#btnOK").data("id", $(this).data("id")); 
         			
@@ -423,8 +463,95 @@
         		$("#btnOKAlert, #btnCloseAlert").click(function(){
         			$("#modalMessageAlert").bPopup().close();
         		});
-        	});
-        </script>
+        		
+        		
+        		//Form Add Product
+        		
+        		$('#btn_add_product').on('hidden.bs.modal', function (event) {
+	    		if(isAdded==true)products.findAllProducts(1);
+				})
+        		
+        		$("#btn_cancel").click(function(){
+        			$('#form_add_product').modal('hide');
+        			
+        		});
+            		
+    			$("#btn_add_product").click(function(){    	
+    				clearFormAdd();
+    				$('#form_add_product').modal({
+    					"backdrop":"static"
+    				}) ;
+    			});
+    			
+    			$("#frmProductAdd").submit(function(e){
+    				e.preventDefault();    				
+    				if($("#optCategory").val()==""){
+    					alert("PLEASE CHOOSE THE CATEGORY");
+    					return;
+    				}
+    				if($("#optUnit").val()==""){
+    					alert("PLEASE CHOOSE THE UNIT");
+    					return;
+    				}
+    				
+    				if($("#image").val()==""){
+    					alert("PLEASE SELECT THE IMAGE.");
+    					return;
+    				}
+    				
+    				
+    				$("#frmProductAdd").ajaxSubmit({
+    					url: "${pageContext.request.contextPath}/admin/product/add",
+    					dataType: 'JSON', 
+    					type: 'POST',
+    					success: function(data) { 
+    						console.log(data);
+     				        if(data){
+     				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+     				        	isAdded=true;
+     				        	clearFormAdd();
+     				        	//location.href="${pageContext.request.contextPath}/admin/products";
+     				        }else{
+     				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+     				        }
+     				    },
+     				    error:function(data,status,er) { 
+     				        console.log("error: "+data+" status: "+status+" er:"+er);
+     				    }
+    				});
+    				
+    			});
+    			
+    				$("#images").change(function(){			
+    					$("#frmProductAdd").ajaxSubmit({
+    						url: "${pageContext.request.contextPath}/admin/rest/images/",
+    						dataType: 'JSON', 
+    						type: 'POST',
+    						success: function(data) { 
+    							console.log(data);
+    					        if(data){
+    					        	$("#images_sample").attr("src", "${pageContext.request.contextPath}/resources/images/products/"+data.IMAGE);
+    					        	$("#images_sample").show();
+    					        	$("#image").val(data.IMAGE);
+    					        	//alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+    					        }else{
+    					        	//alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
+    					        }
+    					    },
+    					    error:function(data,status,er) { 
+    					        console.log("error: "+data+" status: "+status+" er:"+er);
+    					    }
+    					});
+    				});
+    		});
+        	
+        	function clearFormAdd(){
+        		$("#productName").val("");
+        		$("#optCategory").val("");
+        		$("#optUnit").val("");
+        		$("#image").val("");
+        	}
+    	</script>
 
 </body>
 </html>

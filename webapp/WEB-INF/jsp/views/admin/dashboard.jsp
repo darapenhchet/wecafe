@@ -328,7 +328,9 @@
 			$("#request_stock").click(function() {	
 					
 				get_request_stock_detail(1);
-				$('#request_stock_list').modal() ;
+				$('#request_stock_list').modal({
+					"backdrop":"static"
+				}) ;
 				
 			});
 			

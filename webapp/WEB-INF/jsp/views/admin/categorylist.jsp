@@ -100,12 +100,24 @@
 					<div class="panel">
 						<div class="panel-heading">
 							<!-- <h3 class="panel-title">Product Lists</h3> -->
-							<form class="form-inline">
-								<div class="form-group">
-									<label>Search</label> <input type="text" ng-model="search"
-										class="form-control" placeholder="Search" width="400%">
+							<div class="row">
+								<!-- <h3 class="panel-title">Product Lists</h3> -->
+								<div class="col-md-8">
+									<form class="form-inline">
+										<div class="form-group">
+											<label>Search</label> <input type="text"
+												class="form-control" placeholder="Search" width="400%">
+										</div>
+										
+									</form>
+								</div>	
+									
+										<div class="col-md-2 pull-right">
+										<button id="btn_add_category" class="btn btn-primary">Add
+											Category</button>
+										</div>
+								
 								</div>
-							</form>
 						</div>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped"
@@ -341,8 +353,13 @@
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+		
+	
+	<!-- ========== Include product add ========== -->
+	<%@ include file="categoryadd.jsp"%>
 
 	<script type="text/javascript">
+	var isAdded=false;
     	$(function(){
 	    	$(document).on('click','#btnRemove',function(){
 				var id = $(this).parents("tr").find("#CATEGORY_ID").html();
@@ -358,7 +375,7 @@
 		                },
 					    success: function(data) { 
 					        if(data){
-					        	alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
+					        	//alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
 					        	location.href="${pageContext.request.contextPath}/admin/categorylist";
 					        }else{
 					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
@@ -375,7 +392,85 @@
    			 	$('#PER_PAGE li.active').removeClass('active');
    			 	$(this).addClass('active');
    			});
+	    	
+	    	
+	    	//Category Add
+	    	
+	    	//Form Add Product
+	    	
+	    	$('#form_add_category').on('hidden.bs.modal', function (event) {
+	    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/categorylist";
+			})
+    		
+    		$("#btn_cancel").click(function(){
+    			$('#form_add_category').modal('hide');
+    			
+    		});
+        		
+			$("#btn_add_category").click(function(){    	
+				clearFormCategory();
+				$('#form_add_category').modal({
+					"backdrop":"static"
+				}) ;
+			});
+			
+			$("#btnSubmit").click(function(e){
+				e.preventDefault();    				
+				if($("#optCategory").val()==""){
+					alert("PLEASE CHOOSE THE CATEGORY");
+					return;
+				}
+				if($("#image").val()==""){
+					alert("PLEASE SELECT THE IMAGE.");
+					return;
+				}
+				$("#frmAddCategory").ajaxSubmit({
+					url: "${pageContext.request.contextPath}/admin/category/add",
+					dataType: 'JSON', 
+					type: 'POST',
+					success: function(data) { 
+						console.log(data);
+ 				        if(data){
+ 				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+ 							isAdded=true;
+ 							clearFormCategory();
+ 				        }else{
+ 				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
+ 				        	
+ 				        }
+ 				    },
+ 				    error:function(data,status,er) { 
+ 				        console.log("error: "+data+" status: "+status+" er:"+er);
+ 				    }
+				});
+			});
+			
+			$("#images").change(function(){			
+				$("#frmAddCategory").ajaxSubmit({
+					url: "${pageContext.request.contextPath}/admin/rest/images/",
+					dataType: 'JSON', 
+					type: 'POST',
+					success: function(data) { 
+						console.log(data);
+				        if(data){
+				        	$("#images_sample").attr("src", "${pageContext.request.contextPath}/resources/images/products/"+data.IMAGE);
+				        	$("#images_sample").show();
+				        	$("#image").val(data.IMAGE);
+				        }else{
+				        }
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+			});
+	    	
     	});
+    	function clearFormCategory(){
+    		$("#categoryName").val("");
+    		$("#optCategory").val("");
+			$("#image").val("");
+    	}
     	</script>
 </body>
 </html>

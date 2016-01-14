@@ -60,6 +60,8 @@ public class ProductController {
 
 	@RequestMapping(value = "/admin/products", method = RequestMethod.GET)
 	public String listAllProducts(Map<String, Object> model) {
+		model.put("categories", categoryService.getAllCategories());
+		model.put("units", unitService.getAllUnits());
 		return "admin/productlist";
 	}
 
