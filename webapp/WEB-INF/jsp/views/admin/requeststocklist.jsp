@@ -19,8 +19,7 @@
 							</select>
 						</div>
 						<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 pull-right">
-							<select class="form-control" id="out_of_stock"
-								style="display: none;">
+							<select class="form-control" id="out_of_stock">
 								<option value="all">---Show All-----</option>
 								<option value="out">Qty out of stock</option>
 							</select>

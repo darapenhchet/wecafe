@@ -45,7 +45,7 @@ public class RequestServiceImp implements RequestService {
 		try {
 
 			Query query = session
-					.createQuery("Update RequestStockDetail Set proQty =?,remainQty=? Where reqId=? and proId=?");
+					.createQuery("Update RequestStockDetail rsd Set rsd.proQty =?,rsd.remainQty=? Where rsd.pk1.requestStock.reqId=? and rsd.pk1.product.productId=?");
 			query.setParameter(0,req.getProQty());
 			query.setParameter(1,req.getRemainQty());
 			query.setParameter(2,req.getReqId());

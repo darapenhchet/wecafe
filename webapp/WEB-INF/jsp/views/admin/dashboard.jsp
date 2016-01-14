@@ -270,11 +270,12 @@
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.simplePagination.js"></script>
 		
 	<script type="text/javascript">
-		var req_id="";
+		var request_id=0;
 		var check = true;
 		var products = {};
 		var st=0;
 		var data=[];
+		var currentPage=1;
 		$(function(){
 			
 			$("#PAGINATION").pagination({
@@ -315,16 +316,11 @@
 							 return false;
 						 }
 					});
-					if(error==false){
-						  if($("#out_of_stock").val()=="all"){		
-							 approve_request();																						
-						}else{
-							alert("Please select show all");
-						}
+					if(error==false){					 
+						 approve_request();																											
 					}
 				}else{
-					alert("Please select approve");
-					
+					alert("Please select approve");				
 				}
 					
 			});
@@ -336,18 +332,19 @@
 				
 			});
 			
-			$("#req_no").change(function(){
-				
-				($(this).val()==0?$("#out_of_stock").hide():$("#out_of_stock").show());			
+			$("#req_no").change(function(){		
+			
 				$("#out_of_stock option[value='all']").prop("selected",true);	
-				req_id=$(this).val();			
-				get_request_stock_detail(1);
-								
+				request_id=$(this).val();			
+
+				get_request_stock_detail(1);			
+						
 			});			
 			
 		});
 		
 		function pageingClick(pageN,event){
+			currentPage=pageN;
 			get_request_stock_detail(pageN);
 		}
 		
@@ -382,7 +379,7 @@
 				"proQty" : pro_qty,
 				"remainQty" : remain_qty
 			}
-			//
+		
 			$.ajax({
 				 url: "${pageContext.request.contextPath}/admin/update_req_qty", 
 				 type: 'POST',
@@ -393,58 +390,34 @@
 		            xhr.setRequestHeader("Content-Type", "application/json");
 		        },
 				success: function(data){
-					if(data==true)get_request_stock_detail(1);
+					if(data==true){
+						get_request_stock_detail(currentPage);
+					$("#out_of_stock option[value='all']").prop("selected",true);
+					}
 				},
 				error:function(data, status,er){
 					console.log("error: " + data + "status: " + status + "er: ");
 				}
 			});    
 			
-		
-			/* $("tbody tr").each(function(){
-				if(qty > stock_qty){			
-					$(obj).parent().parent().css("color","red");
-					$(this).addClass("out_stock");
-				}else{
-					$(obj).parent().parent().css("color","#797979");
-					$(this).removeClass("out_stock");
-				}
-			}); */
 		}
 		
 		function approve_request(){
 			
 			var products=[];
-			var pro_qty=0;pro_id=0,req_id=0;
-			
-			for(var i=0;i<data.RSD.length;i++){					
-				 pro_qty=data.RSD[i].pro_qty;							
-				 pro_id=data.RSD[i].pro_id;
+		
+					
+			for(var i=0;i<data.RSD.length;i++){		
+				
+				var  pro_qty=data.RSD[i].pro_qty;							
+				var  pro_id=data.RSD[i].pro_id;
+				var  req_id=data.RSD[i].req_id;	
+				
+				var json={"reqId":req_id,"proId":pro_id,"proQty":pro_qty};
+				products.push(json);
 			}
-			
-			for(var i=0;i<data.RS.length;i++){			
-			  req_id=data.RS[i].req_id;				
-			}
-			var json = {
-					"reqId" : req_id,
-					"proId" : pro_id,
-					"proQty" :pro_qty					
-			};
-			
-			console.log(json);
-			products.push(json);
-			
-			
-			/* $('#request_stock_info tr').each(function() {
-						json = {
-							"reqId" : ($(this).find("td").eq(0).html()),
-							"proId" : ($(this).find("td").eq(1).html()),
-							"proQty" : ($(this).find("td").eq(3).html())						
-						};
-						products.push(json);
-					}); */
-
-			/* $.ajax({
+	
+			 $.ajax({
 				 url: "${pageContext.request.contextPath}/admin/approve_request", 
 				 type: 'POST',
 				 data : JSON.stringify(products),
@@ -462,7 +435,7 @@
 				error:function(data, status,er){
 					console.log("error: " + data + "status: " + status + "er: ");
 				}
-			}); */
+			}); 
 		}
 			
 		function get_request_stock_detail(currentPage){
@@ -473,7 +446,7 @@
 		    		"perPage"     :10		
 			}
  			$.ajax({
- 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id="+req_id, 
+ 				 url: "${pageContext.request.contextPath}/admin/list_request_stock_detail?req_id="+request_id, 
 				 type: 'POST',
 				 data:JSON.stringify(input),
  				datatype: 'JSON',
@@ -526,24 +499,20 @@
  						
  						$("#request_stock_info").html(result);
  						
- 						$("#req_no").prepend("<option value='0'>---Select approve-----</option>");
+ 						$("#req_no").prepend("<option value='0'>---Select Approve--</option>");
  						for(var i=0;i<v.RS.length;i++){
  						
  							var req_id1=v.RS[i].req_id;
- 							var selected = "";
  							
- 							if (req_id1 == req_id) {
- 								selected = "selected";
- 							}
- 							if (req_id ==0 ) {
- 								$("#req_no option[value='0']").attr("selected","selected");
- 							}
- 							
- 							result1+= "<option value='" + req_id1 + "'" + selected+ "> " + req_id1 + " </option>";
- 						}
- 						req_id="";
+ 							var selected = ""; 													
+ 												
+ 							result1+= "<option value='" + req_id1 + "'> " + req_id1 + " </option>";
+ 						}						
+ 						
  						$("#req_no").append(result1);
-			
+ 						
+ 						$("#req_no option[value="+request_id+"]").attr("selected","selected");	
+ 						 
  					}
  				},
  				error:function(data, status,er){
