@@ -252,11 +252,8 @@ public class ImportServiceImp implements ImportService {
 	    try {
 	    	//select importprodut by id
 			ImportProduct importProduct = sessionFactory.getCurrentSession().get(ImportProduct.class, id);
-			
 			Set<ImportDetail> importDetails = importProduct.getImportDetail();		
-			
-			System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());			
-			
+			System.out.println("IMPORT DETAILS SIZE=" + importDetails.size());		
 				for(ImportDetail importDetail : importDetails){
 				//select product by id
 				Product product = sessionFactory.getCurrentSession().get(Product.class, importDetail.getProduct().getProductId());

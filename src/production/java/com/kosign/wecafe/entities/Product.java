@@ -64,8 +64,12 @@ public class Product implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="cat_id")
-	private Category category ;
+	private Category category ; 
 
+	@ManyToOne
+	@JoinColumn(name="unit_id")
+	private Unit unit;
+	
 	@Column(name="img_url")
 	private String image;
 	
@@ -106,13 +110,14 @@ public class Product implements Serializable{
 	}
 
 	public Product(Long productId, Set<OrderDetail> orderDetail, String productName, Long quantity,
-			BigDecimal unitPrice, BigDecimal costPrice, BigDecimal salePrice, Category category, String image,
+			BigDecimal unitPrice, BigDecimal costPrice, BigDecimal salePrice, Category category, Unit unit, String image,
 			byte[] images, Date createdDate, User createdBy, Date lastUpdatedDate, User lastUpdatedBy, Boolean status) {
 		super();
 		this.productId = productId;
 		this.orderDetail = orderDetail;
 		this.productName = productName;
 		this.quantity = quantity;
+		this.unit = unit;
 		this.unitPrice = unitPrice;
 		this.costPrice = costPrice;
 		this.salePrice = salePrice;
@@ -175,6 +180,14 @@ public class Product implements Serializable{
 	
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	 
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 
 	public Date getCreatedDate() {
@@ -268,5 +281,11 @@ public class Product implements Serializable{
 	public void setCan_sell_holiday(String can_sell_holiday) {
 		this.can_sell_holiday = can_sell_holiday;
 	}
-	
+	@Override
+	public String toString() {
+		return "Pro_ID = " + this.productId + " User_ID = " + this.unit.getUnitId() + " Cat_ID = " + this.category.getCatId()
+		+ "Pro_name = " + this.productName
+		+ "Pro_type = " + this.productType	;
+		
+	}
 }

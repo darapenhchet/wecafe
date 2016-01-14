@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Unit;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.ProductForm;
 import com.kosign.wecafe.services.CategoryService;
@@ -70,26 +71,32 @@ public class ProductController {
 	}
 
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST)
-	public  @ResponseBody Boolean addNewProduct(ProductForm form , HttpServletRequest request){	
+	public  @ResponseBody Boolean addNewProduct(ProductForm form , HttpServletRequest request){
 		Product product = new Product();
         Category category = new Category();
+        Unit unit = new Unit();
         category.setCatId(form.getCategoryId());
+        unit.setUnitId(form.getUnitId());
 		User user = userService.findUserByUsername(getPrincipal());
-		System.out.println(user.getUsername());
+		//System.out.println("unit name = " + form.getUnitId());
 		product.setProductName(form.getProductName());
 		product.setQuantity(form.getQuantity());
+		product.setProductType("1"); 
+		product.setStockType("1");
+		product.setCan_sell_holiday("1");
 		product.setCostPrice(form.getCostPrice());
 		product.setSalePrice(form.getSalePrice());
 		product.setUnitPrice(form.getUnitPrice());
 		product.setCategory(category);
 		product.setCreatedBy(user);
+		product.setUnit(unit);
 		product.setLastUpdatedBy(user);
 		product.setImage(form.getImage());
 		product.setCreatedDate(new Date());
 		product.setLastUpdatedDate(new Date());
 		product.setStatus(true);
-		return productService.addNewProduct(product);
-		
+		System.out.println("product = " + product.toString());
+		return productService.addNewProduct(product);  
 	}
 
 	@RequestMapping(value = "/admin/product/{id}", method = RequestMethod.GET)

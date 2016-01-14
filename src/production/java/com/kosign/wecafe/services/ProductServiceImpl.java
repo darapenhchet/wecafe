@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kosign.wecafe.entities.Category;
 import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Unit;
+import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.ProductForm;
 
 @Service
@@ -73,16 +75,24 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return 0L;
 	}
-	
-	@Transactional
+	 
 	@Override
+	@Transactional
 	public boolean addNewProduct(Product product) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			Category category = session.get(Category.class, product.getCategory().getCatId());
-			product.setCategory(category);
-			product.setCreatedBy(userService.findUserByUsername(getPrincipal()));
+			//Category category = session.get(Category.class, product.getCategory().getCatId());
+			//Unit unit = session.get(Unit.class, product.getUnit().getUnitId());
+			//User user = userService.findUserByUsername(getPrincipal());
+			//product.setCategory(category);
+			//product.setUnit(unit);
+			//product.setCreatedBy(user);
+			//product.setCreatedBy(userService.findUserByUsername(getPrincipal()));
+		//	sessionFactory.getCurrentSession().flush();
+			//sessionFactory.getCurrentSession().clear();
+			//System.out.println("product : " + product.getProductId());
+			 
 			session.save(product);
 			return true;
 		}catch(Exception ex){
