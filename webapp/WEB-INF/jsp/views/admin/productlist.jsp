@@ -104,9 +104,10 @@
 														<th style="text-align: right;" width="10%">Cost Price</th>
 														<th style="text-align: right;" width="10%">Sale Price</th>
 														<th width="15%">Category</th>
+														<th style="text-align: center;" width="10%">Unit</th>
 														<th style="text-align: center;" width="7%">Image</th>
-														<th style="text-align: center;" width="15%">Status</th>
-														<th style="text-align: center;" width="15%">Action</th>
+														<th style="text-align: center;" width="10%">Status</th>
+														<th style="text-align: center;" width="10%">Action</th>
 													</tr>
 												</thead>
 												<tbody id="CONTENTS">
@@ -198,6 +199,7 @@
 				<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
 				<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
 				<td>{{= category.catName}}</td>
+				<td>{{= unit.unitName +" (" + unit.qty + " " + unit.to +")"}}</td>
 				<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
 				<td style="text-align:center;">
 					<span>

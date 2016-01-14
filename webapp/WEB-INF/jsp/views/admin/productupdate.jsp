@@ -122,6 +122,27 @@
 												</div>
 											</div>
 											<div class="form-group ">
+												<label for="unit" class="control-label col-lg-2">Unit
+													*</label>
+												<div class="col-lg-10">
+													<select class="form-control" id="optUnit" name="unitId"
+														required="required">
+														<option value="">Please choose your Unit</option>
+														<%
+	                                                       		List<Unit> units = (ArrayList<Unit>)request.getAttribute("units");
+																Product product = (Product)request.getAttribute("product"); 
+	                                                    		for(Unit unit : units){ 
+	                                                    			if(unit.getUnitId()== product.getUnit().getUnitId()){
+                                                    					out.println("<option value="+unit.getUnitId()+" selected>"+unit.getUnitName() +" ("+unit.getQty() + " " + unit.getTo()+")"+"</option>");
+	                                                    			}else{
+                                                    					out.println("<option value="+unit.getUnitId()+">"+unit.getUnitName() +" ("+unit.getQty() + " " + unit.getTo()+")"+"</option>");
+	                                                    		}
+	                                                    	}
+                                                       	%>
+													</select>
+												</div>
+											</div>
+											<div class="form-group ">
 												<label for="category" class="control-label col-lg-2">Category
 													*</label>
 												<div class="col-lg-10">
@@ -130,7 +151,7 @@
 														<option value="">Please choose your category</option>
 														<%
                                                        		List<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
-                                                     		Product product = (Product)request.getAttribute("product"); 
+                                                     		//Product product = (Product)request.getAttribute("product"); 
                                                     		for(Category category : categories){
                                                     			if(category.getCatId()== product.getCategory().getCatId()){
                                                     				out.println("<option value="+category.getCatId()+" selected>"+category.getCatName()+"</option>");

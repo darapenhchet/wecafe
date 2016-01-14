@@ -126,11 +126,13 @@ public class ProductServiceImpl implements ProductService{
 			session = sessionFactory.getCurrentSession();
 			Category category = session.get(Category.class, newProduct.getCategoryId());
 			Product product = session.get(Product.class, newProduct.getProductId());
+			Unit unit = session.get(Unit.class, newProduct.getUnitId());
 			System.out.println("PRODUCT QUANTITY="+ newProduct.getQuantity());
 			product.setProductName(newProduct.getProductName());
 			product.setCostPrice(newProduct.getCostPrice());
 			product.setUnitPrice(newProduct.getUnitPrice());
 			product.setSalePrice(newProduct.getSalePrice());
+			product.setUnit(unit);
 			product.setCategory(category);
 			product.setLastUpdatedDate(new Date());
 			product.setImage(newProduct.getImage());

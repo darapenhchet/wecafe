@@ -104,6 +104,7 @@ public class ProductController {
 		Product product = productService.findProductById(id);
 		model.put("product", product);
 		model.put("categories", categoryService.getAllCategories());
+		model.put("units", unitService.getAllUnits());
 		return "admin/productupdate";
 	}
 

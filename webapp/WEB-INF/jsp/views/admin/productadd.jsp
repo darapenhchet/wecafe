@@ -372,7 +372,7 @@
     						console.log(data);
      				        if(data){
      				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
-     				        //	location.href="${pageContext.request.contextPath}/admin/products";
+     				        	location.href="${pageContext.request.contextPath}/admin/products";
      				        }else{
      				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
      				        }
