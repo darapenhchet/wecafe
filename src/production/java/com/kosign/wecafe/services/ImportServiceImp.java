@@ -111,7 +111,7 @@ public class ImportServiceImp implements ImportService {
 			Criteria criteria = session.createCriteria(ImportProduct.class );
 			//criteria.addOrder(Order.desc("createdDate"));
 			criteria.add(Restrictions.between("impDate", startDate, endDate));
-			criteria.addOrder( Order.desc("impDate") );
+			criteria.addOrder( Order.desc("impId") );
 			criteria.setFirstResult(pagination.offset());
 			criteria.setMaxResults(pagination.getPerPage());
 			

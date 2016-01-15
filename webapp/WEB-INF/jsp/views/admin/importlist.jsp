@@ -222,7 +222,7 @@ tbody tr td {
 	<!-- ############################################################# -->
 
 
-	<div id="impDetail" style="display: none; width: 90%;">
+	<div id="impDetail" style="display: none; width: 90%; overflow: auto;">
 		<div class="modal-content">
 			<div class="modal-header"> 
 				<button type="button" class="close" aria-hidden="true">
@@ -241,10 +241,8 @@ tbody tr td {
 							<th>Supplier Name</th>
 						</tr>
 					</thead>
-					<tbody id="impProDetail">
-
-					</tbody>
-
+					<tbody id="impProDetail"> 
+					</tbody> 
 				</table>
 			</div>
 			<div class="modal-footer" style="height: 80px;">
