@@ -382,8 +382,8 @@ tbody tr td {
 		<td>{{= totalAmount}}</td>  
 		<td class="actions" style="text-align: center;">
 			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/viewById/{{= impId}}">
-			<i class="fa fa-pencil"></i></a> <a class="on-default remove-row" href="javascript:;" id="btnRemove">
-			<i class="fa fa-trash-o"></i></a>
+				<i class="fa fa-pencil"></i>
+			</a> 
 		</td>
 	</tr>
 </script>
@@ -396,16 +396,13 @@ tbody tr td {
 			
 			var check = true;
 			var order = 1;
-			
+			var v=[];
+			var b = true;
         	var _thisRow ;
         	var isAdded=false;
-        	
-        	
-			// searchProduct();
-			// searchSupplier();
+		
 			 setCalendar();
-			// searchByDate();
-			 
+		
 			 getimportlist(1); 
 			 		
 			 
@@ -431,8 +428,7 @@ tbody tr td {
 		 		      numberOfMonths: 1,
 		 		      dateFormat: "yy-mm-dd",
 		 		      onClose: function( selectedDate ) {			    	  
-		 			    	    /* alculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
-		 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+		 			    	    
 		 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 		 						getimportlist(1);
 		 			      }
@@ -446,8 +442,7 @@ tbody tr td {
 		 		      onClose: function( selectedDate ) {
 
 		 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
-		 			    	   /*  calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
-		 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+		 			    	  
 		 			    	 getimportlist(1);
 		 			      }
 		 		});		
@@ -547,9 +542,10 @@ tbody tr td {
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
 					 success: function(data){
-						
-						 if(data.imports.length>0){ 
-							  order = 1;
+						 console.log(data);
+						 b =true;
+						v=data;					
+						 if(data.imports.length>0){   
 								$("tbody#CONTENTS").html('');					
 								for(i=0; i<data.imports.length;i++)
 									{
@@ -571,54 +567,24 @@ tbody tr td {
 					 } 
 				 });
 			 }
-			 format = function(value){
+			 format = function(value){ 
 				 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');				 		
 				 		value["impDate"] =(value["impDate"]).substring(0, 10);
-				 		value["importDetail"] = order++;
+				 		if(b){
+				 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+				 			j = order + 1;
+				 			value["importDetail"] =j;
+				 			b = false;
+				 		}
+				 		else  
+				 		value["importDetail"] = ++j; 
+						
 			 }
 			 $("#PER_PAGE").change(function(){
      			check = true;
      			getimportlist(1);
  		    });
-			/* function searchSupplier(){
-				$.ajax({ 
-				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
-				    type: 'POST', 
-				    dataType: 'JSON', 
-				    beforeSend: function(xhr) {
-	                    xhr.setRequestHeader("Accept", "application/json");
-	                    xhr.setRequestHeader("Content-Type", "application/json");
-	                },
-				    success: function(data) { 
-				       console.log(data);
-	// 			       getsizeSession();
-				    },
-				    error:function(data,status,er) { 
-				        console.log("error: "+data+" status: "+status+" er:"+er);
-				    }
-				});
-				
-			}
-		
-		function searchProduct(){
-				$.ajax({ 
-				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
-				    type: 'POST', 
-				    dataType: 'JSON', 
-				    beforeSend: function(xhr) {
-	                    xhr.setRequestHeader("Accept", "application/json");
-	                    xhr.setRequestHeader("Content-Type", "application/json");
-	                },
-				    success: function(data) { 
-				       console.log(data);
-	// 			       getsizeSession();
-				    },
-				    error:function(data,status,er) { 
-				        console.log("error: "+data+" status: "+status+" er:"+er);
-				    }
-				});
-				
-			} */
+
 		setPagination = function(totalPage, currentPage){
 	    	$('#PAGINATION').bootpag({
 		        total: totalPage,

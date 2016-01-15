@@ -310,10 +310,11 @@
 				</td>
 				<td class="actions" style="text-align:center;">
 					<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/product/{{= productId}}" id="btnUpdate" data-id="{{= productId}}"><i class="fa fa-pencil"></i></a>
-					<a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a>
+					
 				</td>
 			</tr>
         </script>
+<!--         <a class="on-default remove-row" href="javascript:;" id="btnRemove" data-id="{{= productId}}"><i class="fa fa-trash-o"></i></a> -->
 	<script>
             var resizefunc = [];
             var ctx = "${pageContext.request.contextPath}"
