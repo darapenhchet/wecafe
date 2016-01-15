@@ -70,6 +70,15 @@
 .borderRed {
 	border-color: red;
 }
+	table{
+	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+}
+
+thead tr th {
+	text-align: center !important;
+	font-size: 14px !important;
+	font-weight: bold;
+}
 </style>
 </head>
 <body class="fixed-left" ng-app="wecafe"> 
@@ -121,7 +130,7 @@
 											</div>
 										</div>									
 										<div class="col-md-2 pull-right">
-											<button id="btn_add_expense" class="btn btn-primary">AddExpense</button>
+											<button id="btn_add_expense" class="btn btn-primary">Add Expense</button>
 										</div>								
 									</div>
 								</div>
@@ -149,6 +158,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<select id="PER_PAGE" class="form-control">
+												
 												<option value="15">15</option>
 												<option value="30">30</option>
 												<option value="50">50</option>
@@ -466,17 +476,8 @@
             /* ==============================================Add Expense=============================================== */
            
             	var _thisRow ;
-            	var isAdded=false;
-            	
-            	$('#form_add_expense').on('hidden.bs.modal', function (event) {
-    	    		if(isAdded==true)getListExpense(1);
-    			});
             	
             		
-            		$("#btn_cancel").click(function(){
-            			$('#form_add_expense').modal('hide');
-            			
-            		});
                 		
         			$("#btn_add_expense").click(function(){    	
         				clear();
@@ -645,9 +646,12 @@
     	 		        },
     	 				success: function(data){
     	 					if(data==true){
+    	 						getListExpense(1);
+    	 						alert("Successfully saved");
     	 						clear();
-    	 						$('#tbllistimport tr').remove();
-    	 						isAdded=true;
+    	 						$('#tbllistimport tr').remove();   	 						
+    	 						$('#form_add_expense').modal('hide');
+    	 						
     	 					}else{
     	 						alert("Please try to save again!");
     	 					}

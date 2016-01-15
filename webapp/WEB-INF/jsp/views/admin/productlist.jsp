@@ -49,6 +49,17 @@
 <link href="${pageContext.request.contextPath}/resources/css/style.css"	rel="stylesheet" type="text/css" />
 <script	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 
+<style type="text/css">
+	table{
+	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+}
+
+thead tr th {
+	text-align: center !important;
+	font-size: 14px !important;
+	font-weight: bold;
+}
+</style>
 </head>
 <body class="fixed-left-void" ng-app="wecafe">
 	<!-- Begin page -->
@@ -82,25 +93,25 @@
 						<div class="col-md-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-								<div class="row">
-								<!-- <h3 class="panel-title">Product Lists</h3> -->
-								<div class="col-md-8">
-									<form class="form-inline">
-										<div class="form-group">
-											<label>Search</label> <input type="text"
-												class="form-control" placeholder="Search" width="400%">
-										</div>
-										
-									</form>
-								</div>									
-										<div class="col-md-2 pull-right">
-										<button id="btn_add_product" class="btn btn-primary">Add
-											Product</button>
-										</div>								
+									<div class="row">
+									<!-- <h3 class="panel-title">Product Lists</h3> -->
+									<div class="col-md-8">
+										<form class="form-inline">
+											<div class="form-group">
+												<label>Search</label> <input type="text"
+													class="form-control" placeholder="Search" width="400%">
+											</div>
+											
+										</form>
+									</div>									
+									<div class="col-md-2 pull-right">
+										<button id="btn_add_product" class="btn btn-primary">Add Product</button>
+									</div>								
+									</div>
 								</div>
 								<div class="panel-body">
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="col-md-12 col-sm-12 col-xs-12" >
 											<table id="datatable"
 												class="table table-striped table-bordered">
 												<thead>
@@ -126,6 +137,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<select id="PER_PAGE" class="form-control">
+												
 												<option value="15">15</option>
 												<option value="30">30</option>
 												<option value="50">50</option>
@@ -135,106 +147,16 @@
 										<div id="PAGINATION" class="pull-right"></div>
 									</div>
 								</div>
-							</div>
 						</div>
 					</div>
-					<!-- End Row -->
+					
 				</div>
 				<!-- container -->
 			</div>
 			<!-- content -->
-			<%@ include file="footer.jsp"%>
 		</div>
-		
-		
-		<!-- Right Sidebar -->
-		<div class="side-bar right-bar nicescroll">
-			<h4 class="text-center">Chat</h4>
-			<div class="contact-list nicescroll">
-				<ul class="list-group contacts-list">
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-1.jpg"
-									alt="">
-							</div> <span class="name">Chadengle</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-2.jpg"
-									alt="">
-							</div> <span class="name">Tomaslau</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-3.jpg"
-									alt="">
-							</div> <span class="name">Stillnotdavid</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-4.jpg"
-									alt="">
-							</div> <span class="name">Kurafire</span> <i
-							class="fa fa-circle online"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-5.jpg"
-									alt="">
-							</div> <span class="name">Shahedk</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-6.jpg"
-									alt="">
-							</div> <span class="name">Adhamdannaway</span> <i
-							class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-7.jpg"
-									alt="">
-							</div> <span class="name">Ok</span> <i class="fa fa-circle away"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-8.jpg"
-									alt="">
-							</div> <span class="name">Arashasghari</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-9.jpg"
-									alt="">
-							</div> <span class="name">Joshaustin</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-					<li class="list-group-item"><a href="#">
-							<div class="avatar">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/users/avatar-10.jpg"
-									alt="">
-							</div> <span class="name">Sortino</span> <i
-							class="fa fa-circle offline"></i>
-					</a> <span class="clearfix"></span></li>
-				</ul>
-			</div>
-		</div>
-		<!-- /Right-bar -->
-		
+		<%@ include file="footer.jsp"%>
+	</div>
 	</div>
 	<div id="modalMessage" style="display: none; width: 50%">
 		<div class="modal-content">

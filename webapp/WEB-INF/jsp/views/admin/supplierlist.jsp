@@ -61,6 +61,19 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 
+<style>
+
+table{
+	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+}
+
+thead tr th {
+	text-align: center !important;
+	font-size: 14px !important;
+	font-weight: bold;
+}
+</style>
+
 </head>
 
 
@@ -95,6 +108,9 @@
 							<h4 class="pull-left page-title">Supplier List</h4>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">	
 					<div class="panel-heading">
 						<!-- <h3 class="panel-title">Product Lists</h3> -->
 						<form class="form-inline">
@@ -119,24 +135,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<%-- <c:forEach items="${suppliers}" var="supplier" varStatus="theCount">
-											<tr>
-												<td id="supplierId" style="display : none;">{{supplier.supId}</td>											
-												<td >${theCount.count }</td>
-												<td id="supplierName">{{supplier.supplierName }</td>
-												<td style="text-align: right;">{{supplier.supplierNumber }
-												</td>
-												<td style="text-align: right;">{{supplier.supplierEmail }
-												</td>
-												<td style="text-align: center;">{{supplier.supplierAddress}</td>
-												<td class="actions" style="text-align: center;"><a
-													class="on-default edit-row"
-													href="${pageContext.request.contextPath}/admin/viewupdate/{{supplier.supId}"><i
-														class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-													href="javascript:;" id="btnRemove"><i
-														class="fa fa-trash-o"></i></a></td>
-											</tr>
-										</c:forEach> --%>
+										
 										<tr
 											dir-paginate="(key,supplier) in suppliers|filter:search|itemsPerPage:perPage|orderBy : supplier.createdDate">
 											<td id="supplierId" style="display: none;">{{supplier.supId}}</td>
@@ -156,11 +155,7 @@
 								</table>
 							</div>
 						</div>
-					</div>
-
-				</div>
-				<!-- end Panel -->
-				<ul class="pagination" id="PER_PAGE">
+						<ul class="pagination" id="PER_PAGE">
 					<li class="active" ng-click="perPage=10"><a
 						href="javascript:;">10</a></li>
 					<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
@@ -170,7 +165,13 @@
 				<dir-pagination-controls max-size="15" direction-links="true"
 					boundary-links="true" class="pull-right">
 				</dir-pagination-controls>
+					</div>
+				</div>
+				</div>
+				</div>
+				<!-- end Panel -->				
 			</div>
+			
 			<!-- container -->
 
 		</div>

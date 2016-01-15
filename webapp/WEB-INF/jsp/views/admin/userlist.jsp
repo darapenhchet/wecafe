@@ -62,6 +62,18 @@
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+<style>
+
+table{
+	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+}
+
+thead tr th {
+	text-align: center !important;
+	font-size: 14px !important;
+	font-weight: bold;
+}
+</style>
 
 </head>
 
@@ -110,19 +122,12 @@
 							</form>
 						</div>
 						<div class="panel-body">
-							<%--                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="m-b-30">
-                                            <a id="addToTable" href="${pageContext.request.contextPath}/admin/useradd" class="btn btn-primary waves-effect waves-light">Add <i class="fa fa-plus"></i></a>
-                                        </div>
-                                    </div>
-                                </div> --%>
+							
 							<table class="table table-bordered table-striped" id="datatable">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Last Name</th>
-										<th>First Name</th>
+										<th>Name</th>									
 										<th>Email</th>
 										<th>Username</th>
 										<th>Type</th>
@@ -138,17 +143,16 @@
 									<tr
 										dir-paginate="(key,user) in users|filter:search|itemsPerPage:perPage|orderBy : user.createdDate">
 										<td id="USER_ID">{{user.id }}
-										<td>{{user.lastName }}</td>
-										<td>{{user.firstName }}</td>
+										<td>{{user.lastName +" "+ user.firstName }}</td>								
 										<td>{{user.email }}</td>
 										<td>{{user.username }}</td>
 										<td>{{user.userRoles[0].type }}</td>
 										<td>{{user.createdBy.lastName }}
 											{{user.createdBy.firstName }}</td>
-										<td>{{user.createdDate | date:'dd-MMMM-yyyy'}}</td>
+										<td>{{user.createdDate | date:'dd/MM/yyyy'}}</td>
 										<td>{{user.lastUpdatedBy.lastName }}
 											{{user.lastUpdatedBy.firstName }}</td>
-										<td>{{user.lastUpdatedDate | date:'dd-MMMM-yyyy' }}</td>
+										<td>{{user.lastUpdatedDate | date:'dd/MM/yyyy' }}</td>
 										<td style="text-align: center;"><span
 											ng-if="user.status=='ACTIVE'"> <a href="javascript:;"
 												class="btn btn-success waves-effect" type="button"
@@ -177,9 +181,7 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
-						<!-- end: page -->
-						<ul class="pagination" id="PER_PAGE">
+							<ul class="pagination" id="PER_PAGE">
 							<li class="active" ng-click="perPage=10"><a
 								href="javascript:;">10</a></li>
 							<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
@@ -189,6 +191,8 @@
 						<dir-pagination-controls max-size="15" direction-links="true"
 							boundary-links="true" class="pull-right">
 						</dir-pagination-controls>
+						</div>
+						<!-- end: page -->					
 					</div>
 					<!-- end Panel -->
 

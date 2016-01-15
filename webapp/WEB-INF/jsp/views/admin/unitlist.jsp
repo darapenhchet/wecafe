@@ -60,7 +60,17 @@
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+<style type="text/css">
+	table{
+	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+}
 
+thead tr th {
+	text-align: center !important;
+	font-size: 14px !important;
+	font-weight: bold;
+}
+</style>
 </head>
 
 

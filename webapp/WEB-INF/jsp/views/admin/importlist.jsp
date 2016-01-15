@@ -13,10 +13,14 @@
 .hidetable {
 	display: none;
 }
+table{
+	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+}
 
 thead tr th {
-	text-align: center;
-	font-size: 12px;
+	text-align: center !important;
+	font-size: 14px !important;
+	font-weight: bold;
 }
 
 tbody tr td {
@@ -181,6 +185,7 @@ tbody tr td {
 									<div class="row">
 										<div class="col-md-2">
 											<select id="PER_PAGE" class="form-control">
+												
 												<option value="15">15</option>
 												<option value="30">30</option>
 												<option value="50">50</option>
