@@ -224,13 +224,11 @@ tbody tr td {
 
 	<div id="impDetail" style="display: none; width: 90%;">
 		<div class="modal-content">
-			<div class="modal-header">
-
+			<div class="modal-header"> 
 				<button type="button" class="close" aria-hidden="true">
 					<span class="button b-close"><span>×</span></span>
 				</button>
-				<h4 class="modal-title">Import Detail</h4>
-
+				<h4 class="modal-title">Import Detail</h4> 
 			</div>
 			<div class="modal-body" style="width: 100%;">
 				<table class="table table-hover">

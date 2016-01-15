@@ -39,7 +39,7 @@ public class User implements Serializable{
 	private String username;
 	
 	@Column(name="PASSWORD", nullable=false)
-	@JsonIgnore
+/*	@JsonIgnore*/
 	private String password;
 	
 	@Column(name="FIRSTNAME", nullable=false)
