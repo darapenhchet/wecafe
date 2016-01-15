@@ -30,12 +30,12 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ion-ios7-cart"></i><span>Product MG</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="ion-ios7-cart"></i><span>Products Mg</span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/products">Product </a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/categorylist">Category</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/unitlist">Unit </a></li>
-                                     <li><a href="${pageContext.request.contextPath}/admin/importlist">Import </a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/products">Products </a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/categorylist">Categories</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/unitlist">Units </a></li>
+                                     <li><a href="${pageContext.request.contextPath}/admin/importlist">Imports </a></li>
                                    
                                    <!--<li><a href="${pageContext.request.contextPath}/admin/productadd">Add Product</a></li> --> 
                                 </ul>
@@ -65,25 +65,27 @@
                                 </ul>
                             </li>-->
   							<li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="fa fa-shopping-cart"></i> <span> Expense </span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="fa fa-shopping-cart"></i> <span> Cash Flow </span> <span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/expenselist">Expense List</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/expenseadd">Add Expense</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/expenselist">Expense</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/sale_report">Sale</a></li>
+                                    <!--<li><a href="${pageContext.request.contextPath}/admin/expenseadd">Add Expense</a></li>-->
                                 </ul>
                             </li>
-                            <li class="has_sub">
+                           <!-- <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ion-social-usd"></i><span> Sale </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/sale_report">Sale List</a></li>
                                     <%-- <li><a href="${pageContext.request.contextPath}/admin/saleadd">Add Sale</a></li> --%>
                                 </ul>
-                            </li>
+                            </li>-->
 
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="md md-redeem"></i> <span> Supplier</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                                <a href="#" class="waves-effect"><i class="md md-redeem"></i> <span> Users Mg</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Supplier List</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/supplieradd">Add Supplier</a></li>
+                                	<li><a href="${pageContext.request.contextPath}/admin/userlist">User</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/supplierlist">Suppliers</a></li>
+                                   <!--<li><a href="${pageContext.request.contextPath}/admin/supplieradd">Add Supplier</a></li>-->
                                 </ul>
                             </li>
                             
@@ -99,13 +101,13 @@
                                 </ul>
                             </li>
                             
-                            <li class="has_sub">
+                            <!--<li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="md md-now-widgets"></i><span> Users </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                <ul class="list-unstyled">
                                     <li><a href="${pageContext.request.contextPath}/admin/userlist">User List</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/useradd">Add User</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             
                             <li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="md md-view-list"></i><span> Setting </span><span class="pull-right"><i class="md md-add"></i></span></a>

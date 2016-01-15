@@ -73,10 +73,10 @@ tbody tr td {
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-	
+
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-	
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <style>
@@ -120,95 +120,100 @@ tbody tr td {
 							<h4 class="pull-left page-title">Import List</h4>
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel panel-default">
-					
-					<div class="panel-body">
-						<div class="panel-heading">
-							
-							<div class="row">
-								<!-- <h3 class="panel-title">Product Lists</h3> -->
-								<div class="col-md-9">
-									<div class="m-h-50 form-group hidden-print ">
-									<label class="col-sm-1 control-label">Date : </label> <input
-										type="hidden" id="SEND_DT" data-id="SEND_DT" />
-									<div id="sendFrdt" class="date-range col-sm-5">
-										<input type="text" readonly="readonly" id="REGS_DATE_S"
-											name="startdate" class="range-start"
-											style="width: 100px; text-align: center;">&nbsp; <a
-											href="#none" id="btnREGS_DATE_S"><img
-											style="width: 20px; height: 20px;"
-											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
-										<input type="text" readonly="readonly" id="REGS_DATE_E"
-											name="stopdate" class="range-end"
-											style="width: 100px; text-align: center;">&nbsp; <a
-											href="#none" id="btnREGS_DATE_E"><img
-											style="width: 20px; height: 20px;"
-											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
-									</div>
-							</div>
-								</div>									
-										<div class="col-md-2 pull-right">
-										<button id="btn_add_import" class="btn btn-primary">Add
-											Import</button>
-										</div>								
-								</div>
-							
-						</div>
-						<div class="row">
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<table id="datatable" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Invoice ID</th>
-											<th style="text-align: center;">Date</th>
-											<th>Name</th>
-											<th style="text-align: right;">Total Amount</th>
-											<th style="text-align: center;">Action</th>
-										</tr>
-									</thead>
-									<tbody id="CONTENTS">										
+								<div class="panel-heading">
 
-									</tbody>
-								</table>
-								
+									<div class="row">
+										<!-- <h3 class="panel-title">Product Lists</h3> -->
+										<div class="col-md-10">
+											<div class="m-h-50 form-group hidden-print ">
+												<label class="col-sm-1 control-label">Date : </label> <input
+													type="hidden" id="SEND_DT" data-id="SEND_DT" />
+												<div id="sendFrdt" class="date-range col-sm-5">
+													<input type="text" readonly="readonly" id="REGS_DATE_S"
+														name="startdate" class="range-start"
+														style="width: 100px; text-align: center;">&nbsp; <a
+														href="#none" id="btnREGS_DATE_S"><img
+														style="width: 20px; height: 20px;"
+														src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
+													<input type="text" readonly="readonly" id="REGS_DATE_E"
+														name="stopdate" class="range-end"
+														style="width: 100px; text-align: center;">&nbsp; <a
+														href="#none" id="btnREGS_DATE_E"><img
+														style="width: 20px; height: 20px;"
+														src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 pull-right">
+											<button id="btn_add_import" class="btn btn-primary">Add
+												Import</button>
+										</div>
+									</div>
+
+								</div>
+								<!-- End Panel Head -->
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<table id="datatable"
+												class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>Invoice ID</th>
+														<th style="text-align: center;">Date</th>
+														<th>Name</th>
+														<th style="text-align: right;">Total Amount</th>
+														<th style="text-align: center;">Action</th>
+													</tr>
+												</thead>
+												<tbody id="CONTENTS">
+
+												</tbody>
+											</table>
+
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<select id="PER_PAGE" class="form-control">
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+										</div>
+										<div class="col-md-10 form-horizontal" align="right">
+											<label class="control-label col-md-9">Total Amount :
+											</label>
+											<div class="col-md-3">
+												<input class="form-control" readonly="readonly"
+													id="allTotalAmount" type="text">
+											</div>
+										</div>
+										<div id="PAGINATION" class="pull-right"></div>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-2">
-								<select id="PER_PAGE" class="form-control">
-									<option value="15">15</option>
-									<option value="30">30</option>
-									<option value="50">50</option>
-									<option value="100">100</option>
-								</select>
-							</div>
-							<div class="col-md-10 form-horizontal" align="right">
-								<label  class="control-label col-md-9">Total Amount : </label>
-									<div class="col-md-3">
-											<input class="form-control" readonly="readonly" id="allTotalAmount" type="text">
-									</div>												
-							</div>
-							<div id="PAGINATION" class="pull-right"></div>
-						</div>
+
 					</div>
-					</div>
-					</div>
+					<!-- end Panel -->
+
 				</div>
-				<!-- end Panel -->
+				<!-- container -->
 
 			</div>
-			<!-- container -->
+			<!-- content -->
+
+			<%@ include file="footer.jsp"%>
 
 		</div>
-		<!-- content -->
 
-		<%@ include file="footer.jsp"%>
-
-	</div>
 	</div>
 	<!-- END wrapper -->
 
@@ -243,32 +248,32 @@ tbody tr td {
 				</table>
 			</div>
 			<div class="modal-footer" style="height: 80px;">
-					<div style="float: left;">
-						<div class="form-group form-horizontal">
-							<label class="control-label col-lg-6">Total Amount</label>
-							<div class="col-lg-6">
-								<input class=" form-control" id="txttotal" type="text"
-									readonly="readonly">
-							</div>
+				<div style="float: left;">
+					<div class="form-group form-horizontal">
+						<label class="control-label col-lg-6">Total Amount</label>
+						<div class="col-lg-6">
+							<input class=" form-control" id="txttotal" type="text"
+								readonly="readonly">
 						</div>
 					</div>
-					<div align="right">
-						<button class="btn btn-default b-close">Close</button>
-					</div>
 				</div>
+				<div align="right">
+					<button class="btn btn-default b-close">Close</button>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-		
+
+
 	<!-- ========== Include product add ========== -->
 	<%@ include file="importadd.jsp"%>
 
 	<!-- ################################################################## -->
 
 	<script>
-            var resizefunc = [];
-            var ctx = "${pageContext.request.contextPath}"
-    </script>
+		var resizefunc = [];
+		var ctx = "${pageContext.request.contextPath}"
+	</script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
@@ -277,7 +282,7 @@ tbody tr td {
 		src="<c:url value='/resources/scripts/services/import_service.js' />"></script>
 	<script
 		src="<c:url value='/resources/scripts/controllers/import_controller.js' />"></script>
-	
+
 	<!-- jQuery  -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -329,10 +334,14 @@ tbody tr td {
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-<script	src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
-	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
-	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
-	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 
 	<!-- flot Chart -->
 	<script
@@ -372,8 +381,7 @@ tbody tr td {
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
 	
-	
-	<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
+		<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
 	<tr>
 		<td>{{= importDetail}} </td>
 		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
@@ -845,7 +853,7 @@ tbody tr td {
     				    	   select: function(event, ui){
     				    		   $("#supID").val(ui.item.dataid);
     				    	   },
-    				    	   maxShowItems: 8,
+    				    	  // maxShowItems: 8,
     				           source: availableTags
     				       });  
     				    },
@@ -906,6 +914,8 @@ tbody tr td {
     		 
             });
         </script>
+
+
 
 </body>
 <script
