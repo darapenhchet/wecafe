@@ -68,6 +68,10 @@
 .hidebtn {
 	display: none;
 }
+
+.borderRed {
+	border-color: red;
+}
 </style>
 
 </head>
@@ -420,6 +424,11 @@
             	searchSupplier();
             	var _thisRow ;
             	
+            	$("#productName").change(function(){   		
+        			$("#prodID").val("");   
+        			$("#suppId").val("");
+				});
+            	
             	$(document).on("click","#btnedit",function(){
             		$("#addbtn").html("Update");
             		$("#addbtn").attr("id","updatebtn");            		
@@ -489,6 +498,65 @@
      	 			});   
                  }); 
             	$(document).on("click","#addbtn",function(){ 
+            	
+            		
+               		if($("#productName").val()=="")
+        			{
+        				$("#productName").addClass("borderRed");           				
+        				return;
+        			}
+        		else
+        			$("#productName").removeClass("borderRed");          		
+        		
+        		if($("#prodID").val()==""){
+        			alert("Product name does not exist");
+        			$("#productName").addClass("borderRed");           				
+    				return;
+        		}else
+        			$("#productName").removeClass("borderRed");
+        		
+        		if($("#suppId").val()==""){
+        			alert("Supplier name does not exist");
+        			$("#supplierName").addClass("borderRed");           				
+    				return;
+        		}else
+        			$("#supplierName").removeClass("borderRed");
+        		
+        		
+        		if($("#qty").val()=="")
+    			{
+    				$("#qty").addClass("borderRed");
+    				return;
+    			}
+        		else
+    				$("#qty").removeClass("borderRed");
+        		if($("#UnitPrice").val()=="")
+    			{
+    				$("#UnitPrice").addClass("borderRed");
+    				return;
+    			}
+        		else
+    				$("#UnitPrice").removeClass("borderRed");
+        		if($("#supplierName").val()=="")
+    			{
+    				$("#supplierName").addClass("borderRed");
+    				return;
+    			}
+        		else
+    				$("#supplierName").removeClass("borderRed");
+        		
+        		var isAdded=false;
+				
+				$('#tbllistimport tr').each(function() {						
+					var pro_name=$(this).find("td").eq(2).text();
+										
+						if($.trim($("#productName").val())==$.trim(pro_name)){
+							alert("Product is already added");
+							isAdded=true ;
+						}
+				});
+				
+				if(isAdded==false){
             		var st="";
             		st += "<tr><td style='display: none;'>" + $('#prodID').val() +"</td>";
             		st += "<td>" + ($("#tbllistimport tr").length + 1) +"</td>";
@@ -502,6 +570,7 @@
             		st += " <a class='on-default remove-row' href='javascript:;' id='btnRemove'> <i class='fa fa-trash-o'></i></a></td>";
             		$("#tbllistimport").append(st);
             		clear();
+					}
             	});
             	
             	$(document).on("click"," #cancelbtnadd",function(){

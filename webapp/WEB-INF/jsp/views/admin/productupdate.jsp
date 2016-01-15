@@ -341,38 +341,7 @@
     					alert("PLEASE SELECT THE IMAGE.");
     					return;
     				}
-    				/* json = {
-    					"productId"   : $("#productId").val(),
-    					"productName" : $("#productname").val(),
-    					"category"    : {
-    										"catId"	: $("#optCategory").val()
-    					},
-    					"quantity"    : $("#quantity").val(),
-    					"unitPrice"   : $("#unitprice").val(),
-    					"costPrice"	  : $("#costprice").val(),
-    					"salePrice"   : $("#saleprice").val()
-    				};
-    				$.ajax({ 
-    				    url: "${pageContext.request.contextPath}/admin/product/update", 
-    				    type: 'POST', 
-    				    dataType: 'JSON', 
-    				    data: JSON.stringify(json), 
-    				    beforeSend: function(xhr) {
-    	                    xhr.setRequestHeader("Accept", "application/json");
-    	                    xhr.setRequestHeader("Content-Type", "application/json");
-    	                },
-    				    success: function(data) { 
-    				        if(data){
-    				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-    				        	location.href="${pageContext.request.contextPath}/admin/products";
-    				        }else{
-    				        	alert('YOU HAVE ERRORS WHEN UPDATE A PRODUCT.');
-    				        }
-    				    },
-    				    error:function(data,status,er) { 
-    				        console.log("error: "+data+" status: "+status+" er:"+er);
-    				    }
-    				}); */
+
     				
     				$("#frmProductAdd").ajaxSubmit({
     					url: "${pageContext.request.contextPath}/admin/product/update",

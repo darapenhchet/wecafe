@@ -21,10 +21,11 @@ public class UnitsServiceImp implements UnitService {
 	private SessionFactory sessionFactory;
 	
 	@Override
+	@Transactional
 	public List<Unit> getAllUnits() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.getTransaction().begin();
+			
 			Query query = session.createQuery("FROM Unit");
 			List<Unit> units = query.list();
 			return units;
@@ -32,9 +33,7 @@ public class UnitsServiceImp implements UnitService {
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.out.println(e.getMessage());
-			session.getTransaction().rollback();
-		}finally {
-			session.close();
+			
 		}
 		return null;
 	}

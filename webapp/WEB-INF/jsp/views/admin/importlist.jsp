@@ -542,7 +542,7 @@ tbody tr td {
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
 					 success: function(data){
-						 console.log(data);
+						 
 						 b =true;
 						v=data;					
 						 if(data.imports.length>0){   
@@ -702,9 +702,7 @@ tbody tr td {
             				return;
             			}
             		else
-            			$("#productName").removeClass("borderRed");
-            		
-            		
+            			$("#productName").removeClass("borderRed");          		
             		
             		if($("#proID").val()==""){
             			alert("Product name does not exist");
@@ -719,6 +717,7 @@ tbody tr td {
         				return;
             		}else
             			$("#supplierName").removeClass("borderRed");
+            		
             		
             		if($("#qty").val()=="")
         			{
