@@ -294,7 +294,7 @@
 	
 	<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
 	    	<tr>
-				<td>{{= productId}}</td>
+				<td>{{= importDetail}}</td>
 				<td>{{= productName}}</td>
 				<td style="text-align:right;">{{= quantity}}</td>
 				<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
@@ -382,7 +382,9 @@
         	$(function(){
         		var products = {};
         		var check = true;
-        		
+        		var order = 1;
+    			var v=[];
+    			var b = true;
         		// TODO: FIND ALL PRODUCTS WITH CURRENT PAGE
         		products.findAllProducts = function(currentPage){
         			$.ajax({ 
@@ -400,6 +402,8 @@
     	                },
     				    success: function(data) {
 							console.log(data);
+							 b = true;
+							 v = data;	
 							if(data.products.length>0){
 								$("tbody#CONTENTS").html('');
 								for(var i=0;i<data.products.length;i++){
@@ -434,6 +438,14 @@
         				value["status"] = "Active";
         				value["button"] = "btn-success";
         			}
+        			if(b){
+			 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+			 			j = order + 1;
+			 			value["importDetail"] =j;
+			 			b = false;
+			 		}
+			 		else  
+			 		value["importDetail"] = ++j;
         		}
         		// TODO: FIND PRODUCT BY ID
         		products.findProductById = function(id){
