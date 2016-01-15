@@ -55,8 +55,8 @@ public class WeCafeBootstrap implements WebApplicationInitializer{
      
     /*Set these variables for your project needs*/
    
-    //private static final String LOCATION = "C:/mytemp/";
-    private static final String LOCATION = "Users/kreysophannatt/Desktop/mytemp/";
+    private static final String LOCATION = "C:/mytemp/";
+    //private static final String LOCATION = "Users/kreysophannatt/Desktop/mytemp/";
  
     private static final long MAX_FILE_SIZE = 1024 * 1024 * 25;//25MB
      

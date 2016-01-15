@@ -73,6 +73,21 @@ tbody tr td {
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+	
+<script
+	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+	
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+.hidebtn {
+	display: none;
+}
+
+.borderRed {
+	border-color: red;
+}
+</style>
 
 </head>
 
@@ -87,12 +102,9 @@ tbody tr td {
 		<%@ include file="topbar.jsp"%>
 		<!-- Top Bar End -->
 
-
 		<!-- ========== Left Sidebar Start ========== -->
 		<%@ include file="left_sidebar.jsp"%>
 		<!-- Left Sidebar End -->
-
-
 
 		<!-- ============================================================== -->
 		<!-- Start right Content here -->
@@ -108,17 +120,18 @@ tbody tr td {
 							<h4 class="pull-left page-title">Import List</h4>
 						</div>
 					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+					
 					<div class="panel-body">
 						<div class="panel-heading">
-							<!-- <h3 class="panel-title">Product Lists</h3> -->
-							<!-- <form class="form-inline">
-						        <div class="form-group">
-						            <label >Search</label>
-						            <input type="text" ng-model="search" class="form-control" placeholder="Search" width="400%">
-						        </div>
-						    </form> -->
-							<div class="m-h-50 form-group hidden-print ">
-								<div class="col-sm-9">
+							
+							<div class="row">
+								<!-- <h3 class="panel-title">Product Lists</h3> -->
+								<div class="col-md-9">
+									<div class="m-h-50 form-group hidden-print ">
 									<label class="col-sm-1 control-label">Date : </label> <input
 										type="hidden" id="SEND_DT" data-id="SEND_DT" />
 									<div id="sendFrdt" class="date-range col-sm-5">
@@ -135,18 +148,14 @@ tbody tr td {
 											style="width: 20px; height: 20px;"
 											src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
 									</div>
-								</div>
-								<!-- <div class="col-sm-3 form-group">
-									<select class="form-control" id="sel1">
-										<option>Detail</option>
-										<option>Daily</option>
-										<option>Weekly</option>
-										<option>Monthly</option>
-										<option>Yearly</option>
-									</select>
-								</div> -->
-
 							</div>
+								</div>									
+										<div class="col-md-2 pull-right">
+										<button id="btn_add_import" class="btn btn-primary">Add
+											Import</button>
+										</div>								
+								</div>
+							
 						</div>
 						<div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
@@ -161,24 +170,7 @@ tbody tr td {
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
-									<tbody id="CONTENTS">
-										<%-- <tr
-											dir-paginate="(key,importproducts) in imports|filter:search|itemsPerPage:perPage|orderBy : importproducts.createdDate">
-											<td>{{key+1}}</td>
-											<td><a href="javascript:;" id="impid">
-													{{importproducts.impId}}</a></td>
-											<td style="text-align: center;">{{importproducts.impDate
-												| date:'dd-MMMM-yyyy'}}</td>
-											<td>{{importproducts.userId }}
-											<td style="text-align: right;">{{importproducts.totalAmount
-												}} Riel
-											<td class="actions" style="text-align: center;"><a
-												class="on-default edit-row"
-												href="${pageContext.request.contextPath}/admin/viewById/{{importproducts.impId}}"><i
-													class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-												href="javascript:;" id="btnRemove"><i
-													class="fa fa-trash-o"></i></a></td>
-										</tr> --%>
+									<tbody id="CONTENTS">										
 
 									</tbody>
 								</table>
@@ -203,7 +195,8 @@ tbody tr td {
 							<div id="PAGINATION" class="pull-right"></div>
 						</div>
 					</div>
-
+					</div>
+					</div>
 				</div>
 				<!-- end Panel -->
 
@@ -222,13 +215,15 @@ tbody tr td {
 	<!-- ############################################################# -->
 
 
-	<div id="impDetail" style="display: none; width: 90%; overflow: auto;">
+	<div id="impDetail" style="display: none; width: 90%;">
 		<div class="modal-content">
-			<div class="modal-header"> 
+			<div class="modal-header">
+
 				<button type="button" class="close" aria-hidden="true">
 					<span class="button b-close"><span>×</span></span>
 				</button>
-				<h4 class="modal-title">Import Detail</h4> 
+				<h4 class="modal-title">Import Detail</h4>
+
 			</div>
 			<div class="modal-body" style="width: 100%;">
 				<table class="table table-hover">
@@ -241,8 +236,10 @@ tbody tr td {
 							<th>Supplier Name</th>
 						</tr>
 					</thead>
-					<tbody id="impProDetail"> 
-					</tbody> 
+					<tbody id="impProDetail">
+
+					</tbody>
+
 				</table>
 			</div>
 			<div class="modal-footer" style="height: 80px;">
@@ -261,6 +258,10 @@ tbody tr td {
 				</div>
 		</div>
 	</div>
+	
+		
+	<!-- ========== Include product add ========== -->
+	<%@ include file="importadd.jsp"%>
 
 	<!-- ################################################################## -->
 
@@ -332,6 +333,46 @@ tbody tr td {
 	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
+
+	<!-- flot Chart -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.time.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.tooltip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.resize.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.pie.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.selection.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.stack.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/flot-chart/jquery.flot.crosshair.js"></script>
+
+	<!-- Counter-up -->
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/waypoints.min.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/counterup/jquery.counterup.min.js"
+		type="text/javascript"></script>
+
+	<!-- Dashboard -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
+
+	<!-- Chat -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
+
+	<!-- Todo -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+	
+	
 	<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
 	<tr>
 		<td>{{= importDetail}} </td>
@@ -355,12 +396,19 @@ tbody tr td {
 			
 			var check = true;
 			var order = 1;
+			
+        	var _thisRow ;
+        	var isAdded=false;
+        	
+        	
 			// searchProduct();
 			// searchSupplier();
 			 setCalendar();
 			// searchByDate();
 			 
 			 getimportlist(1); 
+			 		
+			 
 			 $("#btnREGS_DATE_S").click(function(){	
 		 			$( "#REGS_DATE_S" ).datepicker("show");		
 		 			
@@ -415,7 +463,7 @@ tbody tr td {
 								"startdate"   		  : startDate,
 								"enddate" 		  	  : endDate
 					};
-					console.log(JSON.stringify(json));
+					
 					$.ajax({
 						 url: "${pageContext.request.contextPath}/admin/getsearchsellbydate", 
 				    type: 'POST',
@@ -463,7 +511,7 @@ tbody tr td {
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
 					    success: function(data) { 
-					    	console.log(data);
+					    	
 					    	var	amount = 0;
 					    	var st= "";
 					       for(i=0; i<data.length; i++){
@@ -499,7 +547,7 @@ tbody tr td {
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
 					 success: function(data){
-						 console.log(data);
+						
 						 if(data.imports.length>0){ 
 							  order = 1;
 								$("tbody#CONTENTS").html('');					
@@ -532,7 +580,7 @@ tbody tr td {
      			check = true;
      			getimportlist(1);
  		    });
-			function searchSupplier(){
+			/* function searchSupplier(){
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
 				    type: 'POST', 
@@ -570,7 +618,7 @@ tbody tr td {
 				    }
 				});
 				
-			}
+			} */
 		setPagination = function(totalPage, currentPage){
 	    	$('#PAGINATION').bootpag({
 		        total: totalPage,
@@ -592,16 +640,313 @@ tbody tr td {
 		    	getimportlist(currentPage);
 		    }); 
 		};
-		});
-	</script>
+		
+		//Import add
+		
+            
+            	/* 
+            	$('#btn_add_import').on('hidden.bs.modal', function (event) {
+    	    		if(isAdded==true)getimportlist(1);
+    			}); */
+    			
+    				$("#productName").change(function(){   					
+            			$("#proID").val("");   
+            			$("#supID").val("");
+    				});
+            		
+            		$("#btn_cancel").click(function(){
+            			$('#form_add_import').modal('hide');
+            			
+            		});
+                		
+        			$("#btn_add_import").click(function(){    	
+        				clear();
+        				$("#tbllistimport tr").remove();
+        				searchProduct();
+        			    searchSupplier();
+        				$('#form_add_import').modal({
+        					"backdrop":"static"
+        				}) ;
+        			});
+            	
+            	
+                $(document).on('keypress','#qty, #UnitPrice', function(e){
 
-	<!-- Examples -->
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
+    				if((e.keyCode == 8) || (e.keyCode == 46) || ((e.keyCode >=37) && (e.keyCode <= 40)))
+    					return ;
 
+    			var data = String.fromCharCode(e.which);	
+    					var reg = new RegExp('^[0-9]+$');
+    		    	    if(!reg.test(data)){
+    		    	    	e.preventDefault();
+    					}
+    			     });
+            	
+            	$("#cencelBtn").click(function(){
+            		if(confirm("Do you want to cancel?")){
+            			clear();
+            			$("#tbllistimport tr").remove();
+            		}
+            	});
+            	$(document).on("click","#btndelete",function(){
+            		$(this).parents("tr").remove();            		
+            	});
+            	
+            	$(document).on("click","#btnedit",function(){
+					
 
+            		_thisRow = $(this).parents("tr");
+            		
+            		$("#productName").val($(this).parents("tr").children().eq(3).html());
+            		$("#qty").val($(this).parents("tr").children().eq(4).html());
+            		$("#UnitPrice").val($(this).parents("tr").children().eq(5).html());
+            		$("#supplierName").val($(this).parents("tr").children().eq(6).html()); 
+            		$("#addbtn").attr("id","editbtn");
+            	});
+            	$(document).on("click","#editbtn",function(){
+            		_thisRow.children().eq(0).html($("#proID").val());
+            		_thisRow.children().eq(1).html($("#supID").val());
+            		_thisRow.children().eq(3).html($("#productName").val());
+            		_thisRow.children().eq(4).html($("#qty").val());
+            		_thisRow.children().eq(5).html($("#UnitPrice").val()); 
+            		_thisRow.children().eq(6).html($("#supplierName").val());
+            		$("#editbtn").attr("id","addbtn");
+            		clear();
+            	});
+            	$("#canceladd").click(function(){ 
+	            		clear(); 
+	            		$("#editbtn").attr("id","addbtn");
+            		 
+            	});
+            	$(document).on("blur","#productName ,#qty ,#UnitPrice ,#supplierName",function(){ 
+            		
+            	if($(this).val()=="")
+        		{ 
+        			$(this).addClass("borderRed");
+        			return;
+        		}
+        		else
+        				$(this).removeClass("borderRed"); 
+            	});
+            	$(document).on("click","#addbtn",function(){ 
+            		
+            		if($("#productName").val()=="")
+            			{
+            				$("#productName").addClass("borderRed");           				
+            				return;
+            			}
+            		else
+            			$("#productName").removeClass("borderRed");
+            		
+            		
+            		
+            		if($("#proID").val()==""){
+            			alert("Product name does not exist");
+            			$("#productName").addClass("borderRed");           				
+        				return;
+            		}else
+            			$("#productName").removeClass("borderRed");
+            		
+            		if($("#supID").val()==""){
+            			alert("Supplier name does not exist");
+            			$("#supplierName").addClass("borderRed");           				
+        				return;
+            		}else
+            			$("#supplierName").removeClass("borderRed");
+            		
+            		if($("#qty").val()=="")
+        			{
+        				$("#qty").addClass("borderRed");
+        				return;
+        			}
+            		else
+        				$("#qty").removeClass("borderRed");
+            		if($("#UnitPrice").val()=="")
+        			{
+        				$("#UnitPrice").addClass("borderRed");
+        				return;
+        			}
+            		else
+        				$("#UnitPrice").removeClass("borderRed");
+            		if($("#supplierName").val()=="")
+        			{
+        				$("#supplierName").addClass("borderRed");
+        				return;
+        			}
+            		else
+        				$("#supplierName").removeClass("borderRed");
+            		
+            		var isAdded=false;
+					
+					$('#tbllistimport tr').each(function() {						
+						var pro_name=$(this).find("td").eq(3).text();
+											
+							if($.trim($("#productName").val())==$.trim(pro_name)){
+								alert("Product is already added");
+								isAdded=true ;
+							}
+					});
+					
+					if(isAdded==false){
+            		
+            		var st="";
+            		st += "<tr><td style='display: none;'>" + $('#proID').val() +"</td>";
+            		st += "<td style='display: none;'>"+ $('#supID').val() +"</td>";
+            		st += "<td>" + ($("#tbllistimport tr").length + 1) +"</td>"; 
+            		st += "<td>" + $("#productName").val() +"</td>";
+            		st += "<td>" + $("#qty").val() +"</td>";
+            		st += "<td>" + $("#UnitPrice").val() +"</td>";
+            		st += "<td>" + $("#supplierName").val() +"</td>";
+            		st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
+            		$("#tbllistimport").append(st);
+            		clear();
+            		
+					}
+            	});
+            	
+                $('.counter').counterUp({
+                    delay: 100,
+                    time: 1200
+                });
+                
+                $("#savebtn").click(function(){ 
+                	var importDetail = [];
+                	if($('#tbllistimport tr').length==0){
+                		alert("There is no data was added");
+                		return;
+                	}
+                		$('#tbllistimport tr').each(function(){
+                			json ={
+                						"proId"				: ($(this).find("td").eq(0).text()),
+                						"quantity" 		 	:($(this).find("td").eq(4).text()),
+                						"unitPrice"		    :($(this).find("td").eq(5).text()),
+                						"supplierId"	  	:($(this).find("td").eq(1).text())
+                					};
+                			console.log(json);
+                				importDetail.push(json);	
+                		}); 
+                		
+    	 			$.ajax({
+    	 				 url: "${pageContext.request.contextPath}/admin/addImport", 
+     				    type: 'POST',
+    	 				datatype: 'JSON',
+    	 				data: JSON.stringify(importDetail), 
+    	 				beforeSend: function(xhr) {
+    	 		            xhr.setRequestHeader("Accept", "application/json");
+    	 		            xhr.setRequestHeader("Content-Type", "application/json");
+    	 		        },
+    	 				success: function(data){
+    	 					console.log(data);
+    	 					if(data==true){
+    	 						alert(" Successfully Added");
+    	 						getimportlist(1);
+    	 						$('#form_add_import').modal('hide');
+    	 						clear();
+    	        				$("#tbllistimport tr").remove();
+    	 					}else{
+    	 						alert("Please try to insert again!");
+    	 					}
+    	 					
+    	 				},
+    	 				error:function(data, status,er){
+    	 					console.log("error: " + data + "status: " + status + "er: ");
+    	 				}
+    	 			});    
+                });
+
+                 
+                function searchSupplier(){
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/admin/searchsupplier", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				       //console.log(data); 
+    				       var availableTags=[];
+    				       for(i=0; i<data.length; i++)
+		   						{							
+    				    	   availableTags[i]= 
+		   						         {
+		   						         	"label": data[i].supplierName,
+		   									"dataid": data[i].supId 
+		   						         };
+		   						}
+    				       $("#supplierName" ).autocomplete({
+    				    	   
+    				    	   select: function(event, ui){
+    				    		   $("#supID").val(ui.item.dataid);
+    				    	   },
+    				    	   maxShowItems: 8,
+    				           source: availableTags
+    				       });  
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
+    				
+    			}
+                 
+                function clear(){
+            		$("#productName").val(""); 	$("#productName").removeClass("borderRed");
+            		$('#proID').val("");		 
+            		$('#supID').val("");		 
+            		$("#qty").val("");			$("#qty").removeClass("borderRed");
+            		$("#UnitPrice").val("");	$("#UnitPrice").removeClass("borderRed");
+            		$("#supplierName").val(""); $("#supplierName").removeClass("borderRed");
+            	}
+                
+                function searchProduct(){
+                	 
+    				$.ajax({ 
+    				    url: "${pageContext.request.contextPath}/admin/searchproduct", 
+    				    type: 'POST', 
+    				    dataType: 'JSON', 
+    				    beforeSend: function(xhr) {
+    	                    xhr.setRequestHeader("Accept", "application/json");
+    	                    xhr.setRequestHeader("Content-Type", "application/json");
+    	                },
+    				    success: function(data) { 
+    				      // console.log(data); 
+    				       var availableTags=[];
+    				       for(i=0; i<data.length; i++)
+		   						{							
+    				    	   availableTags[i]= 
+		   						         {
+		   						         	"label": data[i].productName,
+		   									"dataid": data[i].productId 
+		   						         };
+		   						}
+    				       $("#productName" ).autocomplete({
+    				    	   
+    				    	   select: function(event, ui){
+    				    		   $("#proID").val(ui.item.dataid);
+    				    	   },
+    				    	  // maxShowItems: 8,
+    				           source: availableTags
+    				       });
+    				       $(".ui-autocomplete").css("position", "absolute");
+						   $(".ui-autocomplete").css("z-index", "2147483647");
+    				    },
+    				    error:function(data,status,er) { 
+    				        console.log("error: "+data+" status: "+status+" er:"+er);
+    				    }
+    				});
+    				
+    			} 
+    		 
+            });
+        </script>
+
+</body>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script>
 
 
 

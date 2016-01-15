@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.kosign.wecafe.entities.ImportDetail;
 import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
