@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -29,7 +30,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	
 	@Override
 	@Transactional
-	public List<Map> getListReportDetailSaleRest(int byyear) {
+	public List<Map> getListReportDetailSaleRest(Pagination pagination, int byyear) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -41,6 +42,8 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 				 + "	   , A.total_amount from sale A "
 				 + "	    INNER JOIN users B on A.user_id = B.id "
 				 + "	where EXTRACT(YEAR FROM A.sale_datetime) = " + byyear);
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	saleProducts = (List<Map>)query.list();	
 			return saleProducts;
@@ -89,7 +92,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	@Transactional
 	public List<Map> getListReportDailySaleRest(Date startdate) {
 		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
-		System.out.println(startdate);
+		System.out.println("startdate = "+startdate);
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -112,7 +115,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 			e.printStackTrace();
 		}finally {
 			
-		}
+		} 
 		
 		return null;
 	}
@@ -375,12 +378,12 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 
 	@Override
 	@Transactional
-	public Long countDaily(Date dateTime) {
+	public Long countDaily(Date dateTime) {     
 		Session session = null; 
 			session = sessionFactory.getCurrentSession();
 			return  (Long) session.createCriteria(Sale.class)
-					.add(Restrictions.like("saleDatetime", dateTime ))
-					.setProjection(Projections.rowCount()).uniqueResult();   
+					.add(Restrictions.between("saleDatetime", dateTime, dateTime ))
+					.setProjection(Projections.rowCount()).uniqueResult();  
 	}
 /*	@Override
 	@Transactional

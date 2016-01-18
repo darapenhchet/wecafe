@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.kosign.wecafe.entities.Pagination;
+
 public interface AdminReportSaleService {
-	public List<Map> getListReportDetailSaleRest(int byYear);
+	public List<Map> getListReportDetailSaleRest(Pagination pagination,int byYear);
 	public List<Map> getListReportDailySaleRest(Date startdate);
 	public Object getListReportWeeklySaleRest(Date startdate, Date enddate);
 	public Object getListReportMonthlySaleRest(Date startDate, Date endDate);

@@ -309,7 +309,7 @@ public class AdminReportServiceImp implements AdminReportService {
 		Session session = null; 
 			session = sessionFactory.getCurrentSession();
 			return  (Long) session.createCriteria(ImportProduct.class)
-					.add(Restrictions.like("impDate", dateTime ))
+					.add(Restrictions.between("impDate", dateTime, dateTime ))
 					.setProjection(Projections.rowCount()).uniqueResult();   
 	}
 	@Override

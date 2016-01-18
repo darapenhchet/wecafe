@@ -228,7 +228,7 @@ thead tr th {
 												<table id="detailtable" class="table table-responsive">
 													<thead>
 														<tr> 
-															 
+															<th>#</th> 
 															<th>Invoice No</th> 
 															<th>Date</th>
 															<th>Sell By</th>  
@@ -478,7 +478,8 @@ thead tr th {
 <!-- ============================  tbodydetail  ================================== -->		
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
     	<tr>  
-			<td ><a herf="javascript:;" id="saleid" class="ng-binding">{{= sale_id}}</a></td>
+			<td>{{= order}}</td>
+			<td ><a herf="javascript:;" id="saleid" class="ng-binding">{{= sale_id}}</a></td> 
 			<td style="text-align:right;">{{= sale_date}} </td>
 			<td style="text-align:right;">{{= username}} ​</td> 
 			<td style="text-align:right;">{{= total_amount}} </td>
@@ -558,6 +559,9 @@ thead tr th {
  $(document).ready(function(){
 	var sales ={};
 	var check = true;
+	var order = 1;
+	var v=[];
+	var b = true;
 	 setCalendar();  
 	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
 	 $("#selectyear").change(function(){
@@ -575,6 +579,51 @@ thead tr th {
 				 break;
 		 }
 	 });
+	 function checkFilter(currentPage){
+		 switch($("#selectreport").val()){
+		 case '0': 
+			 sales.listDetail(currentPage); 
+			 break;
+		 case '1':
+			 sales.listDaily(currentPage);
+			 break;
+		 case '2':
+			 sales.listWeekly(currentPage);
+			 break;
+		 case '3':
+			 sales.listMonthly(currentPage); 
+			 break;
+			 
+		 case '4':
+			 sales.listYearly(); 
+			 break;
+	 }
+}
+	 $("#PER_PAGE").change(function(){
+		 check = true;
+		 checkFilter(1);
+	 });
+	 sales.setPagination = function(totalPage, currentPage){
+	    	$('#PAGINATION').bootpag({
+		        total: totalPage,
+		        page: currentPage,
+		        maxVisible: 10,
+		        leaps: true,
+		        firstLastUse: true,
+		        first: 'First',
+		        last: 'Last',
+		        wrapClass: 'pagination',
+		        activeClass: 'active',
+		        disabledClass: 'disabled',
+		        nextClass: 'next',
+		        prevClass: 'prev',
+		        lastClass: 'last',
+		        firstClass: 'first'
+		    }).on("page", function(event, currentPage){
+		    	check = false;
+		    	checkFilter(currentPage);
+		    }); 
+		};
 	 $("#selectmonth").change(function(){
 		 setheadermonthly();
 		 sales.listMonthly();
@@ -586,9 +635,7 @@ thead tr th {
 			    type: 'GET', 
 			    data: {
 			    		"currentPage" : currentPage,
-			    		"perPage"     : $("#PER_PAGE").val(),
-			    		"startDate"   : "03/12/2015",
-			    		"endDate"     : "03/12/2015",
+			    		"perPage"     : $("#PER_PAGE").val(), 
 			    		"byYear" 	  : byyear 
 			    },
 				    beforeSend: function(xhr) {
@@ -597,8 +644,11 @@ thead tr th {
 	           },
 			    success: function(data) {
 			    	console.log(data);
+			    	b =true;
+					v=data;
 					  if(data.reportdetail.length>0){
-					$("tbody#tbodydetail").html('');
+						 
+					$("tbody#tbodydetail").html(''); 
 						 for(var i=0;i<data.reportdetail.length;i++){							
 							sales.formatDetail(data.reportdetail[i]);
 						} 
@@ -783,6 +833,14 @@ thead tr th {
 		 		value["purchase_type"] = "Import";
 		 else
 			 	value["purchase_type"] = "Expense";
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
 	 }
 	 sales.formatDaily = function(value){
 		 value["total_amount"] = numeral(value["total_amount"]).format('0,0');
@@ -847,7 +905,7 @@ thead tr th {
 			
 	    	
 	    }
-	 sales.setPagination = function(totalPage, currentPage){
+	/*  sales.setPagination = function(totalPage, currentPage){
 	    	$('#PAGINATION').bootpag({
 		        total: totalPage,
 		        page: currentPage,
@@ -867,7 +925,7 @@ thead tr th {
 		    	check = false;
 		    	sales.findAllProducts(currentPage);
 		    }); 
-		}; 
+		};  */
 	 
 	 $("#selectreport").change(function(){
 		 if($(this).val()==0){
