@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.Category;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.forms.CategoryForm;
 import com.kosign.wecafe.services.CategoryService;
@@ -35,10 +39,20 @@ public class CategoryController {
 	private UserService userService;
 	
 	@RequestMapping(value="/admin/categorylist")
-	public String getAllCategories(Map<String, Object> model){
-		model.put("categories", categoryService.getAllCategories());
+	public String getAllCategories(/*Map<String, Object> model*/){
+		//model.put("categories", categoryService.getAllCategories());
 		return "admin/categorylist";
 	}
+	
+	@RequestMapping(value="/admin/listcategory",method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> listcategory(Pagination pagination){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("categories", categoryService.getAllCategories(pagination));
+		pagination.setTotalCount(categoryService.count());
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination",pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);	 
+	} 
 	
 	@RequestMapping(value="/admin/categoryadd")
 	public String categoryadd(){

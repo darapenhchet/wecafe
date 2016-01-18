@@ -144,7 +144,7 @@ thead tr th {
 										<th style="text-align: center;">Actions</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="CONTENTS">
 									<%-- <c:forEach items="${categories}" var="category" varStatus="theCount">
                                         <tr class="gradeX">
                                             <td id="CATEGORY_ID" style="display : none;">${category.catId}</td>
@@ -163,7 +163,7 @@ thead tr th {
                                             </td>
                                         </tr>
                                     </c:forEach> --%>
-									<tr
+									<%-- <tr
 										dir-paginate="(key,category) in categories|filter:search|itemsPerPage:perPage|orderBy : category.createdDate"
 										class="gradeX">
 										<td id="CATEGORY_ID" style="display: none;">{{category.catId}}</td>
@@ -189,7 +189,7 @@ thead tr th {
 											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
 											<a class="on-default remove-row" href="javascript:;"
 											id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
-									</tr>
+									</tr> --%>
 								</tbody>
 							</table>
 						</div>
@@ -197,17 +197,17 @@ thead tr th {
 
 					</div>
 					<!-- end Panel -->
-					 <ul class="pagination" id="PER_PAGE">
-						<li class="active" ng-click="perPage=10"><a
-							href="javascript:;">10</a></li>
-						<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-						<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-						<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-					</ul>  
-					<dir-pagination-controls max-size="15" direction-links="true"
-						boundary-links="true" class="pull-right">
-					</dir-pagination-controls>
-
+					<div class="row">
+					 <div class="col-md-2">
+											<select id="PER_PAGE" class="form-control"> 
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+					</div>
+					<div id="PAGINATION" class="pull-right"></div>
+					</div> 
 				</div>
 				<!-- container -->
 
@@ -363,6 +363,10 @@ thead tr th {
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<!-- Chat -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.chat.js"></script>
@@ -382,13 +386,91 @@ thead tr th {
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>	
-	
+	<script id="CONTENT_Categorylist" type="text/x-jquery-tmpl">
+	<tr>
+		<td>{{= products}}</td>
+		<td>{{= catName}} </td>
+		<td style="text-align: center;">
+			<img src="${pageContext.request.contextPath}/resources/images/products/{{= img }}"
+											class="img-thumbnail" alt="" width="30px" height="30px" /></td>
+		<td>{{= createdBy.username}}</td>
+		<td>{{= createdBy.createdDate}} </td>
+		<td>{{= lastUpdatedBy}}</td> 
+		<td>{{= lastUpdatedDate}}</td> 
+		<td style="text-align: center;" class="actions"><a
+											href="#" class="hidden on-editing save-row"><i
+												class="fa fa-save"></i></a> <a href="#"
+											class="hidden on-editing cancel-row"><i
+												class="fa fa-times"></i></a> <a
+											href="${pageContext.request.contextPath}/admin/category/update/{{= catId}}"
+											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+											<a class="on-default remove-row" href="javascript:;"
+											id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
+	</tr>
+</script>
 	<!-- ========== Include category add ========== -->
 	<%@ include file="categoryadd.jsp"%>
 
 	<script type="text/javascript">
 	var isAdded=false;
+	var check = true;
+	var order = 1;
+	var v=[];
+	var b = true;
     	$(function(){
+    		listcategory(1);
+    		function listcategory(currentPage){
+    			var json = {
+					 	"currentPage" : currentPage, 
+			    		"perPage"     : $("#PER_PAGE").val()  
+				};
+    			$.ajax({
+				    url: "${pageContext.request.contextPath}/admin/listcategory/",
+				    type: 'GET', 
+				    data: json,
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) {
+				    	b =true;
+						v=data;
+				    	console.log(data);
+				    	 if(data.categories.length>0){  
+								$("tbody#CONTENTS").html(''); 
+								for(i=0; i<data.categories.length;i++)
+								{
+									format(data.categories[i]); 
+								}
+								$("#CONTENT_Categorylist").tmpl(data.categories).appendTo("tbody#CONTENTS"); 
+							}else{
+								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("#allTotalAmount").val("");
+							}
+					    	if(check){
+					    		setPagination(data.pagination.totalPages,1);
+					    		check=false;
+					    	}
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				}); 
+    		}
+    		function format(value){
+    			value["createdBy"]["createdDate"] = (value["createdBy"]["createdDate"]).substring(0, 10);
+    			if (value["lastUpdatedDate"] != null)
+    				value["lastUpdatedDate"] =(value["lastUpdatedDate"]).substring(0, 10);
+    			if(b){
+		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+		 			j = order + 1;
+		 			value["products"] =j;
+		 			b = false;
+		 		}
+		 		else  
+		 		value["products"] = ++j; 
+    		} 
+    		
 	    	$(document).on('click','#btnRemove',function(){
 				var id = $(this).parents("tr").find("#CATEGORY_ID").html();
 				if(confirm("Do you want to delete that category?")){
@@ -415,11 +497,7 @@ thead tr th {
 					});
 					
 				}
-			});
-	    	$("#PER_PAGE li").click(function(){
-   			 	$('#PER_PAGE li.active').removeClass('active');
-   			 	$(this).addClass('active');
-   			});
+			}); 
 	    	
 	    	
 	    	//Category Add
@@ -490,13 +568,39 @@ thead tr th {
 				    }
 				});
 			});
-	    	
+		 	$("#PER_PAGE").change(function(){
+	 			check = true;
+	 			listcategory(1);
+			    });
+
+		setPagination = function(totalPage, currentPage){
+	    	$('#PAGINATION').bootpag({
+		        total: totalPage,
+		        page: currentPage,
+		        maxVisible: 10,
+		        leaps: true,
+		        firstLastUse: true,
+		        first: 'First',
+		        last: 'Last',
+		        wrapClass: 'pagination',
+		        activeClass: 'active',
+		        disabledClass: 'disabled',
+		        nextClass: 'next',
+		        prevClass: 'prev',
+		        lastClass: 'last',
+		        firstClass: 'first'
+		    }).on("page", function(event, currentPage){
+		    	check = false;
+		    	listcategory(currentPage);
+		    }); 
+		};
     	});
     	function clearFormCategory(){
     		$("#categoryName").val("");
     		$("#optCategory").val("");
 			$("#image").val("");
     	}
+   
     	</script>
 </body>
 </html>

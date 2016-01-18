@@ -58,9 +58,8 @@
 
 
 
-<script
-	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 <style>
 	.out_stock{
 			color: :red;
@@ -102,7 +101,7 @@
 <body class="fixed-left-void">
 
 	Dear
-	<strong>${user}</strong>, Welcome to Admin Page.
+	<strong><%-- ${user} --%></strong>, Welcome to Admin Page.
 
 	<sec:authorize access="isFullyAuthenticated()">
 		<label><a href="#">Create New User</a> | <a href="#">View
@@ -150,7 +149,7 @@
 								<span class="mini-stat-icon bg-info"><i
 									class="ion-social-usd"></i></span>
 								<div class="mini-stat-info text-right text-muted">
-									<span class="counter">${TOTAL_SALES }</span> Total Sales
+									<span class="counter" id="total_sales"></span> Total Sales
 								</div>
 							</div>
 						</div>
@@ -159,7 +158,7 @@
 								<span class="mini-stat-icon bg-purple"><i
 									class="ion-ios7-cart"></i></span>
 								<div class="mini-stat-info text-right text-muted">
-									<span class="counter">${REQUEST_STOCK }</span> New Request
+									<span class="counter" id="total_request"></span> New Request
 								</div>
 							</div>
 						</div>
@@ -169,7 +168,7 @@
 								<span class="mini-stat-icon bg-primary"><i
 									class="ion-android-contacts"></i></span>
 								<div class="mini-stat-info text-right text-muted">
-									<span class="counter">${TOTAL_USERS }</span> Total Users
+									<span class="counter" id="total_users"></span> Total Users
 								</div>
 							</div>
 						</div>
@@ -278,6 +277,26 @@
 		var currentPage=1;
 		$(function(){
 			
+			function loadDataInDashboard(){
+				$.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/dashboardsize/" , 
+				    type: 'GET',
+				    dataType: 'JSON',
+				    beforeSend: function(xhr) {
+			               xhr.setRequestHeader("Accept", "application/json");
+			               xhr.setRequestHeader("Content-Type", "application/json");
+			           },
+					    success: function(data) {
+					    	$("#total_sales").html(numeral(data.TOTAL_SALES).format('0,0'));
+					    	$("#total_request").html(numeral(data.REQUEST_STOCK).format('0,0'));
+					    	$("#total_users").html(numeral(data.TOTAL_USERS).format('0,0'));
+					    },
+					    error:function(data,status,er) { 
+					        console.log("error: ",data," status: ",status," er:",er);
+					    }
+				})
+			}
+			loadDataInDashboard();
 			$("#PAGINATION").pagination({
 				items: 10,
 				itemsOnPage:10,

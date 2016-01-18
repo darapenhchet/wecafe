@@ -554,11 +554,10 @@ tbody tr td {
 		                    xhr.setRequestHeader("Accept", "application/json");
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
-					 success: function(data){
-						 
+					 success: function(data){ 
 						 b =true;
 						v=data;					
-						 if(data.imports.length>0){   
+						 if(data.imports.length>0){  
 								$("tbody#CONTENTS").html('');					
 								for(i=0; i<data.imports.length;i++)
 									{
