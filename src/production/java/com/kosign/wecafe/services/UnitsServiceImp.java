@@ -3,14 +3,19 @@ package com.kosign.wecafe.services;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Category;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Unit;
 import com.kosign.wecafe.util.HibernateUtil;
 
@@ -38,6 +43,25 @@ public class UnitsServiceImp implements UnitService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Unit> getAllUnits(Pagination pagination) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Unit.class);  
+			criteria.addOrder( Order.desc("unitId") );
+			criteria.setFirstResult(pagination.offset());
+			criteria.setMaxResults(pagination.getPerPage());			
+			List<Unit>	unitlist = (List<Unit>)criteria.list();	
+			return unitlist;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		return null;   
+	}
+	
 	@Override
 	@Transactional
 	public Boolean addNewUnit(Unit unit) {
@@ -87,6 +111,19 @@ public class UnitsServiceImp implements UnitService {
 			ex.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	@Transactional
+	public Long count() { 
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			return (Long) session.createCriteria(Unit.class).setProjection(Projections.rowCount()).uniqueResult();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
 	}
 
 }

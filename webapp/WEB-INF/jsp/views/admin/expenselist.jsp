@@ -328,6 +328,9 @@ thead tr th {
 		=============================================== */
 		jQuery(document).ready(function($) {
 			var check=true;
+			var order = 1;
+    		var v=[];
+    		var b = true;
 			setCalendar(); 
 			getListExpense(1);
 				function getListExpense(currentPage){
@@ -346,8 +349,9 @@ thead tr th {
 			                },
 						 success: function(data){
 							 console.log(data);
-							  if(data.expense.length>0){
-								  order = 1;
+							 b =true;
+							 v=data; 
+							  if(data.expense.length>0){ 
 									$("tbody#CONTENTS").html('');					
 									for(i=0; i<data.expense.length;i++)
 										{
@@ -372,7 +376,15 @@ thead tr th {
 		format = function(value){
 			 		value["exp_date"] =(value["exp_date"]).substring(0, 10);
 			 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');	
-			 		value["importDetail"] = order++;
+			 		if(b){
+			 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+			 			j = order + 1;
+			 			value["importDetail"] =j;
+			 			b = false;
+			 		}
+			 		else  
+			 			value["importDetail"] = ++j;
+			 		 
 		 }
 		 $("#PER_PAGE").change(function(){
  			check = true;

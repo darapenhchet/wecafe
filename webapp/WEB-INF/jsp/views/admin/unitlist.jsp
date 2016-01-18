@@ -141,8 +141,8 @@ thead tr th {
 										<th style="text-align: center;">Actions</th>
 									</tr>
 								</thead>
-								<tbody>
-									<c:forEach items="${units}" var="unit" varStatus="theCount">
+								<tbody id="CONTENTS">
+									<%-- <c:forEach items="${units}" var="unit" varStatus="theCount">
                                         <tr class="gradeX">
                                             <td id="unitId" style="display : none;">${unit.unitId}</td>
                                             <td >${theCount.count }</td>
@@ -156,7 +156,7 @@ thead tr th {
                                                 <!-- <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a> -->
                                             </td>
                                         </tr> 
-                                    </c:forEach> 
+                                    </c:forEach>  --%>
                                     <%-- <tr	dir-paginate="(key,unit) in units|filter:search|itemsPerPage:perPage|orderBy : unit.unitName"
 										class="gradeX">
 										<td id="unitId" style="display: none;">{{unit.unitId}}</td>
@@ -181,15 +181,17 @@ thead tr th {
 
 					</div>
 					<!-- end Panel -->
-					<ul class="pagination" id="PER_PAGE">
-						<li class="active" ng-click="perPage=2"><a
-							href="javascript:;">10</a></li>
-						<li ng-click="perPage=4"><a href="javascript:;">15</a></li>
-						<li ng-click="perPage=6"><a href="javascript:;">50</a></li>
-						<li ng-click="perPage=8"><a href="javascript:;">100</a></li>
-					</ul> 
-					<dir-pagination-controls max-size="15" direction-links="true" boundary-links="true" class="pull-right">
-					</dir-pagination-controls>
+					<div class="row">
+					 <div class="col-md-2">
+											<select id="PER_PAGE" class="form-control"> 
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+					</div>
+					<div id="PAGINATION" class="pull-right"></div>
+					</div> 
 
 				</div>
 				<!-- container -->
@@ -220,6 +222,7 @@ thead tr th {
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
 	<script src="<c:url value='/resources/scripts/app.js' />"></script>
+	
 	<script
 		src="<c:url value='/resources/scripts/services/category_service.js' />"></script>
 	<script
@@ -274,6 +277,25 @@ thead tr th {
 		src="${pageContext.request.contextPath}/resources/assets/notifications/notify-metro.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
+			<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	<script id="CONTENT_Unitlist" type="text/x-jquery-tmpl">
+	<tr> 
+			<td id="unitId" style="display: none;">{{= unitId}}</td>
+			<td>{{= order}}</td>  
+			<td>{{= unitName }}</td> 
+			<td>{{= qty }}</td>
+			<td>{{= to }}</td>
+			<td style="text-align: center;" class="actions">
+				<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+				<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+				<a href="${pageContext.request.contextPath}/admin/updateunit/{{= unitId}}"
+					class="on-default edit-row"><i class="fa fa-pencil"></i></a> 
+	</tr>
+	</script>
 
 	<!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
 
@@ -283,6 +305,61 @@ thead tr th {
 	<script type="text/javascript">
 	var isAdded=false;
     	$(function(){
+    		var check = true;
+    		var order = 1;
+    		var v=[];
+    		var b = true;
+    		listunit(1);
+    		function listunit(currentPage){
+    			var json = {
+					 	"currentPage" : currentPage, 
+			    		"perPage"     : $("#PER_PAGE").val()  
+				};
+    			$.ajax({
+				    url: "${pageContext.request.contextPath}/admin/listunit/",
+				    type: 'GET', 
+				    data: json,
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) { 
+				    	console.log(data);
+				    	b =true;
+						v=data; 
+				    	 if(data.units.length>0){  
+								$("tbody#CONTENTS").html(''); 
+								for(i=0; i<data.units.length;i++)
+								{ 
+									format(data.units[i]); 
+								}
+								$("#CONTENT_Unitlist").tmpl(data.units).appendTo("tbody#CONTENTS"); 
+							}else{
+								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("#allTotalAmount").val("");
+							}
+					    	if(check){
+					    		setPagination(data.pagination.totalPages,1);
+					    		check=false;
+					    	} 
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				}); 
+    		}
+    		
+    		function format(value){
+    			value["qty"] = (numeral(value["qty"]).format('0,0'));   
+    		 	if(b){
+		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+		 			j = order + 1;
+		 			value["order"] =j;
+		 			b = false;
+		 		}
+		 		else  
+		 		value["order"] = ++j; 
+    		}
     		
 			$("#btnSubmit").click(function(e){
 				e.preventDefault();
@@ -336,7 +413,32 @@ thead tr th {
 					"backdrop":"static"
 				}) ;
 			});	
-	     
+			$("#PER_PAGE").change(function(){
+	 			check = true;
+	 			listunit(1);
+			    });
+
+			setPagination = function(totalPage, currentPage){
+		    	$('#PAGINATION').bootpag({
+			        total: totalPage,
+			        page: currentPage,
+			        maxVisible: 10,
+			        leaps: true,
+			        firstLastUse: true,
+			        first: 'First',
+			        last: 'Last',
+			        wrapClass: 'pagination',
+			        activeClass: 'active',
+			        disabledClass: 'disabled',
+			        nextClass: 'next',
+			        prevClass: 'prev',
+			        lastClass: 'last',
+			        firstClass: 'first'
+			    }).on("page", function(event, currentPage){
+			    	check = false;
+			    	listunit(currentPage);
+			    }); 
+			};
     	});
     	function clearFormUnit(){
     		$("#unitname").val("");

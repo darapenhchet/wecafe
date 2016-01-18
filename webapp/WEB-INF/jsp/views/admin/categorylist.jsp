@@ -383,11 +383,12 @@ thead tr th {
 		src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
 
 	<!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
-
+	
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>	
 	<script id="CONTENT_Categorylist" type="text/x-jquery-tmpl">
 	<tr>
+		<td style="display: none" id="CATEGORY_ID">{{= catId}}</td>
 		<td>{{= products}}</td>
 		<td>{{= catName}} </td>
 		<td style="text-align: center;">
