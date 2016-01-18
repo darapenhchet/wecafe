@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.forms.DateForm;
 
 public interface AdminReportService {
 	
 	public List<Map> getReportListAllSellProduct();	
 	public List<Map> getReportListAllOrderProduct();	
-	public List<Map> getListReportDetailPurchaseRest(int byYear);	
+	public List<Map> getListReportDetailPurchaseRest(Pagination pagination,int byYear);	
 	public List<Map> getListReportDailyPurchaseRest(Date startdate);	
 	public Object getListReportWeeklyPurchaseRest(Date startdate, Date enddate);
 	public Object getListReportMonthlyPurchaseRest(Date startDate, Date endDate);

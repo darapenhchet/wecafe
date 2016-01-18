@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Expense;
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.util.HibernateUtil;
@@ -240,7 +241,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map> getListReportDetailPurchaseRest(int byyear) {
+	public List<Map> getListReportDetailPurchaseRest(Pagination pagination, int byyear) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -267,7 +268,9 @@ public class AdminReportServiceImp implements AdminReportService {
 				+ "	LEFT JOIN users C ON A.exp_user_id = C.id "
 							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = " + byyear
 				+ "	GROUP BY 1,2,3 "
-				+ "	ORDER BY 2 DESC;");
+				+ "	ORDER BY 2 DESC");
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	importProducts = (List<Map>)query.list();	
 			return importProducts;

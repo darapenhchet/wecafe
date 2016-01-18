@@ -560,23 +560,8 @@ tbody tr td {
 	 setCalendar();
 	 searchByDate();
 	 
-	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
-/* 	 
-	 listDaily();
-	 listWeekly();
-	  
-	 listYearly(); */
-	 $("#selectyear").change(function(){/* 		 
-		 if($("#monthcombo").hasClass("hidetable")){
-			 if($("#selectreport").val()==4){
-		 	 products.listMonth();		
-	 			}else				 
-			 products.listDetail(1);
-		 }else{
-			 setheadermonthly();
-			 products.listMonthly();
-		 } */
-	
+	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true); 
+	 $("#selectyear").change(function(){
 		 switch($("#selectreport").val()){
 			 case '0': 
 				 products.listDetail(1); 
@@ -591,9 +576,35 @@ tbody tr td {
 				 break;
 		 }
 	 });
+	 function checkFilter(currentPage){
+		 switch($("#selectreport").val()){
+		 case '0': 
+			 products.listDetail(currentPage); 
+			 break;
+		 case '1':
+			 products.listDaily(currentPage);
+			 break;
+		 case '2':
+			 products.listWeekly(currentPage);
+			 break;
+		 case '3':
+			 products.listMonthly(currentPage); 
+			 break;
+			 
+		 case '4':
+			 products.listYearly(currentPage); 
+			 break;
+	 }
+} 
+	 
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
 		 products.listMonthly();
+	 });
+	 
+	 $("#PER_PAGE").change(function(){
+		 check = true;
+		 checkFilter(1);
 	 });
 	 products.listDetail = function(currentPage){
 		//var defaultyear = new Date().getFullYear();		
@@ -603,9 +614,7 @@ tbody tr td {
 			    type: 'GET', 
 			    data: {
 			    		"currentPage" : currentPage,
-			    		"perPage"     : $("#PER_PAGE").val(),
-			    		"startDate"   : "03/12/2015",
-			    		"endDate"     : "03/12/2015",
+			    		"perPage"     : $("#PER_PAGE").val(), 
 			    		"byYear" 	  : byyear 
 			    },
 				    beforeSend: function(xhr) {
@@ -850,7 +859,7 @@ tbody tr td {
 		        firstClass: 'first'
 		    }).on("page", function(event, currentPage){
 		    	check = false;
-		    	products.findAllProducts(currentPage);
+		    	checkFilter(currentPage);
 		    }); 
 		};
 	 products.listDetail(1); 
