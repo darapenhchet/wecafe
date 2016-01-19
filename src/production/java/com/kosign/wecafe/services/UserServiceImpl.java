@@ -74,8 +74,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public Boolean saveUser(User user) {
+		Session session=null;
 		try{
-			//System.out.println("user.getPassword" + user.getPassword());
 			user.setCreatedBy(this.findUserByUsername(getPrincipal()));
 			user.setCreatedDate(new Date());
 			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
@@ -93,15 +93,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public Boolean updateUser(User userUpdate) {
+		Session session=null;
 		try{
-			//User user = (User) sessionFactory.getCurrentSession().get(User.class, newUser.getId());
-			//user.setFirstName(newUser.getFirstName());
-			//user.setLastName(newUser.getLastName());
-			//user.set
-			User user = (User) sessionFactory.getCurrentSession().get(User.class, userUpdate.getId());
+			session=sessionFactory.getCurrentSession();
+			User user = (User)session.get(User.class, userUpdate.getId());
 			Long id = user.getUserRoles().iterator().next().getId();
 			System.out.println(id);
-			UserRole userRole = (UserRole) sessionFactory.getCurrentSession().get(UserRole.class, id);
+			UserRole userRole = (UserRole)session.get(UserRole.class, id);
 			Set userRoles = new HashSet<UserRole>();
 			userRoles.add(userRole);
 			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
@@ -111,7 +109,7 @@ public class UserServiceImpl implements UserService{
 			user.setLastName(userUpdate.getLastName());
 			user.setStatus(userUpdate.getStatus());
 			user.setUserRoles(userRoles);
-			sessionFactory.getCurrentSession().saveOrUpdate(user);
+			session.saveOrUpdate(user);
 			return true;
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

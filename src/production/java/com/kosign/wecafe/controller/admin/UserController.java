@@ -30,8 +30,8 @@ public class UserController {
 	@Inject
 	UserService userService;
 	@RequestMapping(value="/admin/userlist")
-	public String getAllUsers(/*Map<String, Object> model*/){
-		
+	public String getAllUsers(Map<String, Object> model){
+		model.put("roles", userService.getAllUserRoles());
 		return "admin/userlist";
 	}
  
@@ -69,19 +69,13 @@ public class UserController {
 	
 	@RequestMapping(value="/admin/users/update", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody Boolean updateUser(@RequestBody User user){
-		//System.out.println("==============================================================================================");
-		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
-		///System.out.println("==============================================================================================");
-		//return "redirect:admin/useradd";
+		
 		return userService.updateUser(user);
 	}
 	
 	@RequestMapping(value="/admin/users/delete/{id}", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody Boolean deleteUser(@RequestBody @PathVariable("id") Long id){
-		//System.out.println("==============================================================================================");
-		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
-		///System.out.println("==============================================================================================");
-		//return "redirect:admin/useradd";
+		
 		return userService.deleteUser(id);
 	}
 	
@@ -90,7 +84,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/admin/users/status/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody boolean changeProductStatus(@RequestBody @PathVariable("id") Long id) {
-		System.out.println("ID=" + id);
+		
 		return userService.updateUserStatus(id);
 	}
 	

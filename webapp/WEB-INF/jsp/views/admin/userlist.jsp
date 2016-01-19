@@ -527,6 +527,7 @@ setPagination = function(totalPage, currentPage){
 						
 					              }]
 				};
+				console.log(json);
 				
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/users/add", 
