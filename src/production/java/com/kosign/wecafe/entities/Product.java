@@ -45,16 +45,17 @@ public class Product implements Serializable{
 	@Column(name="pro_name")
 	private String productName;
 	
-	@Column(name="qty")
+	
+	@Column(name="qty",nullable=true)
 	private Long quantity;
 	
-	@Column(name="unit_price")
+	@Column(name="unit_price",nullable=true)
 	private BigDecimal unitPrice;
 	
-	@Column(name="cost_price")
+	@Column(name="cost_price",nullable=true)
 	private BigDecimal costPrice;
 	
-	@Column(name="sale_price")
+	@Column(name="sale_price",nullable=true)
 	private BigDecimal salePrice;
 	
 	@ManyToOne

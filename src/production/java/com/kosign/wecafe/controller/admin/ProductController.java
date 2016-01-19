@@ -3,6 +3,7 @@ package com.kosign.wecafe.controller.admin;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -80,15 +81,15 @@ public class ProductController {
         category.setCatId(form.getCategoryId());
         unit.setUnitId(form.getUnitId());
 		User user = userService.findUserByUsername(getPrincipal());
-		//System.out.println("unit name = " + form.getUnitId());
+	
 		product.setProductName(form.getProductName());
-		product.setQuantity(form.getQuantity());
+		product.setQuantity(0L);
 		product.setProductType("1"); 
 		product.setStockType("1");
 		product.setCan_sell_holiday("1");
-		product.setCostPrice(form.getCostPrice());
-		product.setSalePrice(form.getSalePrice());
-		product.setUnitPrice(form.getUnitPrice());
+		product.setCostPrice(new BigDecimal(0));
+		product.setSalePrice(new BigDecimal(0));
+		product.setUnitPrice(new BigDecimal(0));
 		product.setCategory(category);
 		product.setCreatedBy(user);
 		product.setUnit(unit);
@@ -97,7 +98,7 @@ public class ProductController {
 		product.setCreatedDate(new Date());
 		product.setLastUpdatedDate(new Date());
 		product.setStatus(true);
-		System.out.println("product = " + product.toString());
+		
 		return productService.addNewProduct(product);  
 	}
 
