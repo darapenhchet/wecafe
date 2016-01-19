@@ -561,10 +561,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map> getListReportDailyPurchaseRest(Date startdate) {
-	//	String Startdate[] =startdate.toString().split("/");
-	//	String purchaseDate = Startdate[2] + "-" + Startdate[1] + "-" + Startdate[0];
-		
+	public List<Map> getListReportDailyPurchaseRest(Pagination pagination,Date startdate) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -596,7 +593,9 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " 	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.exp_user_id = C.id "
 					+ " 				WHERE A.expense_date = '" + startdate
 					+ "' GROUP BY 1,2,3,4,5,6,7 "
-					+ " ORDER BY 2 DESC;");
+					+ " ORDER BY 2 DESC");
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	importProducts = (List<Map>)query.list();	
 			return importProducts;

@@ -56,7 +56,8 @@ public class ReportSaleController {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdaily", adminReportSaleService.getListReportDailySaleRest(startDate));
+		map.put("reportdaily", adminReportSaleService.getListReportDailySaleRest(pagination, startDate));
+		map.put("getTotalAmount", adminReportSaleService.getAllTotalAmount(startDate, startDate));
 		pagination.setTotalCount(adminReportSaleService.countDaily(startDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);

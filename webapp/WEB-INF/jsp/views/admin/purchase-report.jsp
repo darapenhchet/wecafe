@@ -203,6 +203,7 @@ tbody tr td {
 												<table id="dailytable" class="table table-responsive">
 													<thead>
 														<tr>
+															<th>#</th>
 															<th>Customer</th>
 															<th>Item</th>
 															<th>Qty</th>
@@ -220,6 +221,7 @@ tbody tr td {
 												<table id="detailtable" class="table table-responsive">
 													<thead>
 														<tr> 
+															<th>#</th>
 															<th>Invoice No</th> 
 															<th>Purchase Date</th>
 															<th>Purchase By</th> 
@@ -471,6 +473,7 @@ tbody tr td {
 <!-- ============================  tbodydetail  ================================== -->		
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
     	<tr>  
+			<td>{{= order}}</td>
 			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
 			<td style="text-align:right;">{{= purchase_date}} </td>
 			<td style="text-align:right;">{{= purchase_by}} ​</td>
@@ -482,6 +485,7 @@ tbody tr td {
  <!-- ============================  tbodydaily  ================================== -->		
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
+			<td>{{= order}}</td>
 			<td>{{= supplier_name}}</td>
 			<td>{{= product_name}}</td>
 			<td>{{= product_qty}}</td>
@@ -557,6 +561,9 @@ tbody tr td {
  $(document).ready(function(){
 	var products ={};
 	var check = true;
+	var order = 1;
+	var v=[];
+	var b = true;
 	 setCalendar();
 	 searchByDate();
 	 
@@ -623,6 +630,8 @@ tbody tr td {
 	           },
 			    success: function(data) { 
 			    	console.log(data);
+			    	b =true;
+					v=data;
 					 if(data.reportdetail.length>0){
 					$("tbody#tbodydetail").html('');
 						 for(var i=0;i<data.reportdetail.length;i++){							
@@ -657,18 +666,14 @@ tbody tr td {
 	           },
 			    success: function(data) { 
 			    	console.log(data);
+			    	b =true;
+					v=data;
 				 	 if(data.reportdaily.length>0){
 						$("tbody#tbodydaily").html('');
 						   for(var i=0;i<data.reportdaily.length;i++){							
 							products.format(data.reportdaily[i]);
 						}   
-						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily");
-						var tblside= $('#dailytable > tbody >tr').length;
-						var alltotal = 0;
-						
-						for(var i =0;i < tblside; i++)	
-							alltotal += parseInt($("#dailytable tbody").children().eq(i).children().eq(6).html());
-						$("#allTotalAmount").val(alltotal);
+						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily"); 
 					}else{
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
@@ -812,6 +817,14 @@ tbody tr td {
 		 		value["purchase_type"] = "Import";
 		 else
 			 	value["purchase_type"] = "Expense";
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
 	 }
 	 function formatMonthlySaleReport(value){
 			console.log(value);

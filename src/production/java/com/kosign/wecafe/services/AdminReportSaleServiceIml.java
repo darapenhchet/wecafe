@@ -1,5 +1,6 @@
 package com.kosign.wecafe.services;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -14,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.type.LongType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,7 +93,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	
 	@Override
 	@Transactional
-	public List<Map> getListReportDailySaleRest(Date startdate) {
+	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate) {
 		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
 		System.out.println("startdate = "+startdate);
 		Session session = null;
@@ -108,6 +111,8 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 							+ " 		LEFT JOIN product B on B.pro_id = A.pro_id "
 							+ " WHERE D.status = 2 and to_char(C.sale_datetime,'YYYY-mm-dd') = '" + startDate
 							+ "' GROUP BY 1,2,4,6");
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	saleProducts = (List<Map>)query.list();	
 			return saleProducts;
@@ -378,12 +383,25 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 
 	@Override
 	@Transactional
-	public Long countDaily(Date dateTime) {     
-		Session session = null; 
+	public Long countDaily(Date dateTime) throws HibernateException, ParseException {  
+	 	String startDate = new SimpleDateFormat("YYYY-MM-DD").format(dateTime); 
+		Session session = null;
+		try{
 			session = sessionFactory.getCurrentSession();
-			return  (Long) session.createCriteria(Sale.class)
-					.add(Restrictions.between("saleDatetime", dateTime, dateTime ))
-					.setProjection(Projections.rowCount()).uniqueResult();  
+			session.getTransaction().begin();
+			SQLQuery query = session.createSQLQuery("SELECT count(DISTINCT A.pro_id) as count "  
+							+ " from order_detail A INNER JOIN wecafe_order B on A.order_id = B.order_id "
+							+ " 		LEFT JOIN sale C on C.ord_id = B.order_id "
+							+ " 		WHERE to_char(C.sale_datetime,'yyyy-MM-dd') = '" + startDate + "'");  
+			query.addScalar("count", LongType.INSTANCE);
+			return (Long) query.uniqueResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			
+		}  
+		
+		return null;
 	}
 /*	@Override
 	@Transactional
@@ -394,5 +412,30 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 					.add(Restrictions.between("saleDatetime", startDate, endDate))
 					.setProjection(Projections.rowCount()).uniqueResult();   
 	}*/
+
+	@Override
+	@Transactional
+	public Long getAllTotalAmount(Date startdate, Date enddate) {
+		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
+		String endDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			session.getTransaction().begin();
+			SQLQuery query = session.createSQLQuery("SELECT "
+							+ " sum(A.pro_qty*A.pro_unit_price) as total_amount " 
+							+ " from sale C INNER JOIN wecafe_order D on C.ord_id = D.order_id "
+							+ " 		LEFT JOIN order_detail A ON C.ord_id = A.order_id "
+							+ " 		LEFT JOIN product B on B.pro_id = A.pro_id "
+							+ " WHERE D.status = 2 and to_char(C.sale_datetime,'YYYY-mm-dd') between '" + startDate +"' and '" +  endDate +"'");  
+			query.addScalar("total_amount", LongType.INSTANCE); 	
+			return  (Long) (query.uniqueResult());
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			
+		}		
+		return null;
+	}
 
 }

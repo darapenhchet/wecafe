@@ -213,7 +213,8 @@ thead tr th {
 											<div class="hidetable" id="tbldaily">
 												<table id="dailytable" class="table table-responsive">
 													<thead>
-														<tr>															 
+														<tr>	
+															<th>#</th>														 
 															<th>Item</th>
 															<th>Qty</th>
 															<th>Unit Price</th> 														
@@ -489,6 +490,7 @@ thead tr th {
  <!-- ============================  tbodydaily  ================================== -->		
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
+			<td>{{= order}}</td>
 			<td>{{= pro_name}}</td>
 			<td>{{= product_qty}}</td>
 			<td>{{= pro_unit_price}}</td> 
@@ -628,8 +630,9 @@ thead tr th {
 		 setheadermonthly();
 		 sales.listMonthly();
 	 });
-	 sales.listDetail = function(currentPage){
+	 sales.listDetail = function(currentPage){ 
 		var byyear = $("#selectyear").val(); 
+		$("#allTotalAmount").val('');
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/saledetail/" , 
 			    type: 'GET', 
@@ -667,7 +670,7 @@ thead tr th {
 			}); 
 	 }
 	 sales.listDetail(1); 
-	  sales.listDaily = function(currentPage){
+	  sales.listDaily = function(currentPage){ 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/salereportdaily/" , 
 			    type: 'GET', 
@@ -682,16 +685,17 @@ thead tr th {
 	           },
 			    success: function(data) { 
 			    	console.log(data);
-			    	var alltotal = 0;
+			    	b =true;
+					v=data;
+			    	//var alltotal = 0;
 				 	 if(data.reportdaily.length>0){
 						$("tbody#tbodydaily").html('');
 						   for(var i=0;i<data.reportdaily.length;i++){	
-							alltotal += data.reportdaily[i].total_amount; 
-							sales.formatDaily(data.reportdaily[i]);
-							
+						//	alltotal += data.reportdaily[i].total_amount; 
+							sales.formatDaily(data.reportdaily[i]); 
 						}   
 						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily"); 
-						$("#allTotalAmount").val(numeral(alltotal).format('0,0'));
+						$("#allTotalAmount").val(numeral(data.getTotalAmount).format('0,0'));
 					}else{
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
@@ -846,6 +850,14 @@ thead tr th {
 		 value["total_amount"] = numeral(value["total_amount"]).format('0,0');
 		 value["pro_unit_price"] = numeral(value["pro_unit_price"]).format('0,0');
 		 value["product_qty"] = numeral(value["product_qty"]).format('0,0'); 
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
 	 }
 	 sales.formatWeekly = function(value, j){
 		 value['day' +(j) + '_qty'] = numeral(value['day' +(j) + '_qty']).format('0,0'); 

@@ -54,7 +54,7 @@ public class ReportPurchaseController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("Date = " + startDate);
-		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(startDate));
+		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(pagination, startDate));
 		pagination.setTotalCount(adminReportService.countDaily(startDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);

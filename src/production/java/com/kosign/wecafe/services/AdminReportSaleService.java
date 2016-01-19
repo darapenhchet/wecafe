@@ -5,18 +5,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
+
 import com.kosign.wecafe.entities.Pagination;
 
 public interface AdminReportSaleService {
 	public List<Map> getListReportDetailSaleRest(Pagination pagination,int byYear);
-	public List<Map> getListReportDailySaleRest(Date startdate);
+	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate);
 	public Object getListReportWeeklySaleRest(Date startdate, Date enddate);
 	public Object getListReportMonthlySaleRest(Date startDate, Date endDate);
 	public Object getListReportYearlySale(Date startDate, Date endDate);	
 	public Map<String, Object> getAllSaleMonthlyReportsTotal(Date startDate, Date endDate);	
 	public List<Map> listAllsaleDetail(Long id);
 	public Long countDetail(int year) throws ParseException;
-	public Long countDaily(Date dateTime);
+	public Long countDaily(Date dateTime) throws HibernateException, ParseException;
 	//public Long countWeekly(Date startDate, Date endDate);
 	public Long count();
+	public Long getAllTotalAmount(Date startdate, Date enddate);
 }
