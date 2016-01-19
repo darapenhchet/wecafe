@@ -54,18 +54,7 @@ public class UserController {
 	
 	@RequestMapping(value="/admin/users/add", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody Boolean addNewUser(@RequestBody User user){
-		//System.out.println("==============================================================================================");
-		//System.out.println("==============================="+userService.saveUser(user)+"=================================");
-		///System.out.println("==============================================================================================");
-		//return "redirect:admin/useradd";
-		System.out.println("NEW USER..." + user.getPassword());
-		System.out.println("NEW getEmail..." + user.getEmail());
-		System.out.println("NEW getFirstName..." + user.getFirstName());
-		System.out.println("NEW getGender..." + user.getGender());
-		System.out.println("NEW getLastName..." + user.getLastName());
-		System.out.println("NEW USER..." + user.getStatus());
-		System.out.println("NEW getStatus..." + user.getUsername());
-		System.out.println("NEW getUserRoles..." + user.getUserRoles()); 
+
 		return userService.saveUser(user);
 	}
 	
