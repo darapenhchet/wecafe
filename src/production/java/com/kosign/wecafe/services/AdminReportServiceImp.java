@@ -323,6 +323,8 @@ public class AdminReportServiceImp implements AdminReportService {
 			return  (Long) session.createCriteria(ImportProduct.class).setProjection(Projections.rowCount()).uniqueResult();   
 	}
 	@Override
+	
+	
 	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -332,12 +334,14 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " left join (select od.pro_qty,od.pro_id, od.order_id,wo.order_date from order_detail od"
 					+ " Inner join wecafe_order wo"
 					+ " on od.order_id = wo.order_id"
-					+ " where wo.status =2 and  wo.order_date BETWEEN '2015-11-07' and '2015-11-19 23:59') as aa"
+					+ " where wo.status =2 and  wo.order_date BETWEEN ? and ?) as aa"
 					+ " on p.pro_id = aa.pro_id "
 					+ " left join import_detail id on p.pro_id = id.pro_id"
 					+ " left join supplier s on id.sup_id = s.sup_id"
 					+ "	GROUP BY p.pro_name, p.qty, id.pro_qty ,  aa.pro_qty, s.sup_name";
 			Query query = session.createSQLQuery(sql);
+			query.setString(0, dateForm.getStartdate());
+			query.setString(1, dateForm.getEnddate());
 			List<Object[]> result = query.list();
 			return result;
 			

@@ -179,7 +179,7 @@
 															<th>purchase</th>
 															<th>Sale</th>
 															<th>Balance</th>
-															<th>Remark</th>
+															
 														</tr>
 													</thead>
 													<tbody id="searchDetail">
@@ -289,13 +289,12 @@
 	 
 	 
 	 function searchByDate(){
-      	var startDate 		= $( "#REGS_DATE_S" ).val() + " 00:00:00";
-		var endDate 		= $( "#REGS_DATE_E" ).val() + " 24:00:00"; 
+      	var startDate 		= $( "#REGS_DATE_S" ).val() //+ " 00:00:00";
+		var endDate 		= $( "#REGS_DATE_E" ).val() //+ " 24:00:00"; 
 		json = {
 					"startdate"   		  : startDate,
 					"enddate" 		  	  : endDate
 		};
-		console.log(JSON.stringify(json));
 		$.ajax({
 			 url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate", 
 	    type: 'POST',
@@ -325,7 +324,7 @@
 		    	  	st += "<td>" + data[i][3]+ "</td>"; 
 		    	  	st += "<td>" + data[i][4]+ "</td>"; 
 		    	  	st += "<td>" + data[i][5]+ "</td>"; 
-		    	  	st += "<td>" + data[i][6]+ "</td>"; 
+		    	  
 		    	}
 	            
       			$("#searchDetail").html(st);

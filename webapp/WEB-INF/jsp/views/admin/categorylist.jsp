@@ -145,51 +145,7 @@ thead tr th {
 									</tr>
 								</thead>
 								<tbody id="CONTENTS">
-									<%-- <c:forEach items="${categories}" var="category" varStatus="theCount">
-                                        <tr class="gradeX">
-                                            <td id="CATEGORY_ID" style="display : none;">${category.catId}</td>
-                                            <td >${theCount.count }</td>
-                                            <td>${category.catName }</td>
-                                            <td style="text-align:center;"><img src="${pageContext.request.contextPath}/resources/images/categories/${category.img }" class="img-thumbnail" alt="${category.catName}" width="30px" height="30px" /></td>
-                                            <td>${category.createdBy.lastName } ${category.createdBy.firstName }</td>
-                                            <td>${category.createdDate}</td>
-                                            <td>${category.lastUpdatedBy.lastName } ${category.lastUpdatedBy.firstName }</td>
-                                            <td>${category.lastUpdatedDate}</td>
-                                            <td style="text-align:center;" class="actions">
-                                                <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                                                <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                                <a href="${pageContext.request.contextPath}/admin/category/update/${category.catId}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach> --%>
-									<%-- <tr
-										dir-paginate="(key,category) in categories|filter:search|itemsPerPage:perPage|orderBy : category.createdDate"
-										class="gradeX">
-										<td id="CATEGORY_ID" style="display: none;">{{category.catId}}</td>
-										<td>{{key+1 }}</td>
-										<td>{{category.catName }}</td>
-										<td style="text-align: center;"><img
-											src="${pageContext.request.contextPath}/resources/images/products/{{category.img }}"
-											class="img-thumbnail" alt="" width="30px" height="30px" /></td>
-										<td>{{category.createdBy.lastName }}
-											{{category.createdBy.firstName }}</td>
-										<td style="text-align: center;">{{category.createdDate |
-											date:'dd-MMMM-yyyy'}}</td>
-										<td>{{category.lastUpdatedBy.lastName }}
-											{{category.lastUpdatedBy.firstName }}</td>
-										<td style="text-align: center;">{{category.lastUpdatedDate
-											| date:'dd-MMMM-yyyy'}}</td>
-										<td style="text-align: center;" class="actions"><a
-											href="#" class="hidden on-editing save-row"><i
-												class="fa fa-save"></i></a> <a href="#"
-											class="hidden on-editing cancel-row"><i
-												class="fa fa-times"></i></a> <a
-											href="${pageContext.request.contextPath}/admin/category/update/{{category.catId}}"
-											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-											<a class="on-default remove-row" href="javascript:;"
-											id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
-									</tr> --%>
+							
 								</tbody>
 							</table>
 						</div>
@@ -521,7 +477,7 @@ thead tr th {
 			
 			$("#btnSubmit").click(function(e){
 				e.preventDefault();    				
-				if($("#optCategory").val()==""){
+				if($("#categoryName").val()==""){
 					alert("PLEASE CHOOSE THE CATEGORY");
 					return;
 				}

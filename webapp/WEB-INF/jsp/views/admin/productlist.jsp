@@ -511,7 +511,7 @@ thead tr th {
     			
     			$("#frmProductAdd").submit(function(e){
     				e.preventDefault();    				
-    				if($("#optCategory").val()==""){
+    				if($("#productName").val()==""){
     					alert("PLEASE CHOOSE THE CATEGORY");
     					return;
     				}
