@@ -57,6 +57,13 @@ public class UnitController {
 		return "admin/unitupdate";
 	}
 	
+	@RequestMapping(value="/admin/deleteunit/{unitid}", method = RequestMethod.GET)
+	public String deleteUnit(@PathVariable("unitid") Long unitid ,Map<String, Object>model){
+		System.out.println("uniteid=========================="+unitid);
+		unitService.deleteUnit(unitid);
+		return "admin/unitlist";
+	}
+	
 	@RequestMapping(value="/admin/unitupdate", method = RequestMethod.POST)
 	public @ResponseBody Boolean unitupdate(UnitForm form ,Map<String, Object>model){ 
 		 Unit unit = unitService.findUnitByID(form.getUnitId());

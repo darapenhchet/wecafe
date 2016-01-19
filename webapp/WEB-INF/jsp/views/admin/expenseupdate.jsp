@@ -449,7 +449,7 @@
             	
             	$("#cencelBtn").click(function(){
             		$("#tbllistimport tr").remove();
-            		location.href="${pageContext.request.contextPath}/admin/importlist";
+            		location.href="${pageContext.request.contextPath}/admin/expenselist";
             	}); 
             	$(document).on("click","#btnRemove",function(){
             		$(this).parents("tr").remove();            		

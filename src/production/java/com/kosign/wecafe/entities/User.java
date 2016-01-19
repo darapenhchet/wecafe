@@ -1,10 +1,8 @@
 package com.kosign.wecafe.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,12 +21,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosign.wecafe.enums.Status;
 
 @Entity
 @Table(name="USERS")
 public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,22 +67,12 @@ public class User implements Serializable{
 	@Column(name="STATUS", nullable=false)
 	private Status status = Status.ACTIVE;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinTable(name = "USER_USER_ROLE", 
              joinColumns = { @JoinColumn(name = "USER_ID") }, 
              inverseJoinColumns = { @JoinColumn(name = "USER_ROLE_ID") })
 	private Set<UserRole> userRoles = new HashSet<UserRole>();
 	
-//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL,mappedBy="user")
-//	private Set<Expense> Expense ;//= new HashSet<Product>();
-//	
-//	public Set<Expense> getExpense() {
-//		return Expense;
-//	}
-//
-//	public void setExpense(Set<Expense> expense) {
-//		Expense = expense;
-//	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_DATE")
@@ -97,6 +89,7 @@ public class User implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="LAST_UPDATED_BY")
 	private User lastUpdatedBy;
+	
 
 	public Long getId() {
 		return id;
@@ -194,15 +187,5 @@ public class User implements Serializable{
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-/*	public List<ImportProduct> getImportproduct() {
-		return importproduct;
-	}
-
-	public void setImportproduct(List<ImportProduct> importproduct) {
-		this.importproduct = importproduct;
-	}*/
-
-	
-	
 	
 }

@@ -440,6 +440,7 @@ thead tr th {
         		$(document).on('click','#btnStatus',function(){
       			
                			      			var id= $(this).parents("tr").children().eq(0).html() ;
+               			      			alert(id);
         			         			var _this = $(this);
         			       				$.ajax({ 
         			        				    url: "${pageContext.request.contextPath}/admin/product/status/"+id, 

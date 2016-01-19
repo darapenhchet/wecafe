@@ -1,10 +1,16 @@
 package com.kosign.wecafe.entities;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,6 +23,7 @@ public class Unit {
 	@GeneratedValue(generator="unit_id", strategy=GenerationType.SEQUENCE)
 	@Column(name="unit_id")
 	private Long unitId;
+
 	
 	@Column(name="qty")
 	private Long qty;
@@ -58,5 +65,6 @@ public class Unit {
 	public void setTo(String to) {
 		this.to = to;
 	}
-	
+
+
 }

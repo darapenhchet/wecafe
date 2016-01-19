@@ -293,7 +293,7 @@ thead tr th {
 				<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 				<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
 				<a href="${pageContext.request.contextPath}/admin/updateunit/{{= unitId}}"
-					class="on-default edit-row"><i class="fa fa-pencil"></i></a> 
+					class="on-default edit-row"><i class="fa fa-pencil"></i></a>
 	</tr>
 	</script>
 
@@ -310,6 +310,8 @@ thead tr th {
     		var v=[];
     		var b = true;
     		listunit(1);
+    		
+    		
     		function listunit(currentPage){
     			var json = {
 					 	"currentPage" : currentPage, 
@@ -384,8 +386,9 @@ thead tr th {
 					success: function(data) { 
 						console.log(data);
  				        if(data){
- 				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+ 				        	alert('Has been successfully added.');
  				        	isAdded=true;
+ 				        	clearFormUnit();
  				        }else{
  				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
  				        }
@@ -396,7 +399,6 @@ thead tr th {
 				});
 			});    		
     		
-		//Category Add
 	    	
 	    	$('#form_add_unit').on('hidden.bs.modal', function (event) {
 	    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/unitlist";
@@ -440,10 +442,13 @@ thead tr th {
 			    }); 
 			};
     	});
+    	
+    	
     	function clearFormUnit(){
     		$("#unitname").val("");
     		$("#unitqty").val("");
     		$("#unittype").val("");
+    		$("#unitname").focus();
     	}
     	</script>
 </body>
