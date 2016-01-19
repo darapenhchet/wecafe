@@ -29,8 +29,6 @@ public class RequestStockController {
 	@RequestMapping(value="/admin/update_req_qty", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Boolean updateReqQty(@RequestBody RequestForm  req)	{
 	
-		System.out.println("reqid==============="+req.getReqId());
-		
 		return requestService.updateReqQty(req);
 		
 	}
