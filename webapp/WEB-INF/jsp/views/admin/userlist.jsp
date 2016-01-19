@@ -139,8 +139,8 @@ thead tr th {
 										<th>Actions</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr
+								<tbody id="CONTENTS">
+									<%-- <tr
 										dir-paginate="(key,user) in users|filter:search|itemsPerPage:perPage|orderBy : user.createdDate">
 										<td id="USER_ID">{{user.id }}
 										<td>{{user.lastName +" "+ user.firstName }}</td>								
@@ -178,19 +178,20 @@ thead tr th {
 												class="fa fa-trash-o"></i></a> <a href="#"
 											class="on-default remove-row" id="btnChangePassword"><i
 												class="fa fa-cog fa-fw"></i></a></td>
-									</tr>
+									</tr> --%>
 								</tbody>
 							</table>
-							<ul class="pagination" id="PER_PAGE">
-							<li class="active" ng-click="perPage=10"><a
-								href="javascript:;">10</a></li>
-							<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-							<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-							<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-						</ul>
-						<dir-pagination-controls max-size="15" direction-links="true"
-							boundary-links="true" class="pull-right">
-						</dir-pagination-controls>
+							<div class="row">
+										<div class="col-md-2">
+											<select id="PER_PAGE" class="form-control"> 
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+										</div> 
+										<div id="PAGINATION" class="pull-right"></div>
+							</div> 
 						</div>
 						<!-- end: page -->					
 					</div>
@@ -302,7 +303,21 @@ thead tr th {
 		src="${pageContext.request.contextPath}/resources/assets/datatables/jquery.dataTables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
-
+		
+		<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
+	<tr>
+		<td>{{= importDetail}} </td>
+		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
+		<td>{{= impDate}}</td>
+		<td>{{= user.firstName +' '+ user.lastName}} </td>
+		<td>{{= totalAmount}}</td>  
+		<td class="actions" style="text-align: center;">
+			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/viewById/{{= impId}}">
+				<i class="fa fa-pencil"></i>
+			</a> 
+		</td>
+	</tr>
+</script>
 	<script type="text/javascript">
             /* ==============================================
             Counter Up
@@ -323,6 +338,25 @@ thead tr th {
 
 	<script>
     	$(function(){
+    		listAllUsers(1);
+    		
+    		function listAllUsers(currentPage){
+    			$.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/listuser/", 
+				    type: 'POST', 
+				    dataType: 'JSON',  
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) {  
+				   			console.log(data);
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				});
+    		}
     		
 	    	$(document).on('click','#btnStatus',function(){
 				var id = $(this).parents("tr").find("#USER_ID").html();
@@ -392,10 +426,7 @@ thead tr th {
 				});
 	    	});
 	    	
-	    	$("#PER_PAGE li").click(function(){
-	   			 $('#PER_PAGE li.active').removeClass('active');
-	   			 $(this).addClass('active');
-	   		});
+	    	 
     	});
     	</script>
 </body>

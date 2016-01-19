@@ -39,7 +39,7 @@ public class DashboardController {
 		map.put("TOTAL_SALES", sellerService.getAllSellCount());
 		map.put("NEW_ORDERS", sellProductService.getOrdered().size());
 		map.put("REQUEST_STOCK", sellProductService.getRequestStock().size());
-		map.put("TOTAL_USERS", userService.getAllUsers().size());
+		map.put("TOTAL_USERS", userService.count());
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);	 
 	}
 }

@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -54,8 +55,10 @@ public class ReportPurchaseController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("Date = " + startDate);
-		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(pagination, startDate));
-		pagination.setTotalCount(adminReportService.countDaily(startDate));
+		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,true)); 
+		//pagination.setTotalCount(adminReportService.countDaily(startDate));
+		List<Map> totalRecord=adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false); 
+		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

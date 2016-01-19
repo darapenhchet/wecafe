@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.entities.UserRole;
@@ -118,6 +122,25 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	@Transactional
+	public List<User> getAllUser(Pagination pagination){
+		
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(User.class ); 
+			criteria.addOrder( Order.asc("username") );
+			criteria.setFirstResult(pagination.offset());
+			criteria.setMaxResults(pagination.getPerPage());			
+			List<User>	userlist = (List<User>)criteria.list();	
+			return userlist;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		return null;
+	}
+	
+	@Override
+	@Transactional
 	public List<User> getAllUsers(){
 		try{
 			return (List<User>)sessionFactory.getCurrentSession().createCriteria(User.class).list();
@@ -126,6 +149,12 @@ public class UserServiceImpl implements UserService{
 			ex.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	@Transactional
+	public Long count(){
+		return  (Long) sessionFactory.getCurrentSession().createCriteria(User.class).uniqueResult();
 	}
 	
 	@Override

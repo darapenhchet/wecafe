@@ -216,6 +216,7 @@ thead tr th {
 	
 	<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
 	    	<tr>
+				<td style="display: none;">{{= productId}}</td>
 				<td>{{= importDetail}}</td>
 				<td>{{= productName}}</td>
 				<td style="text-align:right;">{{= quantity}}</td>
@@ -439,8 +440,7 @@ thead tr th {
         		});       		
         		$(document).on('click','#btnStatus',function(){
       			
-               			      			var id= $(this).parents("tr").children().eq(0).html() ;
-               			      			alert(id);
+               			      			var id= $(this).parents("tr").children().eq(0).html() ; 
         			         			var _this = $(this);
         			       				$.ajax({ 
         			        				    url: "${pageContext.request.contextPath}/admin/product/status/"+id, 

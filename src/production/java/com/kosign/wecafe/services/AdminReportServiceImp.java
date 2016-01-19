@@ -561,7 +561,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map> getListReportDailyPurchaseRest(Pagination pagination,Date startdate) {
+	public List<Map> getListReportDailyPurchaseRest(Pagination pagination,Date startdate, boolean isPagination) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -594,10 +594,13 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " 				WHERE A.expense_date = '" + startdate
 					+ "' GROUP BY 1,2,3,4,5,6,7 "
 					+ " ORDER BY 2 DESC");
-			query.setFirstResult(pagination.offset());
-			query.setMaxResults(pagination.getPerPage());
+			if(isPagination){
+				query.setFirstResult(pagination.offset());
+				query.setMaxResults(pagination.getPerPage());
+			}
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	importProducts = (List<Map>)query.list();	
+			System.out.println("Records Count = "   + importProducts.size());
 			return importProducts;
 		}catch(Exception e){
 			e.printStackTrace();
