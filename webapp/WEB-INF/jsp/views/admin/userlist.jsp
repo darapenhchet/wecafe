@@ -131,9 +131,9 @@ thead tr th {
 										<th>Email</th>
 										<th>Username</th>
 										<th>Type</th>
-										<th>Created By</th>
+										<!-- <th>Created By</th> -->
 										<th>Created Date</th>
-										<th>Updated By</th>
+										<!-- <th>Updated By</th> -->
 										<th>Updated Date</th>
 										<th>Status</th>
 										<th>Actions</th>
@@ -269,27 +269,30 @@ thead tr th {
 		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 		
 		<script id="CONTENT_Userlist" type="text/x-jquery-tmpl">
+	{{if 1==1}}
+	<p>Testing server</p>
+	{{else}}
+	<p>OKAY</p>
+	{{/if}}
 	<tr> 
 		<td style="display: none;" id="USER_ID">{{= id }}
 		<td>{{= order}}</td>
 		<td>{{= firstName}}</td>								
 		<td>{{= email }}</td>
 		<td>{{= username }}</td>
-		<td>{{= userRoles[0].type }}</td>
-		<td></td>
-		<td>{{= createdDate}}</td>
-		<td></td>
+		<td>{{= userRoles[0].type }}</td> 
+		<td>{{= createdDate}}</td> 
 		<td>{{= lastUpdatedDate}}</td>
 		<td style="text-align: center;">
-			<span ng-if="status=='ACTIVE'"> 
+			{{if status=="ACTIVE" }} 
 				<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
-			</span> <span ng-if="status=='INACTIVE'"> 
-				<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a>
-			</span> <span ng-if="status=='DELETED'"> 
+			{{else if status=="INACTIVE" }} 
+				<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a> 
+			{{else if status=="DELETED" }} 
 				<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
-			</span> <span ng-if="status=='LOCKED'"> 
-				<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a>
-			</span>
+			{{else if status=="LOCKED" }}  
+				<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a> 
+			{{/if}}
 		</td> 
 		<td class="actions" style="width: 10%;">
 			<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
@@ -334,7 +337,7 @@ thead tr th {
     			$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/listuser/", 
 				    type: 'GET', 
-				    dataType: 'JSON',  
+				    data: json,  
 				    beforeSend: function(xhr) {
 	                    xhr.setRequestHeader("Accept", "application/json");
 	                    xhr.setRequestHeader("Content-Type", "application/json");
@@ -363,13 +366,9 @@ thead tr th {
 				    }
 				});
     		}
-    		format = function(value){
-    			/* if(value["createdBy"]==null){ 
-    				//value["createBy"]["lastName"] = "";
-    				//value["createBy"]["firstName"] = "";
-    				value["createBy"]["lastUpdatedBy"] = "";
-    				value["createBy"]["lastUpdatedDate"]="";
-    			} */	
+    		format = function(value){ 
+    			value["createdDate"] = value["createdDate"].substring(0, 10);
+    			value["lastUpdatedDate"] = value["lastUpdatedDate"].substring(0, 10);
 		 		if(b){
 		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 		 			j = order + 1;
