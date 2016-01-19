@@ -139,46 +139,7 @@ thead tr th {
 										<th>Actions</th>
 									</tr>
 								</thead>
-								<tbody id="CONTENTS">
-									<%-- <tr
-										dir-paginate="(key,user) in users|filter:search|itemsPerPage:perPage|orderBy : user.createdDate">
-										<td id="USER_ID">{{user.id }}
-										<td>{{user.lastName +" "+ user.firstName }}</td>								
-										<td>{{user.email }}</td>
-										<td>{{user.username }}</td>
-										<td>{{user.userRoles[0].type }}</td>
-										<td>{{user.createdBy.lastName }}
-											{{user.createdBy.firstName }}</td>
-										<td>{{user.createdDate | date:'dd/MM/yyyy'}}</td>
-										<td>{{user.lastUpdatedBy.lastName }}
-											{{user.lastUpdatedBy.firstName }}</td>
-										<td>{{user.lastUpdatedDate | date:'dd/MM/yyyy' }}</td>
-										<td style="text-align: center;"><span
-											ng-if="user.status=='ACTIVE'"> <a href="javascript:;"
-												class="btn btn-success waves-effect" type="button"
-												id="btnStatus">Active</a>
-										</span> <span ng-if="user.status=='INACTIVE'"> <a
-												href="javascript:;" class="btn btn-warning waves-effect"
-												type="button" id="btnStatus">Inactive</a>
-										</span> <span ng-if="user.status=='DELETED'"> <a
-												href="javascript:;" class="btn btn-danger waves-effect"
-												type="button" id="btnStatus">Deleted</a>
-										</span> <span ng-if="user.status=='LOCKED'"> <a
-												href="javascript:;" class="btn btn-info waves-effect"
-												type="button" id="btnStatus">Locked</a>
-										</span></td>
-										</td>
-										<td class="actions" style="width: 10%;"><a href="#"
-											class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-											<a href="#" class="hidden on-editing cancel-row"><i
-												class="fa fa-times"></i></a> <a
-											href="${pageContext.request.contextPath}/admin/user/{{user.id}}"
-											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-											<a href="#" class="on-default remove-row" id="btnDeleteUser"><i
-												class="fa fa-trash-o"></i></a> <a href="#"
-											class="on-default remove-row" id="btnChangePassword"><i
-												class="fa fa-cog fa-fw"></i></a></td>
-									</tr> --%>
+								<tbody id="CONTENTS"> 
 								</tbody>
 							</table>
 							<div class="row">
@@ -286,7 +247,10 @@ thead tr th {
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
+<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<!-- Dashboard -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
@@ -304,19 +268,37 @@ thead tr th {
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 		
-		<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
-	<tr>
-		<td>{{= importDetail}} </td>
-		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
-		<td>{{= impDate}}</td>
-		<td>{{= user.firstName +' '+ user.lastName}} </td>
-		<td>{{= totalAmount}}</td>  
-		<td class="actions" style="text-align: center;">
-			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/viewById/{{= impId}}">
-				<i class="fa fa-pencil"></i>
-			</a> 
+		<script id="CONTENT_Userlist" type="text/x-jquery-tmpl">
+	<tr> 
+		<td style="display: none;" id="USER_ID">{{= id }}
+		<td>{{= order}}</td>
+		<td>{{= firstName}}</td>								
+		<td>{{= email }}</td>
+		<td>{{= username }}</td>
+		<td>{{= userRoles[0].type }}</td>
+		<td></td>
+		<td>{{= createdDate}}</td>
+		<td></td>
+		<td>{{= lastUpdatedDate}}</td>
+		<td style="text-align: center;">
+			<span ng-if="status=='ACTIVE'"> 
+				<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
+			</span> <span ng-if="status=='INACTIVE'"> 
+				<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a>
+			</span> <span ng-if="status=='DELETED'"> 
+				<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
+			</span> <span ng-if="status=='LOCKED'"> 
+				<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a>
+			</span>
+		</td> 
+		<td class="actions" style="width: 10%;">
+			<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+			<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a> 
+			<a href="${pageContext.request.contextPath}/admin/user/{{= id}}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+			<a href="#" class="on-default remove-row" id="btnDeleteUser"><i class="fa fa-trash-o"></i></a> 
+			<a href="#" class="on-default remove-row" id="btnChangePassword"><i class="fa fa-cog fa-fw"></i></a>
 		</td>
-	</tr>
+</tr>
 </script>
 	<script type="text/javascript">
             /* ==============================================
@@ -338,26 +320,92 @@ thead tr th {
 
 	<script>
     	$(function(){
+    		var check = true;
+			var order = 1;
+			var v=[];
+			var b = true;
     		listAllUsers(1);
     		
     		function listAllUsers(currentPage){
+    			var json = {
+					 	"currentPage" : currentPage,
+			    		"perPage"     : $("#PER_PAGE").val() 
+				};
     			$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/listuser/", 
-				    type: 'POST', 
+				    type: 'GET', 
 				    dataType: 'JSON',  
 				    beforeSend: function(xhr) {
 	                    xhr.setRequestHeader("Accept", "application/json");
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
-				    success: function(data) {  
-				   			console.log(data);
+				    success: function(data) {   
+				    	console.log(data);
+						b =true;
+						v=data;	
+						if(data.users.length>0){  
+							$("tbody#CONTENTS").html('');					
+							for(i=0; i<data.users.length;i++)
+								{
+									format(data.users[i]); 
+								}
+							$("#CONTENT_Userlist").tmpl(data.users).appendTo("tbody#CONTENTS"); 
+						}else{
+							$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>'); 
+						}
+				    	if(check){
+				    		setPagination(data.pagination.totalPages,1);
+				    		check=false;
+				    	}	
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
 				    }
 				});
     		}
-    		
+    		format = function(value){
+    			/* if(value["createdBy"]==null){ 
+    				//value["createBy"]["lastName"] = "";
+    				//value["createBy"]["firstName"] = "";
+    				value["createBy"]["lastUpdatedBy"] = "";
+    				value["createBy"]["lastUpdatedDate"]="";
+    			} */	
+		 		if(b){
+		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+		 			j = order + 1;
+		 			value["order"] =j;
+		 			b = false;
+		 		}
+		 		else  
+		 		value["order"] = ++j;  
+	 }
+	 $("#PER_PAGE").change(function(){
+			check = true;
+			listAllUsers(1);
+	    });
+
+setPagination = function(totalPage, currentPage){
+	$('#PAGINATION').bootpag({
+        total: totalPage,
+        page: currentPage,
+        maxVisible: 10,
+        leaps: true,
+        firstLastUse: true,
+        first: 'First',
+        last: 'Last',
+        wrapClass: 'pagination',
+        activeClass: 'active',
+        disabledClass: 'disabled',
+        nextClass: 'next',
+        prevClass: 'prev',
+        lastClass: 'last',
+        firstClass: 'first'
+    }).on("page", function(event, currentPage){
+    	check = false;
+    	listAllUsers(currentPage);
+    }); 
+};
+
 	    	$(document).on('click','#btnStatus',function(){
 				var id = $(this).parents("tr").find("#USER_ID").html();
 				var _this = $(this);

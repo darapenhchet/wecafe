@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -154,7 +155,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public Long count(){
-		return  (Long) sessionFactory.getCurrentSession().createCriteria(User.class).uniqueResult();
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			return (Long) session.createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L; 
 	}
 	
 	@Override
