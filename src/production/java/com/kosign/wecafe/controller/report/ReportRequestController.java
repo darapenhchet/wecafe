@@ -1,4 +1,4 @@
-package com.kosign.wecafe.controller.admin.rest;
+package com.kosign.wecafe.controller.report;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,7 +31,7 @@ import com.kosign.wecafe.services.UserService;
 //TODO: Product REST Controller
 @RestController
 @RequestMapping("api/admin/reports")
-public class ReportPurchaseController {
+public class ReportRequestController {
 	
 	@Inject AdminReportService adminReportService;
 	

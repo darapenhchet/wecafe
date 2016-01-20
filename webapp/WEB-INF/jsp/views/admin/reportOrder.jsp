@@ -567,6 +567,8 @@ tbody tr td {
 	 setCalendar();
 	 searchByDate();
 	 
+	 products.listDetail(1); 
+	 
 	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true); 
 	 $("#selectyear").change(function(){
 		 switch($("#selectreport").val()){
@@ -583,6 +585,7 @@ tbody tr td {
 				 break;
 		 }
 	 });
+	 
 	 function checkFilter(currentPage){
 		 switch($("#selectreport").val()){
 		 case '0': 
@@ -601,8 +604,8 @@ tbody tr td {
 		 case '4':
 			 products.listYearly(currentPage); 
 			 break;
-	 }
-} 
+	 	}
+	} 
 	 
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
@@ -624,7 +627,7 @@ tbody tr td {
 			    		"perPage"     : $("#PER_PAGE").val(), 
 			    		"byYear" 	  : byyear 
 			    },
-				    beforeSend: function(xhr) {
+				   beforeSend: function(xhr) {
 	               xhr.setRequestHeader("Accept", "application/json");
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
@@ -875,7 +878,7 @@ tbody tr td {
 		    	checkFilter(currentPage);
 		    }); 
 		};
-	 products.listDetail(1); 
+
 	 
 	 $("#selectreport").change(function(){
 		 if($(this).val()==0){
@@ -979,16 +982,6 @@ tbody tr td {
 	 
 	function settableheader(){
 		var monthOfyear = ['January', 'February', 'Match', 'April', 'May', 'June', 'July','Augest','Septemper', 'October', 'November', 'December'];
-		//var mm = moment().isoWeekday(1);
-		//var mm= moment($("#REGS_DATE_S").val());
-		//mm = moment().weekday(6);
-		//console.log(mm.weekday(0).get('date'));
-		/* 	$("#startfrom").html(" in " +  mm.get('year'));
-		$("#purchasemonth").html(monthOfyear[mm.get('month')]);	
-		$("#startfrom").html("on" + monthOfyear[mm.get('month')] +" "+ mm.weekday(1).get('date') +", "+ mm.get('year'));
-	*/
-	//	var dd = moment(mm.weekday(0).get('date')).isoWeekday(1);
-	 
 		var dd = 0;
 		var dayID ="";
 		
