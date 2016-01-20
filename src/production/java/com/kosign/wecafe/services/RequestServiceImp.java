@@ -155,13 +155,31 @@ public class RequestServiceImp implements RequestService {
 
 	@Override
 	@Transactional
-	public List<Map> listRequestDetail(String id, Pagination pagination) {
+	public List<Map> listRequestDetail(String id, Pagination pagination,Boolean isTrue) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String sql = "SELECT rs.req_id,pro.pro_id,pro.pro_name,rsd.pro_qty,rsd.remain_qty,firstname,lastname,to_char(rs.req_date, 'DD/MM/YYYY HH24:MI:SS') req_date,pro.qty stock_qty "
-					+ "FROM " + "request_stock rs, request_stock_detail  rsd,users use,product pro " + "WHERE 1=1 "
-					+ "and rs.req_id=rsd.req_id " + "and rs.use_id=use.id " + "and rsd.pro_id=pro.pro_id "
-					+ "and rs.status='t' " + "and CAST(rs.req_id as TEXT) LIKE ? Order By rs.req_id DESC";
+		String sql = "SELECT "
+						+ "rs.req_id,"
+						+ "pro.pro_id,"
+						+ "pro.pro_name,"
+						+ "rsd.pro_qty,"
+						+ "rsd.remain_qty,"
+						+ "firstname,"
+						+ "lastname,"
+						+ "pro.qty stock_qty ,"
+						+ "to_char(rs.req_date, 'DD/MM/YYYY HH24:MI:SS') req_date,"
+						+ "to_char(rs.app_date, 'DD/MM/YYYY HH24:MI:SS') app_date,"
+						+ "(SELECT firstname ||' '|| lastname As req_by FROM users WHERE id=rs.use_id ),"
+						+ "(SELECT firstname ||' '|| lastname As app_by FROM users WHERE id=rs.app_id )"
+					+ "FROM " 
+						+ "request_stock rs, request_stock_detail  rsd,users use,product pro "
+						+ "WHERE 1=1 "
+						+ "and rs.req_id=rsd.req_id "
+						+ "and rs.use_id=use.id " 
+						+ "and rsd.pro_id=pro.pro_id "
+						+ ""+ checkStatus(isTrue)+""
+						+ "and CAST(rs.req_id as TEXT) LIKE ? "				
+					+ " Order By rs.req_id DESC";
 			SQLQuery query = session.createSQLQuery(sql);
 			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 			query.setParameter(0, "%" + id + "%");
@@ -173,6 +191,12 @@ public class RequestServiceImp implements RequestService {
 			e.getStackTrace();
 		}
 		return null;
+	}
+	
+	public String checkStatus(Boolean isTrue){
+		String status="";
+		return status=(isTrue==true)?" and rs.status='t' ":" and rs.status='f' ";
+	
 	}
 
 	@Override

@@ -1,6 +1,5 @@
-package com.kosign.wecafe.services;
+package com.kosign.wecafe.services.report;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Sale;
 import com.kosign.wecafe.util.HibernateUtil;
@@ -52,9 +50,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 			return saleProducts;
 		}catch(Exception e){
 			e.printStackTrace();
-		}finally {
-			
-		}		
+		}	
 		return null;
 	}
 

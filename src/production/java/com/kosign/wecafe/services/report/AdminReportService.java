@@ -1,4 +1,4 @@
-package com.kosign.wecafe.services;
+package com.kosign.wecafe.services.report;
 
 import java.text.ParseException;
 import java.util.Date;

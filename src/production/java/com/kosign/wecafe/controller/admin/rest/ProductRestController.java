@@ -20,9 +20,9 @@ import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.ProductFilter;
 import com.kosign.wecafe.entities.User;
-import com.kosign.wecafe.services.AdminReportService;
 import com.kosign.wecafe.services.ProductService;
 import com.kosign.wecafe.services.UserService;
+import com.kosign.wecafe.services.report.AdminReportService;
 
 
 //TODO: Product REST Controller

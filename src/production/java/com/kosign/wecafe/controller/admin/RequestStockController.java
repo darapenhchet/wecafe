@@ -53,7 +53,7 @@ public class RequestStockController {
 	
 		pagination.setTotalCount(requestService.count(reqId1));
 		pagination.setTotalPages(pagination.totalPages());
-		map.put("RSD", requestService.listRequestDetail(reqId1,pagination));
+		map.put("RSD", requestService.listRequestDetail(reqId1,pagination,true));
 		map.put("RS",requestService.listRequestStock());
 		map.put("pagination",pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

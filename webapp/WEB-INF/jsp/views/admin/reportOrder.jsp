@@ -222,11 +222,10 @@ tbody tr td {
 													<thead>
 														<tr> 
 															<th>#</th>
-															<th>Invoice No</th> 
-															<th>Purchase Date</th>
-															<th>Purchase By</th> 
-															<th>Purchase type</th> 
-															<th>Total Amount</th>
+															<th>Request No</th> 
+															<th>Request Date</th>
+															<th>Request By</th> 														
+															<th>Request Total Qty</th>
 														</tr>
 													</thead>
 													<tbody id="tbodydetail"> 
@@ -404,10 +403,13 @@ tbody tr td {
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Produce Name</th>
-								<th>Qty</th>
-								<th>Unit Price</th>
-								<th>Supplier Name</th>
+								<th>Request No</th>
+								<th>Product Name</th>
+								<th>Request Qty</th>
+								<th>Request Date</th>
+								<th>Request By</th>
+								<th>Approve Date</th>
+								<th>Approve By</th>
 							</tr>
 						</thead>
 						<tbody id="impProDetail"> 
@@ -416,9 +418,9 @@ tbody tr td {
 				</div> 
 				<div class="modal-footer form-group form-horizontal" style="height: 80px;"> 
 					<div align="right">
-						<label  class="control-label col-lg-1">Total Amount : </label>
+						<label  class="control-label col-lg-1" style="color: red">Total Qty : </label>
 							<div class="col-lg-2">
-									<input class="form-control" id="btotalamount"type="text">
+									<input readonly="true" class="form-control" id="btotalamount"type="text" style="color: blue">
 							</div>
 						<button class="btn btn-default b-close">Close</button>
 					</div>
@@ -474,11 +476,10 @@ tbody tr td {
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
     	<tr>  
 			<td>{{= order}}</td>
-			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
-			<td style="text-align:right;">{{= purchase_date}} </td>
-			<td style="text-align:right;">{{= purchase_by}} ​</td>
-			<td style="text-align:right;">{{= purchase_type}} ​</td>
-			<td style="text-align:right;">{{= purchase_total_amount}} </td>
+			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= req_id}}</a></td>
+			<td style="text-align:right;">{{= req_date}} </td>
+			<td style="text-align:right;">{{= request_by}} ​</td>
+			<td style="text-align:right;">{{= total_request_qty}} ​</td>
 		</tr>
     </script>
  
@@ -567,8 +568,8 @@ tbody tr td {
 	 setCalendar();
 	 searchByDate();
 	 
-	 products.listDetail(1); 
-	 
+	
+	  
 	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true); 
 	 $("#selectyear").change(function(){
 		 switch($("#selectreport").val()){
@@ -616,38 +617,44 @@ tbody tr td {
 		 check = true;
 		 checkFilter(1);
 	 });
-	 products.listDetail = function(currentPage){
-		//var defaultyear = new Date().getFullYear();		
+	 
+	 
+	 products.listDetail=function  (currentPage){
+		 var input={
+				 "currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val(), 
+		    		"byYear" 	  :  $("#selectyear").val()
+		 }
+
+		 
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdetail/" , 
+			    url: "${pageContext.request.contextPath}/admin/reports/get_report_request/" , 
 			    type: 'GET', 
-			    data: {
-			    		"currentPage" : currentPage,
-			    		"perPage"     : $("#PER_PAGE").val(), 
-			    		"byYear" 	  : byyear 
-			    },
+			    data: input,
 				   beforeSend: function(xhr) {
 	               xhr.setRequestHeader("Accept", "application/json");
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	console.log(data);
-			    	b =true;
-					v=data;
-					 if(data.reportdetail.length>0){
-					$("tbody#tbodydetail").html('');
-						 for(var i=0;i<data.reportdetail.length;i++){							
-							products.format(data.reportdetail[i]);
-						} 
-						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
-					}else{
-						$("tbody#tbodydetail").html(''); 
+			 
+				    	b =true;
+						v=data;
+						if(data!="" || data!=null){
+						 if(data.REPORT_REQUEST_DETAIL.length>0){
+						$("tbody#tbodydetail").html('');
+							 for(var i=0;i<data.REPORT_REQUEST_DETAIL.length;i++){							
+								products.format(data.REPORT_REQUEST_DETAIL[i]);
+							} 
+							$("#CONTENT_DETAIL").tmpl(data.REPORT_REQUEST_DETAIL).appendTo("tbody#tbodydetail");
+						}else{
+							$("tbody#tbodydetail").html(''); 
+						}
+				    	if(check){
+				    		products.setPagination(data.pagination.totalPages,1);
+				    		check=false;
+				    	}  
 					}
-			    	if(check){
-			    		products.setPagination(data.pagination.totalPages,1);
-			    		check=false;
-			    	}  
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: ",data," status: ",status," er:",er);
@@ -816,10 +823,10 @@ tbody tr td {
 			}); 
 	 }
 	 products.format = function(value){
-		 if(value["purchase_type"] == 0)
+		/*  if(value["purchase_type"] == 0)
 		 		value["purchase_type"] = "Import";
 		 else
-			 	value["purchase_type"] = "Expense";
+			 	value["purchase_type"] = "Expense"; */
 		 if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
@@ -878,6 +885,8 @@ tbody tr td {
 		    	checkFilter(currentPage);
 		    }); 
 		};
+		
+		products.listDetail(1);
 
 	 
 	 $("#selectreport").change(function(){
@@ -1107,9 +1116,9 @@ tbody tr td {
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
 	 $(document).on("click","#impid", function(){
-		 
+		
 		   $.ajax({ 
-			    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
+			    url: "${pageContext.request.contextPath}/admin/reports/get_request_detail?req_id=" + $(this).text() , 
 			    type: 'POST', 
 			    dataType: 'JSON', 
 			    beforeSend: function(xhr) {
@@ -1119,17 +1128,26 @@ tbody tr td {
 			    success: function(data) { 
 			    	console.log(data);
 			    	var st= "";
-			    	var amount = 0;
-			       for(i=0; i<data.length; i++){
-			    	   st += "<tr><td>" + (i + 1) + "</td>";
-			    	   st += "<td>" + data[i].proname +"</td>";
-			    	   st += "<td>" + data[i].proqty +"</td>";
-			    	   st += "<td>" + data[i].prounitprice +"</td>";
-			    	   st += "<td>" + data[i].supname +"</td></tr>"
-			    	   amount += data[i].proqty * data[i].prounitprice;
-			       }
-			       $("#impProDetail").html(st);
-			       $("#btotalamount").val(amount);
+			    	var total_qty = 0,req_qty=0;
+			    	
+			    	if(data!="" || data!=null){
+			    		 for(i=0; i<data.REQUEST_DETAIL.length; i++){
+			    			 req_qty=data.REQUEST_DETAIL[i].pro_qty;
+					    	   st += "<tr><td>" + (i + 1) + "</td>";
+					    	   st += "<td>" + data.REQUEST_DETAIL[i].req_id +"</td>";
+					    	   st += "<td>" + data.REQUEST_DETAIL[i].pro_name +"</td>";
+					    	   st += "<td>" +req_qty +"</td>";
+					    	   st += "<td>" + data.REQUEST_DETAIL[i].req_date +"</td>"
+					    	   st += "<td>" + data.REQUEST_DETAIL[i].req_by +"</td>"
+					    	   st += "<td>" + data.REQUEST_DETAIL[i].app_date +"</td>"
+					    	   st += "<td>" + data.REQUEST_DETAIL[i].app_by +"</td>"
+					    	   total_qty+=req_qty;
+					    	   
+					       }
+					       $("#impProDetail").html(st);
+					       $("#btotalamount").val(total_qty);
+			    	}
+			      
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);

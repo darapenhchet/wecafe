@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.forms.DateForm;
-import com.kosign.wecafe.services.AdminReportService;
+import com.kosign.wecafe.services.report.AdminReportService;
 
 @Controller
-public class AdminReportController {
+public class ReportAdminController {
 
 	@Inject AdminReportService adminReportService;
 	

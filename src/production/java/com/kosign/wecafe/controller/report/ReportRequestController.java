@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,27 +25,39 @@ import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.ProductFilter;
 import com.kosign.wecafe.entities.User;
-import com.kosign.wecafe.services.AdminReportService;
 import com.kosign.wecafe.services.ProductService;
+import com.kosign.wecafe.services.RequestService;
 import com.kosign.wecafe.services.UserService;
+import com.kosign.wecafe.services.report.AdminReportRequestService;
+import com.kosign.wecafe.services.report.AdminReportService;
 
 //TODO: Product REST Controller
 @RestController
-@RequestMapping("api/admin/reports")
+@RequestMapping("admin/reports")
 public class ReportRequestController {
 	
 	@Inject AdminReportService adminReportService;
+	@Inject AdminReportRequestService report;
+	@Inject RequestService reqService;
 	
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value="/purchasereportdetail", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination) throws ParseException{
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdetail", adminReportService.getListReportDetailPurchaseRest(pagination, filter.getByYear()));
-		pagination.setTotalCount(adminReportService.countDetail(filter.getByYear()));
+	@RequestMapping(value="/get_report_request", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> reportRequestDetail(ProductFilter filter, Pagination pagination) throws ParseException{
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("REPORT_REQUEST_DETAIL",report.getListReportDetailRequest(pagination, filter.getByYear()) );
+		pagination.setTotalCount(report.countDetail(filter.getByYear()));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value="/get_request_detail", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> getRequestDetail(@RequestParam(name="req_id",defaultValue="")String reqId, Pagination pagination) throws ParseException{
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("REQUEST_DETAIL",reqService.listRequestDetail(reqId, pagination,false));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
