@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.RequestStock;
+import com.kosign.wecafe.forms.DateForm;
 
 @Service
 public class AdminReportRequestServiceImp implements AdminReportRequestService  {
@@ -27,7 +28,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 
 	@Override
 	@Transactional
-	public List<Map> getListReportDetailRequest(Pagination pagination, int byYear) {
+	public List<Map> getListReportDetailRequest(Pagination pagination,DateForm date) {
 		Session session = null;
 		String sql="SELECT "
 						+"DISTINCT "
@@ -46,7 +47,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 						+"and rs.use_id=use.id "     
 						+"and rsd.pro_id=pro.pro_id "  
 						+"and rs.status='f' "
-						+"and EXTRACT(YEAR FROM rs.app_date)=? "				
+						+ " "+checkDate(date)+" "				
 						+"GROUP BY "
 						+"rs.req_id "
 				   + "ORDER BY app_date DESC "	;					
@@ -54,7 +55,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		try{
 			session = sessionFactory.getCurrentSession();		
 			SQLQuery query = session.createSQLQuery(sql);
-			query.setParameter(0, byYear);
+		//	query.setParameter(0, byYear);
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -64,6 +65,27 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 			e.printStackTrace();
 		}	
 		return null;
+	}
+	
+	public String checkDate(DateForm date){
+		String result="";
+		String startDate=date.getStartdate();
+		String endDate=date.getEnddate();
+		String year=date.getYear();
+		if(date!=null){
+			if(date.getYear() !="" || date.getYear() !=null){
+				result=" And EXTRACT(YEAR FROM rs.app_date)="+year;
+				System.out.println("year========================="+year);
+			}
+			else if(date.getStartdate() !="" || date.getStartdate()!=null){
+				result=" And to_char(req_date,''YYYY-mm-dd'')="+startDate;
+				System.out.println("startdate========================="+startDate);
+			}else if(startDate!="" && endDate!=""){
+				result=" And to_char(req_date,''YYYY-mm-dd'') BETWEEN "+ startDate + " END " + endDate;
+				System.out.println("year========================="+year);
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -104,7 +126,8 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 
 	@Override
 	@Transactional
-	public Long countDetail(int year) throws ParseException {
+	public Long countDetail(DateForm date) throws ParseException {
+		String year=date.getYear();
 		String startDate = year +"-01-01";
 		String endDate = year + "-12-31";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -25,6 +25,7 @@ import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.ProductFilter;
 import com.kosign.wecafe.entities.User;
+import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.services.ProductService;
 import com.kosign.wecafe.services.RequestService;
 import com.kosign.wecafe.services.UserService;
@@ -44,10 +45,13 @@ public class ReportRequestController {
 	UserService userService;
 	
 	@RequestMapping(value="/get_report_request", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> reportRequestDetail(ProductFilter filter, Pagination pagination) throws ParseException{
+	public ResponseEntity<Map<String, Object>> reportRequestDetail(DateForm date, Pagination pagination) throws ParseException{
+		
+		
+		
 		Map<String, Object> map = new HashMap<String, Object>();	
-		map.put("REPORT_REQUEST_DETAIL",report.getListReportDetailRequest(pagination, filter.getByYear()) );
-		pagination.setTotalCount(report.countDetail(filter.getByYear()));
+		map.put("REPORT_REQUEST_DETAIL",report.getListReportDetailRequest(pagination,date) );
+		pagination.setTotalCount(report.countDetail(date));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
@@ -62,18 +66,18 @@ public class ReportRequestController {
 		
 	}
 	
-	@RequestMapping(value="/purchasereportdaily", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getpurchasereportdaily(@RequestParam(value="startDate") String strStartDate, Pagination pagination) throws ParseException{
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date startDate = simpleDateFormat.parse(strStartDate);
+	@RequestMapping(value="/get_request_dailly", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportdaily(DateForm date, Pagination pagination) throws ParseException{
+		
+		System.out.println("===================Year"+date.getYear()+"Startdate====="+date.getStartdate());
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("Date = " + startDate);
-		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,true)); 
+		map.put("reportdaily", report.getListReportDetailRequest(pagination, date)); 
 		//pagination.setTotalCount(adminReportService.countDaily(startDate));
-		List<Map> totalRecord=adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false); 
-		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
-		pagination.setTotalPages(pagination.totalPages());
-		map.put("pagination", pagination);
+		//List<Map> totalRecord=adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false); 
+		//pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
+		//pagination.setTotalPages(pagination.totalPages());
+		//map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}

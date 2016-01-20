@@ -623,7 +623,7 @@ tbody tr td {
 		 var input={
 				 "currentPage" : currentPage,
 		    		"perPage"     : $("#PER_PAGE").val(), 
-		    		"byYear" 	  :  $("#selectyear").val()
+		    		"year" 	  :  $("#selectyear").val()
 		 }
 
 		 
@@ -662,14 +662,18 @@ tbody tr td {
 			}); 
 	 }
 	 products.listDaily = function(currentPage){ 
+		 alert();
+	 var input={
+			 "currentPage" : currentPage,
+	    	 "perPage"     : $("#PER_PAGE").val(),
+	    	 "startdate"   : $.trim($("#REGS_DATE_S").val())			 
+	 };
+	 
+	
 		 $.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdaily/" , 
+			    url: "${pageContext.request.contextPath}/admin/reports/get_request_dailly/" , 
 			    type: 'GET', 
-			    data: {
-			    		"currentPage" : currentPage,
-			    		"perPage"     : $("#PER_PAGE").val(),
-			    		"startDate"   : $("#REGS_DATE_S").val()			    		 
-			    },
+			    data:input,
 				    beforeSend: function(xhr) {
 	               xhr.setRequestHeader("Accept", "application/json");
 	               xhr.setRequestHeader("Content-Type", "application/json");
