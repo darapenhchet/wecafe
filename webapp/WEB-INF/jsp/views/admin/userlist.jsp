@@ -278,7 +278,7 @@ thead tr th {
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 		
-		<script id="CONTENT_Userlist" type="text/x-jquery-tmpl"> 
+	<script id="CONTENT_Userlist" type="text/x-jquery-tmpl"> 
 	<tr> 
 		<td style="display: none;" id="USER_ID">{{= id }}
 		<td>{{= order}}</td>

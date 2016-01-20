@@ -134,37 +134,22 @@ thead tr th {
 											<th style="text-align: center;">Action</th>
 										</tr>
 									</thead>
-									<tbody>
-										
-										<tr
-											dir-paginate="(key,supplier) in suppliers|filter:search|itemsPerPage:perPage|orderBy : supplier.createdDate">
-											<td id="supplierId" style="display: none;">{{supplier.supId}}</td>
-											<td>{{ key+1}}</td>
-											<td id="supplierName">{{supplier.supplierName }}</td>
-											<td style="text-align: right;">{{supplier.supplierNumber }}</td>
-											<td>{{supplier.supplierEmail }}</td>
-											<td>{{supplier.supplierAddress}}</td>
-											<td class="actions" style="text-align: center;"><a
-												class="on-default edit-row"
-												href="${pageContext.request.contextPath}/admin/viewupdate/{{supplier.supId}}"><i
-													class="fa fa-pencil"></i></a> <a class="on-default remove-row"
-												href="javascript:;" id="btnRemove"><i
-													class="fa fa-trash-o"></i></a></td>
-										</tr>
+									<tbody id="CONTENTS"> 
 									</tbody>
 								</table>
 							</div>
 						</div>
-						<ul class="pagination" id="PER_PAGE">
-					<li class="active" ng-click="perPage=10"><a
-						href="javascript:;">10</a></li>
-					<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-					<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-					<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-				</ul>
-				<dir-pagination-controls max-size="15" direction-links="true"
-					boundary-links="true" class="pull-right">
-				</dir-pagination-controls>
+						<div class="row">
+										<div class="col-md-2">
+											<select id="PER_PAGE" class="form-control"> 
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+										</div> 
+										<div id="PAGINATION" class="pull-right"></div>
+							</div> 
 					</div>
 				</div>
 				</div>
@@ -349,7 +334,10 @@ thead tr th {
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<!-- Dashboard -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.dashboard.js"></script>
@@ -361,21 +349,114 @@ thead tr th {
 	<!-- Todo -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
-
+<script id="CONTENT_Supplierlist" type="text/x-jquery-tmpl"> 
+	<tr>
+		<td id="supplierId" style="display: none;">{{= supId}}</td>
+		<td>{{= order}}</td>
+		<td id="supplierName">{{= supplierName }}</td>
+		<td style="text-align: right;">{{= supplierNumber }}</td>
+		<td>{{= supplierEmail }}</td>
+		<td>{{= supplierAddress}}</td>
+		<td class="actions" style="text-align: center;">
+			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/viewupdate/{{= supId}}">
+				<i class="fa fa-pencil"></i></a> 
+			<a class="on-default remove-row" href="javascript:;" id="btnRemove">
+				<i class="fa fa-trash-o"></i></a>
+		</td>
+	</tr>
+ 
+</script>
 	<script type="text/javascript">
 		/* ==============================================
 		Counter Up
 		=============================================== */
 		jQuery(document).ready(function($) {
-			//$('#datatable').dataTable();
+			var check = true;
+			var order = 1;
+			var v=[];
+			var b = true;
+			getAllSupplier(1);
+			function getAllSupplier(currentPage){
+				var json = {
+					 	"currentPage" : currentPage,
+			    		"perPage"     : $("#PER_PAGE").val() 
+				};
+				$.ajax({ 
+					    url: "${pageContext.request.contextPath}/admin/listsupplier", 
+					    type: 'GET', 
+					    data: json,  
+					    beforeSend: function(xhr) {
+		                    xhr.setRequestHeader("Accept", "application/json");
+		                    xhr.setRequestHeader("Content-Type", "application/json");
+		                },
+					    success: function(data) {
+					    	console.log(data); 
+					    	b =true;
+							v=data;	
+							if(data.suppliers.length>0){  
+								$("tbody#CONTENTS").html('');					
+								for(i=0; i<data.suppliers.length;i++)
+									{
+										format(data.suppliers[i]); 
+									}
+								$("#CONTENT_Supplierlist").tmpl(data.suppliers).appendTo("tbody#CONTENTS"); 
+							}else{
+								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>'); 
+							}
+					    	if(check){
+					    		setPagination(data.pagination.totalPages,1);
+					    		check=false;
+					    	}
+					    },
+					    error:function(data,status,er) { 
+					        console.log("error: "+data+" status: "+status+" er:"+er);
+					    }
+					});
+					
+				} 
+			
+			format = function(value){  
+		 		if(b){
+		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+		 			j = order + 1;
+		 			value["order"] =j;
+		 			b = false;
+		 		}
+		 		else  
+		 		value["order"] = ++j;  
+	 }
+	 $("#PER_PAGE").change(function(){
+			check = true;
+			getAllSupplier(1);
+	    });
 
+setPagination = function(totalPage, currentPage){
+	$('#PAGINATION').bootpag({
+        total: totalPage,
+        page: currentPage,
+        maxVisible: 10,
+        leaps: true,
+        firstLastUse: true,
+        first: 'First',
+        last: 'Last',
+        wrapClass: 'pagination',
+        activeClass: 'active',
+        disabledClass: 'disabled',
+        nextClass: 'next',
+        prevClass: 'prev',
+        lastClass: 'last',
+        firstClass: 'first'
+    }).on("page", function(event, currentPage){
+    	check = false;
+    	getAllSupplier(currentPage);
+    }); 
+};
+			
 			$('.counter').counterUp({
 				delay : 100,
 				time : 1200
 			});
-			
-			 
-				 	    	$(document).on('click','#btnRemove',function(){  
+			$(document).on('click','#btnRemove',function(){  
 				   				var id = $(this).parents("tr").find("#supplierId").html();  
 				   				if(confirm("Do you want to delete that supplier?")){
 				   					$.ajax({ 
@@ -402,12 +483,7 @@ thead tr th {
 				   					});
 				 					
 				   				}
-				 			});
-				 	    	
-			        		$("#PER_PAGE li").click(function(){
-			        			 $('#PER_PAGE li.active').removeClass('active');
-			        			 $(this).addClass('active');
-			        		});
+				 			}); 
 				      
 		});
 	</script>

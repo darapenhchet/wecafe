@@ -2,13 +2,21 @@ package com.kosign.wecafe.services;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Supplier;
+import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.util.HibernateUtil;
 
 @Service
 public class SupplierImpl implements SupplierService{
+	@Autowired
+	private SessionFactory sessionFactory;
 
 
 	@Override
@@ -32,18 +40,16 @@ public class SupplierImpl implements SupplierService{
 	}
 
 	@Override
-	public List<Supplier> getAllSupplier() {
-		
+	public List<Supplier> getAllSuppliers(Pagination pagination) { 
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			Query query = session.createQuery("FROM Supplier");
-			List<Supplier> supplier = (List<Supplier>)query.list();
-			
-			System.out.println(supplier);
-			return supplier;
-			
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
+			List<Supplier> supplier = (List<Supplier>)query.list(); 
+			return supplier; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -51,11 +57,28 @@ public class SupplierImpl implements SupplierService{
 		}finally {
 			session.close();
 		}
-		return null;
-		
-		
+		return null; 
 	}
 
+	@Override
+	public List<Supplier> getAllSupplier() { 
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM Supplier");
+			List<Supplier> supplier = (List<Supplier>)query.list(); 
+			return supplier; 
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			
+		}finally {
+			session.close();
+		}
+		return null; 
+	}
+	
 	@Override
 	public Boolean updateSupplier(Supplier supplier) { 
 		Session session = null;
@@ -116,5 +139,18 @@ public class SupplierImpl implements SupplierService{
 		}
 		
 		return true;
+	}
+
+	@Override
+	@Transactional
+	public Long count() {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			return (Long) session.createCriteria(Supplier.class).setProjection(Projections.rowCount()).uniqueResult();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L; 
 	}
 }
