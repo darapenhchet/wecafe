@@ -92,7 +92,7 @@
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4 class="pull-left page-title">Add New User</h4>
+							<h4 class="pull-left page-title">Update User</h4>
 						</div>
 					</div>
 					<!-- Form-validation -->
@@ -145,9 +145,16 @@
 												<label for="category" class="control-label col-lg-2">Gender
 													*</label>
 												<div class="col-lg-10">
-													<select class="form-control" id="gender" name="gender">
-														<option value="M">Male</option>
-														<option value="F">Female</option>
+													<select class="form-control" id="gender" name="gender"> 
+														<option value="${user.gender}"  id="Defaul_gender">${user.gender}</option>
+														<c:choose>
+														    <c:when test="${user.gender == 'Male'}">
+														       <option value="Female">Female</option>
+														    </c:when>    
+														    <c:otherwise>
+														        <option value="Male">Male</option>
+														    </c:otherwise>
+														</c:choose>
 													</select>
 												</div>
 											</div>
@@ -327,6 +334,7 @@
     					"username"  : $("#username").val(),
     					"firstName" : $("#firstName").val(),
     					"lastName"  : $("#lastName").val(),
+    					"gender"    : $("#gender").val(),
     					"email"	    : $("#email").val(),
     					"status"    : 1, //$("#status").val(),
     					"userRoles": [

@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService{
 			Long id = user.getUserRoles().iterator().next().getId();
 			System.out.println(id);
 			UserRole userRole = (UserRole)session.get(UserRole.class, id);
-			Set userRoles = new HashSet<UserRole>();
+			HashSet<UserRole> userRoles = new HashSet<UserRole>();
 			userRoles.add(userRole);
 			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
 			user.setLastUpdatedDate(new Date());
@@ -108,6 +108,7 @@ public class UserServiceImpl implements UserService{
 			user.setFirstName(userUpdate.getFirstName());
 			user.setLastName(userUpdate.getLastName());
 			user.setStatus(userUpdate.getStatus());
+			user.setGender(userUpdate.getGender());
 			user.setUserRoles(userRoles);
 			session.saveOrUpdate(user);
 			return true;
@@ -119,6 +120,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<User> getAllUser(Pagination pagination){
@@ -138,11 +140,14 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<User> getAllUsers(){
+		Session session = null;
 		try{
-			return (List<User>)sessionFactory.getCurrentSession().createCriteria(User.class).list();
+			session = sessionFactory.getCurrentSession();
+			return (List<User>)session.createCriteria(User.class).list();
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();

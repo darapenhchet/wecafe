@@ -513,7 +513,7 @@ setPagination = function(totalPage, currentPage){
 
 			$("#frmAddNewUser").submit(function(e){
 				e.preventDefault();    				
-				json = {
+			 	json = {
 					"username"  : $("#username").val(),
 					"password"	: $("#password").val(),
 					"firstName" : $("#firstName").val(),
@@ -526,9 +526,7 @@ setPagination = function(totalPage, currentPage){
 					              	"id" : $("#USER_ROLE").val()
 						
 					              }]
-				};
-				console.log(json);
-				
+				};  
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/users/add", 
 				    type: 'POST', 
