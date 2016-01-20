@@ -76,8 +76,7 @@
 													Type *</label>
 												<div class="col-lg-10">
 													<select class="form-control" id="USER_ROLE"
-														name="userRoles[0].id">
-														<option value="0">-- SELECT USER ROLE --</option>
+														name="userRoles[0].id"> 
 														<c:forEach items="${roles}" var="role">
 															<option value="${role.id }">${role.type}</option>
 														</c:forEach>

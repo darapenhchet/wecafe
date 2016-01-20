@@ -76,13 +76,14 @@ public class UserServiceImpl implements UserService{
 	public Boolean saveUser(User user) {
 		Session session=null;
 		try{
-			user.setCreatedBy(this.findUserByUsername(getPrincipal()));
-			user.setCreatedDate(new Date());
-			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
-			user.setLastUpdatedDate(new Date());
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			sessionFactory.getCurrentSession().save(user);
-			return true;
+		user.setCreatedBy(this.findUserByUsername(getPrincipal()));
+		//System.out.println("create by = " + this.findUserByUsername(getPrincipal()));
+		user.setCreatedDate(new Date());
+		user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
+		user.setLastUpdatedDate(new Date());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		sessionFactory.getCurrentSession().save(user);
+		return true;
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
@@ -158,13 +159,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public Long count(){
-		Session session = null;
+		 Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
 			return (Long) session.createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
 		}catch(Exception ex){
 			ex.printStackTrace();
-		}
+		} 
 		return 0L; 
 	}
 	

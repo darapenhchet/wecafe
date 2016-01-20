@@ -477,19 +477,15 @@ setPagination = function(totalPage, currentPage){
 				    }
 				});
 	    	});
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
+	    	 
 	    	/* ============================================== Add users =============================================== */
 	    	var isAdded=false;
         
         	function clearUser(){
 				 $("#username").val("");
 				 $("#password").val("");
-				 $("#firstName").val();
+				 $("#confirmation_password").val("");
+				 $("#firstName").val("");
 				 $("#lastName").val("");
 				 $("#gender").val("");
 				 $("#email").val("");
@@ -497,7 +493,7 @@ setPagination = function(totalPage, currentPage){
 			}	
                    
         	$('#btn_add_user').on('hidden.bs.modal', function (event) {
-    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/userlist";
+    			if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/userlist";
 			})
     		
         		
@@ -523,8 +519,7 @@ setPagination = function(totalPage, currentPage){
 					"status"    : 1, //$("#status").val(),
 					"userRoles": [
 					              {
-					              	"id" : $("#USER_ROLE").val()
-						
+					              	"id" : $("#USER_ROLE").val() 
 					              }]
 				};  
 				$.ajax({ 
@@ -536,7 +531,7 @@ setPagination = function(totalPage, currentPage){
 	                    xhr.setRequestHeader("Accept", "application/json");
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
-				    success: function(data) { 
+				    success: function(data) {
 				        if(data){
 				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
 				        	isAdded=true;
