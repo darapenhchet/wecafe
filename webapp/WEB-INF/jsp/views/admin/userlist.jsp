@@ -113,21 +113,13 @@ thead tr th {
 
 					<div class="panel">
 						<div class="panel-heading">
-							<div class="row">
-									<!-- <h3 class="panel-title">Product Lists</h3> -->
-									<div class="col-md-8">
-										<form class="form-inline">
-											<div class="form-group">
-												<label>Search</label> <input type="text"
-													class="form-control" placeholder="Search" width="400%">
-											</div>
-											
-										</form>
-									</div>									
-									<div class="col-md-2 pull-right">
-										<button id="btn_add_user" class="btn btn-primary">Add User</button>
-									</div>								
-									</div>
+							<!-- <h3 class="panel-title">Product Lists</h3> -->
+							<form class="form-inline">
+								<div class="form-group">
+									<label>Search</label> <input type="text" ng-model="search"
+										class="form-control" placeholder="Search" width="400%">
+								</div>
+							</form>
 						</div>
 						<div class="panel-body">
 							
@@ -179,7 +171,6 @@ thead tr th {
 	</div>
 	<!-- END wrapper -->
 
-<%@ include file="useradd.jsp"%>
 
 
 	<script>
@@ -277,12 +268,7 @@ thead tr th {
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/datatables/dataTables.bootstrap.js"></script>
 		
-		<script id="CONTENT_Userlist" type="text/x-jquery-tmpl">
-	{{if 1==1}}
-	<p>Testing server</p>
-	{{else}}
-	<p>OKAY</p>
-	{{/if}}
+		<script id="CONTENT_Userlist" type="text/x-jquery-tmpl"> 
 	<tr> 
 		<td style="display: none;" id="USER_ID">{{= id }}
 		<td>{{= order}}</td>
@@ -295,11 +281,11 @@ thead tr th {
 		<td style="text-align: center;">
 			{{if status=="ACTIVE" }} 
 				<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
-			{{else if status=="INACTIVE" }} 
+			{{else status=="INACTIVE" }} 
 				<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a> 
-			{{else if status=="DELETED" }} 
+			{{else status=="DELETED" }} 
 				<a href="javascript:;" class="btn btn-danger waves-effect" type="button" id="btnStatus">Deleted</a>
-			{{else if status=="LOCKED" }}  
+			{{else status=="LOCKED" }}  
 				<a href="javascript:;" class="btn btn-info waves-effect" type="button" id="btnStatus">Locked</a> 
 			{{/if}}
 		</td> 
@@ -483,79 +469,7 @@ setPagination = function(totalPage, currentPage){
 	    	});
 	    	
 	    	 
-	    	/* ============================================== Add users =============================================== */
-	    	var isAdded=false;
-        
-        	function clearUser(){
-				 $("#username").val("");
-				 $("#password").val("");
-				 $("#firstName").val();
-				 $("#lastName").val("");
-				 $("#gender").val("");
-				 $("#email").val("");
-				$("#USER_ROLE").val("");
-			}	
-                   
-        	$('#btn_add_user').on('hidden.bs.modal', function (event) {
-    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/userlist";
-			})
-    		
-        		
-			$("#btn_add_user").click(function(){    	
-				//clearFormAdd();
-				clearUser();
-				$('#form_add_user').modal({
-					"backdrop":"static"
-				}) ;
-			});
-			
-			
-
-			$("#frmAddNewUser").submit(function(e){
-				e.preventDefault();    				
-				json = {
-					"username"  : $("#username").val(),
-					"password"	: $("#password").val(),
-					"firstName" : $("#firstName").val(),
-					"lastName"  : $("#lastName").val(),
-					"gender"    : $("#gender").val(),
-					"email"	    : $("#email").val(),
-					"status"    : 1, //$("#status").val(),
-					"userRoles": [
-					              {
-					              	"id" : $("#USER_ROLE").val()
-						
-					              }]
-				};
-				console.log(json);
-				
-				$.ajax({ 
-				    url: "${pageContext.request.contextPath}/admin/users/add", 
-				    type: 'POST', 
-				    dataType: 'JSON', 
-				    data: JSON.stringify(json), 
-				    beforeSend: function(xhr) {
-	                    xhr.setRequestHeader("Accept", "application/json");
-	                    xhr.setRequestHeader("Content-Type", "application/json");
-	                },
-				    success: function(data) { 
-				        if(data){
-				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
-				        	isAdded=true;
-				        	clearUser();
-				        }else{
-				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
-				        }
-				    },
-				    error:function(data,status,er) { 
-				        console.log("error: "+data+" status: "+status+" er:"+er);
-				    }
-				}); 
-				
-				
-			});
-		});
-
+    	});
     	</script>
 </body>
 </html>
