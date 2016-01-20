@@ -54,7 +54,7 @@ public class UserController {
 	
 	@RequestMapping(value="/admin/users/add", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody Boolean addNewUser(@RequestBody User user){
-
+		System.out.println("userRoles ID = " + user.getUserRoles().toString());
 		return userService.saveUser(user);
 	}
 	

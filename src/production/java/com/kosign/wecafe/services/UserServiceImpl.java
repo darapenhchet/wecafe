@@ -80,8 +80,8 @@ public class UserServiceImpl implements UserService{
 		//System.out.println("create by = " + this.findUserByUsername(getPrincipal()));
 		user.setCreatedDate(new Date());
 		user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
-		user.setLastUpdatedDate(new Date());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		//user.setLastUpdatedDate(new Date());
+		//user.setPassword(passwordEncoder.encode(user.getPassword()));
 		sessionFactory.getCurrentSession().save(user);
 		return true;
 		}catch(Exception ex){
