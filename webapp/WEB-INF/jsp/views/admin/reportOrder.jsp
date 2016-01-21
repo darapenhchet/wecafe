@@ -204,13 +204,13 @@ tbody tr td {
 													<thead>
 														<tr>
 															<th>#</th>
-															<th>Customer</th>
-															<th>Item</th>
-															<th>Qty</th>
-															<th>Unit Price</th>
-															<th>Purchase By</th>
-															<th>Purchase Type</th>
-															<th>Total</th> 
+															<th>Product Name</th>
+															<th>Request Qty</th>
+															<th>Request Date</th>
+															<th>Approve Date</th>
+															<th>Request By</th>
+															<th>Approve By</th>
+															<th>Total Qty</th>
 														</tr> 
 													</thead>
 													<tbody id="tbodydaily">
@@ -487,13 +487,13 @@ tbody tr td {
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= supplier_name}}</td>
-			<td>{{= product_name}}</td>
-			<td>{{= product_qty}}</td>
-			<td>{{= pro_unit_price}}</td>
-			<td>{{= purchase_by}}​</td>
-			<td>{{= purchase_type}}</td>
-			<td>{{= purchase_total_amount}}</td>
+			<td>{{= req_pro}}</td>
+			<td>{{= req_qty}}</td>
+			<td>{{= req_date}}</td>
+			<td>{{= app_date}}</td>
+			<td>{{= request_by}}​</td>
+			<td>{{= approve_by}}</td>
+			<td rowspan="{{= total_row}}">{{= total_pro_qty}}</td>
 		</tr>
     </script>
  
@@ -565,6 +565,7 @@ tbody tr td {
 	var order = 1;
 	var v=[];
 	var b = true;
+	var index = 0;
 	 setCalendar();
 	 searchByDate();
 	 
@@ -662,13 +663,12 @@ tbody tr td {
 			}); 
 	 }
 	 products.listDaily = function(currentPage){ 
-		 alert();
+
 	 var input={
 			 "currentPage" : currentPage,
 	    	 "perPage"     : $("#PER_PAGE").val(),
-	    	 "startdate"   : $.trim($("#REGS_DATE_S").val())			 
+	    	 "day"   : $.trim($("#REGS_DATE_S").val())			 
 	 };
-	 
 	
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/admin/reports/get_request_dailly/" , 
@@ -679,15 +679,20 @@ tbody tr td {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
+			    	index = 0;
 			    	console.log(data);
 			    	b =true;
 					v=data;
+					var total_qty=0;
 				 	 if(data.reportdaily.length>0){
 						$("tbody#tbodydaily").html('');
-						   for(var i=0;i<data.reportdaily.length;i++){							
-							products.format(data.reportdaily[i]);
+						   for(var i=0;i<data.reportdaily.length;i++){		
+							   total_qty=data.reportdaily[0].total_req_qty;  
+							   products.formatDaily(data.reportdaily[i]);
+							   
 						}   
 						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily"); 
+						$("#allTotalAmount").val(total_qty);
 					}else{
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
@@ -826,11 +831,30 @@ tbody tr td {
 			    }
 			}); 
 	 }
-	 products.format = function(value){
+	 
+	 products.formatDaily = function(value){
+		 if(index < v["total_qty_pro"].length){
+			 value["total_pro_qty"] =v["total_qty_pro"][index]["total_pro_qty"];
+			// value["total_row"] =v["total_qty_pro"][index]["total_row"];
+			 index++;
+		 }
+		
 		/*  if(value["purchase_type"] == 0)
 		 		value["purchase_type"] = "Import";
 		 else
 			 	value["purchase_type"] = "Expense"; */
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
+	 }
+	 
+	 products.format = function(value){
+		
 		 if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
@@ -1075,14 +1099,14 @@ tbody tr td {
 	 		      changeMonth: true,
 	 		      numberOfMonths: 1,
 	 		      dateFormat: "yy-mm-dd",
-	 		      onClose: function( selectedDate ) {			    	  
+	 		      onClose: function( selectedDate ) {		
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 	 						if($("#EDate").hasClass("hidetable"))
-	 							{
-	 							
+	 							{ 							
 	 								products.listDaily(1);
+	 							
 	 							}	 							
 	 						else
 	 							{
@@ -1102,7 +1126,7 @@ tbody tr td {
 	 		      numberOfMonths: 1,
 	 		      dateFormat: "yy-mm-dd",
 	 		      onClose: function( selectedDate ) {
-
+						
 	 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
@@ -1110,7 +1134,9 @@ tbody tr td {
 	 						settableheader();
 	 						searchByDate();
 	 						products.listWeekly(1);
+	 						
 	 			      }
+	 		
 	 		});	
 	 		if($("#EDate").hasClass("hidetable"))
 	 			$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));

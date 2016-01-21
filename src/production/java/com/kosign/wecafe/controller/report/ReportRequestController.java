@@ -68,16 +68,13 @@ public class ReportRequestController {
 	
 	@RequestMapping(value="/get_request_dailly", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportdaily(DateForm date, Pagination pagination) throws ParseException{
-		
-		System.out.println("===================Year"+date.getYear()+"Startdate====="+date.getStartdate());
-		
+	
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdaily", report.getListReportDetailRequest(pagination, date)); 
-		//pagination.setTotalCount(adminReportService.countDaily(startDate));
-		//List<Map> totalRecord=adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false); 
-		//pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
-		//pagination.setTotalPages(pagination.totalPages());
-		//map.put("pagination", pagination);
+		map.put("reportdaily", report.getListReportDailyRequest(pagination, date)); 
+		map.put("total_qty_pro",report.getTotalProQty(date));
+		pagination.setTotalCount(report.getTotalDailyRequest(date));	
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}

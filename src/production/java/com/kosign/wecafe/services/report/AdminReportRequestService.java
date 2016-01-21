@@ -6,16 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.forms.DateForm;
 
 public interface AdminReportRequestService {
+	
+	public List<Map> getTotalProQty(DateForm date);
 	public List<Map> getListReportDetailRequest(Pagination pagination,DateForm date);
-	public List<Map> getListReportDailyRequest(Pagination pagination, Date startdate);
+	public List<Map> getListReportDailyRequest(Pagination pagination, DateForm date);
 	public Object getListReportWeeklyRequest(Date startdate, Date enddate);
 	public Object getListReportMonthlyRequest(Date startDate, Date endDate);
 	public Object getListReportYearlyRequest(Date startDate, Date endDate);	
+	public Long getTotalDailyRequest(DateForm date);
 	public Map<String, Object> getAllRequestMonthlyReportsTotal(Date startDate, Date endDate);	
 	public List<Map> listAllrequestDetail(Long id);
 	public Long countDetail(DateForm date) throws ParseException;

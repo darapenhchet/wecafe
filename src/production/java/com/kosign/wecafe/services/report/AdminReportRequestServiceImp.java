@@ -3,13 +3,16 @@ package com.kosign.wecafe.services.report;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
@@ -47,7 +50,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 						+"and rs.use_id=use.id "     
 						+"and rsd.pro_id=pro.pro_id "  
 						+"and rs.status='f' "
-						+ " "+checkDate(date)+" "				
+						+"and  EXTRACT(YEAR FROM rs.app_date)=? "				
 						+"GROUP BY "
 						+"rs.req_id "
 				   + "ORDER BY app_date DESC "	;					
@@ -55,7 +58,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		try{
 			session = sessionFactory.getCurrentSession();		
 			SQLQuery query = session.createSQLQuery(sql);
-		//	query.setParameter(0, byYear);
+			query.setParameter(0, Integer.parseInt(date.getYear()));
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -67,32 +70,130 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		return null;
 	}
 	
-	public String checkDate(DateForm date){
-		String result="";
-		String startDate=date.getStartdate();
-		String endDate=date.getEnddate();
-		String year=date.getYear();
-		if(date!=null){
-			if(date.getYear() !="" || date.getYear() !=null){
-				result=" And EXTRACT(YEAR FROM rs.app_date)="+year;
-				System.out.println("year========================="+year);
-			}
-			else if(date.getStartdate() !="" || date.getStartdate()!=null){
-				result=" And to_char(req_date,''YYYY-mm-dd'')="+startDate;
-				System.out.println("startdate========================="+startDate);
-			}else if(startDate!="" && endDate!=""){
-				result=" And to_char(req_date,''YYYY-mm-dd'') BETWEEN "+ startDate + " END " + endDate;
-				System.out.println("year========================="+year);
-			}
-		}
-		return result;
-	}
+	
 
 	@Override
-	public List<Map> getListReportDailyRequest(Pagination pagination, Date startdate) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public List<Map> getListReportDailyRequest(Pagination pagination, DateForm date) {
+		Session session = null;	
+						
+		try{
+			session = sessionFactory.getCurrentSession();		
+			SQLQuery query = session.createSQLQuery(getQueryDailyRequest(date));
+			query.setParameter(0, date.getDay());
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map>	requestReport = (List<Map>)query.list();	
+			return requestReport;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
 		return null;
 	}
+	
+	
+	@Override
+	@Transactional
+	public List<Map> getTotalProQty(DateForm date) {
+		Session session = null;	
+						
+		try{
+			String sql="SELECT "
+								+"rsd.pro_id,"
+							    +"sum(pro_qty) total_pro_qty,"
+							    +"count(rsd.pro_id) total_row "
+						    +"FROM "
+						        +"request_stock rs, "
+						        +"request_stock_detail  rsd,"
+						        +"users use,"
+						        +"product pro " 
+						    +"WHERE "
+						        +"1=1 " 
+						        +"and rs.req_id=rsd.req_id " 
+						        +"and rs.use_id=use.id "
+						        +"and rsd.pro_id=pro.pro_id " 
+						        +"and rs.status='f' "
+						        +"and to_char(rs.app_date,'yyyy-mm-dd')=? "  
+								+"GROUP BY "
+								+"rsd.pro_id,"
+								+"pro_name  "
+							+"ORDER BY "
+								+"pro_name ASC"	;
+			session = sessionFactory.getCurrentSession();		
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setParameter(0, date.getDay());
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map>	requestReport = (List<Map>)query.list();	
+			return requestReport;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		return null;
+	}
+	
+	
+	@Override
+	@Transactional
+	public Long getTotalDailyRequest(DateForm date) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		Long cnt = 0L;
+		try {
+
+			try {
+				session=sessionFactory.getCurrentSession();
+				String sql = "SELECT count(*) cnt FROM(" + getQueryDailyRequest(date) + ") cnt ";
+				SQLQuery query = session.createSQLQuery(sql);
+				query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+				query.setParameter(0,date.getDay() );
+				HashMap<String, Object> result = (HashMap<String, Object>) query.uniqueResult();
+				cnt = Long.parseLong(result.get("cnt").toString());
+			} catch (HibernateException e) {
+				System.out.println(" error total remord");				
+				e.printStackTrace();
+			}
+			return cnt;
+		} catch (HibernateException e) {
+			throw new RuntimeException("Could not begin transaction");
+		}
+	}
+	
+	public String getQueryDailyRequest(DateForm date){
+		String sql="";
+		 sql="SELECT " 
+				+"pro.pro_name req_pro, "
+				+"rsd.pro_qty req_qty,"
+				+"(SELECT firstname ||' '|| lastname As approve_by FROM users WHERE id=rs.app_id ),"
+				+"(SELECT firstname ||' '|| lastname As request_by FROM users WHERE id=rs.use_id ),"
+				+"to_char(rs.req_date, 'DD/MM/YYYY HH24:MI:SS') req_date,"
+		        +"to_char(rs.app_date, 'DD/MM/YYYY HH24:MI:SS') app_date ,"
+		        + "(SELECT SUM(rsd1.pro_qty) total_req_qty from request_stock_detail rsd1, request_stock rs1 WHERE rs1.req_id=rsd1.req_id and rs1.status='f' and to_char(rs1.app_date,'yyyy-mm-dd')='"+date.getDay()+"') "
+		  +"FROM "
+			    +"request_stock rs,"
+			    +"request_stock_detail  rsd,"
+			    +"users use,"
+			    +"product pro  "
+		  +"WHERE "
+			    +"1=1  "
+			    +"and rs.req_id=rsd.req_id  "
+			    +"and rs.use_id=use.id  "
+			    +"and rsd.pro_id=pro.pro_id  "
+			    +"and rs.status='f' " 
+			    +"and to_char(rs.app_date,'yyyy-mm-dd')=? "  
+	      +"GROUP BY "
+		        +"pro_name, "
+				+"rsd.pro_qty, "
+				+"rs.app_id,"
+				+"rs.use_id,"
+				+"rs.req_date,"
+				+"rs.app_date "
+		   +"ORDER BY "
+		        +"pro_name ASC";	
+		 return sql;
+	}
+	
+	
 
 	@Override
 	public Object getListReportWeeklyRequest(Date startdate, Date enddate) {
