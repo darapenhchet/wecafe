@@ -16,9 +16,9 @@ public enum UserRoleType {
 		this.userRoleType = userRoleType;
 	}
 	
-	@Override
+	/*@Override
 	public String toString(){
 		return ("userRoleType = " + userRoleType);
-	}
+	}*/
 	
 }
