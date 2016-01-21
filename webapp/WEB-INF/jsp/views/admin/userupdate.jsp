@@ -339,8 +339,8 @@
     					"status"    : 1, //$("#status").val(),
     					"userRoles": [
     					              {
-    					              	"id" : $("#USER_ROLE").val()
-    						
+    					              	"id" : $("#USER_ROLE").val(),
+    					              	"type" : $("#USER_ROLE option:selected").text()
     					              }]
     				};
     				
@@ -356,7 +356,7 @@
     				    success: function(data) { 
     				        if(data){
     				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-    				        	location.href="${pageContext.request.contextPath}/admin/userlist";
+    				        //	location.href="${pageContext.request.contextPath}/admin/userlist";
     				        }else{
     				        	alert('YOU HAVE ERRORS WHEN UPDATE USER.');
     				        }

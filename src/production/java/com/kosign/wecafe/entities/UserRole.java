@@ -42,11 +42,11 @@ public class UserRole implements Serializable{
 		this.type = type;
 	}
 	
-	@Override
+	 @Override
 	public String toString()
 	{
 		return ("getID = " + id + " getType = " + type);
-	}
+	} 
 	
 	
 	@Override

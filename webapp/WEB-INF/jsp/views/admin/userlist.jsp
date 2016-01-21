@@ -492,8 +492,8 @@ setPagination = function(totalPage, currentPage){
 				$("#USER_ROLE").val("");
 			}	
                    
-        	$('#btn_add_user').on('hidden.bs.modal', function (event) {
-    			if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/userlist";
+        	$('#form_add_user').on('hidden.bs.modal', function (event) {
+    			if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/userlist"; 
 			})
     		
         		

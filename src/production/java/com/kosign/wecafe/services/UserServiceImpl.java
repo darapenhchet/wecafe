@@ -82,8 +82,8 @@ public class UserServiceImpl implements UserService{
 			//user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
 			//user.setLastUpdatedDate(new Date());
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			UserRole roles = sessionFactory.getCurrentSession().get(UserRole.class, user.getUserRoles().iterator().next().getId());
-			UserRole rolesNew = (UserRole) sessionFactory.getCurrentSession().merge(roles);
+			//UserRole roles = sessionFactory.getCurrentSession().get(UserRole.class, user.getUserRoles().iterator().next().getId());
+			//UserRole rolesNew = (UserRole) sessionFactory.getCurrentSession().merge(roles);
 			sessionFactory.getCurrentSession().saveOrUpdate(user);
 			return true;
 		}catch(Exception ex){
@@ -100,19 +100,28 @@ public class UserServiceImpl implements UserService{
 		try{
 			session=sessionFactory.getCurrentSession();
 			User user = (User)session.get(User.class, userUpdate.getId());
-			Long id = user.getUserRoles().iterator().next().getId();
-			System.out.println(id);
-			UserRole userRole = (UserRole)session.get(UserRole.class, id);
-			HashSet<UserRole> userRoles = new HashSet<UserRole>();
-			userRoles.add(userRole);
+			 
+			//Long id = user.getUserRoles().iterator().next().getId();
+			//System.out.println("userRole = " + id);
+			//UserRole userRole = (UserRole)session.get(UserRole.class, id);
+			//HashSet<UserRole> userRoles = new HashSet<UserRole>();
+			//userRoles.add(userRole);
 			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
 			user.setLastUpdatedDate(new Date());
 			user.setEmail(userUpdate.getEmail());
 			user.setFirstName(userUpdate.getFirstName());
 			user.setLastName(userUpdate.getLastName());
 			user.setStatus(userUpdate.getStatus());
+			user.setUsername(userUpdate.getUsername());
 			user.setGender(userUpdate.getGender());
-			user.setUserRoles(userRoles);
+			//user.setUserRoles(userRoles);
+			/*sessionFactory.getCurrentSession().flush();
+			sessionFactory.getCurrentSession().clear();*/
+			System.out.println("userRoles = " + userUpdate.getUserRoles());
+			user.setUserRoles(userUpdate.getUserRoles());
+			
+			
+			
 			session.saveOrUpdate(user);
 			return true;
 		}catch(Exception ex){
