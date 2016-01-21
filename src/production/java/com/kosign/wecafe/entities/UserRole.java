@@ -18,7 +18,7 @@ import com.kosign.wecafe.enums.UserRoleType;
 public class UserRole implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
@@ -42,10 +42,20 @@ public class UserRole implements Serializable{
 		this.type = type;
 	}
 	
-/*	@Override
+	@Override
 	public String toString()
 	{
 		return ("getID = " + id + " getType = " + type);
-	}*/
+	}
 	
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 }

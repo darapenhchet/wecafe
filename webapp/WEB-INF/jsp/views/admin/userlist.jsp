@@ -519,7 +519,8 @@ setPagination = function(totalPage, currentPage){
 					"status"    : 1, //$("#status").val(),
 					"userRoles": [
 					              {
-					              	"id" : $("#USER_ROLE").val() 
+					              	"id" : $("#USER_ROLE").val() ,
+					              	"type" : $("#USER_ROLE option:selected").text()
 					              }]
 				};  
 				$.ajax({ 
