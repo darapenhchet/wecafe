@@ -419,7 +419,7 @@ tbody tr td {
 			 getimportlist(1); 
 			 		
 			 
-			 $("#btnREGS_DATE_S").click(function(){	
+			 $("#btnREGS_DATE_S").click(function(){
 		 			$( "#REGS_DATE_S" ).datepicker("show");		
 		 			
 		 		});		
@@ -440,9 +440,9 @@ tbody tr td {
 		 		      changeMonth: true,
 		 		      numberOfMonths: 1,
 		 		      dateFormat: "yy-mm-dd",
-		 		      onClose: function( selectedDate ) {			    	  
-		 			    	    
+		 		      onClose: function( selectedDate ) { 
 		 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+		 						check = true;
 		 						getimportlist(1);
 		 			      }
 		 		});
@@ -455,7 +455,7 @@ tbody tr td {
 		 		      onClose: function( selectedDate ) {
 
 		 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
-		 			    	  
+		 			    	 check = true;
 		 			    	 getimportlist(1);
 		 			      }
 		 		});		
@@ -555,14 +555,16 @@ tbody tr td {
 		                    xhr.setRequestHeader("Content-Type", "application/json");
 		                },
 					 success: function(data){ 
-						 b =true;
-						v=data;					
-						 if(data.imports.length>0){  
+						b =true;
+						v=data;				
+						console.log(data);
+						 if(data.imports.length>0){
+							 
 								$("tbody#CONTENTS").html('');					
-								for(i=0; i<data.imports.length;i++)
+								  for(i=0; i<data.imports.length;i++)
 									{
 										format(data.imports[i]); 
-									}
+									}  
 								$("#CONTENT_Importlist").tmpl(data.imports).appendTo("tbody#CONTENTS");
 								$("#allTotalAmount").val(numeral(data.total_amount[0].total_amount).format('0,0'));
 							}else{
@@ -581,7 +583,7 @@ tbody tr td {
 			 }
 			 format = function(value){ 
 				 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');				 		
-				 		value["impDate"] =(value["impDate"]).substring(0, 10);
+				 	 	value["impDate"] =(value["impDate"]).substring(0, 10);
 				 		if(b){
 				 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 				 			j = order + 1;

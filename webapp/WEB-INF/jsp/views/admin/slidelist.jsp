@@ -92,7 +92,7 @@
 					<!-- Page-Title -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4 class="pull-left page-title">Category List</h4>
+							<h4 class="pull-left page-title">Slide List</h4>
 						</div>
 					</div>
 

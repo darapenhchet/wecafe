@@ -268,7 +268,7 @@ public class AdminReportServiceImp implements AdminReportService {
 				+ "	LEFT JOIN users C ON A.exp_user_id = C.id "
 							+ "	WHERE EXTRACT(YEAR FROM A.expense_date) = " + byyear
 				+ "	GROUP BY 1,2,3 "
-				+ "	ORDER BY 2 DESC");
+				+ "	ORDER BY 2 DESC, 1 DESC");
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -566,6 +566,7 @@ public class AdminReportServiceImp implements AdminReportService {
 	@Override
 	@Transactional
 	public List<Map> getListReportDailyPurchaseRest(Pagination pagination,Date startdate, boolean isPagination) {
+		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -581,7 +582,7 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " SUM(B.pro_qty * B.unit_price) AS purchase_total_amount, '0' AS purchase_type "
 					+ " FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id LEFT JOIN users C ON C.id = A.user_id LEFT JOIN supplier D ON D.sup_id = B.sup_id "
 					+ " 						LEFT JOIN product E on E.pro_id = B.pro_id"
-					+ " WHERE A.imp_date = '" + startdate
+					+ " WHERE to_char(A.imp_date,'YYYY-mm-dd') = '" + startDate
 					+ "' GROUP BY 1,2,3,4,5,6,7 "
 					+ " UNION ALL  	"
 					+ " SELECT 	A.expense_id AS purchase_id  , "
@@ -595,9 +596,9 @@ public class AdminReportServiceImp implements AdminReportService {
 					+ " '1' AS purchase_type"
 					+ " FROM tbl_expense A "
 					+ " 	INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id LEFT JOIN users C ON A.exp_user_id = C.id "
-					+ " 				WHERE A.expense_date = '" + startdate
+					+ " 				WHERE to_char(A.expense_date,'YYYY-mm-dd') = '" + startDate
 					+ "' GROUP BY 1,2,3,4,5,6,7 "
-					+ " ORDER BY 2 DESC");
+					+ " ORDER BY 9");
 			if(isPagination){
 				query.setFirstResult(pagination.offset());
 				query.setMaxResults(pagination.getPerPage());

@@ -434,6 +434,7 @@ thead tr th {
 			 			    	    /* alculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate")); */
 			 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 			 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
+			 						check = true;
 			 						getListExpense(1);
 			 			      }
 			 		});
@@ -446,7 +447,7 @@ thead tr th {
 			 		      onClose: function( selectedDate ) {
 
 			 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
-			 			    	  
+			 			    	 check = true;
 			 			    	 getListExpense(1);
 			 			      }
 			 		});		

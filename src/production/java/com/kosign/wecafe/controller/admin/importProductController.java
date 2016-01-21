@@ -49,15 +49,19 @@ public class importProductController {
 	@RequestMapping(value="/admin/getimportlist", method=RequestMethod.GET) 
 	public ResponseEntity<Map<String, Object>> getAllProducts(ProductFilter filter, Pagination pagination,
 			@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate) throws ParseException{
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		strStartDate = strStartDate + " 00:00:00";
+		strEndDate = strEndDate + " 23:59:59";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("imports", importService.listAllImportProduct(pagination, startDate,endDate));
+		
 		map.put("total_amount", importService.getTotalAmount(startDate, endDate));
 		pagination.setTotalCount(importService.count(startDate, endDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination",pagination);
+		System.out.println("data From" + map.get("imports").toString());
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	

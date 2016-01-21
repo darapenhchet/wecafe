@@ -569,6 +569,7 @@ tbody tr td {
 	 
 	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true); 
 	 $("#selectyear").change(function(){
+		 check = true;
 		 switch($("#selectreport").val()){
 			 case '0': 
 				 products.listDetail(1); 
@@ -606,6 +607,7 @@ tbody tr td {
 	 
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
+		 check = true;
 		 products.listMonthly();
 	 });
 	 
@@ -635,7 +637,7 @@ tbody tr td {
 					 if(data.reportdetail.length>0){
 					$("tbody#tbodydetail").html('');
 						 for(var i=0;i<data.reportdetail.length;i++){							
-							products.format(data.reportdetail[i]);
+							products.formatDetail(data.reportdetail[i]);
 						} 
 						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
 					}else{
@@ -812,11 +814,11 @@ tbody tr td {
 			    }
 			}); 
 	 }
-	 products.format = function(value){
+	products.format = function(value){
 		 if(value["purchase_type"] == 0)
 		 		value["purchase_type"] = "Import";
 		 else
-			 	value["purchase_type"] = "Expense";
+			 	value["purchase_type"] = "Expense"; 
 		 if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
@@ -826,6 +828,23 @@ tbody tr td {
 	 		else  
 	 		value["order"] = ++j; 
 	 }
+	
+	products.formatDetail = function(value){
+		 if(value["purchase_type"] == 0)
+		 		value["purchase_type"] = "Import";
+		 else
+			 	value["purchase_type"] = "Expense";
+		 value["purchase_date"] = value["purchase_date"].substring(0,10);
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
+	 }
+	
 	 function formatMonthlySaleReport(value){
 			console.log(value);
 	    	value["total_amount"] = value["jan_amount"] + 
@@ -890,7 +909,7 @@ tbody tr td {
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
-			 
+			 check = true;
 			 products.listDetail(1);
 			 
 		 }			 
@@ -906,7 +925,7 @@ tbody tr td {
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").addClass("hidetable");
 			 setCalendar();
-			 
+			 check = true;
 			 products.listDaily(1);
 			 
 		 }else if($(this).val()==2){ 
@@ -923,7 +942,7 @@ tbody tr td {
 			 $("#monthcombo").addClass("hidetable");
 			 setCalendar();
 			 settableheader();
-			 
+			 check = true;
 			 products.listWeekly(1);
 			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
 			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
@@ -941,7 +960,7 @@ tbody tr td {
 			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 $("#monthcombo").removeClass("hidetable");
-			 
+			 check = true;
 			 setheadermonthly();
 			 products.listMonthly();
 		 }else if($(this).val()==4){
@@ -952,7 +971,7 @@ tbody tr td {
 			 $("#tblyearly").removeClass("hidetable");
 			 var startdate = new Date().getFullYear() + '/01/01';
 			 var stopdate = new Date().getFullYear() + '/12/31';
-
+			 check = true;
 			 $("#selectmonth").addClass("hidetable");
 			 products.listYearly();
 		 }		 
@@ -1075,13 +1094,14 @@ tbody tr td {
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 	 						if($("#EDate").hasClass("hidetable"))
 	 							{
-	 							
+	 								check = true;
 	 								products.listDaily(1);
 	 							}	 							
 	 						else
 	 							{
 	 								settableheader();
 	 								$("#REGS_DATE_E").datepicker('setDate', moment($("#REGS_DATE_S").val()).add(6, 'days').format('YYYY-MM-DD'));
+	 								check = true;
 	 								products.listWeekly(1);
 	 								 
 	 							}
@@ -1103,6 +1123,7 @@ tbody tr td {
 	 						$("#REGS_DATE_S").datepicker('setDate', moment($("#REGS_DATE_E").val()).subtract(6, 'days').format('YYYY-MM-DD'));
 	 						settableheader();
 	 						searchByDate();
+	 						check = true;
 	 						products.listWeekly(1);
 	 			      }
 	 		});	

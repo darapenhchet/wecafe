@@ -42,7 +42,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 				 + "	   , to_char(A.sale_datetime, 'YYYY-mm-dd') as sale_date "
 				 + "	   , A.total_amount from sale A "
 				 + "	    INNER JOIN users B on A.user_id = B.id "
-				 + "	where EXTRACT(YEAR FROM A.sale_datetime) = " + byyear);
+				 + "	where EXTRACT(YEAR FROM A.sale_datetime) = " + byyear + " order by A.sale_id DESC");
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);

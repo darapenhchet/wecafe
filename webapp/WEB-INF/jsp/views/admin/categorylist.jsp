@@ -61,8 +61,9 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 <style type="text/css">
-	table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
+table {
+	font-family: 'Khmer OS', 'Khmer OS System';
+	font-size: 10pt;
 }
 
 thead tr th {
@@ -115,19 +116,19 @@ thead tr th {
 								<div class="col-md-8">
 									<form class="form-inline">
 										<div class="form-group">
-											<label>Search</label> <input type="text"
-												class="form-control" placeholder="Search" width="400%">
+											<label>Search</label> <input type="text" class="form-control"
+												placeholder="Search" width="400%">
 										</div>
-										
+
 									</form>
-								</div>	
-									
-										<div class="col-md-2 pull-right">
-										<button id="btn_add_category" class="btn btn-primary">Add
-											Category</button>
-										</div>
-								
 								</div>
+
+								<div class="col-md-2 pull-right">
+									<button id="btn_add_category" class="btn btn-primary">Add
+										Category</button>
+								</div>
+
+							</div>
 						</div>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped"
@@ -145,7 +146,7 @@ thead tr th {
 									</tr>
 								</thead>
 								<tbody id="CONTENTS">
-							
+
 								</tbody>
 							</table>
 						</div>
@@ -154,16 +155,16 @@ thead tr th {
 					</div>
 					<!-- end Panel -->
 					<div class="row">
-					 <div class="col-md-2">
-											<select id="PER_PAGE" class="form-control"> 
-												<option value="15">15</option>
-												<option value="30">30</option>
-												<option value="50">50</option>
-												<option value="100">100</option>
-											</select>
+						<div class="col-md-2">
+							<select id="PER_PAGE" class="form-control">
+								<option value="15">15</option>
+								<option value="30">30</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+						</div>
+						<div id="PAGINATION" class="pull-right"></div>
 					</div>
-					<div id="PAGINATION" class="pull-right"></div>
-					</div> 
 				</div>
 				<!-- container -->
 
@@ -272,9 +273,9 @@ thead tr th {
 
 
 	<script>
-            var resizefunc = [];
-            var ctx = "${pageContext.request.contextPath}"
-        </script>
+		var resizefunc = [];
+		var ctx = "${pageContext.request.contextPath}"
+	</script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 	<script src="<c:url value='/resources/scripts/dirPagination.js' />"></script>
@@ -339,9 +340,9 @@ thead tr th {
 		src="${pageContext.request.contextPath}/resources/assets/notifications/notifications.js"></script>
 
 	<!--  <script src="http://malsup.github.com/jquery.form.js"></script> -->
-	
+
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>	
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 	<script id="CONTENT_Categorylist" type="text/x-jquery-tmpl">
 	<tr>
 		<td style="display: none" id="CATEGORY_ID">{{= catId}}</td>
@@ -351,7 +352,7 @@ thead tr th {
 			<img src="${pageContext.request.contextPath}/resources/images/products/{{= img }}"
 											class="img-thumbnail" alt="" width="30px" height="30px" /></td>
 		<td>{{= createdBy.username}}</td>
-		<td>{{= createdBy.createdDate}} </td>
+		<td>{{= createdDate}} </td>
 		<td>{{= lastUpdatedBy}}</td> 
 		<td>{{= lastUpdatedDate}}</td> 
 		<td style="text-align: center;" class="actions"><a
@@ -369,195 +370,246 @@ thead tr th {
 	<%@ include file="categoryadd.jsp"%>
 
 	<script type="text/javascript">
-	var isAdded=false;
-	var check = true;
-	var order = 1;
-	var v=[];
-	var b = true;
-    	$(function(){
-    		listcategory(1);
-    		function listcategory(currentPage){
-    			var json = {
-					 	"currentPage" : currentPage, 
-			    		"perPage"     : $("#PER_PAGE").val()  
+		var isAdded = false;
+		var check = true;
+		var order = 1;
+		var v = [];
+		var b = true;
+		$(function() {
+			listcategory(1);
+			function listcategory(currentPage) {
+				var json = {
+					"currentPage" : currentPage,
+					"perPage" : $("#PER_PAGE").val()
 				};
-    			$.ajax({
-				    url: "${pageContext.request.contextPath}/admin/listcategory/",
-				    type: 'GET', 
-				    data: json,
-				    beforeSend: function(xhr) {
-	                    xhr.setRequestHeader("Accept", "application/json");
-	                    xhr.setRequestHeader("Content-Type", "application/json");
-	                },
-				    success: function(data) {
-				    	b =true;
-						v=data;
-				    	console.log(data);
-				    	 if(data.categories.length>0){  
-								$("tbody#CONTENTS").html(''); 
-								for(i=0; i<data.categories.length;i++)
-								{
-									format(data.categories[i]); 
+				$
+						.ajax({
+							url : "${pageContext.request.contextPath}/admin/listcategory/",
+							type : 'GET',
+							data : json,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept",
+										"application/json");
+								xhr.setRequestHeader("Content-Type",
+										"application/json");
+							},
+							success : function(data) {
+								b = true;
+								v = data;
+								console.log(data);
+								if (data.categories.length > 0) {
+									$("tbody#CONTENTS").html('');
+									for (i = 0; i < data.categories.length; i++) {
+										format(data.categories[i]);
+									}
+									$("#CONTENT_Categorylist").tmpl(
+											data.categories).appendTo(
+											"tbody#CONTENTS");
+								} else {
+									$("tbody#CONTENTS").html(
+											'<tr>NO CONTENTS</tr>');
+									$("#allTotalAmount").val("");
 								}
-								$("#CONTENT_Categorylist").tmpl(data.categories).appendTo("tbody#CONTENTS"); 
-							}else{
-								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
-								$("#allTotalAmount").val("");
+								if (check) {
+									setPagination(data.pagination.totalPages, 1);
+									check = false;
+								}
+							},
+							error : function(data, status, er) {
+								console.log("error: " + data + " status: "
+										+ status + " er:" + er);
 							}
-					    	if(check){
-					    		setPagination(data.pagination.totalPages,1);
-					    		check=false;
-					    	}
-				    },
-				    error:function(data,status,er) { 
-				        console.log("error: "+data+" status: "+status+" er:"+er);
-				    }
-				}); 
-    		}
-    		function format(value){
-    			value["createdBy"]["createdDate"] = (value["createdBy"]["createdDate"]).substring(0, 10);
-    			if (value["lastUpdatedDate"] != null)
-    				value["lastUpdatedDate"] =(value["lastUpdatedDate"]).substring(0, 10);
-    			if(b){
-		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
-		 			j = order + 1;
-		 			value["products"] =j;
-		 			b = false;
-		 		}
-		 		else  
-		 		value["products"] = ++j; 
-    		} 
-    		
-	    	$(document).on('click','#btnRemove',function(){
-				var id = $(this).parents("tr").find("#CATEGORY_ID").html();
-				if(confirm("Do you want to delete that category?")){
-					$.ajax({ 
-					    url: "${pageContext.request.contextPath}/admin/category/delete/"+id, 
-					    type: 'POST', 
-					    dataType: 'JSON', 
-					    //data: JSON.stringify(json), 
-					    beforeSend: function(xhr) {
-		                    xhr.setRequestHeader("Accept", "application/json");
-		                    xhr.setRequestHeader("Content-Type", "application/json");
-		                },
-					    success: function(data) { 
-					        if(data){
-					        	//alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
-					        	location.href="${pageContext.request.contextPath}/admin/categorylist";
-					        }else{
-					        	alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
-					        }
-					    },
-					    error:function(data,status,er) { 
-					        console.log("error: "+data+" status: "+status+" er:"+er);
-					    }
-					});
-					
-				}
-			}); 
-	    	
-	    	
-	    	//Category Add
-	    	
-	    	$('#form_add_category').on('hidden.bs.modal', function (event) {
-	    		if(isAdded==true)location.href="${pageContext.request.contextPath}/admin/categorylist";
-			})
-    		
-    		$("#btn_cancel").click(function(){
-    			$('#form_add_category').modal('hide');
-    			
-    		});
-        		
-			$("#btn_add_category").click(function(){    	
+						});
+			}
+			function format(value) {
+				value["createdDate"] = (value["createdDate"]).substring(0, 10);
+				if (value["lastUpdatedDate"] != null)
+					value["lastUpdatedDate"] = (value["lastUpdatedDate"])
+							.substring(0, 10);  
+				if (b) {
+					order = v.pagination.perPage
+							* (v.pagination.currentPage - 1);
+					j = order + 1;
+					value["products"] = j;
+					b = false;
+				} else
+					value["products"] = ++j;
+			}
+
+			$(document)
+					.on(
+							'click',
+							'#btnRemove',
+							function() {
+								var id = $(this).parents("tr").find(
+										"#CATEGORY_ID").html();
+								if (confirm("Do you want to delete that category?")) {
+									$
+											.ajax({
+												url : "${pageContext.request.contextPath}/admin/category/delete/"
+														+ id,
+												type : 'POST',
+												dataType : 'JSON',
+												//data: JSON.stringify(json), 
+												beforeSend : function(xhr) {
+													xhr.setRequestHeader(
+															"Accept",
+															"application/json");
+													xhr.setRequestHeader(
+															"Content-Type",
+															"application/json");
+												},
+												success : function(data) {
+													if (data) {
+														//alert('YOU HAVE BEEN DELETED SUCCESSFULLY.');
+														location.href = "${pageContext.request.contextPath}/admin/categorylist";
+													} else {
+														alert('YOU HAVE ERRORS WHEN DELETE EXSITING CATEGORY.');
+													}
+												},
+												error : function(data, status,
+														er) {
+													console.log("error: "
+															+ data
+															+ " status: "
+															+ status + " er:"
+															+ er);
+												}
+											});
+
+								}
+							});
+
+			//Category Add
+
+			$('#form_add_category')
+					.on(
+							'hidden.bs.modal',
+							function(event) {
+								if (isAdded == true)
+									location.href = "${pageContext.request.contextPath}/admin/categorylist";
+							})
+
+			$("#btn_cancel").click(function() {
+				$('#form_add_category').modal('hide');
+
+			});
+
+			$("#btn_add_category").click(function() {
 				clearFormCategory();
 				$('#form_add_category').modal({
-					"backdrop":"static"
-				}) ;
-			});
-			
-			$("#btnSubmit").click(function(e){
-				e.preventDefault();    				
-				if($("#categoryName").val()==""){
-					alert("PLEASE CHOOSE THE CATEGORY");
-					return;
-				}
-				if($("#image").val()==""){
-					alert("PLEASE SELECT THE IMAGE.");
-					return;
-				}
-				$("#frmAddCategory").ajaxSubmit({
-					url: "${pageContext.request.contextPath}/admin/category/add",
-					dataType: 'JSON', 
-					type: 'POST',
-					success: function(data) { 
-						console.log(data);
- 				        if(data){
- 				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
- 							isAdded=true;
- 							clearFormCategory();
- 				        }else{
- 				        	alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
- 				        	
- 				        }
- 				    },
- 				    error:function(data,status,er) { 
- 				        console.log("error: "+data+" status: "+status+" er:"+er);
- 				    }
+					"backdrop" : "static"
 				});
 			});
-			
-			$("#images").change(function(){			
-				$("#frmAddCategory").ajaxSubmit({
-					url: "${pageContext.request.contextPath}/admin/rest/images/",
-					dataType: 'JSON', 
-					type: 'POST',
-					success: function(data) { 
-						console.log(data);
-				        if(data){
-				        	$("#images_sample").attr("src", "${pageContext.request.contextPath}/resources/images/products/"+data.IMAGE);
-				        	$("#images_sample").show();
-				        	$("#image").val(data.IMAGE);
-				        }else{
-				        }
-				    },
-				    error:function(data,status,er) { 
-				        console.log("error: "+data+" status: "+status+" er:"+er);
-				    }
-				});
-			});
-		 	$("#PER_PAGE").change(function(){
-	 			check = true;
-	 			listcategory(1);
-			    });
 
-		setPagination = function(totalPage, currentPage){
-	    	$('#PAGINATION').bootpag({
-		        total: totalPage,
-		        page: currentPage,
-		        maxVisible: 10,
-		        leaps: true,
-		        firstLastUse: true,
-		        first: 'First',
-		        last: 'Last',
-		        wrapClass: 'pagination',
-		        activeClass: 'active',
-		        disabledClass: 'disabled',
-		        nextClass: 'next',
-		        prevClass: 'prev',
-		        lastClass: 'last',
-		        firstClass: 'first'
-		    }).on("page", function(event, currentPage){
-		    	check = false;
-		    	listcategory(currentPage);
-		    }); 
-		};
-    	});
-    	function clearFormCategory(){
-    		$("#categoryName").val("");
-    		$("#optCategory").val("");
+			$("#btnSubmit").click(function(e) {
+								e.preventDefault();
+								if ($("#categoryName").val() == "") {
+									alert("PLEASE CHOOSE THE CATEGORY");
+									return;
+								}
+								if ($("#image").val() == "") {
+									alert("PLEASE SELECT THE IMAGE.");
+									return;
+								}
+								$("#frmAddCategory")
+										.ajaxSubmit(
+												{
+													url : "${pageContext.request.contextPath}/admin/category/add",
+													dataType : 'JSON',
+													type : 'POST',
+													success : function(data) {
+														console.log(data);
+														if (data) {
+															alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
+															isAdded = true;
+															clearFormCategory();
+															$(
+																	'#form_add_category')
+																	.modal(
+																			'hide');
+														} else {
+															alert('YOU HAVE ERRORS WHEN INSERT NEW CATEGORY.');
+
+														}
+													},
+													error : function(data,
+															status, er) {
+														console.log("error: "
+																+ data
+																+ " status: "
+																+ status
+																+ " er:" + er);
+													}
+												});
+							});
+
+			$("#images")
+					.change(
+							function() {
+								$("#frmAddCategory")
+										.ajaxSubmit(
+												{
+													url : "${pageContext.request.contextPath}/admin/rest/images/",
+													dataType : 'JSON',
+													type : 'POST',
+													success : function(data) {
+														console.log(data);
+														if (data) {
+															$("#images_sample")
+																	.attr(
+																			"src",
+																			"${pageContext.request.contextPath}/resources/images/products/"
+																					+ data.IMAGE);
+															$("#images_sample")
+																	.show();
+															$("#image").val(
+																	data.IMAGE);
+														} else {
+														}
+													},
+													error : function(data,
+															status, er) {
+														console.log("error: "
+																+ data
+																+ " status: "
+																+ status
+																+ " er:" + er);
+													}
+												});
+							});
+			$("#PER_PAGE").change(function() {
+				check = true;
+				listcategory(1);
+			});
+
+			setPagination = function(totalPage, currentPage) {
+				$('#PAGINATION').bootpag({
+					total : totalPage,
+					page : currentPage,
+					maxVisible : 10,
+					leaps : true,
+					firstLastUse : true,
+					first : 'First',
+					last : 'Last',
+					wrapClass : 'pagination',
+					activeClass : 'active',
+					disabledClass : 'disabled',
+					nextClass : 'next',
+					prevClass : 'prev',
+					lastClass : 'last',
+					firstClass : 'first'
+				}).on("page", function(event, currentPage) {
+					check = false;
+					listcategory(currentPage);
+				});
+			};
+		});
+		function clearFormCategory() {
+			$("#categoryName").val("");
+			$("#optCategory").val("");
 			$("#image").val("");
-    	}
-   
-    	</script>
+		}
+	</script>
 </body>
 </html>

@@ -567,21 +567,23 @@ thead tr th {
 	 setCalendar();  
 	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
 	 $("#selectyear").change(function(){
-		 switch($("#selectreport").val()){
-			 case '0': 
-				 sales.listDetail(1); 
+		 check = true;
+		 switch($("#selectreport").val()){ 
+			 case '0':  
+				 checkFilter(1); 
 				 break;
 				 
 			 case '3':
-				 sales.listMonthly(1); 
+				 checkFilter(1); 
 				 break;
 				 
 			 case '4':
-				 sales.listYearly(); 
+				 checkFilter(1); 
 				 break;
 		 }
 	 });
 	 function checkFilter(currentPage){
+		 
 		 switch($("#selectreport").val()){
 		 case '0': 
 			 sales.listDetail(currentPage); 
@@ -626,8 +628,9 @@ thead tr th {
 		    	checkFilter(currentPage);
 		    }); 
 		};
-	 $("#selectmonth").change(function(){
+	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
+		 check = true;
 		 sales.listMonthly();
 	 });
 	 sales.listDetail = function(currentPage){ 
@@ -658,7 +661,7 @@ thead tr th {
 						$("#CONTENT_DETAIL").tmpl(data.reportdetail).appendTo("tbody#tbodydetail");
 					}else{
 						$("tbody#tbodydetail").html(''); 
-					}
+					} 
 			    	if(check){
 			    		sales.setPagination(data.pagination.totalPages,1);
 			    		check=false;
@@ -952,7 +955,7 @@ thead tr th {
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
-			 
+			 check = true;
 			 sales.listDetail(1);
 			 
 		 }			 
@@ -968,7 +971,7 @@ thead tr th {
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").addClass("hidetable");
 			 setCalendar();
-			 
+			 check = true;
 			 sales.listDaily(1);
 			 
 		 }else if($(this).val()==2){ 
@@ -985,7 +988,7 @@ thead tr th {
 			 $("#monthcombo").addClass("hidetable");
 			 setCalendar();
 			 settableheader();
-			 
+			 check = true;
 			 sales.listWeekly(1);
 			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
 			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
@@ -1003,7 +1006,7 @@ thead tr th {
 			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 $("#monthcombo").removeClass("hidetable");
-			 
+			 check = true;
 			 setheadermonthly();
 			 sales.listMonthly();
 		 }else if($(this).val()==4){
@@ -1014,7 +1017,7 @@ thead tr th {
 			 $("#tblyearly").removeClass("hidetable");
 			 var startdate = new Date().getFullYear() + '/01/01';
 			 var stopdate = new Date().getFullYear() + '/12/31';
-
+			 check = true;
 			 $("#selectmonth").addClass("hidetable");
 			 sales.listYearly();
 		 }		 
@@ -1136,13 +1139,14 @@ thead tr th {
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 	 						if($("#EDate").hasClass("hidetable"))
 	 							{
-	 							
+	 								check = true;
 	 								sales.listDaily(1);
 	 							}	 							
 	 						else
 	 							{
 	 								settableheader();
 	 								$("#REGS_DATE_E").datepicker('setDate', moment($("#REGS_DATE_S").val()).add(6, 'days').format('YYYY-MM-DD'));
+	 								check = true;
 	 								sales.listWeekly(1);
 	 								 
 	 							}
@@ -1164,6 +1168,7 @@ thead tr th {
 	 						$("#REGS_DATE_S").datepicker('setDate', moment($("#REGS_DATE_E").val()).subtract(6, 'days').format('YYYY-MM-DD'));
 	 						settableheader();
 	 						searchByDate();
+	 						check = true;
 	 						sales.listWeekly(1);
 	 			      }
 	 		});	
