@@ -12,9 +12,10 @@ import com.kosign.wecafe.entities.Pagination;
 public interface AdminReportSaleService {
 	public List<Map> getListReportDetailSaleRest(Pagination pagination,int byYear);
 	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate);
-	public Object getListReportWeeklySaleRest(Date startdate, Date enddate);
-	public Object getListReportMonthlySaleRest(Date startDate, Date endDate);
-	public Object getListReportYearlySale(Date startDate, Date endDate);	
+	public Object getListReportWeeklySaleRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination);
+	 
+	public Object getListReportMonthlySaleRest(Pagination pagination,Date startDate, Date endDate, boolean isPagination);
+	public Object getListReportYearlySale(Pagination pagination,Date startDate, Date endDate,boolean isPagination);	
 	public Map<String, Object> getAllSaleMonthlyReportsTotal(Date startDate, Date endDate);	
 	public List<Map> listAllsaleDetail(Long id);
 	public Long countDetail(int year) throws ParseException;

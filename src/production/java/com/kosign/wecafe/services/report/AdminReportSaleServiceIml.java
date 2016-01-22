@@ -123,10 +123,10 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 
 	@Override
 	@Transactional
-	public Object getListReportWeeklySaleRest(Date startdate, Date enddate) {	
+	public Object getListReportWeeklySaleRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination) {	
 	Session session = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	System.out.println("beforFomat = " + startdate);
 	Calendar calStartDate = Calendar.getInstance();
 	calStartDate.setTime(startdate);
 	
@@ -134,6 +134,9 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	calEndDate.setTime(enddate);
 	
 	Calendar calendar = calStartDate;
+	
+	System.out.println("afterFomat = " + sdf.format(startdate));
+	
 	String[] months = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
 	StringBuilder sb = new StringBuilder();
 	StringBuilder sbSelect = new StringBuilder();
@@ -175,9 +178,12 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 + "WHERE D.status = 2 and to_char(C.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" 	 
 + "GROUP BY 1,2   "
 + "ORDER BY 2', "
-+ "        'SELECT to_char(date ''2016-01-01'' + (n || '' day'')::interval, ''DD'') As short_mname  FROM generate_series(0,6) n;' ) AS mthreport " 
-+ "( row_name TEXT , " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"									   
-									   ); 	
++ "        'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname  FROM generate_series(0,6) n;' ) AS mthreport " 
++ "( row_name TEXT , " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"); 	
+		if(isPagination){
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
+		}
 		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 		List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 		return sales;
@@ -190,7 +196,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 
 	@Override
 	@Transactional
-	public Object getListReportMonthlySaleRest(Date startdate, Date enddate) {
+	public Object getListReportMonthlySaleRest(Pagination pagination, Date startdate, Date enddate, boolean isPagination ) {
 
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -245,6 +251,10 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 						   ") AS mthreport ( " +
 						   "row_name TEXT, " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 			   ); 	 
+			if(isPagination){
+				query.setFirstResult(pagination.offset());
+				query.setMaxResults(pagination.getPerPage());
+			}
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map<String, Object>> sales = (List<Map<String, Object>>)query.list();
 			return sales;
@@ -257,7 +267,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 
 	@Override
 	@Transactional
-	public Object getListReportYearlySale(Date startDate, Date endDate) {
+	public Object getListReportYearlySale(Pagination pagination, Date startDate, Date endDate,boolean isPagination) {
 
 		// TODO Auto-generated method stub
 		Session session = null;
@@ -334,6 +344,10 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 										   ") AS mthreport ( " +
 										   "row_name TEXT , " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 										   ); 	
+			if(isPagination){
+				query.setFirstResult(pagination.offset());
+				query.setMaxResults(pagination.getPerPage());
+			}
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 			return sales;
@@ -412,8 +426,10 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	@Override
 	@Transactional
 	public Long getAllTotalAmount(Date startdate, Date enddate) {
-		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
-		String endDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = sdf.format(startdate);
+		String endDate = sdf.format(enddate);
+		System.out.println("StartDate = " + startDate);
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -421,8 +437,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 			SQLQuery query = session.createSQLQuery("SELECT "
 							+ " sum(A.pro_qty*A.pro_unit_price) as total_amount " 
 							+ " from sale C INNER JOIN wecafe_order D on C.ord_id = D.order_id "
-							+ " 		LEFT JOIN order_detail A ON C.ord_id = A.order_id "
-							+ " 		LEFT JOIN product B on B.pro_id = A.pro_id "
+							+ " 		LEFT JOIN order_detail A ON C.ord_id = A.order_id " 
 							+ " WHERE D.status = 2 and to_char(C.sale_datetime,'YYYY-mm-dd') between '" + startDate +"' and '" +  endDate +"'");  
 			query.addScalar("total_amount", LongType.INSTANCE); 	
 			return  (Long) (query.uniqueResult());
@@ -433,5 +448,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 		}		
 		return null;
 	}
+
+	 
 
 }

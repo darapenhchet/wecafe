@@ -43,8 +43,7 @@ public class ReportSaleController {
 	@RequestMapping(value="/saledetail", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportdetail(ProductFilter filter, Pagination pagination) throws ParseException{
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportdetail", adminReportSaleService.getListReportDetailSaleRest(pagination,filter.getByYear()));
-		
+		map.put("reportdetail", adminReportSaleService.getListReportDetailSaleRest(pagination,filter.getByYear())); 
 		pagination.setTotalCount(adminReportSaleService.countDetail(filter.getByYear()));
 		pagination.setTotalPages(pagination.totalPages()); 
 		map.put("pagination", pagination);
@@ -64,14 +63,16 @@ public class ReportSaleController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 	}
 	@RequestMapping(value="/salereportweekly", method=RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getpurchasereportweekly(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 
+	public ResponseEntity<Map<String, Object>> getsalereportweekly(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 
 			Pagination pagination) throws ParseException{
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
-		Date endDate = simpleDateFormat.parse(strEndDate);
+		Date endDate = simpleDateFormat.parse(strEndDate); 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportweekly", adminReportSaleService.getListReportWeeklySaleRest(startDate, endDate));
-		pagination.setTotalCount(adminReportSaleService.count());
+		map.put("reportweekly", adminReportSaleService.getListReportWeeklySaleRest(pagination,startDate, endDate, true));
+		map.put("getTotalAmount", adminReportSaleService.getAllTotalAmount(startDate, endDate));
+		List<Map> totalRecord = (List<Map>) adminReportSaleService.getListReportWeeklySaleRest(pagination, startDate,endDate,false); 
+		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
@@ -83,29 +84,32 @@ public class ReportSaleController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportmonthly", adminReportSaleService.getListReportMonthlySaleRest(startDate, endDate));
-		pagination.setTotalCount(adminReportSaleService.count());
+		map.put("reportmonthly", adminReportSaleService.getListReportMonthlySaleRest(pagination, startDate, endDate, true));
+		map.put("getTotalAmount", adminReportSaleService.getAllTotalAmount(startDate, endDate));
+		List<Map> totalRecord = (List<Map>) adminReportSaleService.getListReportMonthlySaleRest(pagination, startDate,endDate,false);  
+		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 	} 
 	@RequestMapping(value="/salereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(
 			   @RequestParam(value="start_date") String strStartDate, 
-			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
+			   @RequestParam(value="end_date") String strEndDate, Pagination pagination) throws ParseException{
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
-		Map<String, Object> map = new HashMap<String, Object>();
-		
+		Map<String, Object> map = new HashMap<String, Object>(); 
 		System.out.println(strStartDate);
 		System.out.println(strEndDate);
 		
-		map.put("reportyear", adminReportSaleService.getListReportYearlySale(startDate, endDate));
-		 
-		//map.put("total_reportyear", adminReportSaleService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
+		map.put("reportyear", adminReportSaleService.getListReportYearlySale(pagination,startDate, endDate,true));
+		map.put("getTotalAmount", adminReportSaleService.getAllTotalAmount(startDate, endDate));
+		List<Map> totalRecord = (List<Map>) adminReportSaleService.getListReportYearlySale(pagination, startDate,endDate,false);  
+		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination); 
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 		
 	} 
