@@ -108,20 +108,15 @@ public class ReportRequestController {
 	@RequestMapping(value="/purchasereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(Pagination pagination,
 			   @RequestParam(value="start_date") String strStartDate, 
-			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
-		
+			   @RequestParam(value="end_date") String strEndDate) throws ParseException{ 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
-		Map<String, Object> map = new HashMap<String, Object>();
-		
+		Map<String, Object> map = new HashMap<String, Object>(); 
 		System.out.println(strStartDate);
-		System.out.println(strEndDate);
-		
-		map.put("reportyear", adminReportService.getListReportYearlyPurcase(pagination,startDate, endDate, true));
-		 
+		System.out.println(strEndDate); 
+		map.put("reportyear", adminReportService.getListReportYearlyPurcase(pagination,startDate, endDate, true)); 
 		map.put("total_reportyear", adminReportService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
-		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);  
 	}
 }

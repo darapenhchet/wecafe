@@ -848,20 +848,7 @@ tbody tr td {
 							    		+ data.get_total_amount[j].sep_amount 
 							    		+ data.get_total_amount[j].oct_amount 
 							    		+ data.get_total_amount[j].nov_amount 
-							    		+ data.get_total_amount[j].dec_amount;
-				    		console.log(data.get_total_amount[j].jan_amount);
-				    		/* value["jan_amount"] + 
-							value["feb_amount"] + 
-							value["mar_amount"] +
-							value["apr_amount"] +
-							value["may_amount"] +
-							value["jun_amount"] +
-							value["jul_amount"] +
-							value["aug_amount"] +
-							value["sep_amount"] +
-							value["oct_amount"] +
-							value["nov_amount"] +
-							value["dec_amount"]) */
+							    		+ data.get_total_amount[j].dec_amount; 
 				    	}
 			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");	
 			    		 $("#allTotalAmount").val(numeral(total_amount).format('0,0'));

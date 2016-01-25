@@ -742,7 +742,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 										   " GROUP BY 1,2 " +
-										   "	 ORDER BY 2', " +
+										   "	 ORDER BY 1,2', " +
 										   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
 										   " FROM generate_series(0,"+ (calEndDate.get(Calendar.DAY_OF_MONTH) -1) +") n;' " +
 										   ") AS mthreport ( " +
