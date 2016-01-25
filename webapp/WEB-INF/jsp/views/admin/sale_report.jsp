@@ -771,7 +771,7 @@ thead tr th {
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-			    success: function(data) { 
+			    success: function(data) {
 			    	console.log(data);
 			    	b =true; 
 			    	    if(data.reportmonthly){
@@ -787,7 +787,10 @@ thead tr th {
 						 			b = false; 
 						 		}
 						 		else  
-						 			st += "<td>"+ (k+1) +"</td>"; 
+						 			{
+						 			k += 1;
+						 			st += "<td>"+ k +"</td>"; 
+						 			}
 				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>"; 
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
 				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";

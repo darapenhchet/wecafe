@@ -15,9 +15,9 @@ public interface AdminReportService {
 	public List<Map> getReportListAllOrderProduct();	
 	public List<Map> getListReportDetailPurchaseRest(Pagination pagination,int byYear);	
 	public List<Map> getListReportDailyPurchaseRest(Pagination pagination,Date startdate, boolean isPagination);	
-	public Object getListReportWeeklyPurchaseRest(Date startdate, Date enddate);
-	public Object getListReportMonthlyPurchaseRest(Date startDate, Date endDate);
-	public Object getListReportYearlyPurcase(Date startDate, Date endDate);	
+	public Object getListReportWeeklyPurchaseRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination);
+	public Object getListReportMonthlyPurchaseRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination);
+	public Object getListReportYearlyPurcase(Pagination pagination,Date startDate, Date endDate,boolean isPagination);	
 	public Map<String, Object> getAllPurchaseMonthlyReportsTotal(Date startDate, Date endDate);	
 	public List<Map> getListReportYearlyPurchaseRest(int byYear);	
 	public List<Map> getListReportDetailPurchase();	

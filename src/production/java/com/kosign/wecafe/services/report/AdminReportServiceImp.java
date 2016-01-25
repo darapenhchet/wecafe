@@ -376,14 +376,10 @@ public class AdminReportServiceImp implements AdminReportService {
 			session.close();
 		}
 		return null;
-	}
-
- 
-
-
+	} 
 	@Transactional
 	@Override
-	public List<Map<String, Object>> getListReportYearlyPurcase(Date startDate, Date endDate) {
+	public List<Map<String, Object>> getListReportYearlyPurcase(Pagination pagination,Date startDate, Date endDate,boolean isPagination) {
 		// TODO Auto-generated method stub
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -401,17 +397,12 @@ public class AdminReportServiceImp implements AdminReportService {
 		StringBuilder sb = new StringBuilder();
 		StringBuilder sbSelect = new StringBuilder();
 		for(int i=calStartDate.get(Calendar.MONTH) ; i<=calEndDate.get(Calendar.MONTH) ; i++){
-			calendar.add(Calendar.MONTH, i);
-			System.out.println(months[i]);
+			calendar.add(Calendar.MONTH, i); 
 			sbSelect.append("COALESCE("+months[i]+"[1],0) AS "+months[i].toUpperCase()+"_QTY ,");
 			sbSelect.append("COALESCE("+months[i]+"[2],0) AS "+months[i].toUpperCase()+"_AMOUNT ,");
 			sb.append(months[i] + " INTEGER[],");
 			
-		}
-		System.out.println(sb.toString().substring(0, sb.toString().lastIndexOf(",")));
-		
-		System.out.println(calStartDate.getTime());
-		System.out.println(calEndDate.getTime());
+		} 
 		try {
 			session = sessionFactory.getCurrentSession();
 			SQLQuery query = 
@@ -460,24 +451,15 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
 										   " GROUP BY 1,2 "+
 										   "	 ORDER BY 2', " +
-										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +  
-										   /*" FROM generate_series("+calStartDate.get(Calendar.MONTH)+","+calEndDate.get(Calendar.MONTH)+") n' " +*/
+										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +   
 										   " FROM generate_series(0,11) n' " +
 										   ") AS mthreport ( " +
-										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
-										   /*"jan INTEGER[], " +
-										   "feb INTEGER[], " +
-										   "mar INTEGER[], " +
-										   "apr INTEGER[], " +
-										   "may INTEGER[], " +
-										   "jun INTEGER[], " +
-										   "jul INTEGER[], " +
-										   "aug INTEGER[], " +
-										   "sep INTEGER[], " +
-										   "oct INTEGER[], " +
-										   "nov INTEGER[], " +
-										   "dec INTEGER[]) " +*/
+										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 										   ); 	
+			if(isPagination){
+				query.setFirstResult(pagination.offset());
+				query.setMaxResults(pagination.getPerPage());
+			}
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 			return sales;
@@ -618,36 +600,22 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public List<Map<String, Object>> getListReportWeeklyPurchaseRest(Date startdate, Date enddate) {		
-	Session session = null;
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-	Calendar calStartDate = Calendar.getInstance();
-	calStartDate.setTime(startdate);
-	
-	Calendar calEndDate = Calendar.getInstance();
-	calEndDate.setTime(enddate);
-	
-	Calendar calendar = calStartDate;
-	String[] months = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
-	StringBuilder sb = new StringBuilder();
-	StringBuilder sbSelect = new StringBuilder();
-	
-	
-	for(int i=0 ; i<7 ; i++){
-		//calendar.add(Calendar.DATE, i);
-		 
-		//System.out.println("Month ==== " + months[i]);
-		 
+	public List<Map<String, Object>> getListReportWeeklyPurchaseRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination) {		
+		Session session = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+		Calendar calStartDate = Calendar.getInstance();
+		calStartDate.setTime(startdate); 
+		Calendar calEndDate = Calendar.getInstance();
+		calEndDate.setTime(enddate); 
+		Calendar calendar = calStartDate;
+		String[] months = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sbSelect = new StringBuilder();  
+	for(int i=0 ; i<7 ; i++){ 
 		sbSelect.append("COALESCE("+months[i]+"[1],0) AS "+months[i].toUpperCase()+"_QTY ,");
 		sbSelect.append("COALESCE("+months[i]+"[2],0) AS "+months[i].toUpperCase()+"_AMOUNT ,");
-		sb.append(months[i] + " INTEGER[],"); 
-		
-	}
-	System.out.println(sb.toString().substring(0, sb.toString().lastIndexOf(",")));
-	
-	System.out.println(calStartDate.getTime());
-	System.out.println(calEndDate.getTime());
+		sb.append(months[i] + " INTEGER[],");  
+	} 
 	try {
 		session = sessionFactory.getCurrentSession();
 		SQLQuery query = 
@@ -690,20 +658,12 @@ public class AdminReportServiceImp implements AdminReportService {
 									   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
 									   " FROM generate_series(0,6) n;' " +
 									   ") AS mthreport ( " +
-									   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
-									   /*  "jan INTEGER[], " +
-									   "feb INTEGER[], " +
-									   "mar INTEGER[], " +
-									   "apr INTEGER[], " +
-									   "may INTEGER[], " +
-									   "jun INTEGER[], " +
-									   "jul INTEGER[], " +
-									   "aug INTEGER[], " +
-									   "sep INTEGER[], " +
-									   "oct INTEGER[], " +
-									   "nov INTEGER[], " +
-									   "dec INTEGER[]) " +*/
+									   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 									   ); 	
+		if(isPagination){
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
+		}
 		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 		List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 		return sales;
@@ -722,7 +682,7 @@ public class AdminReportServiceImp implements AdminReportService {
 
 	@Override
 	@Transactional
-	public Object getListReportMonthlyPurchaseRest(Date startdate, Date enddate) {
+	public Object getListReportMonthlyPurchaseRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination) {
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -786,25 +746,14 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
 										   " FROM generate_series(0,"+ (calEndDate.get(Calendar.DAY_OF_MONTH) -1) +") n;' " +
 										   ") AS mthreport ( " +
-										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"
-										   /*  "jan INTEGER[], " +
-										   "feb INTEGER[], " +
-										   "mar INTEGER[], " +
-										   "apr INTEGER[], " +
-										   "may INTEGER[], " +
-										   "jun INTEGER[], " +
-										   "jul INTEGER[], " +
-										   "aug INTEGER[], " +
-										   "sep INTEGER[], " +
-										   "oct INTEGER[], " +
-										   "nov INTEGER[], " +
-										   "dec INTEGER[]) " +*/
+										   "row_name TEXT [], " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 										   ); 	
-			System.out.println("SQQQQQQQL" + query.toString());
+			if(isPagination){
+				query.setFirstResult(pagination.offset());
+				query.setMaxResults(pagination.getPerPage());
+			}
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-			List<Map<String, Object>> sales = (List<Map<String, Object>>)query.list();
-//			System.out.println("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO");
-//			System.out.println(sales);
+			List<Map<String, Object>> sales = (List<Map<String, Object>>)query.list(); 
 			return sales;
 		} catch (Exception e) {
 			e.printStackTrace();

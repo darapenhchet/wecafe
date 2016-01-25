@@ -85,7 +85,7 @@ public class ReportRequestController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportweekly", adminReportService.getListReportWeeklyPurchaseRest(startDate, endDate));
+		map.put("reportweekly", adminReportService.getListReportWeeklyPurchaseRest(pagination,startDate, endDate,true));
 		pagination.setTotalCount(adminReportService.count());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
@@ -98,7 +98,7 @@ public class ReportRequestController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportmonthly", adminReportService.getListReportMonthlyPurchaseRest(startDate, endDate));
+		map.put("reportmonthly", adminReportService.getListReportMonthlyPurchaseRest(pagination,startDate, endDate,true));
 		pagination.setTotalCount(adminReportService.count());
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
@@ -106,7 +106,7 @@ public class ReportRequestController {
 		
 	}
 	@RequestMapping(value="/purchasereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(
+	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(Pagination pagination,
 			   @RequestParam(value="start_date") String strStartDate, 
 			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
 		
@@ -118,7 +118,7 @@ public class ReportRequestController {
 		System.out.println(strStartDate);
 		System.out.println(strEndDate);
 		
-		map.put("reportyear", adminReportService.getListReportYearlyPurcase(startDate, endDate));
+		map.put("reportyear", adminReportService.getListReportYearlyPurcase(pagination,startDate, endDate, true));
 		 
 		map.put("total_reportyear", adminReportService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 

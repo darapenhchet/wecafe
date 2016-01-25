@@ -238,6 +238,7 @@ tbody tr td {
 													<table id="weeklytable" class="table table-responsive">
 														<thead>
 															<tr>
+																<th rowspan="2">#</th>
 																<th rowspan="2">Customer</th>
 																<th rowspan="2">Item</th>
 																<th colspan="2" id="week1"></th>
@@ -284,6 +285,7 @@ tbody tr td {
 													<table id="yearlytable" class="table table-responsive">
 														<thead>
 															<tr>
+																<th rowspan="2">#</th>
 																<th rowspan="2">Customer</th>
 																<th rowspan="2">Item</th>
 																<th colspan="2" id="mon1">Jan</th>
@@ -468,6 +470,7 @@ tbody tr td {
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 		<!-- CUSTOM JS -->
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+		<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 		
 <!-- ============================  tbodydetail  ================================== -->		
@@ -499,6 +502,7 @@ tbody tr td {
  <!-- ============================  tbodyweekly  ================================== -->		
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
+			<td>{{= order}}</td>
 			<td>{{= customer}}</td>
 			<td>{{= pro_name}}</td>
 			<td>{{= day1_qty}}</td>
@@ -525,6 +529,7 @@ tbody tr td {
  <!-- ============================  tbodyyearly  ================================== -->		
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr>
+			<td>{{= order}}</td>
 			<td>{{= customer}}</td>
 			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
 			<td>{{= jan_qty}}</td>
@@ -580,7 +585,7 @@ tbody tr td {
 				 break;
 				 
 			 case '4':
-				 products.listYearly(); 
+				 products.listYearly(1); 
 				 break;
 		 }
 	 });
@@ -608,15 +613,14 @@ tbody tr td {
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
 		 check = true;
-		 products.listMonthly();
+		 products.listMonthly(1);
 	 });
 	 
 	 $("#PER_PAGE").change(function(){
 		 check = true;
 		 checkFilter(1);
 	 });
-	 products.listDetail = function(currentPage){
-		//var defaultyear = new Date().getFullYear();		
+	 products.listDetail = function(currentPage){ 		
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdetail/" , 
@@ -653,7 +657,7 @@ tbody tr td {
 			    }
 			}); 
 	 }
-	 products.listDaily = function(currentPage){ 
+	 products.listDaily = function(currentPage){
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdaily/" , 
 			    type: 'GET', 
@@ -670,12 +674,17 @@ tbody tr td {
 			    	console.log(data);
 			    	b =true;
 					v=data;
+					var total_amount = 0;
 				 	 if(data.reportdaily.length>0){
 						$("tbody#tbodydaily").html('');
-						   for(var i=0;i<data.reportdaily.length;i++){							
-							products.format(data.reportdaily[i]);
+						   for(var i=0;i<data.reportdaily.length;i++){
+							products.formatDaily(data.reportdaily[i]); 
 						}   
+					 for(var i=0; i<data.get_total_amount.length; i++){ 
+							   total_amount += data.get_total_amount[i].purchase_total_amount;
+						   }
 						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily"); 
+						$("#allTotalAmount").val(numeral(total_amount).format('0,0'));
 					}else{
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
@@ -683,8 +692,7 @@ tbody tr td {
 			    	if(check){
 			    		products.setPagination(data.pagination.totalPages,1);
 			    		check=false;
-			    	} 
-			    	 
+			    	}  
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: ",data," status: ",status," er:",er);
@@ -693,6 +701,8 @@ tbody tr td {
 	 }
 	 products.listWeekly = function(currentPage){ 
 		 var json = {
+				 	"currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val(),
 	   				"start_date" : $("#REGS_DATE_S").val(),
 	   				"end_date"   : $("#REGS_DATE_E").val()
 			};$.ajax({ 
@@ -705,32 +715,29 @@ tbody tr td {
                 },
 			    success: function(data) {
 			    	console.log(data);
+			    	b =true;
+					v=data;
 			    	if(data.reportweekly.length>0){
 						$("tbody#tbodyweekly").html('');
-						   for(var i=0;i<data.reportweekly.length;i++){							
-							products.format(data.reportweekly[i]);
+						   for(var i=0;i<data.reportweekly.length;i++){
+							products.formatWeekly(data.reportweekly[i]);
 						}   
-						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
-						var tblrowsize= $('#weeklytable > tbody >tr').length; 
-						var all_total_amount = 0;					 
-						 for(var i =0;i < tblrowsize; i++)	
-							 {
-							 	var total_qty = 0;
-								var total_amount = 0;
-							 for(var j=1; j<8 ; j++)
-								 {
-								 	total_amount += parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j + 1)).html());
-								 	total_qty +=  parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j)).html());
-								 }
-							 $("#weeklytable tbody").children().eq(i).children().eq(16).html(total_qty);
-							 $("#weeklytable tbody").children().eq(i).children().eq(17).html(total_amount);
-							 all_total_amount += total_amount;
-							 }	
-						$("#allTotalAmount").val(all_total_amount);
+						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly"); 
+					 	var total_amount = 0;					 
+					 	for(var i=0; i<data.get_total_amount.length; i++){
+					 			for(j=1;j<=7;j++){
+					 				total_amount += data.get_total_amount[i]["day" + j +"_amount" ]; 
+					 			} 
+						   }	  
+						$("#allTotalAmount").val(numeral(total_amount).format('0,0')); 
 					}else{
 						$("tbody#tbodyweekly").html("");
 						$("#allTotalAmount").val('');
 					}
+			    	if(check){
+			    		products.setPagination(data.pagination.totalPages,1);
+			    		check=false;
+			    	} 
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -738,9 +745,10 @@ tbody tr td {
 			}); 
 		 
 	 }
-	 products.listMonthly = function(){ 
-		 
+	 products.listMonthly = function(currentPage){
 		 var json = {
+				 	"currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val(),
 	   				"start_date" : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-01",
 	   				"end_date"   : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-" + (new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate())
 			};$.ajax({
@@ -751,41 +759,63 @@ tbody tr td {
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-			    success: function(data) { 
+			    success: function(data) {
 			    	console.log(data);
+			    	b=true;
+			    	var total_all = 0;
 			    	    if(data.reportmonthly){
 				    	$("#monthlytable tbody").html('');
-				    	var st = "";
-				    	var total_all = 0;
+				    	var st = ""; 
 					    	for(var i=0;i<data.reportmonthly.length;i++){
 					    	var total_qty = 0, total_amount = 0;
-				    		st += "<tr>";
+				    		st += "<tr>"; 
+					    	if(b){
+					 			order = data.pagination.perPage * (data.pagination.currentPage-1); 
+					 			orderlist = order + 1;
+					 			st += "<td>"+ orderlist +"</td>";
+					 			b = false; 
+					 		}
+					 		else  {
+					 			orderlist = orderlist + 1;
+					 			st += "<td>"+ (orderlist) +"</td>"; 
+					 		} 
 				    		st +="<td>" + data.reportmonthly[i].customer + "</td>";
 				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
 				    		
-				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
-				    				console.log('day' + (j+1) + '_qty');
-				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_qty'] + "</td>";
-				    				st += "<td>" + data.reportmonthly[i]['day' + (j+1) + '_amount'] + "</td>";
+				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) { 
+				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
+				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
 				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty'];
 				    				total_amount += data.reportmonthly[i]['day' + (j+1) + '_amount'];
 				    		}
-				    		st += "<td>" + total_qty + "</td>";
-				    		st += "<td>" + total_amount + "</td>";
-				    		st += "</tr>";
-				    		total_all += total_amount;
+				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
+				    		st += "</tr>"; 
 						}
+					     	for(i =0; i<data.get_total_amount.length; i++)
+					    		{
+					     			for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) 
+					     			{  
+					     				total_amount += data.get_total_amount[i]['day' + (j+1) + '_amount'];  
+					     			}
+				    			} 
 				    	$("#monthlytable tbody").html(st);
-				    	$("#allTotalAmount").val(total_all);
+				     	$("#allTotalAmount").val(numeral(total_amount).format('0,0')); 
 				    }    
+			    	    if(check){
+				    		products.setPagination(data.pagination.totalPages,1);
+				    		check=false;
+				    	} 
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			}); 
 	 }
-	 products.listYearly = function(){
+	 products.listYearly = function(currentPage){
 		 var json = {
+				 	"currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val(),
 	   				"start_date" : $("#selectyear").val() + "-01-01",
 	   				"end_date"   : $("#selectyear").val() + "-12-31"
 			};$.ajax({ 
@@ -796,45 +826,68 @@ tbody tr td {
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
-			    success: function(data) { 
+			    success: function(data) {  
+			    	b= true;
+			    	v=data;
 			    	var total_amount = 0;
 			    	console.log(data);
 			    	if(data.reportyear){
 				    	$("tbody#tbodyyearly").html('');
 				    	for(var i=0;i<data.reportyear.length;i++){
-				    	formatMonthlySaleReport(data.reportyear[i]);
-				    	total_amount += data.reportyear[i].total_amount;
+				    	formatMonthlySaleReport(data.reportyear[i]); 
 				    	}
-			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");			    	  
+				    	for(j=0;j<data.get_total_amount.length;j++){
+				    		total_amount +=  data.get_total_amount[j].jan_amount
+							    		+ data.get_total_amount[j].feb_amount 
+							    		+ data.get_total_amount[j].mar_amount 
+							    		+ data.get_total_amount[j].apr_amount 
+							    		+ data.get_total_amount[j].may_amount 
+							    		+ data.get_total_amount[j].jun_amount 
+							    		+ data.get_total_amount[j].jul_amount 
+							    		+ data.get_total_amount[j].aug_amount 
+							    		+ data.get_total_amount[j].sep_amount 
+							    		+ data.get_total_amount[j].oct_amount 
+							    		+ data.get_total_amount[j].nov_amount 
+							    		+ data.get_total_amount[j].dec_amount;
+				    		console.log(data.get_total_amount[j].jan_amount);
+				    		/* value["jan_amount"] + 
+							value["feb_amount"] + 
+							value["mar_amount"] +
+							value["apr_amount"] +
+							value["may_amount"] +
+							value["jun_amount"] +
+							value["jul_amount"] +
+							value["aug_amount"] +
+							value["sep_amount"] +
+							value["oct_amount"] +
+							value["nov_amount"] +
+							value["dec_amount"]) */
+				    	}
+			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");	
+			    		 $("#allTotalAmount").val(numeral(total_amount).format('0,0'));
 			    	}
-			    	$("#allTotalAmount").val(total_amount);
+			    	else
+			    		{
+			    			$("tbody#tbodyyearly").html('');
+			    			$("#allTotalAmount").val('');
+			    		} 
+			    	if(check){
+			    		products.setPagination(data.pagination.totalPages,1);
+			    		check=false;
+			    	}  
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			}); 
 	 }
-	products.format = function(value){
-		 if(value["purchase_type"] == 0)
-		 		value["purchase_type"] = "Import";
-		 else
-			 	value["purchase_type"] = "Expense"; 
-		 if(b){
-	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
-	 			j = order + 1;
-	 			value["order"] =j;
-	 			b = false;
-	 		}
-	 		else  
-	 		value["order"] = ++j; 
-	 }
-	
-	products.formatDetail = function(value){
+	 products.formatDetail = function(value){
 		 if(value["purchase_type"] == 0)
 		 		value["purchase_type"] = "Import";
 		 else
 			 	value["purchase_type"] = "Expense";
 		 value["purchase_date"] = value["purchase_date"].substring(0,10);
+		 value["purchase_total_amount"] = numeral(value["purchase_total_amount"]).format('0,0');
 		 if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
@@ -844,10 +897,61 @@ tbody tr td {
 	 		else  
 	 		value["order"] = ++j; 
 	 }
-	
+	products.formatDaily = function(value){
+		 if(value["purchase_type"] == 0)
+		 		value["purchase_type"] = "Import";
+		 else
+			 	value["purchase_type"] = "Expense"; 
+		 value['product_qty'] = numeral(value['product_qty']).format('0,0');
+		 value['pro_unit_price'] = numeral(value['pro_unit_price']).format('0,0');
+		 value['purchase_total_amount'] = numeral(value['purchase_total_amount']).format('0,0');
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
+	 } 
+	 products.formatWeekly = function(value){
+		 value["total_amount"] = numeral(value["day1_amount"] + 
+					value["day2_amount"] + 
+					value["day3_amount"] +
+					value["day4_amount"] +
+					value["day5_amount"] +
+					value["day6_amount"] +
+					value["day7_amount"]).format('0,0') ;
+		value["total_qty"] = numeral(value["day1_qty"] + 
+				 value["day2_qty"] + 
+				 value["day3_qty"] +
+				 value["day4_qty"] +
+				 value["day5_qty"] +
+				 value["day6_qty"] +
+				 value["day7_qty"] ).format('0,0')  ;
+ 		for(j =1 ;j<=7; j++){
+		value['day' +(j) + '_qty'] = numeral(value['day' +(j) + '_qty']).format('0,0'); 
+		value['day' +(j) + '_amount'] = numeral(value['day' +(j) + '_amount']).format('0,0');
+		}  
+		if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1); 
+	 			k = order + 1;
+	 			value["order"] =k;
+	 			b = false; 
+	 		}
+	 		else  
+	 		value["order"] = ++k;  
+	 } 
 	 function formatMonthlySaleReport(value){
-			console.log(value);
-	    	value["total_amount"] = value["jan_amount"] + 
+		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j;
+	    	value["total_amount"] = numeral(value["jan_amount"] + 
 	    							value["feb_amount"] + 
 	    							value["mar_amount"] +
 	    							value["apr_amount"] +
@@ -858,8 +962,8 @@ tbody tr td {
 	    							value["sep_amount"] +
 	    							value["oct_amount"] +
 	    							value["nov_amount"] +
-	    							value["dec_amount"] ;
-	    	value["total_qty"] = value["jan_qty"] + 
+	    							value["dec_amount"]).format('0,0') ;
+	    	value["total_qty"] = numeral(value["jan_qty"] + 
 								 value["feb_qty"] + 
 								 value["mar_qty"] +
 								 value["apr_qty"] +
@@ -870,7 +974,31 @@ tbody tr td {
 								 value["sep_qty"] +
 								 value["oct_qty"] +
 								 value["nov_qty"] +
-								 value["dec_qty"]  ;
+								 value["dec_qty"]).format('0,0')  ;
+	    	value["jan_amount"] = numeral(value["jan_amount"]).format('0,0');
+	    	value["feb_amount"] = numeral(value["feb_amount"]).format('0,0');
+			value["mar_amount"] = numeral(value["mar_amount"]).format('0,0');
+			value["apr_amount"] = numeral(value["apr_amount"]).format('0,0');
+			value["may_amount"] = numeral(value["may_amount"]).format('0,0');
+			value["jun_amount"] = numeral(value["jun_amount"]).format('0,0');
+			value["jul_amount"] = numeral(value["jul_amount"]).format('0,0');
+			value["aug_amount"] = numeral(value["aug_amount"]).format('0,0');
+			value["sep_amount"] = numeral(value["sep_amount"]).format('0,0');
+			value["oct_amount"] = numeral(value["oct_amount"]).format('0,0');
+			value["nov_amount"] = numeral(value["nov_amount"]).format('0,0');
+			value["dec_amount"] = numeral(value["dec_amount"]).format('0,0');
+			value["jan_qty"] =  numeral(value["jan_qty"]).format('0,0');
+			value["feb_qty"] =  numeral(value["feb_qty"]).format('0,0');
+			value["mar_qty"] = numeral(value["mar_qty"]).format('0,0');
+			value["apr_qty"] = numeral(value["apr_qty"]).format('0,0');
+			value["may_qty"] = numeral(value["may_qty"]).format('0,0');
+			value["jun_qty"] = numeral(value["jun_qty"]).format('0,0');
+			value["jul_qty"] = numeral(value["jul_qty"]).format('0,0');
+			value["aug_qty"] = numeral(value["aug_qty"]).format('0,0');
+			value["sep_qty"] = numeral(value["sep_qty"]).format('0,0');
+			value["oct_qty"] = numeral(value["oct_qty"]).format('0,0');
+			value["nov_qty"] = numeral(value["nov_qty"]).format('0,0');
+			value["dec_qty"] = numeral(value["dec_qty"]).format('0,0');
 	    	
 	    }
 	 products.setPagination = function(totalPage, currentPage){
@@ -962,7 +1090,7 @@ tbody tr td {
 			 $("#monthcombo").removeClass("hidetable");
 			 check = true;
 			 setheadermonthly();
-			 products.listMonthly();
+			 products.listMonthly(1);
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
@@ -973,13 +1101,14 @@ tbody tr td {
 			 var stopdate = new Date().getFullYear() + '/12/31';
 			 check = true;
 			 $("#selectmonth").addClass("hidetable");
-			 products.listYearly();
+			 products.listYearly(1);
 		 }		 
 	 });
 	function setheadermonthly(){
 		
 		var st = "";
 			st += "<tr>";
+			st += "<th rowspan='2'>#</th>"
 			st += "<th rowspan='2'>Customer</th>";
 			st += "<th rowspan='2'>Item</th>";
 		for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
