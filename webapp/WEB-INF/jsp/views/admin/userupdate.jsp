@@ -356,7 +356,7 @@
     				    success: function(data) { 
     				        if(data){
     				        	alert('YOU HAVE BEEN UPDATED SUCCESSFULLY.');
-    				        //	location.href="${pageContext.request.contextPath}/admin/userlist";
+    				        	location.href="${pageContext.request.contextPath}/admin/userlist";
     				        }else{
     				        	alert('YOU HAVE ERRORS WHEN UPDATE USER.');
     				        }

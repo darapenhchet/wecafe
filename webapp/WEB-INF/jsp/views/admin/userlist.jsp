@@ -537,6 +537,7 @@ setPagination = function(totalPage, currentPage){
 				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
 				        	isAdded=true;
 				        	clearUser();
+				        	location.href="${pageContext.request.contextPath}/admin/userlist";
 				        }else{
 				        	alert('YOU HAVE ERRORS WHEN INSERT NEW USER.');
 				        }

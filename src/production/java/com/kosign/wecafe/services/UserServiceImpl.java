@@ -76,9 +76,9 @@ public class UserServiceImpl implements UserService{
 	public Boolean saveUser(User user) {
 		try{
 			//sessionFactory.getCurrentSession().merge(user.getUserRoles());
-			user.setCreatedBy(this.findUserByUsername(getPrincipal()));
+			//user.setCreatedBy(this.findUserByUsername(getPrincipal())); 
 			//System.out.println("create by = " + this.findUserByUsername(getPrincipal()));
-			user.setCreatedDate(new Date());
+			//user.setCreatedDate(new Date());
 			//user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
 			//user.setLastUpdatedDate(new Date());
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -99,29 +99,26 @@ public class UserServiceImpl implements UserService{
 		Session session=null;
 		try{
 			session=sessionFactory.getCurrentSession();
-			User user = (User)session.get(User.class, userUpdate.getId());
-			 
-			//Long id = user.getUserRoles().iterator().next().getId();
-			//System.out.println("userRole = " + id);
+			User user = (User)session.get(User.class, userUpdate.getId()); 
+			Long id = user.getUserRoles().iterator().next().getId();
+			//System.out.println("userRole id= " + id);
 			//UserRole userRole = (UserRole)session.get(UserRole.class, id);
 			//HashSet<UserRole> userRoles = new HashSet<UserRole>();
 			//userRoles.add(userRole);
-			user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
+			//user.setLastUpdatedBy(this.findUserByUsername(getPrincipal()));
+			//System.out.println("update by = " + this.findUserByUsername(getPrincipal()));
 			user.setLastUpdatedDate(new Date());
 			user.setEmail(userUpdate.getEmail());
 			user.setFirstName(userUpdate.getFirstName());
 			user.setLastName(userUpdate.getLastName());
 			user.setStatus(userUpdate.getStatus());
 			user.setUsername(userUpdate.getUsername());
-			user.setGender(userUpdate.getGender());
-			//user.setUserRoles(userRoles);
+			user.setGender(userUpdate.getGender());  
+			if(id != userUpdate.getUserRoles().iterator().next().getId())
+				user.setUserRoles(userUpdate.getUserRoles());
 			/*sessionFactory.getCurrentSession().flush();
 			sessionFactory.getCurrentSession().clear();*/
-			System.out.println("userRoles = " + userUpdate.getUserRoles());
-			user.setUserRoles(userUpdate.getUserRoles());
-			
-			
-			
+			//user.setUserRoles(userUpdate.getUserRoles()); 
 			session.saveOrUpdate(user);
 			return true;
 		}catch(Exception ex){
@@ -238,7 +235,7 @@ public class UserServiceImpl implements UserService{
 			userName = ((UserDetails) principal).getUsername();
 		} else {
 			userName = principal.toString();
-		}
+		} 
 		return userName;
 	}
 }
