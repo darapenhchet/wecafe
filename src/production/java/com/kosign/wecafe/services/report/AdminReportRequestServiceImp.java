@@ -12,7 +12,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
@@ -196,8 +195,72 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 	
 
 	@Override
-	public Object getListReportWeeklyRequest(Date startdate, Date enddate) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public List<Map> getListReportWeeklyRequest(DateForm date) {
+		Session session = null;
+		
+		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("beforFomat = " + startdate);
+		Calendar calStartDate = Calendar.getInstance();
+		calStartDate.setTime(startdate);
+		
+		Calendar calEndDate = Calendar.getInstance();
+		calEndDate.setTime(enddate);
+		
+		Calendar calendar = calStartDate;
+		
+		System.out.println("afterFomat = " + sdf.format(startdate));*/
+		
+		String[] days = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sbSelect = new StringBuilder();
+		
+		
+		for(int i=0 ; i<7 ; i++){
+			sbSelect.append("COALESCE("+days[i]+") AS "+days[i].toUpperCase()+"_QTY ,");
+			sb.append(days[i] + " NUMERIC,"); 
+			
+		}	
+		
+		String startDate=date.getStartdate();
+	
+		try {
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = 
+					session.createSQLQuery("SELECT "
+									+"ct.product_name,	"							 
+									+"COALESCE(day1) AS day1_QTY, " 
+									 +"COALESCE(day2) AS day2_QTY, "
+									 +"COALESCE(day3) AS day3_QTY, " 
+									 +"COALESCE(day4) AS day4_QTY, " 
+									 +"COALESCE(day5) AS day5_QTY, " 
+									 +"COALESCE(day6) AS day6_QTY, "
+									 +"COALESCE(day7) AS day7_QTY "
+								+ "FROM crosstab( "
+								+"'SELECT " 
+									+"pro.pro_name::text , "
+									+"to_char(rs.app_date,''DD'')::TEXT app_date ," 
+									+"SUM(rsd.pro_qty) "
+								+"FROM request_stock rs," 
+									+"request_stock_detail rsd,product pro " 
+								+"WHERE " 
+									+"rs.req_id=rsd.req_id " 
+									+"and rsd.pro_id=pro.pro_id " 
+									+"and rs.status=''f'' "
+									+"and to_char(rs.app_date,''YYYY-mm-dd'') " 
+									+"BETWEEN ''"+startDate+"'' And ''"+date.getEnddate()+"'' "
+									+"GROUP BY 1,2 ORDER BY 1 ', "
+								+"'SELECT to_char(date ''"+startDate+"'' + (n || '' day'')::interval, ''DD'') As short_mname "  
+								+"FROM "
+									+"generate_series(0,6) n;' "
+									+") as ct(product_name text ," + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ") "); 		
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map> sales= (List<Map>)query.list();
+			return sales;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
 

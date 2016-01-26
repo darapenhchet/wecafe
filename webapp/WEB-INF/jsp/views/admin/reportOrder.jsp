@@ -237,34 +237,27 @@ tbody tr td {
 													<table id="weeklytable" class="table table-responsive">
 														<thead>
 															<tr>
-																<th rowspan="2">Customer</th>
+
 																<th rowspan="2">Item</th>
-																<th colspan="2" id="week1"></th>
-																<th colspan="2" id="week2"></th>
-																<th colspan="2" id="week3"></th>
-																<th colspan="2" id="week4"></th>
-																<th colspan="2" id="week5"></th>
-																<th colspan="2" id="week6"></th>
-																<th colspan="2" id="week7"></th>
-																<th colspan="2">Total</th>
+																<th id="week1"></th>
+																<th id="week2"></th>
+																<th id="week3"></th>
+																<th id="week4"></th>
+																<th id="week5"></th>
+																<th id="week6"></th>
+																<th id="week7"></th>
+																<th rowspan="2">Total Qty</th>
 															</tr>
 															<tr>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>Total Qty</th>
-																<th>Total Amount</th>
+																<th>qty</th>									
+																<th>qty</th>																
+																<th>qty</th>																
+																<th>qty</th>																
+																<th>qty</th>									
+																<th>qty</th>																
+																<th>qty</th>	
+																													
+																
 															</tr>
 														</thead>
 														<tbody id="tbodyweekly"> 
@@ -345,7 +338,7 @@ tbody tr td {
 												</select>
 											</div>
 											<div class="col-md-10 form-horizontal" align="right">
-												<label  class="control-label col-md-9">Total Amount : </label>
+												<label  class="control-label col-md-9">Total :</label>
 													<div class="col-md-3">
 															<input class="form-control" readonly="readonly" id="allTotalAmount" type="text">
 													</div>												
@@ -500,24 +493,15 @@ tbody tr td {
  <!-- ============================  tbodyweekly  ================================== -->		
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
-			<td>{{= customer}}</td>
-			<td>{{= pro_name}}</td>
+			<td>{{= product_name}}</td>
 			<td>{{= day1_qty}}</td>
-			<td>{{= day1_amount}}</td>
 			<td>{{= day2_qty}}</td>
-			<td>{{= day2_amount}}</td>
 			<td>{{= day3_qty}}</td>
-			<td>{{= day3_amount}}</td>
 			<td>{{= day4_qty}}</td>
-			<td>{{= day4_amount}}</td>
 			<td>{{= day5_qty}}</td>
-			<td>{{= day5_amount}}</td>
 			<td>{{= day6_qty}}</td>
-			<td>{{= day6_amount}}</td>
 			<td>{{= day7_qty}}</td>
-			<td>{{= day7_amount}}</td>
 			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
 		</tr>
     </script>
  <!-- ============================  tbodymonthly  ================================== -->		
@@ -710,10 +694,10 @@ tbody tr td {
 	 }
 	 products.listWeekly = function(currentPage){ 
 		 var json = {
-	   				"start_date" : $("#REGS_DATE_S").val(),
-	   				"end_date"   : $("#REGS_DATE_E").val()
+	   				"startdate" : $("#REGS_DATE_S").val(),
+	   				"enddate"   : $("#REGS_DATE_E").val()
 			};$.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportweekly/", 
+			    url: "${pageContext.request.contextPath}/admin/reports/get_request_weekly/", 
 			    type: 'GET',  
 			    data: json, 
 			    beforeSend: function(xhr) {
@@ -722,6 +706,7 @@ tbody tr td {
                 },
 			    success: function(data) {
 			    	console.log(data);
+			    	
 			    	if(data.reportweekly.length>0){
 						$("tbody#tbodyweekly").html('');
 						   for(var i=0;i<data.reportweekly.length;i++){							
@@ -729,21 +714,22 @@ tbody tr td {
 						}   
 						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
 						var tblrowsize= $('#weeklytable > tbody >tr').length; 
-						var all_total_amount = 0;					 
+						 var total_qty1 = 0;		 
 						 for(var i =0;i < tblrowsize; i++)	
 							 {
-							 	var total_qty = 0;
-								var total_amount = 0;
+							 var total_qty = 0;
+							 var qty=0,qty1;
 							 for(var j=1; j<8 ; j++)
-								 {
-								 	total_amount += parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j + 1)).html());
-								 	total_qty +=  parseInt($("#weeklytable tbody").children().eq(i).children().eq((2*j)).html());
+								 {	
+								 	qty=$("#weeklytable tbody").children().eq(i).children().eq((j)).text();							 	
+								 	total_qty +=parseInt((qty=="" || qty==null || qty==0)?0:qty);
+								 	
 								 }
-							 $("#weeklytable tbody").children().eq(i).children().eq(16).html(total_qty);
-							 $("#weeklytable tbody").children().eq(i).children().eq(17).html(total_amount);
-							 all_total_amount += total_amount;
+							 $("#weeklytable tbody").children().eq(i).children().eq(8).html(total_qty);
+							
+							 total_qty1 += total_qty;
 							 }	
-						$("#allTotalAmount").val(all_total_amount);
+						$("#allTotalAmount").val(total_qty1);
 					}else{
 						$("tbody#tbodyweekly").html("");
 						$("#allTotalAmount").val('');

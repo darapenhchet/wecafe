@@ -16,7 +16,7 @@ public interface AdminReportRequestService {
 	public List<Map> getTotalProQty(DateForm date);
 	public List<Map> getListReportDetailRequest(Pagination pagination,DateForm date);
 	public List<Map> getListReportDailyRequest(Pagination pagination, DateForm date);
-	public Object getListReportWeeklyRequest(Date startdate, Date enddate);
+	public Object getListReportWeeklyRequest(DateForm date);
 	public Object getListReportMonthlyRequest(Date startDate, Date endDate);
 	public Object getListReportYearlyRequest(Date startDate, Date endDate);	
 	public Long getTotalDailyRequest(DateForm date);
