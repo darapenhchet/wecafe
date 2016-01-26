@@ -712,8 +712,7 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
-			    	
+					    	
 			    	if(data.reportweekly.length>0){
 						$("tbody#tbodyweekly").html('');
 						   for(var i=0;i<data.reportweekly.length;i++){							
