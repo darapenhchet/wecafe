@@ -28,8 +28,16 @@
 							<div class="col-lg-10">
 								<input class=" form-control" id="productName" name="productName"
 									type="text" required="required">
-							</div>
+							</div> 
+								 
 						</div>
+						<!-- <div class="form-group ">
+							<label for="productname" class="control-label col-lg-2">Quantity *</label>
+							<div class="col-lg-10"> 
+								<input class=" form-control" id="quantity" name="quantity"
+									type="text" >
+							</div>  
+						</div> -->
 						<div class="form-group ">
 							<label for="unit" class="control-label col-lg-2">Unit *</label>
 							<div class="col-lg-10">
@@ -45,7 +53,7 @@
 									%>
 								</select>
 							</div>
-						</div>
+						</div> 
 						<div class="form-group ">
 							<label for="category" class="control-label col-lg-2">Category
 								*</label>
@@ -62,8 +70,7 @@
 
 								</select>
 							</div>
-						</div>
-
+						</div> 
 						<div class="form-group ">
 							<label for="costprice" class="control-label col-lg-2">Image
 								*</label>

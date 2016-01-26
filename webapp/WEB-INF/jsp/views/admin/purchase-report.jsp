@@ -763,7 +763,7 @@ tbody tr td {
 			    	console.log(data);
 			    	b=true;
 			    	var total_all = 0;
-			    	    if(data.reportmonthly){
+			    	    if(data.reportmonthly){ 
 				    	$("#monthlytable tbody").html('');
 				    	var st = ""; 
 					    	for(var i=0;i<data.reportmonthly.length;i++){
@@ -791,16 +791,16 @@ tbody tr td {
 				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
 				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>"; 
-						}
+						}  
 					     	for(i =0; i<data.get_total_amount.length; i++)
 					    		{
 					     			for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) 
 					     			{  
-					     				total_amount += data.get_total_amount[i]['day' + (j+1) + '_amount'];  
-					     			}
-				    			} 
+					     				total_all +=  data.get_total_amount[i]['day' + (j+1) + '_amount'] ;  
+					     			} 
+				    			}  
 				    	$("#monthlytable tbody").html(st);
-				     	$("#allTotalAmount").val(numeral(total_amount).format('0,0')); 
+				     	$("#allTotalAmount").val(numeral(total_all).format('0,0')); 
 				    }    
 			    	    if(check){
 				    		products.setPagination(data.pagination.totalPages,1);

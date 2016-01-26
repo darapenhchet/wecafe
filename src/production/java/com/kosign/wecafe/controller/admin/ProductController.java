@@ -80,13 +80,13 @@ public class ProductController {
         Unit unit = new Unit();
         category.setCatId(form.getCategoryId());
         unit.setUnitId(form.getUnitId());
-		User user = userService.findUserByUsername(getPrincipal());
-	
-		product.setProductName(form.getProductName());
-		product.setQuantity(0L);
+		User user = userService.findUserByUsername(getPrincipal()); 
+		
 		product.setProductType("1"); 
 		product.setStockType("1");
 		product.setCan_sell_holiday("1");
+		product.setProductName(form.getProductName());
+		product.setQuantity(form.getQuantity());
 		product.setCostPrice(new BigDecimal(0));
 		product.setSalePrice(new BigDecimal(0));
 		product.setUnitPrice(new BigDecimal(0));

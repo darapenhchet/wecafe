@@ -508,6 +508,12 @@ setPagination = function(totalPage, currentPage){
 			
 
 			$("#frmAddNewUser").submit(function(e){
+				if($("#password").val() != $("#confirmation_password").val())
+					{
+						alert("Password doesn't match");
+						e.preventDefault();
+						return 0;
+					}
 				e.preventDefault();    				
 			 	json = {
 					"username"  : $("#username").val(),
@@ -545,9 +551,7 @@ setPagination = function(totalPage, currentPage){
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
 				    }
-				}); 
-				
-				
+				});  
 			});
 		});
     	</script>

@@ -523,10 +523,8 @@ thead tr th {
     				if($("#image").val()==""){
     					alert("PLEASE SELECT THE IMAGE.");
     					return;
-    				}
-    				
-    				
-    				$("#frmProductAdd").ajaxSubmit({
+    				} 
+    				  $("#frmProductAdd").ajaxSubmit({
     					url: "${pageContext.request.contextPath}/admin/product/add",
     					dataType: 'JSON', 
     					type: 'POST',
@@ -544,8 +542,7 @@ thead tr th {
      				    error:function(data,status,er) { 
      				        console.log("error: "+data+" status: "+status+" er:"+er);
      				    }
-    				});
-    				
+    				});  
     			});
     			
     				$("#images").change(function(){			
