@@ -119,27 +119,7 @@
 										<th style="text-align: center;">Actions</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr
-										dir-paginate="(key,slide) in slides|filter:search|itemsPerPage:perPage|orderBy : slide.createdDate">
-										<td id="SLIDE_ID">{{slide.id}}</td>
-										<td style="text-align: center;"><img
-											src="${pageContext.request.contextPath}/resources/images/products/{{slide.image }}"
-											class="img-thumbnail" alt="" width="320px" height="320px" /></td>
-										<td>{{slide.createdBy.lastName }}
-											{{slide.createdBy.firstName }}</td>
-										<td style="text-align: center;">{{slide.createdDate |
-											date:'dd-MMMM-yyyy'}}</td>
-										<td style="text-align: center;" class="actions"><a
-											href="#" class="hidden on-editing save-row"><i
-												class="fa fa-save"></i></a> <a href="#"
-											class="hidden on-editing cancel-row"><i
-												class="fa fa-times"></i></a> <a
-											href="${pageContext.request.contextPath}/admin/slide/update/{{slide.id}}"
-											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-											<a class="on-default remove-row" href="javascript:;"
-											id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
-									</tr>
+								<tbody id="CONTENTS"> 
 								</tbody>
 							</table>
 						</div>
@@ -147,16 +127,17 @@
 
 					</div>
 					<!-- end Panel -->
-					<ul class="pagination" id="PER_PAGE">
-						<li class="active" ng-click="perPage=10"><a
-							href="javascript:;">10</a></li>
-						<li ng-click="perPage=15"><a href="javascript:;">15</a></li>
-						<li ng-click="perPage=50"><a href="javascript:;">50</a></li>
-						<li ng-click="perPage=100"><a href="javascript:;">100</a></li>
-					</ul>
-					<dir-pagination-controls max-size="15" direction-links="true"
-						boundary-links="true" class="pull-right">
-					</dir-pagination-controls>
+					<div class="row">
+						<div class="col-md-2">
+							<select id="PER_PAGE" class="form-control"> 
+								<option value="4">4</option>
+								<option value="8">8</option>
+								<option value="12">12</option>
+								<option value="16">16</option>
+							</select>
+						</div> 
+						<div id="PAGINATION" class="pull-right"></div>
+					</div> 
 
 				</div>
 				<!-- container -->
@@ -223,11 +204,32 @@
 		src="${pageContext.request.contextPath}/resources/assets/sweet-alert/sweet-alert.init.js"></script>
 
 	<!-- CUSTOM JS -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	<script id="CONTENT_Slidelist" type="text/x-jquery-tmpl"> 
+	<tr>
+		<td id="SLIDE_ID" style="display: none">{{= id}}</td>
+		<td>{{= order}}</td>
+		<td style="text-align: center;"><img src="${pageContext.request.contextPath}/resources/images/products/{{= image }}"
+											class="img-thumbnail" alt="" width="240px" height="240px" /></td>
+		<td>{{= createdBy.lastName }} {{= createdBy.firstName }}</td>
+		<td style="text-align: center;">{{= createdDate}}</td>
+		<td style="text-align: center;" class="actions"><a href="#" class="hidden on-editing save-row">
+			<i class="fa fa-save"></i></a> <a href="#" class="hidden on-editing cancel-row">
+			<i class="fa fa-times"></i></a> <a href="${pageContext.request.contextPath}/admin/slide/update/{{= id}}"
+											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+											<a class="on-default remove-row" href="javascript:;"
+											id="btnRemove"><i class="fa fa-trash-o"></i></a></td>
+	</tr> 
+</script>
 	<script type="text/javascript">
     	$(function(){
+    		var check = true;
+			var order = 1;
+			var v=[];
+			var b = true;
+    		listSlideImage(1);
 	    	$(document).on('click','#btnRemove',function(){
 				var id = $(this).parents("tr").find("#SLIDE_ID").html();
 				if(confirm("Do you want to delete that slide?")){
@@ -254,11 +256,84 @@
 					});
 					
 				}
+			}); 
+	    	
+	 function listSlideImage(currentPage){
+		 var json = {
+				 	"currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val() 
+			};
+			$.ajax({ 
+			    url: "${pageContext.request.contextPath}/admin/listslide/", 
+			    type: 'GET', 
+			    data: json,  
+			    beforeSend: function(xhr) {
+                 xhr.setRequestHeader("Accept", "application/json");
+                 xhr.setRequestHeader("Content-Type", "application/json");
+             },
+			    success: function(data) {   
+			    	console.log(data);
+					b =true;
+					v=data;	
+					if(data.slides.length>0){  
+						$("tbody#CONTENTS").html('');					
+						for(i=0; i<data.slides.length;i++)
+							{
+								format(data.slides[i]); 
+							}
+						$("#CONTENT_Slidelist").tmpl(data.slides).appendTo("tbody#CONTENTS"); 
+					}else{
+						$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>'); 
+					}
+			    	if(check){
+			    		setPagination(data.pagination.totalPages,1);
+			    		check=false;
+			    	}  	
+			    },
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
 			});
-	    	$("#PER_PAGE li").click(function(){
-   			 	$('#PER_PAGE li.active').removeClass('active');
-   			 	$(this).addClass('active');
-   			});
+	 }
+	 format = function(value){ 
+			value["createdDate"] = value["createdDate"].substring(0, 10);
+			/* if(value["lastUpdatedDate"] != null)
+				value["lastUpdatedDate"] = value["lastUpdatedDate"].substring(0, 10); */
+	 		if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j;  
+}
+   	 $("#PER_PAGE").change(function(){
+			check = true;
+			listSlideImage(1);
+     });
+
+	 setPagination = function(totalPage, currentPage){
+	 	$('#PAGINATION').bootpag({
+	         total: totalPage,
+	         page: currentPage,
+	         maxVisible: 10,
+	         leaps: true,
+	         firstLastUse: true,
+	         first: 'First',
+	         last: 'Last',
+	         wrapClass: 'pagination',
+	         activeClass: 'active',
+	         disabledClass: 'disabled',
+	         nextClass: 'next',
+	         prevClass: 'prev',
+	         lastClass: 'last',
+	         firstClass: 'first'
+	     }).on("page", function(event, currentPage){
+	     	check = false;
+	     	listSlideImage(currentPage);
+	     }); 
+	 };
     	});
     	</script>
 </body>

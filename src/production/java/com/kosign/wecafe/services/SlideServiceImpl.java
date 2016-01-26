@@ -3,7 +3,10 @@ package com.kosign.wecafe.services;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Slide;
+import com.kosign.wecafe.entities.User;
 
 @Service
 public class SlideServiceImpl implements SlideService{
@@ -24,17 +29,35 @@ public class SlideServiceImpl implements SlideService{
 	
 	@Override
 	@Transactional
-	public List<Slide> getAllSlides() {
+	public List<Slide> getAllSlidesPagination(Pagination pagination, boolean ispagination) {
+		 
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Slide.class ); 
+			criteria.add(Restrictions.eq("status", true));
+			if(ispagination){
+			criteria.setFirstResult(pagination.offset());
+			criteria.setMaxResults(pagination.getPerPage());}			
+			List<Slide>	slidelist = (List<Slide>)criteria.list();	
+			return slidelist;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		return null;
+	}
+	@Override
+	@Transactional
+	public List<Slide> getAllSlides() { 
 		try{
 			return sessionFactory.getCurrentSession().createCriteria(Slide.class)
 													 .add(Restrictions.eq("status", true))
-													 .list();
+													 .list(); 
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 		return null;
 	}
-
 	@Override
 	@Transactional
 	public Boolean addNewSlide(Slide slide) {
@@ -102,6 +125,22 @@ public class SlideServiceImpl implements SlideService{
 		}
 		return userName;
 	}
+
+/*	@Override
+	@Transactional
+	public Long count() { 
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Slide.class ); 
+			criteria.add(Restrictions.eq("status", true)); 			
+			Long	slidelist = (Long) criteria.uniqueResult();	
+			return slidelist;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		return null;
+	}*/
 	
 
 }

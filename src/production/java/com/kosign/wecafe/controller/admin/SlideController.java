@@ -2,9 +2,13 @@ package com.kosign.wecafe.controller.admin;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Slide;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.services.SlideService;
@@ -30,6 +35,18 @@ public class SlideController {
 	@RequestMapping(value="/admin/slides")
 	public String listAllSlides(Map<String , Object> model){
 		return "admin/slidelist";		
+	}
+	
+	@RequestMapping(value="/admin/listslide", method=RequestMethod.GET) 
+	public ResponseEntity<Map<String, Object>> getSlide(Pagination pagination){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("slides", slideService.getAllSlidesPagination(pagination, true));
+		List<Slide> totalRecord=slideService.getAllSlidesPagination(pagination, false); 
+		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
+		//pagination.setTotalCount(slideService.count());
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination",pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/admin/slideadd")
