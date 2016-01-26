@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService{
 		try{
 			session = sessionFactory.getCurrentSession();
 			Criteria criteria = session.createCriteria(Product.class);
-			criteria.addOrder(Order.asc("productId"));
+			criteria.addOrder(Order.desc("productId"));
 			criteria.setFirstResult(pagination.offset());
 			criteria.setMaxResults(pagination.getPerPage());
 			List<Product> products = (List<Product>)criteria.list();
@@ -82,18 +82,16 @@ public class ProductServiceImpl implements ProductService{
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
-			//Category category = session.get(Category.class, product.getCategory().getCatId());
-			//Unit unit = session.get(Unit.class, product.getUnit().getUnitId());
-			//User user = userService.findUserByUsername(getPrincipal());
-			//product.setCategory(category);
-			//product.setUnit(unit);
+			Category category = session.get(Category.class, product.getCategory().getCatId());
+			Unit unit = session.get(Unit.class, product.getUnit().getUnitId());
+			User user = userService.findUserByUsername(getPrincipal());
+			product.setCategory(category);
+			product.setUnit(unit);
 			//product.setCreatedBy(user);
 			//product.setCreatedBy(userService.findUserByUsername(getPrincipal()));
-		//	sessionFactory.getCurrentSession().flush();
-			//sessionFactory.getCurrentSession().clear();
-			//System.out.println("product : " + product.getProductId());
-			 
-			session.save(product);
+			sessionFactory.getCurrentSession().flush();
+			sessionFactory.getCurrentSession().clear();  
+			session.saveOrUpdate(product);
 			return true;
 		}catch(Exception ex){
 			ex.printStackTrace();

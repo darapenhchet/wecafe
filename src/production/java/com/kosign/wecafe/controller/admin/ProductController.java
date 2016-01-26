@@ -76,12 +76,11 @@ public class ProductController {
 	@RequestMapping(value="/admin/product/add", method=RequestMethod.POST)
 	public  @ResponseBody Boolean addNewProduct(ProductForm form , HttpServletRequest request){
 		Product product = new Product();
-        Category category = new Category();
-        Unit unit = new Unit();
-        category.setCatId(form.getCategoryId());
-        unit.setUnitId(form.getUnitId());
-		User user = userService.findUserByUsername(getPrincipal()); 
-		
+		Category category = new Category();
+		Unit unit = new Unit();
+		category.setCatId(form.getCategoryId());
+		unit.setUnitId(form.getUnitId());  
+		User user = userService.findUserByUsername(getPrincipal());  
 		product.setProductType("1"); 
 		product.setStockType("1");
 		product.setCan_sell_holiday("1");

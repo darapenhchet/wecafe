@@ -65,6 +65,9 @@ public class Unit {
 	public void setTo(String to) {
 		this.to = to;
 	}
-
+	@Override
+	public String toString(){
+		return ( "unitname = " + unitName + " catId = " + unitId + " convert to = " + to);
+	}
 
 }

@@ -125,5 +125,9 @@ public class Category implements java.io.Serializable{
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+	@Override
+	public String toString(){
+		return ( "catname = " + catName + " catId = " + catId + " create date = " + createdDate);
+	}
 
 }
