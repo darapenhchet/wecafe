@@ -16,7 +16,7 @@ public interface AdminReportRequestService {
 	public List<Map> getTotalProQty(DateForm date);
 	public List<Map> getListReportDetailRequest(Pagination pagination,DateForm date);
 	public List<Map> getListReportDailyRequest(Pagination pagination, DateForm date);
-	public Object getListReportWeeklyRequest(DateForm date);
+	public Object getListReportWeeklyRequest(Pagination pagination,DateForm date);
 	public Object getListReportMonthlyRequest(Date startDate, Date endDate);
 	public Object getListReportYearlyRequest(Date startDate, Date endDate);	
 	public Long getTotalDailyRequest(DateForm date);
@@ -27,4 +27,7 @@ public interface AdminReportRequestService {
 	//public Long countWeekly(Date startDate, Date endDate);
 	public Long count();
 	public Long getAllTotalAmount(Date startdate, Date enddate);
+	public Long countWeekly(DateForm date) throws ParseException;
+	public Long getTotalQtyWeeklyRequest(DateForm date) throws ParseException;
+	public Long getTotalQtyDetailRequest(DateForm date);
 }

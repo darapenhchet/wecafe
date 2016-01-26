@@ -37,6 +37,7 @@ public class ReportRequestController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();	
 		map.put("REPORT_REQUEST_DETAIL",report.getListReportDetailRequest(pagination,date) );
+		map.put("total_qty", report.getTotalQtyDetailRequest(date));
 		pagination.setTotalCount(report.countDetail(date));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
@@ -67,14 +68,14 @@ public class ReportRequestController {
 	@RequestMapping(value="/get_request_weekly", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportweekly(DateForm date, 
 			Pagination pagination) throws ParseException{
-	/*	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date startDate = simpleDateFormat.parse(strStartDate);
-		Date endDate = simpleDateFormat.parse(strEndDate);*/
+	
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportweekly", report.getListReportWeeklyRequest(date));
-		//pagination.setTotalCount(adminReportService.count());
-		//pagination.setTotalPages(pagination.totalPages());
-		//map.put("pagination", pagination);
+		map.put("reportweekly", report.getListReportWeeklyRequest(pagination,date));
+		pagination.setTotalCount(report.countWeekly(date));
+	
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination);
+		map.put("total_qty",report.getTotalQtyWeeklyRequest(date));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
 	}
 /*	@RequestMapping(value="/purchasereportmonthly", method=RequestMethod.GET)

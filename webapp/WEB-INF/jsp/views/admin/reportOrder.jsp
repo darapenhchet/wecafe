@@ -622,18 +622,23 @@ tbody tr td {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			 
+			 		console.log(data);
 				    	b =true;
 						v=data;
+						var total_qty=0;
 						if(data!="" || data!=null){
+							total_qty=data.total_qty;
 						 if(data.REPORT_REQUEST_DETAIL.length>0){
+							
 						$("tbody#tbodydetail").html('');
 							 for(var i=0;i<data.REPORT_REQUEST_DETAIL.length;i++){							
 								products.format(data.REPORT_REQUEST_DETAIL[i]);
 							} 
 							$("#CONTENT_DETAIL").tmpl(data.REPORT_REQUEST_DETAIL).appendTo("tbody#tbodydetail");
+							$("#allTotalAmount").val(total_qty);
 						}else{
 							$("tbody#tbodydetail").html(''); 
+							$("#allTotalAmount").val('');
 						}
 				    	if(check){
 				    		products.setPagination(data.pagination.totalPages,1);
@@ -694,6 +699,8 @@ tbody tr td {
 	 }
 	 products.listWeekly = function(currentPage){ 
 		 var json = {
+				   "currentPage" : currentPage,
+				   "perPage"     : $("#PER_PAGE").val(),
 	   				"startdate" : $("#REGS_DATE_S").val(),
 	   				"enddate"   : $("#REGS_DATE_E").val()
 			};$.ajax({ 
@@ -714,7 +721,7 @@ tbody tr td {
 						}   
 						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
 						var tblrowsize= $('#weeklytable > tbody >tr').length; 
-						 var total_qty1 = 0;		 
+						 var total_qty1 =data.total_qty;		 
 						 for(var i =0;i < tblrowsize; i++)	
 							 {
 							 var total_qty = 0;
@@ -727,13 +734,16 @@ tbody tr td {
 								 }
 							 $("#weeklytable tbody").children().eq(i).children().eq(8).html(total_qty);
 							
-							 total_qty1 += total_qty;
 							 }	
 						$("#allTotalAmount").val(total_qty1);
 					}else{
 						$("tbody#tbodyweekly").html("");
 						$("#allTotalAmount").val('');
 					}
+			    	if(check){
+			    		products.setPagination(data.pagination.totalPages,1);
+			    		check=false;
+			    	} 
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -916,7 +926,7 @@ tbody tr td {
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
-			 
+			 check=true;
 			 products.listDetail(1);
 			 
 		 }			 
@@ -932,7 +942,7 @@ tbody tr td {
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").addClass("hidetable");
 			 setCalendar();
-			 
+			 check=true;
 			 products.listDaily(1);
 			 
 		 }else if($(this).val()==2){ 
@@ -949,7 +959,7 @@ tbody tr td {
 			 $("#monthcombo").addClass("hidetable");
 			 setCalendar();
 			 settableheader();
-			 
+			 check=true;
 			 products.listWeekly(1);
 			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
 			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
@@ -967,7 +977,7 @@ tbody tr td {
 			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 $("#monthcombo").removeClass("hidetable");
-			 
+			 check=true;
 			 setheadermonthly();
 			 products.listMonthly();
 		 }else if($(this).val()==4){
@@ -978,7 +988,7 @@ tbody tr td {
 			 $("#tblyearly").removeClass("hidetable");
 			 var startdate = new Date().getFullYear() + '/01/01';
 			 var stopdate = new Date().getFullYear() + '/12/31';
-
+			 check=true;
 			 $("#selectmonth").addClass("hidetable");
 			 products.listYearly();
 		 }		 
@@ -1090,7 +1100,8 @@ tbody tr td {
 	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 	 						if($("#EDate").hasClass("hidetable"))
-	 							{ 							
+	 							{ 		
+	 								check=true;
 	 								products.listDaily(1);
 	 							
 	 							}	 							
@@ -1098,6 +1109,7 @@ tbody tr td {
 	 							{
 	 								settableheader();
 	 								$("#REGS_DATE_E").datepicker('setDate', moment($("#REGS_DATE_S").val()).add(6, 'days').format('YYYY-MM-DD'));
+	 								check=true;
 	 								products.listWeekly(1);
 	 								 
 	 							}
@@ -1119,6 +1131,7 @@ tbody tr td {
 	 						$("#REGS_DATE_S").datepicker('setDate', moment($("#REGS_DATE_E").val()).subtract(6, 'days').format('YYYY-MM-DD'));
 	 						settableheader();
 	 						searchByDate();
+	 						check=true;
 	 						products.listWeekly(1);
 	 						
 	 			      }

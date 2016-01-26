@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.Query;
+
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -20,7 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosign.wecafe.entities.Pagination;
+import com.kosign.wecafe.entities.Product;
 import com.kosign.wecafe.entities.RequestStock;
+import com.kosign.wecafe.entities.RequestStockDetail;
 import com.kosign.wecafe.forms.DateForm;
 
 @Service
@@ -196,25 +201,12 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 
 	@Override
 	@Transactional
-	public List<Map> getListReportWeeklyRequest(DateForm date) {
+	public List<Map> getListReportWeeklyRequest(Pagination pagination,DateForm date) {
 		Session session = null;
-		
-		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("beforFomat = " + startdate);
-		Calendar calStartDate = Calendar.getInstance();
-		calStartDate.setTime(startdate);
-		
-		Calendar calEndDate = Calendar.getInstance();
-		calEndDate.setTime(enddate);
-		
-		Calendar calendar = calStartDate;
-		
-		System.out.println("afterFomat = " + sdf.format(startdate));*/
 		
 		String[] days = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
 		StringBuilder sb = new StringBuilder();
-		StringBuilder sbSelect = new StringBuilder();
-		
+		StringBuilder sbSelect = new StringBuilder();		
 		
 		for(int i=0 ; i<7 ; i++){
 			sbSelect.append("COALESCE("+days[i]+") AS "+days[i].toUpperCase()+"_QTY ,");
@@ -253,7 +245,9 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 								+"'SELECT to_char(date ''"+startDate+"'' + (n || '' day'')::interval, ''DD'') As short_mname "  
 								+"FROM "
 									+"generate_series(0,6) n;' "
-									+") as ct(product_name text ," + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ") "); 		
+									+") as ct(product_name text ," + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ") "); 	
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map> sales= (List<Map>)query.list();
 			return sales;
@@ -263,6 +257,56 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		}
 		return null;
 	}
+	
+	@Override
+	@Transactional
+	public Long getTotalQtyWeeklyRequest(DateForm date){
+		
+		Session session = sessionFactory.getCurrentSession();
+		try {
+
+			org.hibernate.Query query= session.createQuery("Select Sum(rsd.proQty) "
+															+ "From "
+																+ "RequestStockDetail rsd "
+															+ "Where "
+																+ "rsd.pk1.requestStock.status=? "
+																+ "And to_char(rsd.pk1.requestStock.appDate,'YYYY-mm-dd') " 
+																+"BETWEEN ?  And ? ");
+			query.setParameter(0, false);
+			query.setParameter(1, date.getStartdate());
+			query.setParameter(2, date.getEnddate());
+			return (Long) query.uniqueResult() ;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0L;
+	}
+	
+	@Override
+	@Transactional
+	public Long getTotalQtyDetailRequest(DateForm date){
+		
+		int year =0;
+		year=Integer.parseInt(date.getYear());
+		Session session = sessionFactory.getCurrentSession();
+		try {
+
+			org.hibernate.Query query= session.createQuery("Select Sum(rsd.proQty) "
+															+ "From "
+																+ "RequestStockDetail rsd "
+															+ "Where "
+																+ "rsd.pk1.requestStock.status=? "
+																+ "And EXTRACT(YEAR FROM rsd.pk1.requestStock.appDate)=? " 
+															);
+			query.setParameter(0, false);
+			query.setParameter(1, year);
+			return (Long) query.uniqueResult() ;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0L;
+	}
+	
 
 	@Override
 	public Object getListReportMonthlyRequest(Date startDate, Date endDate) {
@@ -309,7 +353,27 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		}
 		return 0L;
 	}
-
+	
+	@Override
+	@Transactional
+	public Long countWeekly(DateForm date) throws ParseException {
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startdate = simpleDateFormat.parse(date.getStartdate());
+		Date enddate = simpleDateFormat.parse(date.getEnddate());
+		Session session = null;
+		try{ 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(RequestStock.class)
+					.add(Restrictions.eq("status",false))
+					.add(Restrictions.and(Restrictions.between("appDate", startdate ,enddate)))					
+					.setProjection(Projections.rowCount()).uniqueResult(); 
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
+	}
+	
 	@Override
 	public Long countDaily(Date dateTime) throws HibernateException, ParseException {
 		// TODO Auto-generated method stub
