@@ -65,6 +65,7 @@ public class SupplierController {
 			suppliers.setSupplierEmail(supplierForm.getSupplierEmail());
 			suppliers.setSupplierName(supplierForm.getSupplierName());
 			suppliers.setSupplierNumber(supplierForm.getSupplierNumber());
+			System.out.println("suppliername  = " + supplierForm.getSupplierName());
 			return SupplierService.saveSupplier(suppliers);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

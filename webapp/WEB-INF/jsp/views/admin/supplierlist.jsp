@@ -118,7 +118,10 @@ thead tr th {
 								<label>Search</label> <input type="text" ng-model="search"
 									class="form-control" placeholder="Search" width="400%">
 							</div>
-						</form>
+							<div class="col-md-2 pull-right" style="text-align: right;">
+								<button id="btn_add_user" class="btn btn-primary">Add Supplier</button>
+						</div>	
+						</form> 
 					</div>
 					<div class="panel-body">
 						<div class="row">
@@ -127,8 +130,8 @@ thead tr th {
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Order Number</th>
-											<th style="text-align: right;">Total Amount</th>
+											<th>Supplier Name</th>
+											<th style="text-align: right;">Phone Number</th>
 											<th>E-mail</th>
 											<th>Address</th>
 											<th style="text-align: center;">Action</th>
@@ -257,7 +260,7 @@ thead tr th {
 
 	</div>
 	<!-- END wrapper -->
-
+<%@ include file="supplieradd.jsp"%> 
 
 
 	<script>
@@ -353,7 +356,7 @@ thead tr th {
 	<tr>
 		<td id="supplierId" style="display: none;">{{= supId}}</td>
 		<td>{{= order}}</td>
-		<td id="supplierName">{{= supplierName }}</td>
+		<td id="supName">{{= supplierName }}</td>
 		<td style="text-align: right;">{{= supplierNumber }}</td>
 		<td>{{= supplierEmail }}</td>
 		<td>{{= supplierAddress}}</td>
@@ -484,6 +487,43 @@ setPagination = function(totalPage, currentPage){
 				 					
 				   				}
 				 			}); 
+			$("#btn_add_user").click(function(){  	
+				//clearFormAdd();
+				//clearUser();
+				$('#form_add_supplier').modal({
+					"backdrop":"static"
+				}) ;
+			});
+			$("#save").click(function(){
+            	var supName 		= $("#supplierName").val();
+	 			var phoneNm 		= $("#phoneNumber").val();
+	 			var address 		= $("#address").val();
+	 			var email 			= $("#email").val();
+	 			alert
+	 			json = {
+	 						"supplierName"   		  : supName,
+	 						"supplierNumber" 		  : phoneNm,
+	 						"supplierAddress"		  : address,
+	 						"supplierEmail"	 		  : email
+	 			};
+	 			console.log(JSON.stringify(json));
+	 			$.ajax({
+	 				 url: "${pageContext.request.contextPath}/admin/addSupplier", 
+ 				    type: 'POST',
+	 				datatype: 'JSON',
+	 				data: JSON.stringify(json), 
+	 				beforeSend: function(xhr) {
+	 		            xhr.setRequestHeader("Accept", "application/json");
+	 		            xhr.setRequestHeader("Content-Type", "application/json");
+	 		        },
+	 				success: function(data){
+	 					location.href="${pageContext.request.contextPath}/admin/supplierlist";
+	 				},
+	 				error:function(data, status,er){
+	 					console.log("error: " + data + "status: " + status + "er: ");
+	 				}
+	 			}); 
+            });
 				      
 		});
 	</script>

@@ -9,8 +9,7 @@
 			</div>
 			<div class="modal-body">
 				<div class=" form">
-										<form class="cmxform form-horizontal tasi-form"
-											id="frmAddNewUser" method="POST"
+										<form class="cmxform form-horizontal tasi-form" id="frmAddNewUser" method="POST"
 											action="${pageContext.request.contextPath}/admin/users/add"
 											novalidate="novalidate">
 											<div class="form-group ">
