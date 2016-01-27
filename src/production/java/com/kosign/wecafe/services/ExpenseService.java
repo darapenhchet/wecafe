@@ -14,7 +14,7 @@ import com.kosign.wecafe.forms.ImportForm;;
 
 public interface ExpenseService {
 
-	public   List<Expense> listAllExpense(Pagination pagination, Date startDate, Date endDate) ;
+	public   List<Expense> listAllExpense(Pagination pagination, Date startDate, Date endDate,boolean ispagination) ;
 	public   List<ExpenseDetail> listExpenseDetail(Long id) ;
 	public Boolean saveExpense(List<ExpenseForm> expenseForm);
 	public Boolean updateExpense(List<ExpenseForm> expenseform, Long id);

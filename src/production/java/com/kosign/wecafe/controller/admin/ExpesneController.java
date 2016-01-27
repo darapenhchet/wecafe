@@ -50,14 +50,29 @@ public class ExpesneController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("expense", expenseService.listAllExpense(pagination, startDate,endDate));
+		map.put("expense", expenseService.listAllExpense(pagination, startDate,endDate,true));
 		map.put("total_amount", expenseService.getTotalAmount(startDate, endDate)); 
 		pagination.setTotalCount(expenseService.count(startDate, endDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination",pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
-	
+	@RequestMapping(value="/admin/getexpenselist_print", method=RequestMethod.GET) 
+	public ResponseEntity<Map<String, Object>> getAllProducts_print(ProductFilter filter, Pagination pagination,
+			@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate) throws ParseException{
+		strStartDate = strStartDate + " 00:00:00";
+		strEndDate = strEndDate + " 23:59:59";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date startDate = simpleDateFormat.parse(strStartDate);
+		Date endDate = simpleDateFormat.parse(strEndDate);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("expense_print", expenseService.listAllExpense(pagination, startDate,endDate,false));
+		map.put("total_amount_print", expenseService.getTotalAmount(startDate, endDate)); 
+		//pagination.setTotalCount(expenseService.count(startDate, endDate));
+		//pagination.setTotalPages(pagination.totalPages());
+		//map.put("pagination",pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
 	@RequestMapping(value="/admin/expenseadd", method=RequestMethod.GET)
 	public String expProductAdd(){
 		return "admin/expenseadd";

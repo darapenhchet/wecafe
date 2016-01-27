@@ -173,6 +173,15 @@ thead tr th {
 										</div>
 										<div id="PAGINATION" class="pull-right"></div>
 									</div>
+									<div class="row" style="border-radius: 0px;">
+											 <div class="hidden-print">
+											<div class="pull-right">
+												<a href="javascrpt:"
+													class="btn btn-inverse waves-effect waves-light" id="print_report"><i class="fa fa-print"></i></a> 
+													<!-- <a onclick="window.print();" href="#" class="btn btn-primary waves-effect waves-light">Print</a> -->
+											</div>
+										</div>
+										</div>
 								</div>	
 								<!--End  Panel Body -->				
 					</div>
@@ -243,7 +252,7 @@ thead tr th {
 	<!-- ################################################################## -->
 	
 	<%@ include file="expenseadd.jsp"%>
-
+	<%@ include file="print_report_expense_list.jsp"%>
 	<script>
             var resizefunc = [];
             var ctx = "${pageContext.request.contextPath}"
@@ -771,7 +780,63 @@ thead tr th {
     				});
     				
     			} 
-   		 
+                $("#print_report").click(function() {
+                	$("#report_start_date").html(" Date " + $("#REGS_DATE_S").val());
+                	$("#report_end_date").html($("#REGS_DATE_E").val());
+                	list_print_report();
+    				$('#request_stock_list').modal({
+    					"backdrop":"static"
+    				}) ;
+    				
+    			});
+                function list_print_report(){
+                	var json = { 
+			   				"start_date" : $("#REGS_DATE_S").val(),
+			   				"end_date"   : $("#REGS_DATE_E").val()
+					};$.ajax({
+					 url: "${pageContext.request.contextPath}/admin/getexpenselist_print/",
+					 type: 'GET',
+					 data: json, 
+					    beforeSend: function(xhr) {
+		                    xhr.setRequestHeader("Accept", "application/json");
+		                    xhr.setRequestHeader("Content-Type", "application/json");
+		                },
+					 success: function(data){ 
+						b =true;
+						v=data;				
+						console.log(data);
+						 if(data.expense_print.length>0){ 
+								$("tbody#PRINT_CONTENTS").html('');					
+								  for(i=0; i<data.expense_print.length;i++)
+									{
+									  format_print(data.expense_print[i]); 
+									}  
+								$("#CONTENT_Print_Import").tmpl(data.expense_print).appendTo("tbody#PRINT_CONTENTS");
+								$("#allTotalAmount_print").val(numeral(data.total_amount_print[0].total_amount).format('0,0'));
+							}else{
+								$("tbody#PRINT_CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("#allTotalAmount_print").val("");
+							} 
+					 },
+					 error:function(data,status,er){
+						 console.log("error: "+data+" status: "+status+" er: "+ er);
+					 } 
+				 });
+                }
+                format_print = function(value){ 
+			 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');		
+			 		
+			 	 	value["exp_date"] =(value["exp_date"]).substring(0, 10);
+			 		if(b){
+			 			order = 0
+			 			j = order + 1;
+			 			value["importDetail"] =j;
+			 			b = false;
+			 		}
+			 		else  
+			 		value["importDetail"] = ++j; 
+					
+		 }
             });
         </script>
 

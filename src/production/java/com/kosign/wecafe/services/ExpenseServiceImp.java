@@ -44,16 +44,17 @@ public class ExpenseServiceImp implements ExpenseService {
 	
 	@Override
 	@Transactional
-	public List<Expense> listAllExpense(Pagination pagination, Date startDate, Date endDate) {
+	public List<Expense> listAllExpense(Pagination pagination, Date startDate, Date endDate, boolean ispagination) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
 			Criteria criteria = session.createCriteria(Expense.class );
 			//criteria.addOrder(Order.desc("createdDate"));
 			criteria.add(Restrictions.between("exp_date", startDate, endDate));
+			if(ispagination){
 			criteria.setFirstResult(pagination.offset());
 			criteria.setMaxResults(pagination.getPerPage());
-			
+			}
 			List<Expense>	expenseProducts = (List<Expense>)criteria.list();	
 							
 			return expenseProducts;
