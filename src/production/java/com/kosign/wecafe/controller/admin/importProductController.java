@@ -55,7 +55,7 @@ public class importProductController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("imports", importService.listAllImportProduct(pagination, startDate,endDate));
+		map.put("imports", importService.listAllImportProduct(pagination, startDate,endDate,true));
 		
 		map.put("total_amount", importService.getTotalAmount(startDate, endDate));
 		pagination.setTotalCount(importService.count(startDate, endDate));
@@ -64,7 +64,19 @@ public class importProductController {
 		System.out.println("data From" + map.get("imports").toString());
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
-	
+	@RequestMapping(value="/admin/getimportlist_print", method=RequestMethod.GET) 
+	public ResponseEntity<Map<String, Object>> getAllProducts_print(ProductFilter filter, Pagination pagination,
+			@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate) throws ParseException{
+		strStartDate = strStartDate + " 00:00:00";
+		strEndDate = strEndDate + " 23:59:59";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date startDate = simpleDateFormat.parse(strStartDate);
+		Date endDate = simpleDateFormat.parse(strEndDate);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("imports_print", importService.listAllImportProduct(pagination, startDate,endDate,false)); 
+		map.put("total_amount_print", importService.getTotalAmount(startDate, endDate));   
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
 	@RequestMapping(value="/admin/searchproduct", method=RequestMethod.POST)
 	public @ResponseBody List<Product> searchProductName(){
 		return importService.listAllProduct();

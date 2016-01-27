@@ -12,7 +12,7 @@ import com.kosign.wecafe.forms.ImportForm;
 
 public interface ImportService {
 
-	public List<ImportProduct> listAllImportProduct(Pagination pagination, Date startDate, Date endDate );
+	public List<ImportProduct> listAllImportProduct(Pagination pagination, Date startDate, Date endDate, boolean ispagination );
 	 
 	//public List<Map> listAllImportProduct();
 	public Boolean saveImportPro(List<ImportForm> importForm);

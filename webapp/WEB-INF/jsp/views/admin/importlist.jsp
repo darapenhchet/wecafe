@@ -91,12 +91,19 @@ tbody tr td {
 .borderRed {
 	border-color: red;
 }
+@media print {
+	.content-page {
+		margin-top: -100px;
+		margin-left: 0px;
+	}
+	.content {
+		margin-top: -100px;
+		margin-bottom: 0px;
+	}
+}
 </style>
 
-</head>
-
-
-
+</head> 
 <body class="fixed-left" ng-app="wecafe">
 
 	<!-- Begin page -->
@@ -116,7 +123,7 @@ tbody tr td {
 		<div class="content-page">
 			<!-- Start content -->
 			<div class="content">
-				<div class="container">
+				<div class="container hidden-print">
 
 					<!-- Page-Title -->
 					<div class="row">
@@ -133,7 +140,7 @@ tbody tr td {
 									<div class="row">
 										<!-- <h3 class="panel-title">Product Lists</h3> -->
 										<div class="col-md-10">
-											<div class="m-h-50 form-group hidden-print ">
+											<div class="m-h-50 form-group ">
 												<label class="col-sm-1 control-label">Date : </label> <input
 													type="hidden" id="SEND_DT" data-id="SEND_DT" />
 												<div id="sendFrdt" class="date-range col-sm-5">
@@ -152,9 +159,8 @@ tbody tr td {
 												</div>
 											</div>
 										</div>
-										<div class="col-md-2 pull-right">
-											<button id="btn_add_import" class="btn btn-primary">Add
-												Import</button>
+										<div class="col-md-2 pull-right" style="text-align: right;">
+											<button id="btn_add_import"  class="btn btn-primary hidden-print">Add Import</button>
 										</div>
 									</div>
 
@@ -172,7 +178,7 @@ tbody tr td {
 														<th style="text-align: center;">Date</th>
 														<th>Name</th>
 														<th style="text-align: right;">Total Amount</th>
-														<th style="text-align: center;">Action</th>
+														<th style="text-align: center;" class="hidden-print">Action</th>
 													</tr>
 												</thead>
 												<tbody id="CONTENTS">
@@ -182,10 +188,9 @@ tbody tr td {
 
 										</div>
 									</div>
-									<div class="row">
+									<div class="row hidden-print">
 										<div class="col-md-2">
-											<select id="PER_PAGE" class="form-control">
-												
+											<select id="PER_PAGE" class="form-control"> 
 												<option value="15">15</option>
 												<option value="30">30</option>
 												<option value="50">50</option>
@@ -200,8 +205,17 @@ tbody tr td {
 													id="allTotalAmount" type="text">
 											</div>
 										</div>
-										<div id="PAGINATION" class="pull-right"></div>
+										<div id="PAGINATION" class="pull-right"></div> 
 									</div>
+									<div class="row" style="border-radius: 0px;">
+											 <div class="hidden-print">
+											<div class="pull-right">
+												<a href="javascrpt:"
+													class="btn btn-inverse waves-effect waves-light" id="print_report"><i class="fa fa-print"></i></a> 
+													<!-- <a onclick="window.print();" href="#" class="btn btn-primary waves-effect waves-light">Print</a> -->
+											</div>
+										</div>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -272,7 +286,7 @@ tbody tr td {
 
 	<!-- ========== Include product add ========== -->
 	<%@ include file="importadd.jsp"%>
-
+	<%@ include file="print_report_import_list.jsp"%>
 	<!-- ################################################################## -->
 
 	<script>
@@ -393,7 +407,7 @@ tbody tr td {
 		<td>{{= impDate}}</td>
 		<td>{{= user.firstName +' '+ user.lastName}} </td>
 		<td>{{= totalAmount}}</td>  
-		<td class="actions" style="text-align: center;">
+		<td class="actions hidden-print" style="text-align: center;">
 			<a class="on-default edit-row" href="${pageContext.request.contextPath}/admin/viewById/{{= impId}}">
 				<i class="fa fa-pencil"></i>
 			</a> 
@@ -591,9 +605,21 @@ tbody tr td {
 				 			b = false;
 				 		}
 				 		else  
-				 		value["importDetail"] = ++j; 
-						
+				 		value["importDetail"] = ++j;   
 			 }
+			 format_print = function(value){ 
+			 		value["totalAmount"] = numeral(value["totalAmount"]).format('0,0');				 		
+			 	 	value["impDate"] =(value["impDate"]).substring(0, 10);
+			 		if(b){
+			 			order = 0
+			 			j = order + 1;
+			 			value["importDetail"] =j;
+			 			b = false;
+			 		}
+			 		else  
+			 		value["importDetail"] = ++j; 
+					
+		 }
 			 $("#PER_PAGE").change(function(){
      			check = true;
      			getimportlist(1);
@@ -917,7 +943,50 @@ tbody tr td {
     				});
     				
     			} 
-    		 
+                $("#print_report").click(function() {
+                	$("#report_start_date").html(" Date " + $("#REGS_DATE_S").val());
+                	$("#report_end_date").html($("#REGS_DATE_E").val());
+                	list_print_report();
+    				$('#request_stock_list').modal({
+    					"backdrop":"static"
+    				}) ;
+    				
+    			});
+                function list_print_report(){
+                	var json = { 
+			   				"start_date" : $("#REGS_DATE_S").val(),
+			   				"end_date"   : $("#REGS_DATE_E").val()
+					};$.ajax({
+					 url: "${pageContext.request.contextPath}/admin/getimportlist_print/",
+					 type: 'GET',
+					 data: json, 
+					    beforeSend: function(xhr) {
+		                    xhr.setRequestHeader("Accept", "application/json");
+		                    xhr.setRequestHeader("Content-Type", "application/json");
+		                },
+					 success: function(data){ 
+						b =true;
+						v=data;				
+						console.log(data);
+						 if(data.imports_print.length>0){
+							 
+								$("tbody#PRINT_CONTENTS").html('');					
+								  for(i=0; i<data.imports_print.length;i++)
+									{
+									  format_print(data.imports_print[i]); 
+									}  
+								$("#CONTENT_Print_Import").tmpl(data.imports_print).appendTo("tbody#PRINT_CONTENTS");
+								$("#allTotalAmount_print").val(numeral(data.total_amount_print[0].total_amount).format('0,0'));
+							}else{
+								$("tbody#PRINT_CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("#allTotalAmount_print").val("");
+							} 
+					 },
+					 error:function(data,status,er){
+						 console.log("error: "+data+" status: "+status+" er: "+ er);
+					 } 
+				 });
+                }
             });
         </script>
 

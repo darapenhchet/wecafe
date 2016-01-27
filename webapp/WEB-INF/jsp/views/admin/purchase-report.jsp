@@ -360,8 +360,8 @@ tbody tr td {
 											<div class="pull-right">
 												<a href="javascrpt:"
 													class="btn btn-inverse waves-effect waves-light"
-													onclick="window.print();"><i class="fa fa-print"></i></a> <a
-													href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
+													onclick="window.print();"><i class="fa fa-print"></i></a> 
+													<a href="#" onclick="window.print();" class="btn btn-primary waves-effect waves-light">Print</a>
 											</div>
 										</div>
 										</div>

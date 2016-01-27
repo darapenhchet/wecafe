@@ -42,15 +42,17 @@ public class ImportServiceImp implements ImportService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<ImportProduct> listAllImportProduct(Pagination pagination, Date startDate, Date endDate) {
+	public List<ImportProduct> listAllImportProduct(Pagination pagination, Date startDate, Date endDate, boolean ispagination) {
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
 			Criteria criteria = session.createCriteria(ImportProduct.class );
 			criteria.add(Restrictions.between("impDate", startDate, endDate));
 			criteria.addOrder( Order.desc("impId") );
-			criteria.setFirstResult(pagination.offset());
-			criteria.setMaxResults(pagination.getPerPage());			
+			if(ispagination){ 
+				criteria.setFirstResult(pagination.offset());
+				criteria.setMaxResults(pagination.getPerPage());
+			}			
 			List<ImportProduct>	importProducts = (List<ImportProduct>)criteria.list();	
 			return importProducts;
 		}catch(Exception e){
