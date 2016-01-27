@@ -2,6 +2,7 @@ package com.kosign.wecafe.services.report;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -284,6 +285,30 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 	
 	@Override
 	@Transactional
+	public Long getTotalQtyMonthlyRequest(Date startDate,Date endDate){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Session session =null;
+		try {
+			session=sessionFactory.getCurrentSession();
+			org.hibernate.Query query= session.createQuery("Select Sum(rsd.proQty) "
+															+ "From "
+																+ "RequestStockDetail rsd "
+															+ "Where "
+																+ "rsd.pk1.requestStock.status=? "
+																+ "And to_char(rsd.pk1.requestStock.appDate,'YYYY-mm-dd') " 
+																+"BETWEEN '"+sdf.format(startDate)+"'  And '"+sdf.format(endDate)+"' ");
+			query.setParameter(0, false);
+			//query.setParameter(1, sdf.format(startDate));
+			//query.setParameter(2, sdf.format(endDate));
+			return (Long) query.uniqueResult() ;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0L;
+	}
+	
+	@Override
+	@Transactional
 	public Long getTotalQtyDetailRequest(DateForm date){
 		
 		int year =0;
@@ -307,30 +332,70 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		return 0L;
 	}
 	
-
 	@Override
-	public Object getListReportMonthlyRequest(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public List<Map> getListReportMonthlyRequest(Date startdate, Date enddate,Pagination pagination) {
+		Session session = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Calendar calStartDate = Calendar.getInstance();
+		calStartDate.setTime(startdate);
+		
+		Calendar calEndDate = Calendar.getInstance();
+		calEndDate.setTime(enddate);
+		
+		String[] months = new String[calEndDate.get(Calendar.DAY_OF_MONTH)];
+		for(int i=0;i<calEndDate.get(Calendar.DAY_OF_MONTH);i++)
+		{
+			months[i] = "day" + (i+1);
+		}
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sbSelect = new StringBuilder();
+		
+		
+		for(int i=0 ; i<calEndDate.get(Calendar.DAY_OF_MONTH) ; i++){
+			 
+			sbSelect.append("COALESCE("+months[i]+") AS "+months[i].toUpperCase()+"_QTY ,");
+			sb.append(months[i] + " INTEGER,"); 
+			
+		}
+		  
+		try {
+			session = sessionFactory.getCurrentSession();
+			SQLQuery query = 
+					session.createSQLQuery("SELECT " 
+											   +"mthreport.row_name AS pro_name, " 
+											   +""+sbSelect.toString().substring(0, sbSelect.toString().lastIndexOf(","))+" "								    
+											   +"FROM " 
+											   +"crosstab ( " 
+										   +"'SELECT "
+												+"pro.pro_name::text ,"
+												+" to_char(rs.app_date,''DD'')::TEXT app_date ,"
+												+"SUM(rsd.pro_qty) "
+												+"FROM request_stock rs,request_stock_detail rsd,product pro "
+											+"WHERE  rs.req_id=rsd.req_id and rsd.pro_id=pro.pro_id and rs.status=''f'' "
+												+"and to_char(rs.app_date,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"'' " 
+												+"GROUP BY 1,2 ORDER BY 1 ', "
+										    +"'SELECT "
+										    	+ "to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " 								   
+										   +"FROM "
+										   		+ "generate_series(0,"+ (calEndDate.get(Calendar.DAY_OF_MONTH) -1) +") n;' " 
+										   +") AS mthreport ( "
+										   		+"row_name TEXT, " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
+										   ); 	
+			
+			query.setFirstResult(pagination.offset());
+			query.setMaxResults(pagination.getPerPage());		
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			List<Map> sales= (List<Map>)query.list();
+			return sales;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
-
-	@Override
-	public Object getListReportYearlyRequest(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<String, Object> getAllRequestMonthlyReportsTotal(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Map> listAllrequestDetail(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	@Transactional
@@ -374,22 +439,28 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		return 0L;
 	}
 	
+	
+	@Override
+	@Transactional
+	public Long countMonthly(Date startDate,Date endDate) throws ParseException {
+		Session session = null;
+		try{ 
+			session = sessionFactory.getCurrentSession();
+			return  (Long) session.createCriteria(RequestStock.class)
+					.add(Restrictions.eq("status",false))
+					.add(Restrictions.and(Restrictions.between("appDate", startDate ,endDate)))					
+					.setProjection(Projections.rowCount()).uniqueResult(); 
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return 0L;
+	}
+	
 	@Override
 	public Long countDaily(Date dateTime) throws HibernateException, ParseException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Long count() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Long getAllTotalAmount(Date startdate, Date enddate) {
-		// TODO Auto-generated method stub
-		return null;
-	} 
 	
 }

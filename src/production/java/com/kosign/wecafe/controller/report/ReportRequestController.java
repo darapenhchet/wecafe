@@ -1,5 +1,7 @@
 package com.kosign.wecafe.controller.report;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,21 +80,24 @@ public class ReportRequestController {
 		map.put("total_qty",report.getTotalQtyWeeklyRequest(date));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
 	}
-/*	@RequestMapping(value="/purchasereportmonthly", method=RequestMethod.GET)
+  @RequestMapping(value="/get_request_monthly", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportmonthly(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 
 			Pagination pagination) throws ParseException{
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	  
+	  	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
+	  
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportmonthly", adminReportService.getListReportMonthlyPurchaseRest(startDate, endDate));
-		pagination.setTotalCount(adminReportService.count());
+		map.put("reportmonthly",report.getListReportMonthlyRequest(startDate,endDate, pagination));
+		map.put("total_qty",report.getTotalQtyMonthlyRequest(startDate, endDate));
+		pagination.setTotalCount(report.countMonthly(startDate,endDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
-	@RequestMapping(value="/purchasereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(value="/purchasereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(
 			   @RequestParam(value="start_date") String strStartDate, 
 			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
@@ -111,5 +116,5 @@ public class ReportRequestController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 		
 	}
-}*/
+	}*/
 }
