@@ -11,7 +11,7 @@ import com.kosign.wecafe.entities.Pagination;
 
 public interface AdminReportSaleService {
 	public List<Map> getListReportDetailSaleRest(Pagination pagination,int byYear);
-	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate);
+	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate, boolean ispagination);
 	public Object getListReportWeeklySaleRest(Pagination pagination,Date startdate, Date enddate, boolean isPagination);
 	 
 	public Object getListReportMonthlySaleRest(Pagination pagination,Date startDate, Date endDate, boolean isPagination);

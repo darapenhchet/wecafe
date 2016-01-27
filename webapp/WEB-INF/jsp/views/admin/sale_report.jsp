@@ -360,13 +360,12 @@ thead tr th {
 											</div>
 											<div id="PAGINATION" class="pull-right"></div>
 										</div>
-										<div class="row" style="border-radius: 0px;">
-											 <div class="hidden-print">
+										<div class="row hidetable" id="printAble" style="border-radius: 0px;">
+											<div class="hidden-print">
 											<div class="pull-right">
 												<a href="javascrpt:"
-													class="btn btn-inverse waves-effect waves-light"
-													onclick="window.print();"><i class="fa fa-print"></i></a> <a
-													href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
+													class="btn btn-inverse waves-effect waves-light" id ="print_report"><i class="fa fa-print"></i></a> 
+												<a href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
 											</div>
 										</div>
 										</div>
@@ -388,7 +387,7 @@ thead tr th {
 				<!-- content -->
 
 				<%@ include file="footer.jsp"%>
-
+				<%@ include file="print_report_sale_list.jsp"%>
 			</div>
 			<!-- ============================================================== -->
 			<!-- End Right content here -->
@@ -591,6 +590,7 @@ thead tr th {
 		 switch($("#selectreport").val()){
 		 case '0': 
 			 sales.listDetail(currentPage); 
+			 
 			 break;
 		 case '1':
 			 sales.listDaily(currentPage);
@@ -816,6 +816,7 @@ thead tr th {
 			    }
 			}); 
 	 } 
+	   
 	  sales.listYearly = function(currentPage){
 		 var json = {
 				 	"currentPage" : currentPage,
@@ -886,6 +887,19 @@ thead tr th {
 	 		else  
 	 		value["order"] = ++j; 
 	 } 
+	 formatDaily_print = function(value){
+		 value["total_amount"] = numeral(value["total_amount"]).format('0,0');
+		 value["pro_unit_price"] = numeral(value["pro_unit_price"]).format('0,0');
+		 value["product_qty"] = numeral(value["product_qty"]).format('0,0'); 
+		 if(b){
+	 			order = 0;
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
+	 } 
 	 sales.formatWeekly = function(value){ 
 		 value["total_amount"] = numeral(value["day1_amount"] + 
 					value["day2_amount"] + 
@@ -907,6 +921,34 @@ thead tr th {
 		}
 		if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1); 
+	 			k = order + 1;
+	 			value["order"] =k;
+	 			b = false; 
+	 		}
+	 		else  
+	 		value["order"] = ++k;
+	 }
+	 sales.formatWeekly_print = function(value){ 
+		 value["total_amount"] = numeral(value["day1_amount"] + 
+					value["day2_amount"] + 
+					value["day3_amount"] +
+					value["day4_amount"] +
+					value["day5_amount"] +
+					value["day6_amount"] +
+					value["day7_amount"]).format('0,0') ;
+		value["total_qty"] = numeral(value["day1_qty"] + 
+				 value["day2_qty"] + 
+				 value["day3_qty"] +
+				 value["day4_qty"] +
+				 value["day5_qty"] +
+				 value["day6_qty"] +
+				 value["day7_qty"] ).format('0,0')  ;
+		for(j =1 ;j<=7; j++){
+		value['day' +(j) + '_qty'] = numeral(value['day' +(j) + '_qty']).format('0,0'); 
+		value['day' +(j) + '_amount'] = numeral(value['day' +(j) + '_amount']).format('0,0');
+		}
+		if(b){
+	 			order = 0; 
 	 			k = order + 1;
 	 			value["order"] =k;
 	 			b = false; 
@@ -975,27 +1017,6 @@ thead tr th {
 	 		value["order"] = ++k;
 	    	
 	    }
-	/*  sales.setPagination = function(totalPage, currentPage){
-	    	$('#PAGINATION').bootpag({
-		        total: totalPage,
-		        page: currentPage,
-		        maxVisible: 10,
-		        leaps: true,
-		        firstLastUse: true,
-		        first: 'First',
-		        last: 'Last',
-		        wrapClass: 'pagination',
-		        activeClass: 'active',
-		        disabledClass: 'disabled',
-		        nextClass: 'next',
-		        prevClass: 'prev',
-		        lastClass: 'last',
-		        firstClass: 'first'
-		    }).on("page", function(event, currentPage){
-		    	check = false;
-		    	sales.findAllProducts(currentPage);
-		    }); 
-		};  */
 	 
 	 $("#selectreport").change(function(){
 		 if($(this).val()==0){
@@ -1005,7 +1026,7 @@ thead tr th {
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
 			// setCalendar();
-			 
+			 $("#printAble").addClass("hidetable");
 			// $("#startfrom").html(" in " +  new Date().getFullYear());
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
@@ -1025,6 +1046,8 @@ thead tr th {
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").addClass("hidetable");
+			 
+			 $("#printAble").removeClass("hidetable");
 			 setCalendar();
 			 check = true;
 			 sales.listDaily(1);
@@ -1041,6 +1064,8 @@ thead tr th {
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").removeClass("hidetable");	
 			 $("#monthcombo").addClass("hidetable");
+			 
+			 $("#printAble").removeClass("hidetable");
 			 setCalendar();
 			 settableheader();
 			 check = true;
@@ -1061,6 +1086,8 @@ thead tr th {
 			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 $("#monthcombo").removeClass("hidetable");
+			 
+			 $("#printAble").removeClass("hidetable");
 			 check = true;
 			 setheadermonthly();
 			 sales.listMonthly();
@@ -1070,6 +1097,8 @@ thead tr th {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").removeClass("hidetable");
+			 
+			 $("#printAble").removeClass("hidetable");
 			 var startdate = new Date().getFullYear() + '/01/01';
 			 var stopdate = new Date().getFullYear() + '/12/31';
 			 check = true;
@@ -1077,8 +1106,7 @@ thead tr th {
 			 sales.listYearly();
 		 }		 
 	 });
-	function setheadermonthly(){
-		
+	function setheadermonthly(){ 
 		var st = "";
 			st += "<tr>";
 			st += "<th rowspan='2'>#</th>";
@@ -1236,7 +1264,6 @@ thead tr th {
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
 	 $(document).on("click","#saleid", function(){
-		 
 		   $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/getsaledetail/" + $(this).html() , 
 			    type: 'POST', 
@@ -1266,6 +1293,220 @@ thead tr th {
 		 
 		  $("#impDetail").bPopup();  
 	 });
+  function print_daily(){
+	  $.ajax({ 
+		    url: "${pageContext.request.contextPath}/api/admin/reports/salereportdaily_print/" , 
+		    type: 'GET', 
+		    data: { 
+		    		"startDate"   : $("#REGS_DATE_S").val()			    		 
+		    },
+			    beforeSend: function(xhr) {
+             xhr.setRequestHeader("Accept", "application/json");
+             xhr.setRequestHeader("Content-Type", "application/json");
+         },
+		    success: function(data) { 
+		    	console.log(data);
+		    	b =true; 
+			 	 if(data.reportdaily_print.length>0){
+					$("tbody#PRINT_CONTENTS_DAILY").html('');
+					   for(var i=0;i<data.reportdaily_print.length;i++){
+						   formatDaily_print(data.reportdaily_print[i]);
+					}   
+					$("#CONTENT_DAILY_PRINT").tmpl(data.reportdaily_print).appendTo("tbody#PRINT_CONTENTS_DAILY"); 
+					$("#allTotalAmount_print_daily").val(numeral(data.getTotalAmount_print).format('0,0'));
+				}else{
+					$("tbody#PRINT_CONTENTS_DAILY").html("");
+					$("#allTotalAmount_print_daily").val('');
+				} 
+		    },
+		    error:function(data,status,er) { 
+		        console.log("error: ",data," status: ",status," er:",er);
+		    }
+		}); 
+  }
+  
+  function print_weekly(){
+	  var json = { 
+ 				"start_date" : $("#REGS_DATE_S").val(),
+ 				"end_date"   : $("#REGS_DATE_E").val()
+		};$.ajax({ 
+		    url: "${pageContext.request.contextPath}/api/admin/reports/salereportweekly_print/", 
+		    type: 'GET',  
+		    data: json, 
+		    beforeSend: function(xhr) {
+              xhr.setRequestHeader("Accept", "application/json");
+              xhr.setRequestHeader("Content-Type", "application/json");
+          },
+		    success: function(data) {
+		    	console.log(data);
+		    	b =true; 
+		    	if(data.reportweekly_print.length>0){
+					$("tbody#PRINT_CONTENTS_WEEKLY").html('');
+					   for(var i=0;i<data.reportweekly_print.length;i++){
+						   sales.formatWeekly(data.reportweekly_print[i]);
+					}   
+					$("#CONTENT_WEEKLY_PRINT").tmpl(data.reportweekly_print).appendTo("tbody#PRINT_CONTENTS_WEEKLY");  
+					$("#allTotalAmount_print_weekly").val(numeral(data.getTotalAmount_print).format('0,0'));
+				}else{
+					$("tbody#PRINT_CONTENTS_WEEKLY").html("");
+					$("#allTotalAmount_print_weekly").val('');
+				} 
+		    },	
+		    error:function(data,status,er) { 
+		        console.log("error: "+data+" status: "+status+" er:"+er);
+		    }
+		}); 
+  }
+  listMonthly_print = function(){
+		 var json = { 
+	   				"start_date" : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-01",
+	   				"end_date"   : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-" + (new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate())
+			};$.ajax({
+			    url: "${pageContext.request.contextPath}/api/admin/reports/salereportmonthly_print/", 
+			    type: 'GET',  
+			    data: json, 
+			    beforeSend: function(xhr) {
+                 xhr.setRequestHeader("Accept", "application/json");
+                 xhr.setRequestHeader("Content-Type", "application/json");
+             },
+			    success: function(data) {
+			    	console.log(data);
+			    	b =true; 
+			    	    if(data.reportmonthly_print){
+				    	$("#PRINT_CONTENTS_MONTHLY tbody").html('');
+				    	var st = "" ; 
+				    		st += "<tr>";
+					    	for(var i=0;i<data.reportmonthly_print.length;i++){
+					    	var total_qty = 0, total_amount = 0;
+						    	if(b){
+						 			order = 0; 
+						 			k = order + 1;
+						 			st += "<td>"+ k +"</td>";
+						 			b = false; 
+						 		}
+						 		else  
+						 			{
+						 			k += 1;
+						 			st += "<td>"+ k +"</td>"; 
+						 			}
+				    		st += "<td>" + data.reportmonthly_print[i].pro_name + "</td>"; 
+				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
+				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
+				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
+				    				total_qty += data.reportmonthly_print[i]['day' + (j+1) + '_qty'];
+				    				total_amount += data.reportmonthly_print[i]['day' + (j+1) + '_amount'];
+				    		}
+				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
+				    		st += "</tr>";
+				    		//total_all += total_amount;
+						}
+				    	$("#PRINT_CONTENTS_MONTHLY").html(st);
+				    	$("#allTotalAmount_print_monthly").val(numeral(data.getTotalAmount_print).format('0,0'));
+				    }  
+			    	    else{
+			    	    	$("#PRINT_CONTENTS_MONTHLY").html("");
+					    	$("#allTotalAmount_print_monthly").val('');
+			    	    }
+			    },	
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			}); 
+	 }
+   listYearly_print = function(){
+		 var json = { 
+	   				"start_date" : $("#selectyear").val() + "-01-01",
+	   				"end_date"   : $("#selectyear").val() + "-12-31"
+			};$.ajax({ 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/salereportyearly_print/", 
+			    type: 'GET',  
+			    data: json, 
+			    beforeSend: function(xhr) {
+                 xhr.setRequestHeader("Accept", "application/json");
+                 xhr.setRequestHeader("Content-Type", "application/json");
+             },
+			    success: function(data) {
+			    	var total_amount = 0; 
+			    	console.log(data);
+			    	if(data.reportyear_print){
+				    	$("tbody#PRINT_CONTENTS_YEARLY").html('');
+				    	for(var i=0;i<data.reportyear_print.length;i++){
+				    	formatMonthlySaleReport(data.reportyear_print[i]); 
+				    	data.reportyear_print[i].order = i+1;
+				    	}
+			    		 $("#CONTENT_YEARLY_PRINT").tmpl(data.reportyear_print).appendTo("tbody#PRINT_CONTENTS_YEARLY");	
+			    		 $("#allTotalAmount_print_yearly").val(numeral(data.getTotalAmount_print).format('0,0'));
+			    	}
+			    	else
+			    		{
+			    			$("tbody#PRINT_CONTENTS_YEARLY").html('');
+			    			$("#allTotalAmount_print_yearly").val("");
+			    		} 
+			    },	
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			}); 
+	 } 
+	 $("#print_report").click(function() {
+		 switch($("#selectreport").val()){
+		 case '0':  
+			 break;
+		 case '1':
+			 $("#report_start_daily").html(" Date : " + $("#REGS_DATE_S").val());
+			 print_daily();
+			 $('#daily_list').modal({
+					"backdrop":"static"
+				}) ;
+			 break;
+		 case '2':
+			 $("#report_start_weekly").html(" Date : " + $("#REGS_DATE_S").val());
+			 $("#report_end_weekly").html(" Date : " + $("#REGS_DATE_E").val()); 
+				var dd = 0;
+				var dayID =""; 
+					for (var i=0; i <7; i++) {
+						dayID = "#week_print" + (i+1);
+						dd=	moment($("#REGS_DATE_S").val()).add(i, 'days').get('date');
+						$(dayID).html(dd);
+					};
+			print_weekly();
+			 $('#weekly_list').modal({
+					"backdrop":"static"
+				}) ;
+			 break;
+		 case '3':
+			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
+			   var st = "";
+				st += "<tr>";
+				st += "<th rowspan='2'>#</th>";
+				st += "<th rowspan='2'>Item</th>";
+			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
+				{			
+				st += "<th colspan='2'>" + (1+i) + "</th>";
+				}
+				st += "<th colspan='2'>Total</th></tr><tr>";		
+				for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
+				{			
+				st += "<th>qty</th><th>Amount</th>";
+				}	
+				st += "<th>Total Qty</th><th>Total Amount</th></tr>";	
+				$("#tbl_header_month_print").html(st);  
+				listMonthly_print();
+			 $('#monthly_list').modal({
+					"backdrop":"static"
+				}) ; 
+			 break;
+			 
+		 case '4':
+			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());
+			 listYearly_print();
+			 $('#yearly_list').modal({
+					"backdrop":"static"
+				}) ;
+			 break;
+	 }  	
+		});
 	 });
  
  </script>

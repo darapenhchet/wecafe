@@ -89,7 +89,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	
 	@Override
 	@Transactional
-	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate) {
+	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate, boolean ispagination) {
 		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
 		System.out.println("startdate = "+startdate);
 		Session session = null;
@@ -107,8 +107,10 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 							+ " 		LEFT JOIN product B on B.pro_id = A.pro_id "
 							+ " WHERE D.status = 2 and to_char(C.sale_datetime,'YYYY-mm-dd') = '" + startDate
 							+ "' GROUP BY 1,2,4,6");
+			if(ispagination){
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
+			}
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	saleProducts = (List<Map>)query.list();	
 			return saleProducts;
