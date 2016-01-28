@@ -552,7 +552,7 @@ tbody tr td {
 	var currentPage=1;
 	 setCalendar();
 	 searchByDate();
-	 
+	  
 	 $("#PAGINATION").pagination({
 			items:10,
 			itemsOnPage:10,
