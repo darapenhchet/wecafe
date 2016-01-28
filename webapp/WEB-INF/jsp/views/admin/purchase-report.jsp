@@ -1291,7 +1291,7 @@ tbody tr td {
 	 
 	 print_daily = function(){
 		 $.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdaily_print/" , 
+			 url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdaily_print/" , 
 			    type: 'GET', 
 			    data: { 
 			    		"startDate"   : $("#REGS_DATE_S").val()			    		 
@@ -1302,12 +1302,14 @@ tbody tr td {
 	           },
 			    success: function(data) {
 			    	console.log(data);
-			    	b =true; 
+			    	//b =true; 
+			    	//v = data;
 					var total_amount = 0;
 				 	 if(data.reportdaily_print.length>0){
 						$("tbody#PRINT_CONTENTS_DAILY").html('');
 						   for(var i=0;i<data.reportdaily_print.length;i++){
-							products.formatDaily(data.reportdaily_print[i]); 
+							products.formatDaily(data.reportdaily_print[i]);  
+							data.reportdaily_print[i].order = i+1;
 						}   
 					 for(var i=0; i<data.get_total_amount_print.length; i++){ 
 							   total_amount += data.get_total_amount_print[i].purchase_total_amount;
@@ -1328,12 +1330,12 @@ tbody tr td {
 			    }
 			}); 
 	 }
-	 listWeekly_print = function(){ 
+	 print_weekly = function(){ 
 		 var json = { 
 	   				"start_date" : $("#REGS_DATE_S").val(),
 	   				"end_date"   : $("#REGS_DATE_E").val()
 			};$.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportweekly/", 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportweekly_print/", 
 			    type: 'GET',  
 			    data: json, 
 			    beforeSend: function(xhr) {
@@ -1342,29 +1344,26 @@ tbody tr td {
                 },
 			    success: function(data) {
 			    	console.log(data);
-			    	b =true;
-					v=data;
-			    	if(data.reportweekly.length>0){
-						$("tbody#tbodyweekly").html('');
-						   for(var i=0;i<data.reportweekly.length;i++){
-							products.formatWeekly(data.reportweekly[i]);
+			    	//b =true;
+					//v=data;
+			    	if(data.reportweekly_print.length>0){
+						$("tbody#PRINT_CONTENTS_WEEKLY").html('');
+						   for(var i=0;i<data.reportweekly_print.length;i++){
+							products.formatWeekly(data.reportweekly_print[i]);
+							data.reportweekly_print[i].order = i+1;
 						}   
-						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly"); 
+						$("#CONTENT_WEEKLY_PRINT").tmpl(data.reportweekly_print).appendTo("tbody#PRINT_CONTENTS_WEEKLY"); 
 					 	var total_amount = 0;					 
-					 	for(var i=0; i<data.get_total_amount.length; i++){
+					 	for(var i=0; i<data.get_total_amount_print.length; i++){
 					 			for(j=1;j<=7;j++){
-					 				total_amount += data.get_total_amount[i]["day" + j +"_amount" ]; 
+					 				total_amount += data.get_total_amount_print[i]["day" + j +"_amount" ]; 
 					 			} 
 						   }	  
-						$("#allTotalAmount").val(numeral(total_amount).format('0,0')); 
+						$("#allTotalAmount_print_weekly").val(numeral(total_amount).format('0,0')); 
 					}else{
-						$("tbody#tbodyweekly").html("");
-						$("#allTotalAmount").val('');
-					}
-			    	if(check){
-			    		products.setPagination(data.pagination.totalPages,1);
-			    		check=false;
-			    	} 
+						$("tbody#PRINT_CONTENTS_WEEKLY").html("");
+						$("#allTotalAmount_print_weekly").val('');
+					} 
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -1372,12 +1371,12 @@ tbody tr td {
 			}); 
 		 
 	 }
-	  listMonthly_print = function(){
+	  print_monthly = function(){
 		 var json = { 
 	   				"start_date" : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-01",
 	   				"end_date"   : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-" + (new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate())
 			};$.ajax({
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportmonthly/", 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportmonthly_print/", 
 			    type: 'GET',  
 			    data: json, 
 			    beforeSend: function(xhr) {
@@ -1385,64 +1384,54 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
-			    	b=true;
+			    	console.log(data); 
 			    	var total_all = 0;
-			    	    if(data.reportmonthly){ 
-				    	$("#monthlytable tbody").html('');
+			    	    if(data.reportmonthly_print){
+				    	$("#PRINT_CONTENTS_MONTHLY").html('');
 				    	var st = ""; 
-					    	for(var i=0;i<data.reportmonthly.length;i++){
+					    	for(var i=0;i<data.reportmonthly_print.length;i++){
 					    	var total_qty = 0, total_amount = 0;
 				    		st += "<tr>"; 
-					    	if(b){
-					 			order = data.pagination.perPage * (data.pagination.currentPage-1); 
-					 			orderlist = order + 1;
-					 			st += "<td>"+ orderlist +"</td>";
-					 			b = false; 
-					 		}
-					 		else  {
-					 			orderlist = orderlist + 1;
-					 			st += "<td>"+ (orderlist) +"</td>"; 
-					 		} 
-				    		st +="<td>" + data.reportmonthly[i].customer + "</td>";
-				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
-				    		
+						    st += "<td>"+ (i+1) +"</td>";  
+				    		st +="<td>" + data.reportmonthly_print[i].customer + "</td>";
+				    		st += "<td>" + data.reportmonthly_print[i].pro_name + "</td>"; 
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) { 
-				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
-				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
-				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty'];
-				    				total_amount += data.reportmonthly[i]['day' + (j+1) + '_amount'];
+				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
+				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
+				    				total_qty += data.reportmonthly_print[i]['day' + (j+1) + '_qty'];
+				    				total_amount += data.reportmonthly_print[i]['day' + (j+1) + '_amount'];
 				    		}
 				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
 				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>"; 
 						}  
-					     	for(i =0; i<data.get_total_amount.length; i++)
+					     	for(i =0; i<data.get_total_amount_print.length; i++)
 					    		{
 					     			for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) 
 					     			{  
-					     				total_all +=  data.get_total_amount[i]['day' + (j+1) + '_amount'] ;  
+					     				total_all +=  data.get_total_amount_print[i]['day' + (j+1) + '_amount'] ;  
 					     			} 
 				    			}  
-				    	$("#monthlytable tbody").html(st);
-				     	$("#allTotalAmount").val(numeral(total_all).format('0,0')); 
+				    	$("#PRINT_CONTENTS_MONTHLY").html(st);
+				     	$("#allTotalAmount_print_monthly").val(numeral(total_all).format('0,0')); 
 				    }    
-			    	    if(check){
-				    		products.setPagination(data.pagination.totalPages,1);
-				    		check=false;
-				    	} 
+			    	    else
+			    	    	{
+			    	    	$("#PRINT_CONTENTS_MONTHLY").html("");
+					     	$("#allTotalAmount_print_monthly").val('');
+			    	    	}
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			}); 
 	 }
-	 listYearly_print = function(){
+	 print_yearly = function(){
 		 var json = { 
 	   				"start_date" : $("#selectyear").val() + "-01-01",
 	   				"end_date"   : $("#selectyear").val() + "-12-31"
 			};$.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportyearly/", 
+			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportyearly_print/", 
 			    type: 'GET',  
 			    data: json, 
 			    beforeSend: function(xhr) {
@@ -1450,55 +1439,45 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {  
-			    	b= true;
-			    	v=data;
+			    //	b= true;
+			    //	v=data;
 			    	var total_amount = 0;
 			    	console.log(data);
-			    	if(data.reportyear){
-				    	$("tbody#tbodyyearly").html('');
-				    	for(var i=0;i<data.reportyear.length;i++){
-				    	formatMonthlySaleReport(data.reportyear[i]); 
+			    	if(data.reportyear_print){
+				    	$("tbody#PRINT_CONTENTS_YEARLY").html('');
+				    	for(var i=0;i<data.reportyear_print.length;i++){
+				    	formatMonthlySaleReport(data.reportyear_print[i]); 
+				    	data.reportyear_print[i].order = i+1;
 				    	}
-				    	for(j=0;j<data.get_total_amount.length;j++){
-				    		total_amount +=  data.get_total_amount[j].jan_amount
-							    		+ data.get_total_amount[j].feb_amount 
-							    		+ data.get_total_amount[j].mar_amount 
-							    		+ data.get_total_amount[j].apr_amount 
-							    		+ data.get_total_amount[j].may_amount 
-							    		+ data.get_total_amount[j].jun_amount 
-							    		+ data.get_total_amount[j].jul_amount 
-							    		+ data.get_total_amount[j].aug_amount 
-							    		+ data.get_total_amount[j].sep_amount 
-							    		+ data.get_total_amount[j].oct_amount 
-							    		+ data.get_total_amount[j].nov_amount 
-							    		+ data.get_total_amount[j].dec_amount; 
+				    	for(j=0;j<data.get_total_amount_print.length;j++){
+				    		total_amount +=  data.get_total_amount_print[j].jan_amount
+							    		+ data.get_total_amount_print[j].feb_amount 
+							    		+ data.get_total_amount_print[j].mar_amount 
+							    		+ data.get_total_amount_print[j].apr_amount 
+							    		+ data.get_total_amount_print[j].may_amount 
+							    		+ data.get_total_amount_print[j].jun_amount 
+							    		+ data.get_total_amount_print[j].jul_amount 
+							    		+ data.get_total_amount_print[j].aug_amount 
+							    		+ data.get_total_amount_print[j].sep_amount 
+							    		+ data.get_total_amount_print[j].oct_amount 
+							    		+ data.get_total_amount_print[j].nov_amount 
+							    		+ data.get_total_amount_print[j].dec_amount; 
 				    	}
-			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");	
-			    		 $("#allTotalAmount").val(numeral(total_amount).format('0,0'));
+			    		 $("#CONTENT_YEARLY_PRINT").tmpl(data.reportyear_print).appendTo("tbody#PRINT_CONTENTS_YEARLY");	
+			    		 $("#allTotalAmount_print_yearly").val(numeral(total_amount).format('0,0'));
 			    	}
 			    	else
 			    		{
-			    			$("tbody#tbodyyearly").html('');
-			    			$("#allTotalAmount").val('');
-			    		} 
-			    	if(check){
-			    		products.setPagination(data.pagination.totalPages,1);
-			    		check=false;
-			    	}  
+			    			$("tbody#PRINT_CONTENTS_YEARLY").html('');
+			    			$("#allTotalAmount_print_yearly").val('');
+			    		}  
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			}); 
 	 }
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 $("#print_report").click(function() {
+ 	 $("#print_report").click(function() {
 		 switch($("#selectreport").val()){
 		 case '0':  
 			 break;
@@ -1519,7 +1498,7 @@ tbody tr td {
 						dd=	moment($("#REGS_DATE_S").val()).add(i, 'days').get('date');
 						$(dayID).html(dd);
 					};
-			//print_weekly();
+			print_weekly();
 			 $('#weekly_list').modal({
 					"backdrop":"static"
 				}) ; 
@@ -1541,7 +1520,7 @@ tbody tr td {
 				}	
 				st += "<th>Total Qty</th><th>Total Amount</th></tr>";	
 				$("#tbl_header_month_print").html(st);  
-				//listMonthly_print();
+				print_monthly();
 			 $('#monthly_list').modal({
 					"backdrop":"static"
 				}) ;  
@@ -1549,7 +1528,7 @@ tbody tr td {
 			 
 		 case '4': 
 			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());
-			// listYearly_print();
+			 print_yearly();
 			 $('#yearly_list').modal({
 					"backdrop":"static"
 				}) ; 

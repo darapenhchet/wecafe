@@ -5,7 +5,8 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
-				<a href="javascrpt:;" class="btn btn-inverse waves-effect waves-light pull-right hidden-print" onclick="window.print();"><i class="fa fa-print"></i></a>
+				<a href="javascrpt:;" class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
+				 onClick=window.print(); id="btn_print_import"><i class="fa fa-print"></i></a>
 				<h4 class="modal-title">Import List </h4>
 				<small id="report_start_date"></small> - <small id="report_end_date"></small>
 				

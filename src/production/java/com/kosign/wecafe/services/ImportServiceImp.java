@@ -103,7 +103,10 @@ public class ImportServiceImp implements ImportService {
 				Product products  = session.get(Product.class, importdetail.getProduct().getProductId());
 				System.out.println("importdetail.getProduct().getProductId()" + products.getQuantity());
 				products.setQuantity(products.getQuantity() + importform.get(i).getQuantity() );
-				
+				products.setUnitPrice(importform.get(i).getUnitPrice());
+				/*products.setCostPrice(importform.get(i).getUnitPrice());
+				products.setUnit(unit);
+				products.setSalePrice(salePrice);*/
 				session.update(products);
 			}
 			
@@ -193,7 +196,7 @@ public class ImportServiceImp implements ImportService {
 				importDetail.setProQty(importForm.getQuantity());
 				importDetail.setProStatus(true);				
 				
-				product.setUnitPrice(new BigDecimal(importForm.getUnitPrice()));
+				product.setUnitPrice(importForm.getUnitPrice());
 				product.setQuantity(product.getQuantity()+importForm.getQuantity());
 				
 				sessionFactory.getCurrentSession().flush();

@@ -49,7 +49,7 @@ public class ImportDetail implements Serializable{
 	private long proQty;
 
 	@Column(name = "unit_price")
-	private long unitPrice;
+	private BigDecimal unitPrice;
 
 	@Column(name = "pro_status")
 	private Boolean proStatus;
@@ -93,11 +93,11 @@ public class ImportDetail implements Serializable{
 		this.proQty = proQty;
 	}
 
-	public long getUnitPrice() {
+	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(long unitPrice) {
+	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 

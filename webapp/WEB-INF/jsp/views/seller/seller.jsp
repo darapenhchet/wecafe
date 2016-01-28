@@ -212,8 +212,7 @@
 													}
 												%>
 
-												<a href="#"> <span id="btnplus"
-													class="glyphicon glyphicon-plus"></span>
+												<a href="#"> <span id="btnplus" class="glyphicon glyphicon-plus"></span>
 												</a>
 											</div>
 										</div>
@@ -653,10 +652,8 @@
 	/* ==============================================
 	Counter Up
 	=============================================== */
-	jQuery(document)
-			.ready(
+	jQuery(document).ready(
 					function($) {
-
 						var _thisRow;
 						
 						//Check qty for input only number
@@ -1175,71 +1172,41 @@
 
 						});
 
-						$(document)
-
-								.on(
-										'click',
-										"#btndelete, #btnminus, #btnedit,#cancelbtn",
-										function() {
+						$(document).on('click',"#btndelete, #btnminus, #btnedit,#cancelbtn",function() { 
 											_thisRow = $(this).parents("tr");
 											var st = "";
 											var _url = "";
 											var amount = 0;
 											_this = $(this);
 
-											if (_this.html() == "Delete") {
-												var proId = $(this).parent()
-														.parent().children()
-														.eq(0).html();
-												alert("ppppppp" + proId);
+											if (_this.html() == "Delete") { 
+												var proId = $(this).parent().parent().children().eq(0).html(); 
 												var txt;
-												var msg = confirm("Do you want to delete Order Numeber"
-														+ _orderid
-														+ "\nand Product Number "
-														+ proId);
+												var msg = confirm("Do you want to remove " + $(this).parent().parent().children().eq(1).html() + " from your cart?");
 												if (msg == true) {
-													$
-															.ajax({
-																url : "${pageContext.request.contextPath}/seller/deletedOrderProduct/"
-																		+ _orderid
-																		+ "/"
-																		+ proId,
-																type : 'GET',
+													$.ajax({
+																url : "${pageContext.request.contextPath}/seller/removefromcart/"+proId, /* deletedOrderProduct/" + _orderid + "/" + proId, */
+																type : 'POST',
 																dataType : 'JSON',
-																beforeSend : function(
-																		xhr) {
-																	xhr
-																			.setRequestHeader(
-																					"Accept",
-																					"application/json");
-																	xhr
-																			.setRequestHeader(
-																					"Content-Type",
-																					"application/json");
+																beforeSend : function(xhr) {
+																	xhr.setRequestHeader("Accept", "application/json");
+																	xhr.setRequestHeader("Content-Type", "application/json");
 																},
-																success : function(
-																		data) {
-																	console
-																			.log(data);
+																success : function(data) {
+																	console.log(data);
+																	$("#totalamount").val($("#totalamount").val() - (_this.parent().parent().children().eq(4).html()));
+																	_this.parents("tr").remove();
 																},
-																error : function(
-																		data,
-																		status,
-																		er) {
-																	console
-																			.log("error: "
-																					+ data
-																					+ " status: "
-																					+ status
-																					+ " er:"
-																					+ er);
+																error : function(data, status, er) {
+																	console.log("error: " + data + " status: " + status + " er:" + er);
 																}
 															});
 													txt = "Successful";
+													
 												} else {
 													// 												        txt = "You pressed Cancel!";
 												}
-												document.getElementById("demo").innerHTML = txt;
+												//document.getElementById("demo").innerHTML = txt;
 
 											} else if (_this.html() == "Edit") {
 												_productid = $(this).parent()
@@ -1275,12 +1242,32 @@
 												$("#myModal").bPopup();
 											} else if (_this.html() == "Cancel") {
 
-											} else
-												var proId = $(this).parent()
-														.parent().children()
-														.html();
-
-									
+											} else{
+												_this = $(this);
+												 var proId =  _this.parents(".panel-body").find("#idpro").html(); 
+												 $.ajax({
+														url : "${pageContext.request.contextPath}/seller/removetocart/"+proId, /* deletedOrderProduct/" + _orderid + "/" + proId, */
+														type : 'POST',
+														dataType : 'JSON',
+														beforeSend : function(xhr) {
+															xhr.setRequestHeader("Accept", "application/json");
+															xhr.setRequestHeader("Content-Type", "application/json");
+														},
+														success : function(data) {
+															console.log(data); 
+															if(_this.parent().siblings("#txtqty").val() != 0){
+																if(_this.parent().siblings("#txtqty").val(_this.parent().siblings("#txtqty").val()-1) == 0);
+																{
+																	getsizeSession();
+																}
+															}
+ 													},
+														error : function(data, status, er) {
+															console.log("error: " + data + " status: " + status + " er:" + er);
+														}
+													}); 
+													
+											}
 										});
 
 						$("#btnUpdate")
@@ -1361,24 +1348,11 @@
 														}
 													});
 										});
-						$(document)
-								.on(
-										'click',
-										'#btnplus',
-										function() {
-
-											var proNm = $(this).parents(
-													".panel-body").find(
-													"#pro_nm").val();
-											var proId = $(this).parents(
-													".panel-body").find(
-													"#pro_id").val();
-											var price = $(this).parents(
-													".panel-body").find(
-													"#PRICE").html();
-											var price = $(this).parents(
-													".panel-body").find(
-													"#PRICE").html();
+						$(document).on('click','#btnplus',function() { 
+											var proNm = $(this).parents(".panel-body").find("#pro_nm").val();
+											var proId = $(this).parents(".panel-body").find("#pro_id").val();
+											var price = $(this).parents(".panel-body").find("#PRICE").html();
+											var price = $(this).parents(".panel-body").find("#PRICE").html();
 											var proqty = 1;
 											var _this = $(this);
 											var totalAmount = proqty * price;
@@ -1390,56 +1364,32 @@
 												"quantity" : proqty,
 												"totalAmount" : totalAmount
 											};
-											$
-													.ajax({
+											$.ajax({
 														url : "${pageContext.request.contextPath}/seller/addtocart",
 														type : 'POST',
 														datatype : 'JSON',
-														data : JSON
-																.stringify(json),
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			"Accept",
-																			"application/json");
-															xhr
-																	.setRequestHeader(
-																			"Content-Type",
-																			"application/json");
+														data : JSON.stringify(json),
+														beforeSend : function(xhr) {
+															xhr.setRequestHeader("Accept", "application/json");
+															xhr.setRequestHeader("Content-Type", "application/json");
 														},
 														success : function(data) {
 															getsizeSession();
 															for (i = 0; i < data.length; i++) {
 																if (data[i].productId == proId) {
-																	_this
-																			.parents(
-																					".panel-body")
-																			.find(
-																					"#txtqty")
-																			.val(
-																					data[i].quantity);
+																	_this.parents(".panel-body").find("#txtqty").val(data[i].quantity);
 																	break;
 																}
 															}
 														},
-														error : function(data,
-																status, er) {
-															console
-																	.log("error: "
-																			+ data
-																			+ "status: "
-																			+ status
-																			+ "er: ");
+														error : function(data,status, er) {
+															console.log("error: "+ data + "status: " + status + "er: ");
 														}
 													});
 										});
 
-						$("#btnconfirm")
-								.click(
-										function() {
-											$
-													.ajax({
+						$("#btnconfirm").click(function() {
+											$.ajax({
 														url : "${pageContext.request.contextPath}/seller/insertcartsell",
 														type : 'POST',
 														datatype : 'JSON',
@@ -1489,8 +1439,7 @@
 													"application/json");
 										},
 										success : function(data) {
-											$("#totalproduce")
-													.html(data.length);
+											$("#totalproduce").html(data.length);
 										},
 										error : function(data, status, er) {
 											console.log("error: " + data

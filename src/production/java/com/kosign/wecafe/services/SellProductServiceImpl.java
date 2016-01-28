@@ -222,7 +222,7 @@ public class SellProductServiceImpl implements SellProductsService {
 		User user = userService.findUserByUsername(getPrincipal());
 		Order order = session.get(Order.class, orderID);
 		sale.setSaleDatetime(new Date());		
-		//sale.setTotalAmount(order.getOrderAmount());		
+		sale.setTotalAmount(order.getOrderAmount());		
 		order.setStatus(2);		
 		sale.setUser(user);
 		sale.setOrder(order);

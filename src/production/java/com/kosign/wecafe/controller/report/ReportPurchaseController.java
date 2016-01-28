@@ -58,7 +58,7 @@ public class ReportPurchaseController {
 		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 	}
-	@RequestMapping(value="/purchasereportdaily_print)", method=RequestMethod.GET)
+	@RequestMapping(value="/purchasereportdaily_print", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportdaily_print(@RequestParam(value="startDate") String strStartDate, Pagination pagination) throws ParseException{
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);

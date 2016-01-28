@@ -54,8 +54,7 @@ public class OrderController {
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
-			for(int i=0; i <carts.size();i++){
-				
+			for(int i=0; i <carts.size();i++){ 
 				if(carts.get(i).getProductId().equals(cart.getProductId())){
 					carts.get(i).setQuantity(cart.getQuantity());
 					carts.get(i).setComment(cart.getComment());

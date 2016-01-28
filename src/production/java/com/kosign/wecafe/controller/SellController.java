@@ -97,10 +97,8 @@ public class SellController {
 	public  @ResponseBody List<Cart> addProductToCart(HttpSession session, @RequestBody Cart cart){
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
-			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
-			
-			for(int i=0; i <carts.size();i++){
-				
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS"); 
+			for(int i=0; i <carts.size();i++){ 
 				System.out.println("cart.getProductName" + cart.getProductName());
 				System.out.println("carts.get(i).getProductName()" + carts.get(i).getProductName());
 				if(carts.get(i).getProductId().equals(cart.getProductId())){
@@ -111,10 +109,8 @@ public class SellController {
 				}
 			}
 		}
-		carts.add(cart); 
-		
-		session.setAttribute("CARTS", carts);
-		
+		carts.add(cart);  
+		session.setAttribute("CARTS", carts); 
 		return carts;
 	}
 	
@@ -158,15 +154,30 @@ public class SellController {
 					carts.remove(cart);
 					System.out.println("TRUE");
 					break;
-				}
-				
+				} 
 			}
 			System.err.println("FALSE");
 		}
 		session.setAttribute("CARTS", carts);
 		return carts;
 	}
-	
+	@RequestMapping(value="/seller/removefromcart/{id}", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public  @ResponseBody List<Cart> removeProductFromCart(HttpSession session, @PathVariable("id") Long productId){
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+		} 
+		for(Cart cart : carts){
+			if(cart.getProductId().equals(productId)){
+				carts.remove(cart);
+				System.out.println("TRUE");
+				break;
+			}
+			System.out.println("FALSE");
+		} 
+		session.setAttribute("CARTS", carts); 
+		return carts;
+	}
 	@RequestMapping(value="/seller/insertcartsell", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public  @ResponseBody Boolean insertProductFromCart(HttpSession session){
 		
