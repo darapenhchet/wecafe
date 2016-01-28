@@ -3,12 +3,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,6 +66,7 @@ public class ReportRequestController {
 		pagination.setTotalCount(report.getTotalDailyRequest(date));	
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
+		
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
@@ -97,24 +100,20 @@ public class ReportRequestController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
-	/*@RequestMapping(value="/purchasereportyearly", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(
+  @RequestMapping(value="/get_request_yearly", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportyearly(Pagination pagination,
 			   @RequestParam(value="start_date") String strStartDate, 
 			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
-		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		System.out.println(strStartDate);
-		System.out.println(strEndDate);
-		
-		map.put("reportyear", adminReportService.getListReportYearlyPurcase(startDate, endDate));
-		 
-		map.put("total_reportyear", adminReportService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
+		Map<String, Object> map = new HashMap<String, Object>(); 		
+		map.put("reportyear", report.getListReportYearlyRequest(pagination, startDate, endDate));	
+		map.put("total_qty", report.getTotalQtyYearlyRequest(startDate, endDate));
+		pagination.setTotalCount(report.countYearly(startDate,endDate));
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 		
 	}
-	}*/
 }

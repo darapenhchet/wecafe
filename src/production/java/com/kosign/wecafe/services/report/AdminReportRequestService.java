@@ -19,11 +19,13 @@ public interface AdminReportRequestService {
 	public Object getListReportWeeklyRequest(Pagination pagination,DateForm date);
 	public Long getTotalDailyRequest(DateForm date);
 	public Long countDetail(DateForm date) throws ParseException;
-	public Long countDaily(Date dateTime) throws HibernateException, ParseException;
 	public Long countWeekly(DateForm date) throws ParseException;
 	public Long getTotalQtyWeeklyRequest(DateForm date) throws ParseException;
 	public Long getTotalQtyDetailRequest(DateForm date);
 	public List<Map> getListReportMonthlyRequest(Date startdate, Date enddate, Pagination pagination);
 	public Long countMonthly(Date startDate, Date endDate) throws ParseException;
 	public Long getTotalQtyMonthlyRequest(Date startDate, Date endDate);
+	public Long countYearly(Date startDate,Date Endate) throws HibernateException, ParseException;
+	public List<Map<String, Object>> getListReportYearlyRequest(Pagination pagination, Date startDate, Date endDate);
+	public Long getTotalQtyYearlyRequest(Date startDate, Date endDate);
 }

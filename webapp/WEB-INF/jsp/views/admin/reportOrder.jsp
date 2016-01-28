@@ -238,7 +238,7 @@ tbody tr td {
 													<table id="weeklytable" class="table table-responsive">
 														<thead>
 															<tr>
-
+																<th rowspan="2" id="order">#</th>
 																<th rowspan="2">Item</th>
 																<th id="week1"></th>
 																<th id="week2"></th>
@@ -277,6 +277,7 @@ tbody tr td {
 													<table id="yearlytable" class="table table-responsive">
 														<thead>
 															<tr>
+																<th rowspan="2" id="order">#</th>
 																<th rowspan="2">Item</th>
 																<th id="mon1">Jan</th>
 																<th  id="mon2">Feb</th>
@@ -492,6 +493,7 @@ tbody tr td {
  <!-- ============================  tbodyweekly  ================================== -->		
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
+			<td>{{= order}}</td>
 			<td>{{= product_name}}</td>
 			<td>{{= (day1_qty=day1_qty?day1_qty:0)}}</td>
 			<td>{{= (day2_qty=day2_qty?day2_qty:0)}}</td>
@@ -509,34 +511,21 @@ tbody tr td {
  <!-- ============================  tbodyyearly  ================================== -->		
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr>
-			<td>{{= customer}}</td>
+			<td>{{= order}}</td>
 			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
-			<td>{{= jan_qty}}</td>
-			<td>{{= jan_amount}}</td>
-			<td>{{= feb_qty}}</td>
-			<td>{{= feb_amount}}</td>
-			<td>{{= mar_qty}}</td>
-			<td>{{= mar_amount}}</td>
-			<td>{{= apr_qty}}</td>
-			<td>{{= apr_amount}}</td>
-			<td>{{= may_qty}}</td>
-			<td>{{= may_amount}}</td>
-			<td>{{= jun_qty}}</td>
-			<td>{{= jun_amount}}</td>
-			<td>{{= jul_qty}}</td>
-			<td>{{= jul_amount}}</td>
-			<td>{{= aug_qty}}</td>
-			<td>{{= aug_amount}}</td>
-			<td>{{= sep_qty}}</td>
-			<td>{{= sep_amount}}</td>
-			<td>{{= oct_qty}}</td>
-			<td>{{= oct_amount}}</td>
-			<td>{{= nov_qty}}</td>
-			<td>{{= nov_amount}}</td>
-			<td>{{= dec_qty}}</td>
-			<td>{{= dec_amount}}</td>
+			<td>{{= (jan_qty=jan_qty)?jan_qty:0}}</td>
+			<td>{{= (feb_qty=feb_qty)?feb_qty:0}}</td>
+			<td>{{= (mar_qty=mar_qty)?mar_qty:0}}</td>
+			<td>{{= (apr_qty=apr_qty)?apr_qty:0}}</td>
+			<td>{{= (may_qty=may_qty)?may_qty:0}}</td>
+			<td>{{= (jun_qty=jun_qty)?jun_qty:0}}</td>
+			<td>{{= (jul_qty=jul_qty)?jul_qty:0}}</td>
+			<td>{{= (aug_qty=aug_qty)?aug_qty:0}}</td>
+			<td>{{= (sep_qty=sep_qty)?sep_qty:0}}</td>
+			<td>{{= (oct_qty=oct_qty)?oct_qty:0}}</td>
+			<td>{{= (nov_qty=nov_qty)?nov_qty:0}}</td>
+			<td>{{= (dec_qty=dec_qty)?dec_qty:0}}</td>
 			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
 		</tr>
     </script>
    <!-- ============================================================== -->   
@@ -615,14 +604,12 @@ tbody tr td {
 	 
 	 $("#selectmonth").change(function(){ 
 		 setheadermonthly();
-		 check=true;
 		 products.listMonthly(1);
 		 $("#PAGINATION").pagination('selectPage',1);
 		 
 	 });
 	 
 	 $("#PER_PAGE").change(function(){
-		 check = true;
 		 $("#PAGINATION").pagination('updateItemsOnPage', $(this).val());
 		 checkFilter(1);
 		 
@@ -648,7 +635,7 @@ tbody tr td {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	
+			    	console.log("detail==="+data.total_qty);
 					$("#PAGINATION").html("");
 			    	
 					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);
@@ -665,16 +652,12 @@ tbody tr td {
 								products.format(data.REPORT_REQUEST_DETAIL[i]);
 							} 
 							$("#CONTENT_DETAIL").tmpl(data.REPORT_REQUEST_DETAIL).appendTo("tbody#tbodydetail");
+							
 							$("#allTotalAmount").val(total_qty);
 						}else{
 							$("tbody#tbodydetail").html(''); 
 							$("#allTotalAmount").val('');
 						}
-						
-				    	/* if(check){
-				    		products.setPagination(data.pagination.totalPages,1);
-				    		check=false;
-				    	}   */
 					}
 			    },
 			    error:function(data,status,er) { 
@@ -699,13 +682,13 @@ tbody tr td {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	
+			    	console.log("daily==="+data.total_qty);
 					$("#PAGINATION").html("");
 			    	
 					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);
 					
 			    	index = 0;
-			    	console.log(data);
+			    	
 			    	b =true;
 					v=data;
 					var total_qty=0;
@@ -722,10 +705,6 @@ tbody tr td {
 						$("tbody#tbodydaily").html("");
 						$("#allTotalAmount").val('');
 					}
-			    	/* if(check){
-			    		products.setPagination(data.pagination.totalPages,1);
-			    		check=false;
-			    	}  */
 			    	 
 			    },
 			    error:function(data,status,er) { 
@@ -748,41 +727,28 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
+			    	console.log("weeekly==="+data.total_qty);
+			    	b=true;
+			    	v=data;
 			    	
 					$("#PAGINATION").html("");
 			    	
 					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);
-					    	
-			    	if(data.reportweekly.length>0){
+				
+					
+					if(data.reportweekly.length>0){
 						$("tbody#tbodyweekly").html('');
-						   for(var i=0;i<data.reportweekly.length;i++){							
-							products.format(data.reportweekly[i]);
+						   for(var i=0;i<data.reportweekly.length;i++){
+							products.formatWeekly(data.reportweekly[i]);
 						}   
-						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly");
-						var tblrowsize= $('#weeklytable > tbody >tr').length; 
-						 var total_qty1 =data.total_qty;		 
-						 for(var i =0;i < tblrowsize; i++)	
-							 {
-							 var total_qty = 0;
-							 var qty=0,qty1;
-							 for(var j=1; j<8 ; j++)
-								 {	
-								 	qty=$("#weeklytable tbody").children().eq(i).children().eq((j)).text();							 	
-								 	total_qty +=parseInt((qty=="" || qty==null || qty==0)?0:qty);
-								 	
-								 }
-							 $("#weeklytable tbody").children().eq(i).children().eq(8).html(total_qty);
-							
-							 }	
-						$("#allTotalAmount").val(total_qty1);
+						$("#CONTENT_WEEKLY").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly"); 
+					 	
+						$("#allTotalAmount").val(data.total_qty); 
 					}else{
 						$("tbody#tbodyweekly").html("");
 						$("#allTotalAmount").val('');
 					}
-			    	/* if(check){
-			    		products.setPagination(data.pagination.totalPages,1);
-			    		check=false;
-			    	}  */
+							    
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -797,7 +763,8 @@ tbody tr td {
 		    		"perPage"     : $("#PER_PAGE").val(),
 	   				"start_date" : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-01",
 	   				"end_date"   : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-" + (new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate())
-			};$.ajax({
+			};
+		 $.ajax({
 			    url: "${pageContext.request.contextPath}/admin/reports/get_request_monthly/", 
 			    type: 'GET',  
 			    data: json, 
@@ -806,6 +773,7 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) { 
+			    	console.log("monthly==="+data.total_qty);
 			    	
 			    	$("#PAGINATION").html("");
 			    	
@@ -845,25 +813,21 @@ tbody tr td {
 						}
 					    	$("#monthlytable tbody").html(st);
 					    	$("#allTotalAmount").val(total_qty1);
-				        
-					
-			    	   /*  if(check){
-			    	    	
-				    		products.setPagination(data.pagination.totalPages,1);
-				    		check=false;
-				    	}  */
+				   
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }
 			}); 
 	 }
-	 products.listYearly = function(){
+	 products.listYearly = function(currentPage){
 		 var json = {
+					"currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val(),
 	   				"start_date" : $("#selectyear").val() + "-01-01",
 	   				"end_date"   : $("#selectyear").val() + "-12-31"
 			};$.ajax({ 
-			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportyearly/", 
+			    url: "${pageContext.request.contextPath}/admin/reports/get_request_yearly/", 
 			    type: 'GET',  
 			    data: json, 
 			    beforeSend: function(xhr) {
@@ -871,17 +835,22 @@ tbody tr td {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) { 
-			    	var total_amount = 0;
-			    	console.log(data);
+			    	console.log("yearly==="+data.total_qty);
+			    	v=data;
+			    	b=true;
+			    	
+					$("#PAGINATION").html("");
+			    	
+					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);		    	
+			    	
 			    	if(data.reportyear){
 				    	$("tbody#tbodyyearly").html('');
 				    	for(var i=0;i<data.reportyear.length;i++){
 				    	formatMonthlySaleReport(data.reportyear[i]);
-				    	total_amount += data.reportyear[i].total_amount;
 				    	}
 			    		 $("#CONTENT_YEARLY").tmpl(data.reportyear).appendTo("tbody#tbodyyearly");			    	  
 			    	}
-			    	$("#allTotalAmount").val(total_amount);
+			    	$("#allTotalAmount").val((data.total_qty>0)?data.total_qty:0);
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -892,14 +861,9 @@ tbody tr td {
 	 products.formatDaily = function(value){
 		 if(index < v["total_qty_pro"].length){
 			 value["total_pro_qty"] =v["total_qty_pro"][index]["total_pro_qty"];
-			// value["total_row"] =v["total_qty_pro"][index]["total_row"];
 			 index++;
-		 }
-		
-		/*  if(value["purchase_type"] == 0)
-		 		value["purchase_type"] = "Import";
-		 else
-			 	value["purchase_type"] = "Expense"; */
+		 }	
+	
 		 if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
@@ -921,20 +885,32 @@ tbody tr td {
 	 		else  
 	 		value["order"] = ++j; 
 	 }
+	 
+	 products.formatWeekly = function(value){
+		
+		value["total_qty"] =value["day1_qty"] + 
+				 value["day2_qty"] + 
+				 value["day3_qty"] +
+				 value["day4_qty"] +
+				 value["day5_qty"] +
+				 value["day6_qty"] +
+				 value["day7_qty"]  ;
+ 		for(j =1 ;j<=7; j++){
+		value['day' +(j) + '_qty'] = value['day' +(j) + '_qty']; 
+	
+		}  
+		if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1); 
+	 			k = order + 1;
+	 			value["order"] =k;
+	 			b = false; 
+	 		}
+	 		else  
+	 		value["order"] = ++k;  
+	 } 
+	 
 	 function formatMonthlySaleReport(value){
-			console.log(value);
-	    	value["total_amount"] = value["jan_amount"] + 
-	    							value["feb_amount"] + 
-	    							value["mar_amount"] +
-	    							value["apr_amount"] +
-	    							value["may_amount"] +
-	    							value["jun_amount"] +
-	    							value["jul_amount"] +
-	    							value["aug_amount"] +
-	    							value["sep_amount"] +
-	    							value["oct_amount"] +
-	    							value["nov_amount"] +
-	    							value["dec_amount"] ;
+			
 	    	value["total_qty"] = value["jan_qty"] + 
 								 value["feb_qty"] + 
 								 value["mar_qty"] +
@@ -947,29 +923,16 @@ tbody tr td {
 								 value["oct_qty"] +
 								 value["nov_qty"] +
 								 value["dec_qty"]  ;
+	    	 if(b){
+		 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+		 			j = order + 1;
+		 			value["order"] =j;
+		 			b = false;
+		 		}
+		 		else  
+		 		value["order"] = ++j; 
 	    	
 	    }
-	 products.setPagination = function(totalPage, currentPage){
-	    	$('#PAGINATION').bootpag({
-		        total: totalPage,
-		        page: currentPage,
-		        maxVisible: 10,
-		        leaps: true,
-		        firstLastUse: true,
-		        first: 'First',
-		        last: 'Last',
-		        wrapClass: 'pagination',
-		        activeClass: 'active',
-		        disabledClass: 'disabled',
-		        nextClass: 'next',
-		        prevClass: 'prev',
-		        lastClass: 'last',
-		        firstClass: 'first'
-		    }).on("page", function(event, currentPage){
-		    	check = false;
-		    	checkFilter(currentPage);
-		    }); 
-		};
 		
 		products.listDetail(1);
 
@@ -984,7 +947,7 @@ tbody tr td {
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
-			 check=true;
+			 
 			 products.listDetail(1);
 		 }			 
 		 else if($(this).val()==1){ 
@@ -1000,7 +963,7 @@ tbody tr td {
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").addClass("hidetable");
 			 setCalendar();
-			 check=true;
+			 
 			 products.listDaily(1);
 			
 			 
@@ -1018,7 +981,7 @@ tbody tr td {
 			 $("#monthcombo").addClass("hidetable");
 			 setCalendar();
 			 settableheader();
-			 check=true;
+			 
 			 products.listWeekly(1);
 			
 			 
@@ -1035,7 +998,7 @@ tbody tr td {
 			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 $("#monthcombo").removeClass("hidetable");
-			 check=true;
+			 
 			 setheadermonthly();
 			 products.listMonthly(1);
 			
@@ -1047,9 +1010,9 @@ tbody tr td {
 			 $("#tblyearly").removeClass("hidetable");
 			 var startdate = new Date().getFullYear() + '/01/01';
 			 var stopdate = new Date().getFullYear() + '/12/31';
-			 check=true;
+			 
 			 $("#selectmonth").addClass("hidetable");
-			 products.listYearly();
+			 products.listYearly(1);
 		 }	
 		 $("#PAGINATION").pagination('selectPage',1);
 	 });
@@ -1131,9 +1094,7 @@ tbody tr td {
 		}); 
 	 }
 	  
-	 
-	 
-	 
+
 	 $("#btnREGS_DATE_S").click(function(){	
 	 			$( "#REGS_DATE_S" ).datepicker("show");		
 	 			
