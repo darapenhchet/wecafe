@@ -193,7 +193,7 @@
                 <div class="modal-footer" style="height: 80px; overflow: auto;">
                     <button type="button" class="btn btn-default hidebtn" id="btnAddToCart"><span class="button b-close"><span>Add to cart</span></span></button>
                     <button type="button" class="btn btn-default hidebtn" id="btnok"><span class="button b-close"><span>Ok</span></span></button>
-                    <button type="button" class="btn btn-primary hidebtn" id="btn_buy"> <span class="button b-close"><span>Buy</span></span></button>
+                    <button type="button" class="btn btn-primary hidebtn b-close" id="btn_buy"> <!-- <span class="button b-close"><span> -->Buy<!-- </span></span> --></button>
                     <button type="button" class="btn btn-default hidebtn" id="btncancelup"><span class="button b-close"><span>Cancel</span></span></button>
                 </div>
             </div>
@@ -240,7 +240,7 @@
 				<div class="modal-footer" style="height: 80px;">
 					<div align="right">
 						<button type="button" id="btnbuymore" class="btn btn-default"><span class="button b-close"><span>Buy more</span></span></button>
-						<button type="button" id="btnconfirm" class="btn btn-default"><span class="button b-close"><span>Confirm</span></span></button>
+						<button type="button"  class="btn btn-default button b-close"><span id="btnconfirm">Confirm</span></button>
 						<button type="button" id="btncancel" class="btn btn-default"><span class="button b-close"><span>Cancel Order</span></span></button>		
 					</div>
 				</div>
@@ -316,10 +316,8 @@
 	                },
 				    success: function(data) { 
 				       console.log(data);
-				       getsizeSession();
-						
-					   sendMessage();
-				       
+				       getsizeSession(); 
+					   sendMessage(); 
 				    },
 				    error:function(data,status,er) { 
 				        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -461,7 +459,7 @@
     	                    xhr.setRequestHeader("Accept", "application/json");
     	                    xhr.setRequestHeader("Content-Type", "application/json");
     	                },
-    				    success: function(data) { 
+    				    success: function(data) {
     				        console.log(data);
     						listorderproduce();
     						getsizeSession();
@@ -484,6 +482,7 @@
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
 				    success: function(data) {   
+				    	console.log(data);
 				    	$("#totalproduce").html(data.length);			    	
 				    },
 				    error:function(data,status,er) { 
@@ -492,10 +491,9 @@
 				});	 
 				
 			}
-			
-			
+			 
 			function listorderproduce(){
-				$("#addtocart").bPopup();				
+							
 				 var st=""; var amount=0;
 				$.ajax({ 
 				    url: "${pageContext.request.contextPath}/order/listcart", 
@@ -506,7 +504,8 @@
 	                    xhr.setRequestHeader("Accept", "application/json");
 	                    xhr.setRequestHeader("Content-Type", "application/json");
 	                },
-				    success: function(data) {  
+				    success: function(data) {
+				    	$("#addtocart").bPopup();	
 				      	for(i=0; i<data.length; i++)				    	  
 				      	{
 				    	  	st += "<tr><td style='display: none;'>" + data[i].productId +"</td>"

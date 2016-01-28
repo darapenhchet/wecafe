@@ -63,8 +63,7 @@ public class OrderController {
 					session.setAttribute("CARTS", carts);
 					return carts; 
 				}
-			}
-			
+			} 
 		}
 		carts.add(cart); 
 		
@@ -116,14 +115,12 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/insertcartorder", method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public  @ResponseBody List<Cart> insertProductFromCart(HttpSession session){
-		
+	public  @ResponseBody List<Cart> insertProductFromCart(HttpSession session){ 
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
 			orderProductService.addNewOrder(carts);
-		}
-				
+		} 	
 		return carts;
 	}
 	
