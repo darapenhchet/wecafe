@@ -63,10 +63,10 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		try{
 			session = sessionFactory.getCurrentSession();		
 			SQLQuery query = session.createSQLQuery(sql);
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			query.setParameter(0, Integer.parseInt(date.getYear()));
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	requestReport = (List<Map>)query.list();	
 			return requestReport;
 		}catch(Exception e){
@@ -85,10 +85,10 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 		try{
 			session = sessionFactory.getCurrentSession();		
 			SQLQuery query = session.createSQLQuery(getQueryDailyRequest(date));
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			query.setParameter(0, date.getDay());
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map>	requestReport = (List<Map>)query.list();	
 			return requestReport;
 		}catch(Exception e){
@@ -127,8 +127,8 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 								+"pro_name ASC"	;
 			session = sessionFactory.getCurrentSession();		
 			SQLQuery query = session.createSQLQuery(sql);
-			query.setParameter(0, date.getDay());
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			query.setParameter(0, date.getDay());
 			List<Map>	requestReport = (List<Map>)query.list();	
 			return requestReport;
 		}catch(Exception e){
@@ -247,9 +247,9 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 								+"FROM "
 									+"generate_series(0,6) n;' "
 									+") as ct(product_name text ," + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ") "); 	
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map> sales= (List<Map>)query.list();
 			return sales;
 		} catch (Exception e) {
@@ -335,6 +335,9 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 	@Override
 	@Transactional
 	public List<Map> getListReportMonthlyRequest(Date startdate, Date enddate,Pagination pagination) {
+	
+		System.out.println("offet================="+pagination.offset());
+		
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -384,9 +387,9 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 										   		+"row_name TEXT, " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 										   ); 	
 			
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());		
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map> sales= (List<Map>)query.list();
 			return sales;
 		} catch (Exception e) {

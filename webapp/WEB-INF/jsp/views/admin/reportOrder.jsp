@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -586,6 +587,7 @@ tbody tr td {
 			 products.listYearly(1); 
 			 break;
 	 	}
+		 $("#PAGINATION").pagination('selectPage',1);
 	 });
 	 
 	 function checkFilter(currentPage){
@@ -615,12 +617,15 @@ tbody tr td {
 		 setheadermonthly();
 		 check=true;
 		 products.listMonthly(1);
+		 $("#PAGINATION").pagination('selectPage',1);
+		 
 	 });
 	 
 	 $("#PER_PAGE").change(function(){
 		 check = true;
 		 $("#PAGINATION").pagination('updateItemsOnPage', $(this).val());
 		 checkFilter(1);
+		 
 	 });
 	 
 	 
@@ -628,8 +633,8 @@ tbody tr td {
 		
 		 var input={
 				 "currentPage" : currentPage,
-		    		"perPage"     : $("#PER_PAGE").val(), 
-		    		"year" 	  :  $("#selectyear").val()
+		    	 "perPage"     : $("#PER_PAGE").val(), 
+		    	 "year" 	  :  $("#selectyear").val()
 		 }
 
 		 
@@ -976,15 +981,11 @@ tbody tr td {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
-			// setCalendar();
-			 
-			// $("#startfrom").html(" in " +  new Date().getFullYear());
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 check=true;
 			 products.listDetail(1);
-			 
 		 }			 
 		 else if($(this).val()==1){ 
 			
@@ -1001,6 +1002,7 @@ tbody tr td {
 			 setCalendar();
 			 check=true;
 			 products.listDaily(1);
+			
 			 
 		 }else if($(this).val()==2){ 
 			 
@@ -1018,8 +1020,7 @@ tbody tr td {
 			 settableheader();
 			 check=true;
 			 products.listWeekly(1);
-			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
-			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
+			
 			 
 		 }else if($(this).val()==3){
 			 $("#tbldaily").addClass("hidetable");
@@ -1037,6 +1038,7 @@ tbody tr td {
 			 check=true;
 			 setheadermonthly();
 			 products.listMonthly(1);
+			
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
@@ -1049,7 +1051,7 @@ tbody tr td {
 			 $("#selectmonth").addClass("hidetable");
 			 products.listYearly();
 		 }	
-		
+		 $("#PAGINATION").pagination('selectPage',1);
 	 });
 	function setheadermonthly(){
 		

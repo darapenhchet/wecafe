@@ -49,7 +49,7 @@ public class Pagination implements Serializable{
 	}	
 	
 	public int offset(){
-		return (this.currentPage-1)* perPage;
+		return ((this.currentPage-1) * this.perPage);
 	}
 	
 	public void setCurrentPage(int currentPage) {
