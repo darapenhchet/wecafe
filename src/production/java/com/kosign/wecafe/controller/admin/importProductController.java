@@ -40,6 +40,11 @@ public class importProductController {
 	
 	@Inject SupplierService supplierService;
 	
+	@RequestMapping(value="/admin/get_import_print", method=RequestMethod.GET)
+	public String getImportPrint(){		
+		return "admin/print_report_import_list";
+	}
+	
 	@RequestMapping(value="/admin/importlist", method=RequestMethod.GET)
 	public String listAllImpProduct(Map<String, Object>model){
 		//model.put("importproducts",importService.listAllImportProduct());

@@ -9,6 +9,9 @@
 <meta name="description"
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
 <meta name="author" content="Coderthemes">
+
+
+
 <style>
 .hidetable {
 	display: none;
@@ -947,10 +950,10 @@ tbody tr td {
                 	$("#report_start_date").html(" Date " + $("#REGS_DATE_S").val());
                 	$("#report_end_date").html($("#REGS_DATE_E").val());
                 	list_print_report();
-    				$('#request_stock_list').modal({
+    				 $('#request_stock_list').modal({
     					"backdrop":"static"
     				}) ;
-    				
+    			
     			});
                 function list_print_report(){
                 	var json = { 
@@ -976,10 +979,11 @@ tbody tr td {
 									  format_print(data.imports_print[i]); 
 									}  
 								$("#CONTENT_Print_Import").tmpl(data.imports_print).appendTo("tbody#PRINT_CONTENTS");
-								$("#allTotalAmount_print").val(numeral(data.total_amount_print[0].total_amount).format('0,0'));
+							//	$("#allTotalAmount_print").val(numeral(data.total_amount_print[0].total_amount).format('0,0'));
+								$("#allTotalAmount_print").html(numeral(data.total_amount_print[0].total_amount).format('0,0'));
 							}else{
 								$("tbody#PRINT_CONTENTS").html('<tr>NO CONTENTS</tr>');
-								$("#allTotalAmount_print").val("");
+								$("#allTotalAmount_print").html("");
 							} 
 					 },
 					 error:function(data,status,er){
@@ -987,16 +991,17 @@ tbody tr td {
 					 } 
 				 });
                 }
-               /*    $("#btn_print_import").click(function(){
-               	 var divContents = $("#request_stock_list").html();
+                   $("#btn_print_import").click(function(){
+                	   
+               	 var divContents = $("#print_data").html(); 
                     var printWindow = window.open('', '', 'height=400,width=800');
-                    printWindow.document.write('<html><head><title>DIV Contents</title>');
+                    printWindow.document.write('<html><head>');
                     printWindow.document.write('</head><body >');
                     printWindow.document.write(divContents);
                     printWindow.document.write('</body></html>');
                     printWindow.document.close();
                     printWindow.print();
-               }); */  
+               }); 
             });
         </script>
 
@@ -1008,6 +1013,8 @@ tbody tr td {
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script>
 
+<script
+	src="${pageContext.request.contextPath}/resources/js/print.js"></script>
 
 
 </body>
