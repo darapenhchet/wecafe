@@ -41,10 +41,10 @@ tbody tr td {
 } 
 
 </style>
+
+
 <!-- Base Css Files -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- Font Icons -->
 <link
@@ -589,9 +589,17 @@ tbody tr td {
          return false;
      });
      
-     // print pursurse weekly 
+     // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
   	   var divContents = $("#print_data_monthly").html(); 
+         loadPrintPage(divContents);
+         return false;
+     });
+     
+     // print pursurse yearly 
+     $("#btn_print_yearly").click(function(){
+    	 
+  	   var divContents = $("#print_data_yearly").html(); 
          loadPrintPage(divContents);
          return false;
      });
@@ -1491,12 +1499,12 @@ tbody tr td {
 							    		+ data.get_total_amount_print[j].dec_amount; 
 				    	}
 			    		 $("#CONTENT_YEARLY_PRINT").tmpl(data.reportyear_print).appendTo("tbody#PRINT_CONTENTS_YEARLY");	
-			    		 $("#allTotalAmount_print_yearly").val(numeral(total_amount).format('0,0'));
+			    		 $("#allTotalAmount_print_yearly").html(numeral(total_amount).format('0,0'));
 			    	}
 			    	else
 			    		{
 			    			$("tbody#PRINT_CONTENTS_YEARLY").html('');
-			    			$("#allTotalAmount_print_yearly").val('');
+			    			$("#allTotalAmount_print_yearly").html('');
 			    		}  
 			    },	
 			    error:function(data,status,er) { 

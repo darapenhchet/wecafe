@@ -1,4 +1,4 @@
-
+ 
 
 $(function(){
 	
@@ -78,13 +78,58 @@ function loadPrintPage(divContents){
 		               'fullscreen=yes',
 		                'resizable=no'
 		           ].join(',');
-	 printWindow = window.open('', '',params );
-	 printWindow.document.write('<html><head>');
-	 printWindow.document.write('</head><body >');
-	 printWindow.document.write(divContents);
-	 printWindow.document.write('</body></html>');
+	/* printWindow = window.open("","",params );
+	 printWindow.document.write("<html>");
+	 	printWindow.document.write("<head>");
+	 	printWindow.document.write('<link href="${pageContext.request.contextPath}/resources/css/print.css" rel="stylesheet" />');
+	 	printWindow.document.write("</head>");
+	 	printWindow.document.write("<body>");
+	 		printWindow.document.write(divContents);
+	 	printWindow.document.write("</body>");
+	 printWindow.document.write("</html>");
 	 printWindow.document.close();
-	 printWindow.print();
+	 printWindow.print();*/
+	 
+	 
+     var printWindow = window.open('', '', ',width=800');
+     printWindow.document.write('<html>');
+     printWindow.document.write('<link href="${pageContext.request.contextPath}/resources/css/print.css" rel="stylesheet" />');
+     printWindow.document.write('<body >');
+     printWindow.document.write(divContents);
+     printWindow.document.write('</body></html>');
+     printWindow.print();
+     printWindow.close();
+
+}
+
+
+function pageLanscape(){
+	
+	var style="";
+	
+	style="<style type=\"text/css\"> "
+			+"@page { "
+			+"size: landscape; "
+			+"background: white;"
+			+"margin-top: 0.5cm; margin-bottom : 0.1cm; margin-left : 1cm;"
+			+"margin-right : 2cm;"
+			+"box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);"
+			+"margin-bottom: 0.1cm;"
+			+"margin-left: 1cm;"
+			+"margin-right: 2cm;"
+			+"} "
+		
+			+"@media print {"
+			+"html, body, page[size=\"A4\"] {"
+			+"width: 1350px !important;"
+			+"margin: 0;"
+			+"margin-top: 10px;"
+			+"box-shadow: 0;"
+			+"}"
+			+"}"
+			+"</style>"
+	return style;
+	
 }
 
 
