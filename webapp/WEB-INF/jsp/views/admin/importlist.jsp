@@ -992,7 +992,7 @@ tbody tr td {
 							//	$("#allTotalAmount_print").val(numeral(data.total_amount_print[0].total_amount).format('0,0'));
 								$("#allTotalAmount_print").html(numeral(data.total_amount_print[0].total_amount).format('0,0'));
 							}else{
-								$("tbody#PRINT_CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("tbody#PRINT_CONTENTS").html('');
 								$("#allTotalAmount_print").html("");
 							} 
 					 },

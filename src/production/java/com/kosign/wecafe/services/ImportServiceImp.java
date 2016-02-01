@@ -1,6 +1,7 @@
 package com.kosign.wecafe.services;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -307,11 +308,24 @@ public class ImportServiceImp implements ImportService {
 	public Object getTotalAmount(Date startDate, Date endDate) {
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String StartDate = sdf.format(startDate) + " 00:00:00";
+		String EndDate = sdf.format(endDate) + " 23:59:59";
+		
+		try {
+			startDate = sdf2.parse(StartDate);
+			endDate =  sdf2.parse(EndDate);
+			System.out.println("endDate = " + endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		try{
 			session = sessionFactory.getCurrentSession();
 			SQLQuery query = session.createSQLQuery("SELECT sum(B.pro_qty* unit_price) as total_amount"
 					+ " FROM import A INNER JOIN import_detail B on A.imp_id = B.imp_id "
-					+ " WHERE A.imp_date BETWEEN '" + sdf.format(startDate) + "' and '" + sdf.format(endDate) + "'");
+					+ " WHERE A.imp_date BETWEEN '" + startDate + "' and '" + endDate + "'");
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 			return sales;
