@@ -1393,8 +1393,7 @@
 														url : "${pageContext.request.contextPath}/seller/insertcartsell",
 														type : 'POST',
 														datatype : 'JSON',
-														data : JSON
-																.stringify(json),
+													//	data : JSON.stringify(json),
 														beforeSend : function(
 																xhr) {
 															xhr
@@ -1407,6 +1406,7 @@
 																			"application/json");
 														},
 														success : function(data) {
+															console.log(data);
 															clearallsession();
 															$(
 																	'input[name="orderqty"]')
@@ -1515,9 +1515,7 @@
 
 						}
 
-						var wsURI = "ws://"
-								+ document.location.host
-								+ "${pageContext.request.contextPath}/notification";
+						var wsURI = "ws://"+ document.location.host	+ "${pageContext.request.contextPath}/notification";
 						if (!("WebSocket" in window)) {
 							console
 									.log("WebSocket is not support on your browser...")

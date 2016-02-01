@@ -284,12 +284,16 @@
 		
 			function sendMessage() {
 				sendedMessage = "SENT";
-				if (connection.readyState != WebSocket.OPEN) {
+				if (connection.readyState != WebSocket.OPEN) { 
+					 alert("connection.readyState != WebSocket.OPEN = " + (connection.readyState != WebSocket.OPEN));
 					return;
 				}
-				if (connection.bufferedAmount == 0) {
-					connection.send("HDHDHD");
+				
+				if (connection.bufferedAmount == 0) { 
+					//connection.send("HDHDHD");
+					connection.send("SENT");
 				} 
+				
 			}
 			getsizeSession();
 			
