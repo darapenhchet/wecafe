@@ -96,7 +96,7 @@ public class ProductController {
 		product.setImage(form.getImage());
 		product.setCreatedDate(new Date());
 		product.setLastUpdatedDate(new Date());
-		product.setStatus(true);
+		product.setStatus(false);
 		
 		return productService.addNewProduct(product);  
 	}

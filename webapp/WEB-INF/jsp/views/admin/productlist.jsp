@@ -534,7 +534,7 @@ thead tr th {
      				        	alert('YOU HAVE BEEN INSERTED SUCCESSFULLY.');
      				        	isAdded=true;
      				        	clearFormAdd();
-     				        	//location.href="${pageContext.request.contextPath}/admin/products";
+     				        	location.href="${pageContext.request.contextPath}/admin/products";
      				        }else{
      				        	alert('YOU HAVE ERRORS WHEN INSERT NEW PRODUCT.');
      				        }
@@ -573,6 +573,7 @@ thead tr th {
         		$("#optCategory").val("");
         		$("#optUnit").val("");
         		$("#image").val("");
+        		$("#images_sample").attr("src","");
         	}
     	</script>
 

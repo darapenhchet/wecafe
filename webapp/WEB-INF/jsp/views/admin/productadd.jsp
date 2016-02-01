@@ -31,13 +31,13 @@
 							</div> 
 								 
 						</div>
-						<!-- <div class="form-group ">
-							<label for="productname" class="control-label col-lg-2">Quantity *</label>
+						 <div class="form-group " style="display : none">
+							<label for="quantity" class="control-label col-lg-2">Quantity *</label>
 							<div class="col-lg-10"> 
 								<input class=" form-control" id="quantity" name="quantity"
-									type="text" >
+									type="text" value="0">
 							</div>  
-						</div> -->
+						</div> 
 						<div class="form-group ">
 							<label for="unit" class="control-label col-lg-2">Unit *</label>
 							<div class="col-lg-10">
