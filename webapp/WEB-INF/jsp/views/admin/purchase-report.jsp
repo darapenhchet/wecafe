@@ -578,21 +578,21 @@ tbody tr td {
 	  // print pursurse daily 
      $("#btn_print").click(function(){
   	   var divContents = $("#print_data").html(); 
-         loadPrintPage(divContents);
+         loadPrintPage(divContents,getPortrait());
          return false;
      });
 	 
      // print pursurse weekly 
      $("#btn_print_weekly").click(function(){
   	   var divContents = $("#print_data_weekly").html(); 
-         loadPrintPage(divContents);
+         loadPrintPage(divContents,getPortrait());
          return false;
      });
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
   	   var divContents = $("#print_data_monthly").html(); 
-         loadPrintPage(divContents);
+         loadPrintPage(divContents,getLangScape());
          return false;
      });
      
@@ -600,7 +600,7 @@ tbody tr td {
      $("#btn_print_yearly").click(function(){
     	 
   	   var divContents = $("#print_data_yearly").html(); 
-         loadPrintPage(divContents);
+         loadPrintPage(divContents,getLangScape());
          return false;
      });
 	 

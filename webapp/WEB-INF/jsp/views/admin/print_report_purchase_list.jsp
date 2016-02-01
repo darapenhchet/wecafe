@@ -153,20 +153,24 @@
 <div class="modal fade" id="yearly_list" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
-			<div class="modal-header">
+		
+			<div id="print_data_yearly">
+				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
 				<a href="javascrpt:;"
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
-					onclick="window.print();"><i class="fa fa-print"></i></a>
-				<h4 class="modal-title">Yearly Sale List</h4>
-				<small id="report_start_yearly"></small>
-			</div>
-			<div class="modal-body">
-				<div class="table-responsive">
-					<table class="table table-hover table-bordered table-responsive"
-						style="font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;">
+					id="btn_print_yearly"><i class="fa fa-print"></i></a>
+
+				<h2 style="text-align: center;">Yearlyly Sale List</h2>
+				<h5>
+					<span id="report_start_yearly"></span> 
+				</h5>
+
+				<div>
+					<table border="1" cellpadding="0" cellspacing="0" border="1" style="text-align: center; width: 100%; line-height: 24px;">
 						<thead class="style2" id="tbl_header_month">
 							<tr>
 								<th rowspan="2">#</th>
+								<th rowspan="2">Customer</th>
 								<th rowspan="2">Item</th>
 								<th colspan="2" id="mon1">Jan</th>
 								<th colspan="2" id="mon2">Feb</th>
@@ -183,52 +187,51 @@
 								<th colspan="2">Total</th>
 							</tr>
 							<tr>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>Total Qty</th>
-								<th>Total Amount</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
 							</tr>
 						</thead>
 						<tbody id="PRINT_CONTENTS_YEARLY" style="width: 100%;">
 						</tbody>
 					</table>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="col-md-10 form-horizontal" align="right">
-					<label class="control-label col-md-9">Total Amount : </label>
-					<div class="col-md-3">
-						<input class="form-control" readonly="readonly"
-							id="allTotalAmount_print_yearly" type="text">
-					</div>
+
+				<br />
+				<div
+					style="border: 1px solid; margin: 0 auto; padding: 3px; width: 28%; margin-right: -2px; color: blue; text-align: left; padding-left: 8px;">
+					<span>Total Amount : </span><span id="allTotalAmount_print_yearly"></span>
 				</div>
+			</div>
+
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
-</div>
+
 
 <!-- ============================  tbodydaily  ================================== -->
 <script id="CONTENT_DAILY_PRINT" type="text/x-jquery-tmpl">
@@ -266,11 +269,14 @@
 			<td>{{= total_amount}}</td>
 		</tr>
     </script>
+    
+
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
 			<tr> 
 			<td>{{= order}}</td>
-			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
+			<td  style="text-align:left;"><span class="ellipsis">{{= customer}}</span></td>
+			<td style="text-align:left; width: 100px;"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= jan_qty}}</td>
 			<td>{{= jan_amount}}</td>
 			<td>{{= feb_qty}}</td>
