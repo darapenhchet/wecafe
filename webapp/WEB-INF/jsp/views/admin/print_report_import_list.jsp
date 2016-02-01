@@ -9,7 +9,7 @@
 		  <div id="print_data">
 				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
 				<a href="javascrpt:;" class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
-				 id="btn_print_import"><i class="fa fa-print"></i></a>
+				 id="btn_print"><i class="fa fa-print"></i></a>
 				 
 				<h2 style="text-align: center;">Import List </h2>
 				<h5><span id="report_start_date"></span> - <span id="report_end_date"></span> </h5>

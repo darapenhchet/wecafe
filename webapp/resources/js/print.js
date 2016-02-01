@@ -1,3 +1,5 @@
+va 
+
 $(function(){
 	
 	$.fn.beforeprint = function(callback) {
@@ -40,7 +42,8 @@ $(function(){
 		    	$(".signature").hide();$(".signature1").hide();
 		    	$("#select_num").show();
 		    	$(".othertd").hide();$("#otherth").hide();	
-		    	 $("#break_row").hide();
+		    	$("#break_row").hide();
+		    	
 		    };
 		
 		
@@ -51,18 +54,38 @@ $(function(){
 	                beforePrint();
 	            } else {
 	                afterPrint();
+	                window.close();
+	                alert();
 	            }
 	        });
 	    }
 
 	    window.onbeforeprint = beforePrint;
 	    window.onafterprint = afterPrint;
-		//printPage();
-	    window.print();
+	  
+		
 	});
+	
 
 	
 });
+
+
+function loadPrintPage(divContents){
+	  var params = [
+		               'height='+screen.height,
+		               'width='+screen.width,
+		               'fullscreen=yes',
+		                'resizable=no'
+		           ].join(',');
+	 printWindow = window.open('', '',params );
+	 printWindow.document.write('<html><head>');
+	 printWindow.document.write('</head><body >');
+	 printWindow.document.write(divContents);
+	 printWindow.document.write('</body></html>');
+	 printWindow.document.close();
+	 printWindow.print();
+}
 
 
 function popup(url ) 

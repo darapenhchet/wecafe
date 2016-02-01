@@ -404,6 +404,8 @@ tbody tr td {
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
 	
 		<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
+
+
 	<tr>
 		<td>{{= importDetail}} </td>
 		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
@@ -417,6 +419,14 @@ tbody tr td {
 		</td>
 	</tr>
 </script>
+
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script>
+
+<script
+	src="${pageContext.request.contextPath}/resources/js/print.js"></script>
 	<script type="text/javascript">
 
 		/* ==============================================
@@ -585,7 +595,7 @@ tbody tr td {
 								$("#CONTENT_Importlist").tmpl(data.imports).appendTo("tbody#CONTENTS");
 								$("#allTotalAmount").val(numeral(data.total_amount[0].total_amount).format('0,0'));
 							}else{
-								$("tbody#CONTENTS").html('');
+								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
 								$("#allTotalAmount").val("");
 							}
 					    	if(check){
@@ -991,30 +1001,22 @@ tbody tr td {
 					 } 
 				 });
                 }
-                   $("#btn_print_import").click(function(){
-                	   
-               	 var divContents = $("#print_data").html(); 
-                    var printWindow = window.open('', '', 'height=400,width=800');
-                    printWindow.document.write('<html><head>');
-                    printWindow.document.write('</head><body >');
-                    printWindow.document.write(divContents);
-                    printWindow.document.write('</body></html>');
-                    printWindow.document.close();
-                    printWindow.print();
-               }); 
+               // print import 
+               $("#btn_print").click(function(){
+            	   var divContents = $("#print_data").html(); 
+                   loadPrintPage(divContents);
+                   return false;
+               });
+              
             });
+		
+		
         </script>
 
 
 
 </body>
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script>
 
-<script
-	src="${pageContext.request.contextPath}/resources/js/print.js"></script>
 
 
 </body>
