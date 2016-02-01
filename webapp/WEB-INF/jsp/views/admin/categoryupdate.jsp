@@ -132,7 +132,7 @@
 														id="image" name="image" value="${category.img}"
 														required="required" /> <img
 														src="${pageContext.request.contextPath}/resources/images/products/${category.img}"
-														width="400px" height="400px" class="img-thumbnail"
+														style="width: 400px; height: 400px;" class="img-thumbnail"
 														id="images_sample" required="required" />
 												</div>
 											</div>

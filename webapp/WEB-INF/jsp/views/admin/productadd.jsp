@@ -79,7 +79,7 @@
 									type="file"> <input type="hidden" id="image"
 									name="image" /> <img src="" id="images_sample"
 									name="images_sample" class="img-thumbnail"
-									style="display: none;">
+									style="display: none; width: 450px; height: 450px;">
 							</div>
 						</div>
 						<div class="form-group">

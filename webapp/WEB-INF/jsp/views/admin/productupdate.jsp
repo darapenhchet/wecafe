@@ -207,7 +207,7 @@
 														type="file" value="${product.image }">
 													<img id="images_sample" name="images_sample"
 														src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
-														width="400px" height="400px" class="img-thumbnail" /> <input
+														style= "width: 400px; height: 400px;" class="img-thumbnail" /> <input
 														type="hidden" id="image" name="image"
 														value="${product.image}" />
 												</div>
