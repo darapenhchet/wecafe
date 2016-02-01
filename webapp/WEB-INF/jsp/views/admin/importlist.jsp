@@ -595,7 +595,7 @@ tbody tr td {
 								$("#CONTENT_Importlist").tmpl(data.imports).appendTo("tbody#CONTENTS");
 								$("#allTotalAmount").val(numeral(data.total_amount[0].total_amount).format('0,0'));
 							}else{
-								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+								$("tbody#CONTENTS").html('');
 								$("#allTotalAmount").val("");
 							}
 					    	if(check){
@@ -663,10 +663,10 @@ tbody tr td {
 		//Import add
 		
             
-            	/* 
+            	
             	$('#btn_add_import').on('hidden.bs.modal', function (event) {
     	    		if(isAdded==true)getimportlist(1);
-    			}); */
+    			}); 
     			
     				$("#productName").change(function(){   					
             			$("#proID").val("");   

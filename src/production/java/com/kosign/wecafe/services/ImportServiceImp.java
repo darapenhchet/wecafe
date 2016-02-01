@@ -102,7 +102,7 @@ public class ImportServiceImp implements ImportService {
 				//3. update product (stock)
 				Product products  = session.get(Product.class, importdetail.getProduct().getProductId());
 				System.out.println("importdetail.getProduct().getProductId()" + products.getQuantity());
-				products.setQuantity(products.getQuantity() + importform.get(i).getQuantity() );
+				products.setQuantity(products.getQuantity() + (importform.get(i).getQuantity()* products.getUnit().getQty() ));
 				products.setUnitPrice(importform.get(i).getUnitPrice());
 				/*products.setCostPrice(importform.get(i).getUnitPrice());
 				products.setUnit(unit);

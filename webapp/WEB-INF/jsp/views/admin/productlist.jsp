@@ -219,8 +219,8 @@ thead tr th {
 				<td style="display: none;">{{= productId}}</td>
 				<td>{{= importDetail}}</td>
 				<td>{{= productName}}</td>
-				<td style="text-align:right;">{{= quantity}}</td>
-				<td style="text-align:right;">{{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+				<td>{{= quantity + " " + unit.to}}</td>
+				<td>1 {{= unit.unitName}} = {{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
 				<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
 				<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
 				<td>{{= category.catName}}</td>
