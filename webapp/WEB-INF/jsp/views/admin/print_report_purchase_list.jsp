@@ -15,9 +15,8 @@
 					<span id="report_start_daily"></span>
 				</h5>
 
-				<div>
-					<table border="1" cellpadding="0" cellspacing="0" border="1"
-						style="text-align: center; width: 100%; line-height: 24px;">
+				<div style="overflow-x: auto">
+					<table>
 						<thead class="style2">
 							<tr class="active">
 								<th>#</th>
@@ -63,9 +62,8 @@
 						id="report_end_weekly"></span>
 				</h5>
 
-				<div>
-					<table border="1" cellpadding="0" cellspacing="0" border="1"
-						style="text-align: center; width: 100%; line-height: 24px;">
+				<div style="overflow-x: auto">
+					<table>
 						<thead class="style2">
 							<tr>
 								<th rowspan="2">#</th>
@@ -80,22 +78,22 @@
 								<th colspan="2">Total</th>
 							</tr>
 							<tr>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>qty</th>
-								<th>Amount</th>
-								<th>Total Qty</th>
-								<th>Total Amount</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
+								<th>Qty</th>
+								<th>Amt</th>
 							</tr>
 						</thead>
 						<tbody id="PRINT_CONTENTS_WEEKLY" style="width: 100%;">
@@ -129,8 +127,8 @@
 					<span id="report_start_monthly"></span> 
 				</h5>
 
-				<div>
-					<table border="1" cellpadding="0" cellspacing="0" border="1" style="text-align: center; width: 100%; line-height: 24px;">
+				<div style="overflow-x: auto">
+					<table>
 						<thead class="style2" id="tbl_header_month_print">
 						</thead>
 						<tbody id="PRINT_CONTENTS_MONTHLY" style="width: 100%;">
@@ -160,13 +158,13 @@
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 					id="btn_print_yearly"><i class="fa fa-print"></i></a>
 
-				<h2 style="text-align: center;">Yearlyly Sale List</h2>
+				<h2 style="text-align: center;">Yearly Sale List</h2>
 				<h5>
 					<span id="report_start_yearly"></span> 
 				</h5>
 
-				<div>
-					<table border="1" cellpadding="0" cellspacing="0" border="1" style="text-align: center; width: 100%; line-height: 24px;">
+				<div style="overflow-x: auto">
+					<table >
 						<thead class="style2" id="tbl_header_month">
 							<tr>
 								<th rowspan="2">#</th>
@@ -237,20 +235,20 @@
 <script id="CONTENT_DAILY_PRINT" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= supplier_name}}</td>
-			<td>{{= product_name}}</td>
+			<td style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= supplier_name}}</span></td>
+			<td style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= product_name}}</span></td>
 			<td>{{= product_qty}}</td>
 			<td>{{= pro_unit_price}}</td>
 			<td>{{= purchase_by}}​</td>
-			<td>{{= purchase_type}}</td>
-			<td>{{= purchase_total_amount}}</td>
+			<td style="text-align:right;padding-right:4px;">{{= purchase_type}}</td>
+			<td style="text-align:right;padding-right:4px;">{{= purchase_total_amount}}</td>
 		</tr>
     </script>
 <!-- ============================  tbodyweekly  ================================== -->
 <script id="CONTENT_WEEKLY_PRINT" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= pro_name}}</td>
+			<td style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= day1_qty}}</td>
 			<td>{{= day1_amount}}</td>
 			<td>{{= day2_qty}}</td>
@@ -265,18 +263,24 @@
 			<td>{{= day6_amount}}</td>
 			<td>{{= day7_qty}}</td>
 			<td>{{= day7_amount}}</td>
-			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
+			<td style="text-align:right;padding-right:4px;">{{= total_qty}}</td>
+			<td style="text-align:right;padding-right:4px;">{{= total_amount}}</td>
 		</tr>
     </script>
     
 
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
+			
+			{{if order==27}} 
+				<tr id="row_break" style="display:none;">
+					<td colspan="8" style="border: none;padding:20px;"></td>
+				</tr>	
+			{{/if}}	
 			<tr> 
 			<td>{{= order}}</td>
-			<td  style="text-align:left;"><span class="ellipsis">{{= customer}}</span></td>
-			<td style="text-align:left; width: 100px;"><span class="ellipsis">{{= pro_name}}</span></td>
+			<td  style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= customer}}</span></td>
+			<td style="text-align:left; max-width: 100px;width: 10%;"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= jan_qty}}</td>
 			<td>{{= jan_amount}}</td>
 			<td>{{= feb_qty}}</td>
@@ -301,7 +305,9 @@
 			<td>{{= nov_amount}}</td>
 			<td>{{= dec_qty}}</td>
 			<td>{{= dec_amount}}</td>
-			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
+			<td style="text-align:right;padding-right:4px;">{{= total_qty}}</td>
+			<td style="text-align:right;padding-right:4px;">{{= total_amount}}</td>
 		</tr>
+		
+
     </script>

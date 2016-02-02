@@ -70,6 +70,10 @@ $(function(){
 	
 });
 
+function getScript(){
+	
+	return '<script src="${pageContext.request.contextPath}/resources/print.js"></script>';
+}
 
 function loadPrintPage(divContents,pageStyle){
 	
@@ -82,10 +86,13 @@ function loadPrintPage(divContents,pageStyle){
 	 printWindow = window.open("","",params );
 	 printWindow.document.write("<html>");
 	 	printWindow.document.write("<head><style type=\"text/css\"> ");
-		printWindow.document.write(pageStyle +" " +getellipsis());
+		printWindow.document.write(pageStyle +" " +getellipsis() +" "+ getTableBorder());
 	 	printWindow.document.write("</style></head>");
 	 	printWindow.document.write("<body>");
 	 		printWindow.document.write(divContents);
+	 		printWindow.document.write("<script>");
+	 		printWindow.document.write(getScript());
+	 		printWindow.document.write("</script>");
 	 	printWindow.document.write("</body>");
 	 printWindow.document.write("</html>");
 	
@@ -94,11 +101,18 @@ function loadPrintPage(divContents,pageStyle){
 	 
 }
 
+function getTableBorder(){
+	var table="table {border-collapse: collapse;width:100%;} " 
+	 		+"table tr th   {padding:8px !important;}"
+	 		+"table,td,th{text-align: center;font-size:12px;border: 1px solid black;}";
+	return table;
+}
+
 function getellipsis(){
 	
 	var ellipsis=".ellipsis {"
 			+"display: inline-block;"
-			+"width: 99%;"
+			+"width:100%;"
 			+"text-overflow: ellipsis;"
 			+"white-space: nowrap;"
 			+"overflow: hidden;"
@@ -110,7 +124,7 @@ function getellipsis(){
 function pagePrintPortrait(){
 	var page_Print="@media print { "
 
-		+"table { page-break-inside:auto !important; } "
+		+"table { page-break-inside:auto !important;line-height:22px; } "
 		+"tr    { page-break-inside:avoid !important; page-break-after:auto  !important;}"
 		+"html,body {"
 		+"width: 900px !important;"
@@ -120,52 +134,13 @@ function pagePrintPortrait(){
 		+"top: 0;"
 		+" margin :0 auto;"
 		+"padding: 0;"
-		+" overflow: hidden;"
+		
 		+" }"
 		+"}";
 	return page_Print;
 }
 
-function pagePrintLanscape(){
-	var page_Print="@media print { "
 
-		/*+" table { page-break-inside:auto } "
-		+"tr    { page-break-inside:avoid; page-break-after:auto } "*/
-		+"table tr th   {padding:8px !important;}"
-		//+"table{font-size:12px;}"
-		+"html,body {"
-		+"width:auto;"
-		+"height:auto;"
-		+"box-shadow: 0;"
-		+"position:absolute;"
-		+"h2{text-align: center;}"
-		//+"position:absolute;"
-		//+"left:0;"
-		//+"top: 0;"
-		+" margin :0 auto;"
-		+"padding: 0;"
-		//+" overflow: hidden;"
-		+" }"
-		+"}";
-	return page_Print;
-}
-
-function getLangScape(){
-	var land="@page { "
-			+"size: landscape; "
-			+"background: white;"
-			+"margin:0 auto;"
-			+"padding:0;"
-			+"width:auto;"
-			+"height:auto;"
-			+"display: block !important;"
-			+"orphans:4; widows:2;"
-			+"margin-top: 0.5cm;"
-			+"margin-bottom: 0.5cm;"
-	
-			+"} " + pagePrintLanscape();
-	return land;
-}
 
 function getPortrait(){
 	
@@ -178,62 +153,51 @@ function getPortrait(){
 		  +"orphans:4; widows:2;"
 		  +"margin: 0 auto;"
 		  +"padding: 0;"
-		  +"margin-top: 0.5cm;"
-		  +"margin-bottom:0.5cm;} "  +pagePrintPortrait();
+		  +"margin-top:0.21in;"
+		  +"margin-bottom:01cm;"
+		  +"margin-left:0.24in;"
+		  +"margin-right:0.22in;}" + pagePrintPortrait();
 		 return pot;
 	}
 
 
-		/*@media print {
-
-		table { page-break-inside:auto !important; }
-		tr    { page-break-inside:avoid !important; page-break-after:auto  !important;}
-		 html,body, page[size="A4"] {
-		  	 width: 850px !important;
-		     box-shadow: 0;
-		     position:absolute;
-		     left:0;
-		     top: 0;
-		    margin :0 auto;
-		     padding: 0;
-		     overflow: hidden;
-		    }
-		 
-
-		  }*/
-		 
-
-
-
-
-/*function pageLanscape(){
 	
-	var style="";
-	
-	style="<style type=\"text/css\"> "
-			+"@page { "
+function pagePrintLanscape(){
+	var page_Print="@media print { "
+		+" table {page-break-inside : auto;border:none !important;line-height:22px;} "
+		+"table tr    { page-break-inside:avoid; page-break-after:auto; } "
+		+"html,body ,page[size=\"landscape\"] {"
+		+"h1 { page-break-before : right } "
+		+"h2 { page-break-after : avoid }"
+		+"width:auto !important;"
+		+"position:absolute;"
+		+"margin :0 auto;"
+		+"padding: 0;"
+		+" }"
+		+"}";
+	return page_Print;
+}
+
+function getLangScape(){
+	var land="@page { "
 			+"size: landscape; "
 			+"background: white;"
-			+"margin-top: 0.5cm; margin-bottom : 0.1cm; margin-left : 1cm;"
-			+"margin-right : 2cm;"
-			+"box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);"
-			+"margin-bottom: 0.1cm;"
-			+"margin-left: 1cm;"
-			+"margin-right: 2cm;"
-			+"} "
-		
-			+"@media print {"
-			+"html, body, page[size=\"A4\"] {"
-			+"width: 1350px !important;"
-			+"margin: 0;"
-			+"margin-top: 10px;"
-			+"box-shadow: 0;"
-			+"}"
-			+"}"
-			+"</style>"
-	return style;
+			+"margin:0 auto;"
+			+"padding:0;"
+			+"width:100%;"
+			+"height:100%;"
+			+"display: block !important;"
+			+"orphans:4; widows:2;"
+			+"margin-top:0.21in;"
+			+"margin-bottom:01cm;"
+			+"margin-left:0.24in;"
+			+"margin-right:0.22in;"
 	
-}*/
+			+"} " + pagePrintLanscape();
+	return land;
+}		 
+
+
 
 
 function popup(url ) 

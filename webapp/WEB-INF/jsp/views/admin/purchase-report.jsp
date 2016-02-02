@@ -20,26 +20,32 @@ a {
 .hidetable {
 	display: none;
 }
-
-  table {
-	border: 1px solid;
+table{
+	 text-align: center;
+	 width:100% !important;
+	 height:auto; 
+	 line-height: 22px !important;
+	 font-size: 12px;
+	 border: none;
+	 border-collapse: collapse;
 }
 
-thead tr th {
-	text-align: center;
-	font-size: 12px;
-	border: 1px solid;
+table, td, th {
+	 border: 1px solid black;
+	 font-size: 12px !important;
+	 text-align: center !important;
+	
 }
-
-tbody tr td {
-	text-align: center;
-	border-right: 1px solid;
-} 
-#tblfooter td {
-	text-align: center;
-	border-top: 1px solid;
-} 
-
+table th{
+ padding:5px !important;
+}
+.ellipsis {
+			display: inline-block;
+			width:100%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			}
 </style>
 
 
@@ -198,9 +204,9 @@ tbody tr td {
 									</div>
 
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="col-md-12 col-sm-12 col-xs-12" style="overflow-x: auto">
 											<div class="hidetable" id="tbldaily">
-												<table id="dailytable" class="table table-responsive">
+												<table id="dailytable">
 													<thead>
 														<tr>
 															<th>#</th>
@@ -217,8 +223,8 @@ tbody tr td {
 													</tbody>
 												</table>
 											</div>
-											<div id="tbldetail">
-												<table id="detailtable" class="table table-responsive">
+											<div id="tbldetail" style="overflow-x: auto">
+												<table id="detailtable" >
 													<thead>
 														<tr> 
 															<th>#</th>
@@ -234,8 +240,8 @@ tbody tr td {
 												</table>
 											</div>
 											<div>
-												<div class="hidetable" id="tblweekly">
-													<table id="weeklytable" class="table table-responsive">
+												<div class="hidetable" id="tblweekly" style="overflow-x: auto">
+													<table id="weeklytable">
 														<thead>
 															<tr>
 																<th rowspan="2">#</th>
@@ -252,37 +258,37 @@ tbody tr td {
 															</tr>
 															<tr>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>qty</th>
-																<th>Amount</th>
+																<th>Amt</th>
 																<th>Total Qty</th>
-																<th>Total Amount</th>
+																<th>Total Amt</th>
 															</tr>
 														</thead>
 														<tbody id="tbodyweekly"> 
 														</tbody>
 													</table>
 												</div>
-												<div id="tblmonthly" class="hidetable  table-responsive">
-													<table id="monthlytable" class="table">
+												<div id="tblmonthly" class="hidetable" style="overflow-x: auto">
+													<table id="monthlytable">
 														<thead id="tbl_header_month"> 
 														</thead>
 														<tbody id="tbodymonthly"> 
 														</tbody>
 													</table>
 												</div>
-												<div class="hidetable table-responsive" id="tblyearly">
-													<table id="yearlytable" class="table table-responsive">
+												<div class="hidetable" id="tblyearly" style="overflow-x: auto">
+													<table id="yearlytable">
 														<thead>
 															<tr>
 																<th rowspan="2">#</th>
@@ -303,32 +309,32 @@ tbody tr td {
 																<th colspan="2">Total</th>
 															</tr>
 															<tr>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th> 
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th> 
 																<th>Total Qty</th>
-																<th>Total Amount</th>
+																<th>Total Amt</th>
 															</tr>
 														</thead>
 														<tbody id="tbodyyearly"> 
@@ -373,8 +379,6 @@ tbody tr td {
 
 						</div>
 
-
-
 					</div>
 					<!-- container -->
 
@@ -390,7 +394,7 @@ tbody tr td {
 		</div>
 		<!-- END wrapper -->
 		<!-- ############################################################# --> 
-		<div id="impDetail" style="display: none; width: 90%;">
+		<div id="impDetail" style="display: none; width: 90%;overflow-x: auto">
 			<div class="modal-content">
 				<div class="modal-header">
 
@@ -401,7 +405,7 @@ tbody tr td {
 
 				</div>
 				<div class="modal-body" style="width: 100%;">
-					<table class="table table-hover">
+					<table>
 						<thead>
 							<tr>
 								<th>#</th>
@@ -491,13 +495,13 @@ tbody tr td {
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= supplier_name}}</td>
-			<td>{{= product_name}}</td>
+			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= supplier_name}}</span></td>
+			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= product_name}}</span></td>
 			<td>{{= product_qty}}</td>
 			<td>{{= pro_unit_price}}</td>
 			<td>{{= purchase_by}}​</td>
 			<td>{{= purchase_type}}</td>
-			<td>{{= purchase_total_amount}}</td>
+			<td style="text-align:right !important;padding-right:4px;">{{= purchase_total_amount}}</td>
 		</tr>
     </script>
  
@@ -505,8 +509,8 @@ tbody tr td {
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= customer}}</td>
-			<td>{{= pro_name}}</td>
+			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= customer}}</span></td>
+			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= day1_qty}}</td>
 			<td>{{= day1_amount}}</td>
 			<td>{{= day2_qty}}</td>
@@ -521,8 +525,8 @@ tbody tr td {
 			<td>{{= day6_amount}}</td>
 			<td>{{= day7_qty}}</td>
 			<td>{{= day7_amount}}</td>
-			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
+			<td style="text-align:right !important;padding-right: 4px;">{{= total_qty}}</td>
+			<td style="text-align:right !important;padding-right: 4px;">{{= total_amount}}</td>
 		</tr>
     </script>
  <!-- ============================  tbodymonthly  ================================== -->		
@@ -532,8 +536,8 @@ tbody tr td {
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr>
 			<td>{{= order}}</td>
-			<td>{{= customer}}</td>
-			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
+			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= customer}}</span></td>
+			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= jan_qty}}</td>
 			<td>{{= jan_amount}}</td>
 			<td>{{= feb_qty}}</td>
@@ -558,8 +562,8 @@ tbody tr td {
 			<td>{{= nov_amount}}</td>
 			<td>{{= dec_qty}}</td>
 			<td>{{= dec_amount}}</td>
-			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
+			<td style="text-align:right !important;padding-right: 4px;">{{= total_qty}}</td>
+			<td style="text-align:right !important;padding-right: 4px;">{{= total_amount}}</td>
 		</tr>
     </script>
    <!-- ============================================================== -->   
@@ -598,7 +602,7 @@ tbody tr td {
      
      // print pursurse yearly 
      $("#btn_print_yearly").click(function(){
-    	 
+    	$("#row_break").show();
   	   var divContents = $("#print_data_yearly").html(); 
          loadPrintPage(divContents,getLangScape());
          return false;
@@ -1563,6 +1567,8 @@ tbody tr td {
 			 
 		 case '4': 
 			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());
+			
+			
 			 print_yearly();
 			 $('#yearly_list').modal({
 					"backdrop":"static"
