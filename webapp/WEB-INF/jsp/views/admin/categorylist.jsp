@@ -116,14 +116,15 @@ thead tr th {
 								<div class="col-md-8">
 									<form class="form-inline">
 										<div class="form-group">
-											<label>Search</label> <input type="text" class="form-control"
+											<label>Search</label> <input type="text" class="form-control" id="txtSearch"
 												placeholder="Search" width="400%">
+											<input type="button" class="btn btn-default" id="btnSearch" value="Search">
 										</div>
 
 									</form>
 								</div>
 
-								<div class="col-md-2 pull-right">
+								<div class="col-md-2 pull-right" style="text-align: rithg;">
 									<button id="btn_add_category" class="btn btn-primary">Add
 										Category</button>
 								</div>
@@ -377,6 +378,42 @@ thead tr th {
 		var b = true;
 		$(function() {
 			listcategory(1);
+			$("#btnSearch").click(function(){
+				str = $("#txtSearch").val();
+				if(str == ""){
+					listcategory(1);
+					return ;
+				}
+				
+				$.ajax({
+					url: "${pageContext.request.contextPath}/admin/searchcategory/" + str,
+					type: 'GET',
+					dataType: 'JSON',
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Context-Type", "application/json");
+					},
+					success: function(data){
+						console.log(data); 
+						b = true;
+						//v = data;
+						console.log(data);
+						if (data.categories.length > 0) {
+							$("tbody#CONTENTS").html('');
+							for (i = 0; i < data.categories.length; i++) {
+								format(data.categories[i]);
+							}
+							$("#CONTENT_Categorylist").tmpl(data.categories).appendTo("tbody#CONTENTS");
+						} else {
+							$("tbody#CONTENTS").html('');
+							$("#allTotalAmount").val("");
+						}
+					},
+					error:function(data,status,er){
+						console.log("error: "+data+" status: "+status+" er:"+er);
+					}
+				});
+			});
 			function listcategory(currentPage) {
 				var json = {
 					"currentPage" : currentPage,
@@ -436,16 +473,11 @@ thead tr th {
 					value["products"] = ++j;
 			}
 
-			$(document)
-					.on(
-							'click',
-							'#btnRemove',
-							function() {
+			$(document).on('click','#btnRemove',function() {
 								var id = $(this).parents("tr").find(
 										"#CATEGORY_ID").html();
 								if (confirm("Do you want to delete that category?")) {
-									$
-											.ajax({
+									$.ajax({
 												url : "${pageContext.request.contextPath}/admin/category/delete/"
 														+ id,
 												type : 'POST',
@@ -482,9 +514,7 @@ thead tr th {
 
 			//Category Add
 
-			$('#form_add_category')
-					.on(
-							'hidden.bs.modal',
+			$('#form_add_category').on('hidden.bs.modal',
 							function(event) {
 								if (isAdded == true)
 									location.href = "${pageContext.request.contextPath}/admin/categorylist";
@@ -492,7 +522,6 @@ thead tr th {
 
 			$("#btn_cancel").click(function() {
 				$('#form_add_category').modal('hide');
-
 			});
 
 			$("#btn_add_category").click(function() {
@@ -544,11 +573,8 @@ thead tr th {
 												});
 							});
 
-			$("#images")
-					.change(
-							function() {
-								$("#frmAddCategory")
-										.ajaxSubmit(
+			$("#images").change(function() {
+					$("#frmAddCategory").ajaxSubmit(
 												{
 													url : "${pageContext.request.contextPath}/admin/rest/images/",
 													dataType : 'JSON',
@@ -605,6 +631,7 @@ thead tr th {
 				});
 			};
 		});
+		
 		function clearFormCategory() {
 			$("#categoryName").val("");
 			$("#optCategory").val("");

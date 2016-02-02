@@ -737,7 +737,7 @@ tbody tr td {
 	            		$("#editbtn").attr("id","addbtn");
             		 
             	});
-            	$(document).on("blur","#productName ,#qty ,#UnitPrice ,#supplierName",function(){ 
+            	$(document).on("blur","#productName ,#qty ,#UnitPrice ,#supplierName",function(){
             		
             	if($(this).val()=="")
         		{ 

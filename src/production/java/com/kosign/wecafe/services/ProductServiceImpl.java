@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -169,5 +170,28 @@ public class ProductServiceImpl implements ProductService{
 			userName = principal.toString();
 		}
 		return userName;
+	}
+
+	@Override
+	@Transactional
+	public List<Product> searchProducts(Pagination pagination, String str, Boolean ispagination) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			criteria.add(Restrictions.ilike("productName", str + "%"));
+			criteria.addOrder(Order.desc("status"));
+			criteria.addOrder(Order.desc("productId")); 
+			if(ispagination){
+			criteria.setFirstResult(pagination.offset());
+			criteria.setMaxResults(pagination.getPerPage());
+			}
+			List<Product> products = (List<Product>)criteria.list();
+			return products;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+		}
+		return null;
 	}
 }

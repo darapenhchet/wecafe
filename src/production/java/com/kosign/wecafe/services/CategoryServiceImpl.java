@@ -131,6 +131,23 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		return 0L;
 	}
+	@Override
+	@Transactional
+	public List<Category> searchCategories(String categoryName) {
+		Session session = null;
+		try{
+			session = sessionFactory.getCurrentSession();
+			Criteria criteria = session.createCriteria(Category.class ); 
+			criteria.add(Restrictions.ilike("catName", categoryName + "%"));
+			criteria.add(Restrictions.eq("status", true));
+			criteria.addOrder( Order.desc("catId") ); 			
+			List<Category>	categorylist = (List<Category>)criteria.list();	
+			return categorylist;
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		return null; 
+	}
 	
 	
 

@@ -96,15 +96,15 @@ thead tr th {
 									<div class="row">
 									<!-- <h3 class="panel-title">Product Lists</h3> -->
 									<div class="col-md-8">
-										<form class="form-inline">
+										<div class="form-inline">
 											<div class="form-group">
-												<label>Search</label> <input type="text"
-													class="form-control" placeholder="Search" width="400%">
-											</div>
-											
-										</form>
+												<label>Search : </label> <input type="text"
+													class="form-control" id="txtSearch" placeholder="Search" width="400%">
+												<input type="button" class="btn btn-default" id="btnSearch" value="Search">
+											</div> 
+										</div>
 									</div>									
-									<div class="col-md-2 pull-right">
+									<div class="col-md-2 pull-right" style="text-align: rithg;">
 										<button id="btn_add_product" class="btn btn-primary">Add Product</button>
 									</div>								
 									</div>
@@ -370,10 +370,46 @@ thead tr th {
 			 		else  
 			 		value["importDetail"] = ++j;
         		}
-        		// TODO: FIND PRODUCT BY ID
-        		products.findProductById = function(id){
+        		// TODO: FIND PRODUCT BY Name
+        		$("#btnSearch").click(function(){
+        			str = $("#txtSearch").val();
+        			if(str == ""){
+        				products.findAllProducts(1);
+        				return ;
+        			}
         			
-        		};
+        			$.ajax({
+        				url: "${pageContext.request.contextPath}/api/admin/products/searchproduct/" + str,
+        				type: 'GET',
+        				dataType: 'JSON',
+        				beforeSend: function(xhr){
+        					xhr.setRequestHeader("Accept", "application/json");
+        					xhr.setRequestHeader("Context-Type", "application/json");
+        				},
+        				success: function(data){
+        					console.log(data);
+        					b = true;
+							 v = data;	
+							if(data.productName.length>0){
+								$("tbody#CONTENTS").html('');
+								for(var i=0;i<data.productName.length;i++){
+									data.productName[i]["button"] = "btn-success";
+									products.format(data.productName[i]);
+								}
+								$("#CONTENT_TEMPLATE").tmpl(data.productName).appendTo("tbody#CONTENTS");
+							}else{
+								$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>');
+							}
+					    	if(check){
+					    		products.setPagination(data.pagination.totalPages,1);
+					    		check=false; 
+					    	}
+        				},
+        				error:function(data,status,er){
+        					console.log("error: "+data+" status: "+status+" er:"+er);
+        				}
+        			});
+        		});
         		
         		// TODO: DELETE PRODUCT BY ID
         		products.deleteProductById = function(id){

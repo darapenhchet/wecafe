@@ -109,6 +109,8 @@ public class ProductController {
 		model.put("units", unitService.getAllUnits());
 		return "admin/productupdate";
 	}
+	
+	
 
 	@RequestMapping(value = "/admin/product/update", method = RequestMethod.POST)
 	public @ResponseBody boolean updateProduct(ProductForm product, HttpServletRequest request) {

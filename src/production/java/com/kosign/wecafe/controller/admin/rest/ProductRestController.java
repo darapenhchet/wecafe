@@ -3,6 +3,7 @@ package com.kosign.wecafe.controller.admin.rest;
 import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -51,8 +52,18 @@ public class ProductRestController {
 	
 	// TODO: List All Import
 	
-	
-	
+	@RequestMapping(value = "/searchproduct/{str}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> searchProduct(Pagination pagination,@PathVariable("str") String productName )
+	{ 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productName", productService.searchProducts(pagination, productName,true));
+		List<Product> totalrecord = productService.searchProducts(pagination, productName,false);
+		pagination.setTotalCount((long) totalrecord.size());
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination", pagination);
+		return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+		
+	}
 	
 	// TODO: Get a Product
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)

@@ -53,6 +53,12 @@ public class CategoryController {
 		map.put("pagination",pagination);
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);	 
 	} 
+	@RequestMapping(value="/admin/searchcategory/{str}",method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> searchcategory(@PathVariable("str") String categoryName){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("categories", categoryService.searchCategories(categoryName)); 
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);	 
+	} 
 	
 	@RequestMapping(value="/admin/categoryadd")
 	public String categoryadd(){

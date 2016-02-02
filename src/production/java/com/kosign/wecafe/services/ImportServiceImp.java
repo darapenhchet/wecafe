@@ -126,7 +126,8 @@ public class ImportServiceImp implements ImportService {
 	public List<Product> listAllProduct() {		
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			Query query = session.createQuery("FROM Product");
+			Query query = session.createQuery("FROM Product where status='t'");
+			 
 			List<Product> products = query.list(); 
 			 return products; 
 		} catch (Exception e) {

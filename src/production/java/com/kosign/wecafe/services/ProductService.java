@@ -8,6 +8,7 @@ import com.kosign.wecafe.forms.ProductForm;
 
 public interface ProductService {
 	public List<Product> findAllProducts(Pagination pagination);
+	public List<Product> searchProducts(Pagination pagination, String str, Boolean ispagination);
 	public Product findProductById(Long id);
 	public Long count();
 	public boolean addNewProduct(Product product);
