@@ -492,7 +492,7 @@ thead tr th {
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= pro_name}}</td>
+			<td style="text-align:left;">{{= pro_name}}</td>
 			<td>{{= product_qty}}</td>
 			<td>{{= pro_unit_price}}</td> 
 			<td>{{= total_amount}}​</td>

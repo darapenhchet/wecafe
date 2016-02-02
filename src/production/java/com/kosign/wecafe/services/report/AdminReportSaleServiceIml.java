@@ -90,7 +90,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	@Override
 	@Transactional
 	public List<Map> getListReportDailySaleRest(Pagination pagination, Date startdate, boolean ispagination) {
-		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
+		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(startdate);
 		System.out.println("startdate = "+startdate);
 		Session session = null;
 		try{

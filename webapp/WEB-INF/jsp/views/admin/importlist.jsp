@@ -812,8 +812,8 @@ tbody tr td {
             		st += "<td style='display: none;'>"+ $('#supID').val() +"</td>";
             		st += "<td>" + ($("#tbllistimport tr").length + 1) +"</td>"; 
             		st += "<td>" + $("#productName").val() +"</td>";
-            		st += "<td>" + $("#qty").val() +"</td>";
-            		st += "<td>" + $("#UnitPrice").val() +"</td>";
+            		st += "<td>" + numeral($("#qty").val()).format('0,0') +"</td>";
+            		st += "<td>" + numeral($("#UnitPrice").val()).format('0,0') +"</td>";
             		st += "<td>" + $("#supplierName").val() +"</td>";
             		st += "<td><a href= 'javascript:;' id='btnedit'>Edit</a> | <a href='javascript:;' id='btndelete'>Delete</a></td></tr>";
             		$("#tbllistimport").append(st);
