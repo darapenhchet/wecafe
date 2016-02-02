@@ -8,6 +8,7 @@ import com.kosign.wecafe.entities.Unit;
 
 public interface UnitService {
 	public List<Unit> getAllUnits(Pagination pagination);
+	public List<Unit> searchUnits(String str);
 	public List<Unit> getAllUnits();
 	public Boolean addNewUnit(Unit unit);
 	public Unit findUnit(Long unitid);

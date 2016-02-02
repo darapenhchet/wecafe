@@ -124,7 +124,7 @@ thead tr th {
 									</form>
 								</div>
 
-								<div class="col-md-2 pull-right" style="text-align: rithg;">
+								<div class="col-md-2 pull-right" style="text-align: right;">
 									<button id="btn_add_category" class="btn btn-primary">Add
 										Category</button>
 								</div>

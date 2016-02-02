@@ -153,4 +153,24 @@ public class SupplierImpl implements SupplierService{
 		}
 		return 0L; 
 	}
+
+	@Override
+	@Transactional
+	public List<Supplier> searchSupplier(String str) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.getTransaction().begin();
+			Query query = session.createQuery("FROM Supplier where lower(supplierName) like lower('" + str + "%')"); 
+			List<Supplier> supplier = (List<Supplier>)query.list(); 
+			return supplier; 
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			
+		}finally {
+			session.close();
+		}
+		return null; 
+	}
 }

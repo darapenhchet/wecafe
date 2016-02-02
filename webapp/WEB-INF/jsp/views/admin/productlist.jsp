@@ -104,7 +104,7 @@ thead tr th {
 											</div> 
 										</div>
 									</div>									
-									<div class="col-md-2 pull-right" style="text-align: rithg;">
+									<div class="col-md-2 pull-right" style="text-align: right;">
 										<button id="btn_add_product" class="btn btn-primary">Add Product</button>
 									</div>								
 									</div>

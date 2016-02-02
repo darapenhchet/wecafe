@@ -14,5 +14,5 @@ public interface SupplierService {
 	public List<Supplier> getAllSupplier();
 	public Boolean deleteSupplier(Supplier id);
 	public Long count();
-	
+	public List<Supplier> searchSupplier(String str);
 }

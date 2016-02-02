@@ -115,18 +115,20 @@ thead tr th {
 								<div class="col-md-8">
 									<form class="form-inline">
 										<div class="form-group">
-											<label>Search</label> <input type="text"
+											<label>Search</label> <input type="text" id="txtSearch"
 												class="form-control" placeholder="Search" width="400%">
+												<input type="button" class="btn btn-default" id="btnSearch" value="Search">
 										</div>
 										
 									</form>
 								</div>	
 									
-										<div class="col-md-2 pull-right">
+										<div class="col-md-2 pull-right" style="text-align: right;">
 										<button id="btn_add_unit" class="btn btn-primary">Add
 											Unit</button>
+											
 										</div>
-								
+									
 								</div>
 						</div>
 						<div class="panel-body">
@@ -310,7 +312,41 @@ thead tr th {
     		var v=[];
     		var b = true;
     		listunit(1);
-    		
+    		$("#btnSearch").click(function(){
+				str = $("#txtSearch").val();
+				if(str == ""){
+					listunit(1);
+					return ;
+				} 
+				$.ajax({
+					url: "${pageContext.request.contextPath}/admin/searchunit/" + str,
+					type: 'GET',
+					dataType: 'JSON',
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Context-Type", "application/json");
+					},
+					success: function(data){
+						console.log(data); 
+						b =true;
+					//	v=data; 
+				    	 if(data.unitSearch.length>0){  
+								$("tbody#CONTENTS").html(''); 
+								for(i=0; i<data.unitSearch.length;i++)
+								{ 
+									format(data.unitSearch[i]); 
+								}
+								$("#CONTENT_Unitlist").tmpl(data.unitSearch).appendTo("tbody#CONTENTS"); 
+							}else{
+								$("tbody#CONTENTS").html('');
+								$("#allTotalAmount").val("");
+							}
+					},
+					error:function(data,status,er){
+						console.log("error: "+data+" status: "+status+" er:"+er);
+					}
+				});
+			});
     		
     		function listunit(currentPage){
     			var json = {

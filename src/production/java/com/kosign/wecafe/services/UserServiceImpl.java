@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kosign.wecafe.entities.ImportProduct;
 import com.kosign.wecafe.entities.Pagination;
 import com.kosign.wecafe.entities.Product;
+import com.kosign.wecafe.entities.Unit;
 import com.kosign.wecafe.entities.User;
 import com.kosign.wecafe.entities.UserRole;
 import com.kosign.wecafe.enums.Status;
@@ -237,5 +239,21 @@ public class UserServiceImpl implements UserService{
 			userName = principal.toString();
 		} 
 		return userName;
+	}
+
+	@Override
+	@Transactional
+	public List<User> searchUser(String str) {
+		Session session = sessionFactory.getCurrentSession();
+		try { 
+			Query query = session.createQuery("FROM User where lower(username) like lower('" + str + "%')");
+			List<User> users = query.list();
+			return users;
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.out.println(e.getMessage()); 
+		}
+		return null;
 	}
 }

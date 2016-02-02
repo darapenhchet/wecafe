@@ -19,7 +19,7 @@ public interface UserService {
 	public Boolean updateUser(User user);
 	
 	public List<User> getAllUser(Pagination pagination);
-	
+	public List<User> searchUser(String str);
 	public List<User> getAllUsers();
 	
 	public List<UserRole> getAllUserRoles();

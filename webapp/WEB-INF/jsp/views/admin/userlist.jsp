@@ -119,12 +119,13 @@ thead tr th {
 										<form class="form-inline">
 											<div class="form-group">
 												<label>Search</label> <input type="text"
-													class="form-control" placeholder="Search" width="400%">
+													class="form-control" id="txtSearch" placeholder="Search" width="400%">
+													<input type="button" class="btn btn-default" id="btnSearch" value="Search">
 											</div>
 											
 										</form>
 									</div>									
-									<div class="col-md-2 pull-right">
+									<div class="col-md-2 pull-right" style="text-align: right;">
 										<button id="btn_add_user" class="btn btn-primary">Add User</button>
 									</div>								
 									</div>
@@ -333,6 +334,41 @@ thead tr th {
 			var v=[];
 			var b = true;
     		listAllUsers(1);
+    		
+    		$("#btnSearch").click(function(){
+				str = $("#txtSearch").val();
+				if(str == ""){
+					listAllUsers(1);
+					return ;
+				} 
+				$.ajax({
+					url: "${pageContext.request.contextPath}/admin/searchuser/" + str,
+					type: 'GET',
+					dataType: 'JSON',
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Context-Type", "application/json");
+					},
+					success: function(data){
+						console.log(data); 
+						b =true;
+						//v=data;	
+						if(data.users.length>0){  
+							$("tbody#CONTENTS").html('');					
+							for(i=0; i<data.users.length;i++)
+								{
+									format(data.users[i]); 
+								}
+							$("#CONTENT_Userlist").tmpl(data.users).appendTo("tbody#CONTENTS"); 
+						}else{
+							$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>'); 
+						}
+					},
+					error:function(data,status,er){
+						console.log("error: "+data+" status: "+status+" er:"+er);
+					}
+				});
+			});
     		
     		function listAllUsers(currentPage){
     			var json = {

@@ -42,6 +42,13 @@ public class UnitController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/admin/searchunit/{str}", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> searchUnit(@PathVariable("str") String unitName){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("unitSearch", unitService.searchUnits(unitName));
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/admin/unitadd")
 	public String setunit(Map<String, Object>model){
 		

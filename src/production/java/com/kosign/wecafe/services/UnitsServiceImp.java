@@ -124,4 +124,20 @@ public class UnitsServiceImp implements UnitService {
 		return 0L;
 	}
 
+	@Override
+	@Transactional
+	public List<Unit> searchUnits(String str) {
+		Session session = sessionFactory.getCurrentSession();
+		try { 
+			Query query = session.createQuery("FROM Unit where lower(unitName) like lower('" + str + "%')");
+			List<Unit> units = query.list();
+			return units;
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.out.println(e.getMessage()); 
+		}
+		return null;
+	}
+
 }

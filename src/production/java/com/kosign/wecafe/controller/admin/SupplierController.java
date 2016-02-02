@@ -47,6 +47,13 @@ public class SupplierController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/admin/searchsupplier/{str}", method=RequestMethod.GET) 
+	public ResponseEntity<Map<String, Object>> searchSuppliers(@PathVariable("str") String supplierName){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("suppliers", SupplierService.searchSupplier(supplierName)); 
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/admin/supplieradd", method = RequestMethod.GET)
 	public String SupplierAdd(){
 		return "admin/supplieradd";

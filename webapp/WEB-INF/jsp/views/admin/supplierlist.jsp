@@ -115,8 +115,9 @@ thead tr th {
 						<!-- <h3 class="panel-title">Product Lists</h3> -->
 						<form class="form-inline">
 							<div class="form-group">
-								<label>Search</label> <input type="text" ng-model="search"
+								<label>Search</label> <input type="text" ng-model="search" id="txtSearch"
 									class="form-control" placeholder="Search" width="400%">
+									<input type="button" class="btn btn-default" id="btnSearch" value="Search">
 							</div>
 							<div class="col-md-2 pull-right" style="text-align: right;">
 								<button id="btn_add_user" class="btn btn-primary">Add Supplier</button>
@@ -379,6 +380,40 @@ thead tr th {
 			var v=[];
 			var b = true;
 			getAllSupplier(1);
+			$("#btnSearch").click(function(){
+				str = $("#txtSearch").val();
+				if(str == ""){
+					getAllSupplier(1);
+					return ;
+				} 
+				$.ajax({
+					url: "${pageContext.request.contextPath}/admin/searchsupplier/" + str,
+					type: 'GET',
+					dataType: 'JSON',
+					beforeSend: function(xhr){
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Context-Type", "application/json");
+					},
+					success: function(data){
+						console.log(data); 
+						b =true;
+						//v=data;	
+						if(data.suppliers.length>0){  
+							$("tbody#CONTENTS").html('');					
+							for(i=0; i<data.suppliers.length;i++)
+								{
+									format(data.suppliers[i]); 
+								}
+							$("#CONTENT_Supplierlist").tmpl(data.suppliers).appendTo("tbody#CONTENTS"); 
+						}else{
+							$("tbody#CONTENTS").html('<tr>NO CONTENTS</tr>'); 
+						}
+					},
+					error:function(data,status,er){
+						console.log("error: "+data+" status: "+status+" er:"+er);
+					}
+				});
+			});
 			function getAllSupplier(currentPage){
 				var json = {
 					 	"currentPage" : currentPage,
