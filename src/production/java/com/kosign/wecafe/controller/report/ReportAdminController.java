@@ -1,18 +1,27 @@
 package com.kosign.wecafe.controller.report;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.ImportProduct;
+import com.kosign.wecafe.entities.Pagination;
+import com.kosign.wecafe.entities.ProductFilter;
 import com.kosign.wecafe.forms.DateForm;
 import com.kosign.wecafe.services.report.AdminReportService;
 
@@ -71,10 +80,16 @@ public class ReportAdminController {
 	}
 	
 	@RequestMapping(value="/admin/getsearchBeveragebydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Object[]> getsearchBeveragebydate(@RequestBody DateForm dateForm){
-		
-		return adminReportService.getReportListAllBeverageStock(dateForm);
-	}
+	public ResponseEntity<Map<String, Object>> getsearchBeveragebydate(@RequestBody DateForm dateForm, Pagination pagination){
+		 
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		map.put("beverage", adminReportService.getReportListAllBeverageStock(dateForm, pagination, true));
+		List<Map> recorde = adminReportService.getReportListAllBeverageStock(dateForm, pagination, false);
+		pagination.setTotalCount(Long.parseLong(recorde.size()+ ""));
+		pagination.setTotalPages(pagination.totalPages());
+		map.put("pagination",pagination); 
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	} 
 	
 	@RequestMapping(value="/admin/cupstock")
 	public String ListAllCupStock(){

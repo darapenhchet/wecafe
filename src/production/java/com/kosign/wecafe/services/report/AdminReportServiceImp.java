@@ -325,26 +325,63 @@ public class AdminReportServiceImp implements AdminReportService {
 	@Override
 	
 	
-	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm) {
+	public List<Map> getReportListAllBeverageStock(DateForm dateForm, Pagination pagination, boolean ispagination) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
-			String sql = "select  s.sup_name,p.pro_name, p.qty as carried_over, id.pro_qty as purhase, aa.pro_qty as sales,(p.qty  - aa.pro_qty )as balance "
-					+ " from product p"
-					+ " left join (select od.pro_qty,od.pro_id, od.order_id,wo.order_date from order_detail od"
-					+ " Inner join wecafe_order wo"
-					+ " on od.order_id = wo.order_id"
-					+ " where wo.status =2 and  wo.order_date BETWEEN '"+ dateForm.getStartdate() +"' and '"+ dateForm.getEnddate()+ "') as aa"
-					+ " on p.pro_id = aa.pro_id "
-					+ " left join import_detail id on p.pro_id = id.pro_id"
-					+ " left join supplier s on id.sup_id = s.sup_id"
-					+ "	GROUP BY p.pro_name, p.qty, id.pro_qty ,  aa.pro_qty, s.sup_name";
+			String sql = "SELECT  "
+	+ " A.pro_id as pro_id, "
+	+ " A.pro_name as pro_name, "
+	+ " A.unit_id as unit_id, "
+	+ " A.qty as balance,  "
+	+ " (COALESCE((SELECT sum(impde.pro_qty*un.qty) as pro_qty "
+	+ " 			FROM import_detail impde  "
+	+ " 			INNER JOIN import imp ON impde.imp_id = imp.imp_id  " 
+	+ " 			INNER JOIN unit un on un.unit_id = A.unit_id "
+	+ " 			WHERE to_char(imp.imp_date,'yyyy-MM-dd')= '" + dateForm.getStartdate() + "' AND impde.pro_id = A.pro_id "
+	+ " 			),'0')) as pro_qty, "
++ " (COALESCE((select "
+    + "             sum(od.pro_qty) as pro_qty  "
+    + "        from "
+    + "            order_detail od  "
+    + "         Inner join "
+    + "             wecafe_order wo  "
+    + "                 on od.order_id = wo.order_id  "
+    + "         where "
+    + "             wo.status =2 and A.pro_id=od.pro_id and  to_char(wo.order_date,'yyyy-MM-dd') = '" + dateForm.getStartdate() 
+	+ "' 				),'0')) as salse, " 
++ " (A.qty + (COALESCE((select "
+    + "             sum(od.pro_qty) as pro_qty "
+    + "         from "
+    + "            order_detail od  "
+    + "         Inner join "
+    + "             wecafe_order wo  "
+    + "                 on od.order_id = wo.order_id  "
+    + "         where "
+    + "             wo.status =2 and A.pro_id=od.pro_id and  to_char(wo.order_date,'yyyy-MM-dd') = '" + dateForm.getStartdate() 
+	+ "' 				),'0'))- COALESCE((SELECT sum(impde.pro_qty*un.qty) as pro_qty "
+	+ " 			FROM import_detail impde  "
+	+ " 			INNER JOIN import imp ON impde.imp_id = imp.imp_id   "
+	+ " 			INNER JOIN unit un on un.unit_id = A.unit_id "
+	+ " 			WHERE to_char(imp.imp_date,'yyyy-MM-dd') = '" + dateForm.getStartdate() +  "' AND impde.pro_id = A.pro_id "
+	+ " 			),'0')) as carried_over "
++ " from product A ";
+			
 			Query query = session.createSQLQuery(sql);
+			if(ispagination){ 
+				query.setFirstResult(pagination.offset());
+				query.setMaxResults(pagination.getPerPage());
+			}
 			//query.setString(0, dateForm.getStartdate());
 			//query.setString(1, dateForm.getEnddate());
-		System.out.println("getStartdate = " + dateForm.getStartdate());
-		System.out.println("getStartdate = " + dateForm.getEnddate());
-			List<Object[]> result = query.list();
+	//	System.out.println("getStartdate = " + dateForm.getStartdate());
+		
+		
+			List<Map> result = (ArrayList<Map>)query.list();
+			for (Object object : result) {
+				System.out.println(object);
+			}
+			
 			return result;
 			
 		} catch (Exception e) {

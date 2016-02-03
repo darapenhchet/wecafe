@@ -23,7 +23,8 @@ public interface AdminReportService {
 	public List<Map> getListReportDetailPurchase();	
 	public List<Map> getSearchSellbyDate(DateForm dateForm);
 	public List<Map> getSearchOrderbyDate(DateForm dateForm);	
-	public List<Object[]> getReportListAllBeverageStock(DateForm dateForm);	
+	//public List<Object[]> getReportListAllBeverageStock(DateForm dateForm);	
+	public List<Map> getReportListAllBeverageStock(DateForm dateForm,Pagination pagination,boolean isPagination);
 	public List<Object[]> getReportListAllCupStockbyDate(DateForm dateForm);
 	public Long countDetail(int year) throws ParseException;
 	public Long countDaily(Date dateTime);

@@ -173,28 +173,17 @@
 													<thead>
 														<tr>
 															<th>#</th>
-															<th>Customer</th>
+															<!-- <th>Customer</th> -->
 															<th>Item</th>
 															<th>Carried Over</th>
-															<th>purchase</th>
+															<th>Purchase</th>
 															<th>Sale</th>
 															<th>Balance</th>
 															
 														</tr>
 													</thead>
 													<tbody id="searchDetail">
-														<%--  <c:set var="total" value="${0}"/>
-                                                   		 <c:forEach items="${reportSell}" var="reportSells" varStatus="theCount"  >
-	                                                    	<tr>
-	                                                            <td>${theCount.count}</td>
-	                                                            <td>${reportSells.productName }</td>
-	                                                            <td>${reportSells.proQty }</td>
-	                                                            <td>${reportSells.UnitPrice }</td>
-	                                                            <td>${reportSells.Total }</td>
-	                                                             <c:set var="total" value = "${total + reportSells.Total}" />
-	                                                             <!--   <td>${total}</td>-->
-	                                                        </tr> 
-                                                        </c:forEach>  --%>
+													 
 													</tbody>
 												</table>
 											</div>
@@ -208,6 +197,18 @@
 											<hr>
 											<h3 class="text-right" id="totalPrice">${total}Riels</h3>
 										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<select id="PER_PAGE" class="form-control">
+												
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+										</div>
+										<div id="PAGINATION" class="pull-right"></div>
 									</div>
 									<hr>
 									<div class="hidden-print">
@@ -243,6 +244,16 @@
 	</div>
 	<!-- END wrapper -->
 
+<script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
+	<tr>
+	     <td>{{ =order}}</td>
+	     <td>{{ =proName}}</td>
+	     <td>{{ =carriedOver}}</td>
+	     <td>{{ =purchase}}</td>
+	     <td>{{ =sale}}</td>
+	     <td>{{ =balance}}</td>
+	</tr> 
+</script>
 	<script>
         var resizefunc = [];
         
@@ -276,7 +287,9 @@
 		src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/jquery-blockui/jquery.blockUI.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
 
 	<!-- CUSTOM JS -->
 	<script
@@ -286,54 +299,50 @@
  $(document).ready(function(){
 	 setCalendar();
 	 searchByDate();
+	 var check = true;
+		var order = 1;
+		var v=[];
+		var b = true;
 	 
-	 
-	 function searchByDate(){
-      	var startDate 		= $( "#REGS_DATE_S" ).val() //+ " 00:00:00";
-		var endDate 		= $( "#REGS_DATE_E" ).val() //+ " 24:00:00"; 
-		json = {
-					"startdate"   		  : startDate,
-					"enddate" 		  	  : endDate
+	 function searchByDate(currentPage){
+      	var startDate 		= moment().format('YYYY-MM-DD');   
+		  json = {
+					"startdate"   : startDate , 
+					"currentPage" : currentPage,
+		    		"perPage"     : $("#PER_PAGE").val() 
 		};
 		$.ajax({
-			 url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate", 
-	    type: 'POST',
-			datatype: 'JSON',
+			url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate", 
+	    	type: 'POST',
+			dataType: 'JSON',
 			data: JSON.stringify(json), 
 			beforeSend: function(xhr) {
 	            xhr.setRequestHeader("Accept", "application/json");
 	            xhr.setRequestHeader("Content-Type", "application/json");
 	        },
 			success: function(data){
-				console.log(data.length);
-				st="";
+				console.log(data);
+				b = true;
+				v = data;	
+				if(data.beverage.length>0){
+				$("tbody#CONTENTS").html('');
+				for(var i=0;i<data.beverage.length;i++){ 
+					format(data.beverage[i]);
+				}
+				$("#CONTENT_TEMPLATE").tmpl(data.beverage).appendTo("tbody#CONTENTS");
+			}else{
+				$("tbody#CONTENTS").html('');
 				
-            	var a = 1;
-            	var total = 0;
-            	
-	            for(i=0; i<data.length; i++)	
-		      	{ 
-	            	console.log(data[i]);
-	            	a = i+1;
-// // 	            	total += data[i].Total ;
-		    	  	st += "<tr>"
-		    	  	st += "<td>" + a + "</td> "
-		    	  	st += "<td>" + data[i][0] + "</td>";
-		    	  	st += "<td>" + data[i][1] + "</td>";
-		    	  	st += "<td>" + data[i][2] + "</td>";
-		    	  	st += "<td>" + data[i][3]+ "</td>"; 
-		    	  	st += "<td>" + data[i][4]+ "</td>"; 
-		    	  	st += "<td>" + data[i][5]+ "</td>"; 
-		    	  
-		    	}
-	            
-      			$("#searchDetail").html(st);
-      			$("#totalPrice").html(total);
+			}
+	    	 if(check){
+	    		setPagination(data.pagination.totalPages,1);
+	    		check=false;
+	    	}    
 			},
 			error:function(data, status,er){
 				console.log("error: " + data + "status: " + status + "er: ");
 			}
-		}); 
+		});  
 	 }
 	  
 	 
@@ -385,6 +394,48 @@
 	 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
+	 setPagination = function(totalPage, currentPage){
+	    	$('#PAGINATION').bootpag({
+		        total: totalPage,
+		        page: currentPage,
+		        maxVisible: 10,
+		        leaps: true,
+		        firstLastUse: true,
+		        first: 'First',
+		        last: 'Last',
+		        wrapClass: 'pagination',
+		        activeClass: 'active',
+		        disabledClass: 'disabled',
+		        nextClass: 'next',
+		        prevClass: 'prev',
+		        lastClass: 'last',
+		        firstClass: 'first'
+		    }).on("page", function(event, currentPage){
+		    	check = false;
+		    	searchByDate(currentPage);
+		    }); 
+		};
+		$("#PER_PAGE").change(function(){
+			check = true;
+			searchByDate(1);
+	    });
+	  	format = function(value){
+	  		//console.log(value[1]);
+			/* value["proName"] = value[1];
+			value["carriedOver"] = numeral(value[2]).format('0,0');
+			value["purchase"] = numeral(value[3]).format('0,0');
+			value["sale"] = numeral(value[4]).format('0,0'); 
+			value["balance"] = numeral(value[5]).format('0,0'); 
+	 
+			if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j;     */
+		}  
 	 });
  </script>
 
