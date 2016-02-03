@@ -20,32 +20,7 @@ a {
 .hidetable {
 	display: none;
 }
-table{
-	 text-align: center;
-	 width:100% !important;
-	 height:auto; 
-	 line-height: 22px !important;
-	 font-size: 12px;
-	 border: none;
-	 border-collapse: collapse;
-}
 
-table, td, th {
-	 border: 1px solid black;
-	 font-size: 12px !important;
-	 text-align: center !important;
-	
-}
-table th{
- padding:5px !important;
-}
-.ellipsis {
-			display: inline-block;
-			width:100%;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
-			}
 </style>
 
 
@@ -79,10 +54,13 @@ table th{
 	rel="stylesheet">
 
 <!-- Custom Files -->
-<link href="${pageContext.request.contextPath}/resources/css/helper.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/helper.css" rel="stylesheet" type="text/css" />
+	
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
+	
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -204,7 +182,7 @@ table th{
 									</div>
 
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12" style="overflow-x: auto">
+										<div class="col-md-12 col-sm-12 col-xs-12 overflow-x">
 											<div class="hidetable" id="tbldaily">
 												<table id="dailytable">
 													<thead>
@@ -223,7 +201,7 @@ table th{
 													</tbody>
 												</table>
 											</div>
-											<div id="tbldetail" style="overflow-x: auto">
+											<div id="tbldetail" class="overflow-x">
 												<table id="detailtable" >
 													<thead>
 														<tr> 
@@ -240,7 +218,7 @@ table th{
 												</table>
 											</div>
 											<div>
-												<div class="hidetable" id="tblweekly" style="overflow-x: auto">
+												<div class="hidetable overflow-x" id="tblweekly" >
 													<table id="weeklytable">
 														<thead>
 															<tr>
@@ -279,7 +257,7 @@ table th{
 														</tbody>
 													</table>
 												</div>
-												<div id="tblmonthly" class="hidetable" style="overflow-x: auto">
+												<div id="tblmonthly" class="hidetable overflow-x" >
 													<table id="monthlytable">
 														<thead id="tbl_header_month"> 
 														</thead>
@@ -287,7 +265,7 @@ table th{
 														</tbody>
 													</table>
 												</div>
-												<div class="hidetable" id="tblyearly" style="overflow-x: auto">
+												<div class="hidetable overflow-x" id="tblyearly" >
 													<table id="yearlytable">
 														<thead>
 															<tr>
@@ -394,7 +372,7 @@ table th{
 		</div>
 		<!-- END wrapper -->
 		<!-- ############################################################# --> 
-		<div id="impDetail" style="display: none; width: 90%;overflow-x: auto">
+		<div id="impDetail" style="display: none; width: 90%;" class="overflow-x">
 			<div class="modal-content">
 				<div class="modal-header">
 

@@ -104,7 +104,8 @@ function loadPrintPage(divContents,pageStyle){
 function getTableBorder(){
 	var table="table {border-collapse: collapse;width:100%;} " 
 	 		+"table tr th   {padding:8px !important;}"
-	 		+"table,td,th{text-align: center;font-size:12px;border: 1px solid black;}";
+	 		+"table,td,th{text-align: center;font-size:12px;border: 1px solid black;}" 
+	 	    +".content-right{text-align:right !important;} .content-left{text-align:left !important;}";
 	return table;
 }
 

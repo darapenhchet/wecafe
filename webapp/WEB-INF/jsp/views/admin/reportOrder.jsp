@@ -22,25 +22,6 @@ a {
 	display: none;
 }
 
-  table {
-	border: 1px solid;
-}
-
-thead tr th {
-	text-align: center;
-	font-size: 12px;
-	border: 1px solid;
-}
-
-tbody tr td {
-	text-align: center;
-	border-right: 1px solid;
-} 
-#tblfooter td {
-	text-align: center;
-	border-top: 1px solid;
-} 
-
 </style>
 <!-- Base Css Files -->
 <link
@@ -74,10 +55,12 @@ tbody tr td {
 	rel="stylesheet">
 
 <!-- Custom Files -->
-<link href="${pageContext.request.contextPath}/resources/css/helper.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/helper.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -199,9 +182,9 @@ tbody tr td {
 									</div>
 
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="col-md-12 col-sm-12 col-xs-12 overflow-x">
 											<div class="hidetable" id="tbldaily">
-												<table id="dailytable" class="table table-responsive">
+												<table id="dailytable" >
 													<thead>
 														<tr>
 															<th>#</th>
@@ -218,8 +201,8 @@ tbody tr td {
 													</tbody>
 												</table>
 											</div>
-											<div id="tbldetail">
-												<table id="detailtable" class="table table-responsive">
+											<div id="tbldetail" class="overflow-x">
+												<table id="detailtable" >
 													<thead>
 														<tr> 
 															<th>#</th>
@@ -234,8 +217,8 @@ tbody tr td {
 												</table>
 											</div>
 											<div>
-												<div class="hidetable" id="tblweekly">
-													<table id="weeklytable" class="table table-responsive">
+												<div class="hidetable overflow-x" id="tblweekly">
+													<table id="weeklytable">
 														<thead>
 															<tr>
 																<th rowspan="2" id="order">#</th>
@@ -265,16 +248,16 @@ tbody tr td {
 														</tbody>
 													</table>
 												</div>
-												<div id="tblmonthly" class="hidetable  table-responsive">
-													<table id="monthlytable" class="table">
+												<div id="tblmonthly" class="hidetable overflow-x">
+													<table id="monthlytable">
 														<thead id="tbl_header_month"> 
 														</thead>
 														<tbody id="tbodymonthly"> 
 														</tbody>
 													</table>
 												</div>
-												<div class="hidetable table-responsive" id="tblyearly">
-													<table id="yearlytable" class="table table-responsive">
+												<div class="hidetable overflow-x" id="tblyearly">
+													<table id="yearlytable">
 														<thead>
 															<tr>
 																<th rowspan="2" id="order">#</th>
@@ -387,8 +370,8 @@ tbody tr td {
 					<h4 class="modal-title">Import Detail</h4>
 
 				</div>
-				<div class="modal-body" style="width: 100%;">
-					<table class="table table-hover">
+				<div class="modal-body overflow-x" style="width: 100%;">
+					<table>
 						<thead>
 							<tr>
 								<th>#</th>
@@ -464,6 +447,8 @@ tbody tr td {
 		<!-- Pageination -->
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.simplePagination.js"></script>
 		
+		<script src="${pageContext.request.contextPath}/resources/js/print.js"></script>
+		
 		
 <!-- ============================  tbodydetail  ================================== -->		
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
@@ -480,13 +465,13 @@ tbody tr td {
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= req_pro}}</td>
+			<td class="content-left"><span class="ellipsis">{{= req_pro}}</span></td>
 			<td>{{= req_qty}}</td>
 			<td>{{= req_date}}</td>
 			<td>{{= app_date}}</td>
 			<td>{{= request_by}}​</td>
 			<td>{{= approve_by}}</td>
-			<td rowspan="{{= total_row}}">{{= total_pro_qty}}</td>
+			<td class="content-right" rowspan="{{= total_row}}">{{= total_pro_qty}}</td>
 		</tr>
     </script>
  
@@ -494,7 +479,7 @@ tbody tr td {
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= product_name}}</td>
+			<td class="content-left"><span class="ellipsis">{{= product_name}}</span></td>
 			<td>{{= (day1_qty=day1_qty?day1_qty:0)}}</td>
 			<td>{{= (day2_qty=day2_qty?day2_qty:0)}}</td>
 			<td>{{= (day3_qty=day3_qty?day3_qty:0)}}</td>
@@ -502,7 +487,7 @@ tbody tr td {
 			<td>{{= (day5_qty=day5_qty?day5_qty:0)}}</td>
 			<td>{{= (day6_qty=day6_qty?day6_qty:0)}}</td>
 			<td>{{= (day7_qty=day7_qty?day7_qty:0)}}</td>
-			<td>{{= total_qty}}</td>
+			<td class="content-right">{{= total_qty}}</td>
 		</tr>
     </script>
  <!-- ============================  tbodymonthly  ================================== -->		
@@ -512,7 +497,7 @@ tbody tr td {
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr>
 			<td>{{= order}}</td>
-			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
+			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= (jan_qty=jan_qty)?jan_qty:0}}</td>
 			<td>{{= (feb_qty=feb_qty)?feb_qty:0}}</td>
 			<td>{{= (mar_qty=mar_qty)?mar_qty:0}}</td>
@@ -525,7 +510,7 @@ tbody tr td {
 			<td>{{= (oct_qty=oct_qty)?oct_qty:0}}</td>
 			<td>{{= (nov_qty=nov_qty)?nov_qty:0}}</td>
 			<td>{{= (dec_qty=dec_qty)?dec_qty:0}}</td>
-			<td>{{= total_qty}}</td>
+			<td class="content-right">{{= total_qty}}</td>
 		</tr>
     </script>
    <!-- ============================================================== -->   
