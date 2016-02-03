@@ -462,10 +462,10 @@ a {
     	<tr>  
 			<td>{{= order}}</td>
 			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
-			<td style="text-align:right;">{{= purchase_date}} </td>
-			<td style="text-align:right;">{{= purchase_by}} ​</td>
-			<td style="text-align:right;">{{= purchase_type}} ​</td>
-			<td style="text-align:right;">{{= purchase_total_amount}} </td>
+			<td style="text-align:right;">{{= purchase_date}}</td>
+			<td style="text-align:right;">{{= purchase_by}}​</td>
+			<td style="text-align:right;">{{= purchase_type}}</td>
+			<td style="text-align:right;">{{= purchase_total_amount}}</td>
 		</tr>
     </script>
  
@@ -1274,11 +1274,19 @@ a {
 	 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
-	 $(document).on("click","#impid", function(){
-		 
-		   $.ajax({ 
-			    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
-			    type: 'POST', 
+	 $(document).on("click","#impid", function(){ 
+		  if($(this).parents("tr").children().eq(4).html() == "Import"){
+		 		url = "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html();
+		 		purchaseType = true;
+		  }
+		else{
+				url = "${pageContext.request.contextPath}/admin/getexpensedetail/" + $(this).html();
+				purchaseType = false;
+		}	
+				
+		   $.ajax({  
+			    url:  url, 
+			    type: 'GET', 
 			    dataType: 'JSON', 
 			    beforeSend: function(xhr) {
                   xhr.setRequestHeader("Accept", "application/json");
@@ -1288,16 +1296,28 @@ a {
 			    	console.log(data);
 			    	var st= "";
 			    	var amount = 0;
-			       for(i=0; i<data.length; i++){
-			    	   st += "<tr><td>" + (i + 1) + "</td>";
-			    	   st += "<td>" + data[i].proname +"</td>";
-			    	   st += "<td>" + data[i].proqty +"</td>";
-			    	   st += "<td>" + data[i].prounitprice +"</td>";
-			    	   st += "<td>" + data[i].supname +"</td></tr>"
-			    	   amount += data[i].proqty * data[i].prounitprice;
-			       }
-			       $("#impProDetail").html(st);
-			       $("#btotalamount").val(amount);
+			    	if(purchaseType){
+					       for(i=0; i<data.length; i++){
+					    	   st += "<tr><td>" + (i + 1) + "</td>";
+					    	   st += "<td>" + data[i].proname +"</td>";
+					    	   st += "<td>" + numeral(data[i].proqty).format('0,0') +"</td>";
+					    	   st += "<td>" + numeral(data[i].prounitprice).format('0,0') +"</td>";
+					    	   st += "<td>" + data[i].supname +"</td></tr>"
+					    	   amount += data[i].proqty * data[i].prounitprice;
+					       } 
+			    	}else
+			    		{
+			    		 for(i=0; i<data.length; i++){
+					    	   st += "<tr><td>" + (i + 1) + "</td>";
+					    	   st += "<td>" + data[i].exp_description +"</td>"; 
+					    	   st += "<td>" + numeral((data[i].exp_unitprice * data[i].exp_qty)).format('0,0') +"</td>";
+					    	   st += "<td>" + numeral(data[i].exp_unitprice).format('0,0') +"</td>"; 
+					    	   st += "<td>" + data[i].customer +"</td>";  
+					    	   amount += (data[i].exp_unitprice * data[i].exp_qty);
+					       }
+			    		}
+			    	$("#impProDetail").html(st);
+				    $("#btotalamount").val(numeral(amount).format('0,0'));
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);

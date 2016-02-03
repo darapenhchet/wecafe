@@ -539,7 +539,7 @@ tbody tr td {
 			 $(document).on("click","#impid", function(){
 				   $.ajax({ 
 					    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
-					    type: 'POST', 
+					    type: 'GET', 
 					    dataType: 'JSON', 
 					    beforeSend: function(xhr) {
 		                    xhr.setRequestHeader("Accept", "application/json");
@@ -837,7 +837,7 @@ tbody tr td {
                 			json ={
                 						"proId"				: ($(this).find("td").eq(0).text()),
                 						"quantity" 		 	:($(this).find("td").eq(4).text()),
-                						"unitPrice"		    :($(this).find("td").eq(5).text()),
+                						"unitPrice"		    :($(this).find("td").eq(5).text()).replace(",",""),
                 						"supplierId"	  	:($(this).find("td").eq(1).text())
                 					};
                 			console.log(json);

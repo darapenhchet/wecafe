@@ -503,8 +503,8 @@ thead tr th {
                 		
         			$("#btn_add_expense").click(function(){    	
         				clear();
-        				searchProduct();
-        				searchSupplier()
+        			//	searchProduct();
+        		//		searchSupplier()
         				
         				$('#form_add_expense').modal({
         					"backdrop":"static"

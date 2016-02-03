@@ -550,7 +550,7 @@ public class AdminReportServiceImp implements AdminReportService {
 	@Override
 	@Transactional
 	public List<Map> getListReportDailyPurchaseRest(Pagination pagination,Date startdate, boolean isPagination) {
-		String startDate = new SimpleDateFormat("YYYY-MM-DD").format(startdate);
+		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(startdate);
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -646,7 +646,7 @@ public class AdminReportServiceImp implements AdminReportService {
 									   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
 									   "	 LEFT JOIN users C ON C.id = A.user_id " +
 									   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   
-									   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE A.imp_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+									   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE to_char(A.imp_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 									   "	 GROUP BY 1,2 " +
 									   " UNION ALL " +
 									   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
@@ -654,7 +654,7 @@ public class AdminReportServiceImp implements AdminReportService {
 									   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
 									   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
 									   " LEFT JOIN users C ON A.exp_user_id = C.id " +
-									   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+									   " WHERE to_char(A.expense_date,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 									   " GROUP BY 1,2 " +
 									   "	 ORDER BY 2', " +
 									   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   

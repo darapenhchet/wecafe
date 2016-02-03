@@ -124,7 +124,7 @@ public class importProductController {
 		return false;
 	}
 	
-	@RequestMapping(value="admin/getimportdetail/{id}", method=RequestMethod.POST)
+	@RequestMapping(value="admin/getimportdetail/{id}", method=RequestMethod.GET)
 		public @ResponseBody List<Map> importdetail(@PathVariable("id") Long impid, Map<String, Object>model){
 			   
 		return importService.listAllImportDetail(impid);
