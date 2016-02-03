@@ -21,25 +21,6 @@ a {
 	display: none;
 }
 
-  table {
-	border: 1px solid;
-}
-
-thead tr th {
-	text-align: center;
-	font-size: 12px;
-	border: 1px solid;
-}
-
-tbody tr td {
-	text-align: center;
-	border-right: 1px solid;
-} 
-#tblfooter td {
-	text-align: center;
-	border-top: 1px solid;
-} 
-
 </style>
 <!-- Base Css Files -->
 <link
@@ -75,8 +56,9 @@ tbody tr td {
 <!-- Custom Files -->
 <link href="${pageContext.request.contextPath}/resources/css/helper.css"
 	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -99,15 +81,6 @@ tbody tr td {
 	}
 }
 
-table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
-}
-
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
 </style>
 
 </head>
@@ -209,9 +182,9 @@ thead tr th {
 									</div>
 
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="col-md-12 col-sm-12 col-xs-12 overflow-x">
 											<div class="hidetable" id="tbldaily">
-												<table id="dailytable" class="table table-responsive">
+												<table id="dailytable">
 													<thead>
 														<tr>	
 															<th>#</th>														 
@@ -225,8 +198,8 @@ thead tr th {
 													</tbody>
 												</table>
 											</div>
-											<div id="tbldetail">
-												<table id="detailtable" class="table table-responsive">
+											<div id="tbldetail" class="overflow-x">
+												<table id="detailtable">
 													<thead>
 														<tr> 
 															<th>#</th> 
@@ -241,8 +214,8 @@ thead tr th {
 												</table>
 											</div>
 											<div>
-												<div class="hidetable" id="tblweekly">
-													<table id="weeklytable" class="table table-responsive">
+												<div class="hidetable overflow-x" id="tblweekly">
+													<table id="weeklytable">
 														<thead>
 															<tr> 
 																<th rowspan="2">#</th>
@@ -257,38 +230,38 @@ thead tr th {
 																<th colspan="2">Total</th>
 															</tr>
 															<tr>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>Total Qty</th>
-																<th>Total Amount</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
 															</tr>
 														</thead>
 														<tbody id="tbodyweekly"> 
 														</tbody>
 													</table>
 												</div>
-												<div id="tblmonthly" class="hidetable  table-responsive">
-													<table id="monthlytable" class="table">
+												<div id="tblmonthly" class="hidetable overflow-x">
+													<table id="monthlytable">
 														<thead id="tbl_header_month"> 
 														</thead>
 														<tbody id="tbodymonthly"> 
 														</tbody>
 													</table>
 												</div>
-												<div class="hidetable table-responsive" id="tblyearly">
-													<table id="yearlytable" class="table table-responsive">
+												<div class="hidetable overflow-x" id="tblyearly">
+													<table id="yearlytable">
 														<thead>
 															<tr> 
 																<th rowspan="2">#</th>
@@ -308,32 +281,32 @@ thead tr th {
 																<th colspan="2">Total</th>
 															</tr>
 															<tr>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th>
-																<th>qty</th>
-																<th>Amount</th> 
-																<th>Total Qty</th>
-																<th>Total Amount</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th>
+																<th>Qty</th>
+																<th>Amt</th> 
+																<th>Qty</th>
+																<th>Amt</th>
 															</tr>
 														</thead>
 														<tbody id="tbodyyearly"> 
@@ -405,8 +378,8 @@ thead tr th {
 					<h4 class="modal-title">Sale Detail</h4>
 
 				</div>
-				<div class="modal-body" style="width: 100%;">
-					<table class="table table-hover">
+				<div class="modal-body overflow-x" style="width: 100%;">
+					<table>
 						<thead>
 							<tr>
 								<th>#</th>
@@ -477,6 +450,8 @@ thead tr th {
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.bpopup.min.js"></script>
 		
+		<script src="${pageContext.request.contextPath}/resources/js/print.js"></script>
+		
 <!-- ============================  tbodydetail  ================================== -->		
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
     	<tr>  
@@ -492,10 +467,10 @@ thead tr th {
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td style="text-align:left;">{{= pro_name}}</td>
+			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= product_qty}}</td>
 			<td>{{= pro_unit_price}}</td> 
-			<td>{{= total_amount}}​</td>
+			<td class="content-right">{{= total_amount}}​</td>
 		</tr>
     </script>
  
@@ -503,7 +478,7 @@ thead tr th {
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td>{{= pro_name}}</td>
+			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= day1_qty}}</td>
 			<td>{{= day1_amount}}</td>
 			<td>{{= day2_qty}}</td>
@@ -518,8 +493,8 @@ thead tr th {
 			<td>{{= day6_amount}}</td>
 			<td>{{= day7_qty}}</td>
 			<td>{{= day7_amount}}</td>
-			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
+			<td class="content-right">{{= total_qty}}</td>
+			<td class="content-right">{{= total_amount}}</td>
 		</tr>
     </script>
  <!-- ============================  tbodymonthly  ================================== -->		
@@ -529,7 +504,7 @@ thead tr th {
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr> 
 			<td>{{= order}}</td>
-			<td style="text-align:left; width: 100px;">{{= pro_name}}</td>
+			<td class="content-left"><span class="ellipsis">{{= pro_name}}<span></td>
 			<td>{{= jan_qty}}</td>
 			<td>{{= jan_amount}}</td>
 			<td>{{= feb_qty}}</td>
@@ -554,8 +529,8 @@ thead tr th {
 			<td>{{= nov_amount}}</td>
 			<td>{{= dec_qty}}</td>
 			<td>{{= dec_amount}}</td>
-			<td>{{= total_qty}}</td>
-			<td>{{= total_amount}}</td>
+			<td class="content-right">{{= total_qty}}</td>
+			<td class="content-right">{{= total_amount}}</td>
 		</tr>
     </script>
    <!-- ============================================================== -->   
@@ -568,6 +543,37 @@ thead tr th {
 	var v=[];
 	var b = true;
 	 setCalendar();  
+	 
+	  // print pursurse daily 
+     $("#btn_print").click(function(){
+  	   var divContents = $("#print_data").html(); 
+         loadPrintPage(divContents,getPortrait());
+         return false;
+     });
+	 
+     // print pursurse weekly 
+     $("#btn_print_weekly").click(function(){
+  	   var divContents = $("#print_data_weekly").html(); 
+         loadPrintPage(divContents,getPortrait());
+         return false;
+     });
+     
+     // print pursurse monthly 
+     $("#btn_print_monthly").click(function(){
+  	   var divContents = $("#print_data_monthly").html(); 
+         loadPrintPage(divContents,getLangScape());
+         return false;
+     });
+     
+     // print pursurse yearly 
+     $("#btn_print_yearly").click(function(){
+    	$("#row_break").show();
+  	   var divContents = $("#print_data_yearly").html(); 
+         loadPrintPage(divContents,getLangScape());
+         return false;
+     });
+	 
+	 
 	 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
 	 $("#selectyear").change(function(){
 		 check = true;
@@ -1313,10 +1319,10 @@ thead tr th {
 						   formatDaily_print(data.reportdaily_print[i]);
 					}   
 					$("#CONTENT_DAILY_PRINT").tmpl(data.reportdaily_print).appendTo("tbody#PRINT_CONTENTS_DAILY"); 
-					$("#allTotalAmount_print_daily").val(numeral(data.getTotalAmount_print).format('0,0'));
+					$("#allTotalAmount_print_daily").html(numeral(data.getTotalAmount_print).format('0,0'));
 				}else{
 					$("tbody#PRINT_CONTENTS_DAILY").html("");
-					$("#allTotalAmount_print_daily").val('');
+					$("#allTotalAmount_print_daily").html('');
 				} 
 		    },
 		    error:function(data,status,er) { 
@@ -1346,10 +1352,10 @@ thead tr th {
 						   sales.formatWeekly(data.reportweekly_print[i]);
 					}   
 					$("#CONTENT_WEEKLY_PRINT").tmpl(data.reportweekly_print).appendTo("tbody#PRINT_CONTENTS_WEEKLY");  
-					$("#allTotalAmount_print_weekly").val(numeral(data.getTotalAmount_print).format('0,0'));
+					$("#allTotalAmount_print_weekly").html(numeral(data.getTotalAmount_print).format('0,0'));
 				}else{
 					$("tbody#PRINT_CONTENTS_WEEKLY").html("");
-					$("#allTotalAmount_print_weekly").val('');
+					$("#allTotalAmount_print_weekly").html('');
 				} 
 		    },	
 		    error:function(data,status,er) { 
@@ -1402,11 +1408,11 @@ thead tr th {
 				    		//total_all += total_amount;
 						}
 				    	$("#PRINT_CONTENTS_MONTHLY").html(st);
-				    	$("#allTotalAmount_print_monthly").val(numeral(data.getTotalAmount_print).format('0,0'));
+				    	$("#allTotalAmount_print_monthly").html(numeral(data.getTotalAmount_print).format('0,0'));
 				    }  
 			    	    else{
 			    	    	$("#PRINT_CONTENTS_MONTHLY").html("");
-					    	$("#allTotalAmount_print_monthly").val('');
+					    	$("#allTotalAmount_print_monthly").html('');
 			    	    }
 			    },	
 			    error:function(data,status,er) { 
@@ -1436,12 +1442,12 @@ thead tr th {
 				    	data.reportyear_print[i].order = i+1;
 				    	}
 			    		 $("#CONTENT_YEARLY_PRINT").tmpl(data.reportyear_print).appendTo("tbody#PRINT_CONTENTS_YEARLY");	
-			    		 $("#allTotalAmount_print_yearly").val(numeral(data.getTotalAmount_print).format('0,0'));
+			    		 $("#allTotalAmount_print_yearly").html(numeral(data.getTotalAmount_print).format('0,0'));
 			    	}
 			    	else
 			    		{
 			    			$("tbody#PRINT_CONTENTS_YEARLY").html('');
-			    			$("#allTotalAmount_print_yearly").val("");
+			    			$("#allTotalAmount_print_yearly").html("");
 			    		} 
 			    },	
 			    error:function(data,status,er) { 
