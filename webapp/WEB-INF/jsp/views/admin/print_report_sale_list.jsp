@@ -16,7 +16,7 @@
 				</h5>
 
 				<div class="overflow-x">
-					<table>
+					<table style="border: none;">
 						<thead class="style2">
 							<tr class="active">
 								<th>#</th>
@@ -60,7 +60,7 @@
 						id="report_end_weekly"></span>
 				</h5>
 	<div class="overflow-x">
-					<table>
+					<table style="border: none;">
 						<thead class="style2">
 							<tr>
 								<th rowspan="2">#</th>
@@ -127,7 +127,7 @@
 				</h5>
 
 				<div class="overflow-x">
-					<table>
+					<table style="border: none;">
 						<thead class="style2" id="tbl_header_month_print">
 
 						</thead>
@@ -165,7 +165,7 @@
 				</h5>
 
 				<div class="overflow-x">
-					<table >
+					<table style="border: none;page-break-after:always">
 						<thead class="style2" id="tbl_header_month">
 							<tr>
 								<th rowspan="2">#</th>
@@ -231,6 +231,11 @@
 	</div>
 
 <script id="CONTENT_DAILY_PRINT" type="text/x-jquery-tmpl">
+			{{if order==44}} 
+				<tr>
+					<td colspan="8" style="border: none;padding:22px;"></td>
+				</tr>	
+			{{/if}}	
     	<tr>
 			<td>{{= order}}</td>
 			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
@@ -241,6 +246,11 @@
  </script>
 <!-- ============================  tbodyweekly  ================================== -->
 <script id="CONTENT_WEEKLY_PRINT" type="text/x-jquery-tmpl">
+		{{if order==44}} 
+				<tr>
+					<td colspan="8" style="border: none;padding:22px;"></td>
+				</tr>	
+			{{/if}}	
     	<tr>
 			<td>{{= order}}</td>
 			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
@@ -264,6 +274,11 @@
     </script>
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
+			{{if order==24}} 
+				<tr>
+					<td colspan="8" style="border: none;padding:10px;"></td>
+				</tr>	
+			{{/if}}	
 			<tr> 
 			<td>{{= order}}</td>
 			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>

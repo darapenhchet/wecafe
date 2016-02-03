@@ -105,7 +105,7 @@ function getTableBorder(){
 	var table="table {border-collapse: collapse;width:100%;} " 
 	 		+"table tr th   {padding:8px !important;}"
 	 		+"table,td,th{text-align: center;font-size:12px;border: 1px solid black;}" 
-	 	    +".content-right{text-align:right !important;} .content-left{text-align:left !important;}";
+	 	    +".content-right{text-align:right !important;} .content-left{text-align:left !important;max-width:100px !important;}";
 	return table;
 }
 
@@ -125,8 +125,8 @@ function getellipsis(){
 function pagePrintPortrait(){
 	var page_Print="@media print { "
 
-		+"table { page-break-inside:auto !important;line-height:22px; } "
-		+"tr    { page-break-inside:avoid !important; page-break-after:auto  !important;}"
+		+"table { page-break-before: always;page-break-after: always; !important;line-height:22px; } "
+		+"tr    {  page-break-inside: avoid; !important; page-break-after:auto  !important;}"
 		+"html,body {"
 		+"width: 900px !important;"
 		+"box-shadow: 0;"

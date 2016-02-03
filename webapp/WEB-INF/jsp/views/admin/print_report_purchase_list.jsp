@@ -233,6 +233,11 @@
 
 <!-- ============================  tbodydaily  ================================== -->
 <script id="CONTENT_DAILY_PRINT" type="text/x-jquery-tmpl">
+			{{if order==44}} 
+				<tr >
+					<td colspan="8" style="border: none;padding:22px;"></td>
+				</tr>	
+			{{/if}}	
     	<tr>
 			<td>{{= order}}</td>
 			<td style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= supplier_name}}</span></td>
@@ -246,6 +251,11 @@
     </script>
 <!-- ============================  tbodyweekly  ================================== -->
 <script id="CONTENT_WEEKLY_PRINT" type="text/x-jquery-tmpl">
+			{{if order==44}} 
+				<tr >
+					<td colspan="8" style="border: none;padding:22px;"></td>
+				</tr>	
+			{{/if}}	
     	<tr>
 			<td>{{= order}}</td>
 			<td style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= pro_name}}</span></td>
@@ -271,12 +281,12 @@
 
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
-			
 			{{if order==27}} 
-				<tr id="row_break" style="display:none;">
-					<td colspan="8" style="border: none;padding:20px;"></td>
+				<tr >
+					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
 			{{/if}}	
+			
 			<tr> 
 			<td>{{= order}}</td>
 			<td  style="text-align:left;padding-left:4px;"><span class="ellipsis">{{= customer}}</span></td>

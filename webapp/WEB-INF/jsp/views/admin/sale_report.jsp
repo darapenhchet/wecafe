@@ -544,6 +544,8 @@ a {
 	var b = true;
 	 setCalendar();  
 	 
+	
+	 
 	  // print pursurse daily 
      $("#btn_print").click(function(){
   	   var divContents = $("#print_data").html(); 
