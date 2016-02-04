@@ -2,6 +2,7 @@
 
 $(function(){
 	
+	
 	$.fn.beforeprint = function(callback) {
 	    return $(this).each(function() {
 	        if ( !jQuery.isWindow(this) )
@@ -22,27 +23,25 @@ $(function(){
 	            $(this).one('mouseover', callback);
 	    });
 	};
+	
+	$("#select_month").change(function(){
+		if($(this).val()==2){
+			$(".hide").removeClass("hide").addClass("show2");
+			$(".show1").addClass("hide");
+		}else{
+			$(".hide").removeClass("hide");
+			$(".show2").addClass("hide");
+		}
+	});
 
 
-	$("#btn_print").click(function(){
+	$("#print_report").click(function(){
 		
 		 var beforePrint = function() {	    	
-		    	$("#record_num").hide();
-				$("#select_num").hide();
-				$(".pagination").hide();
-				$("#btn_print").hide();$(".status").hide();
-				$(".signature").show();$(".signature1").show();
-				$(".othertd").show();$("#otherth").show();
-			    $("#break_row").show();
+		    	alert("before");
 		    };
 		    var afterPrint = function() {
-		    	$("#record_num").show();
-		    	$(".pagination").show();
-		    	$("#btn_print").show();$(".status").show();
-		    	$(".signature").hide();$(".signature1").hide();
-		    	$("#select_num").show();
-		    	$(".othertd").hide();$("#otherth").hide();	
-		    	$("#break_row").hide();
+		    	alert("after");
 		    	
 		    };
 		
@@ -70,10 +69,6 @@ $(function(){
 	
 });
 
-function getScript(){
-	
-	return '<script src="${pageContext.request.contextPath}/resources/print.js"></script>';
-}
 
 function loadPrintPage(divContents,pageStyle){
 	
@@ -85,14 +80,14 @@ function loadPrintPage(divContents,pageStyle){
 		           ].join(',');
 	 printWindow = window.open("","",params );
 	 printWindow.document.write("<html>");
-	 	printWindow.document.write("<head><style type=\"text/css\"> ");
-		printWindow.document.write(pageStyle +" " +getellipsis() +" "+ getTableBorder());
-	 	printWindow.document.write("</style></head>");
-	 	printWindow.document.write("<body>");
+	 	printWindow.document.write("<head>");
+	 		printWindow.document.write('<link href="/WeCafe/resources/css/customize.css" rel="stylesheet" type="text/css" />');
+	 		printWindow.document.write("<style type=\"text/css\"> ");			
+	 				printWindow.document.write(pageStyle);
+	 		printWindow.document.write("</style>");
+	 	printWindow.document.write("</head><body>");
 	 		printWindow.document.write(divContents);
-	 		printWindow.document.write("<script>");
-	 		printWindow.document.write(getScript());
-	 		printWindow.document.write("</script>");
+	 		printWindow.document.write('<script src="/WeCafe/resources/js/jquery.min.js"></script> <script src="/WeCafe/resources/js/print.js"></script>');
 	 	printWindow.document.write("</body>");
 	 printWindow.document.write("</html>");
 	
@@ -101,26 +96,8 @@ function loadPrintPage(divContents,pageStyle){
 	 
 }
 
-function getTableBorder(){
-	var table="table {border-collapse: collapse;width:100%;} " 
-	 		+"table tr th   {padding:8px !important;}"
-	 		+"table,td,th{text-align: center;font-size:12px;border: 1px solid black;}" 
-	 	    +".content-right{text-align:right !important;} .content-left{text-align:left !important;max-width:100px !important;}";
-	return table;
-}
 
-function getellipsis(){
-	
-	var ellipsis=".ellipsis {"
-			+"display: inline-block;"
-			+"width:100%;"
-			+"text-overflow: ellipsis;"
-			+"white-space: nowrap;"
-			+"overflow: hidden;"
-			+"}"
-			
-	return ellipsis;
-}
+
 
 function pagePrintPortrait(){
 	var page_Print="@media print { "

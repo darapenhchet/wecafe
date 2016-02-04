@@ -149,14 +149,9 @@ public class ReportPurchaseController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>(); 
-		System.out.println(strStartDate);
-		System.out.println(strEndDate); 
+	
 		map.put("reportyear_print", adminReportService.getListReportYearlyPurcase(pagination,startDate, endDate, false));
 		map.put("get_total_amount_print", adminReportService.getListReportYearlyPurcase(pagination, startDate,endDate ,false));
-	//	List<Map> totalRecord=(List<Map>) adminReportService.getListReportYearlyPurcase(pagination, startDate, endDate,false); 
-	//	pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
-	//	pagination.setTotalPages(pagination.totalPages());
-	//	map.put("pagination", pagination);
 		map.put("total_reportyear", adminReportService.getAllPurchaseMonthlyReportsTotal(startDate, endDate));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 		

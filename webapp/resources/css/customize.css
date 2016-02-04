@@ -41,3 +41,6 @@ table td{
 .content-right{
 	text-align:right !important;
 }
+.hide{
+	display: none;
+}

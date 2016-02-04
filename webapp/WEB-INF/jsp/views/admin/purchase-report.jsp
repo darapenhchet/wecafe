@@ -421,8 +421,7 @@ a {
     </script>
 
 		<!-- jQuery  -->
-		<script
-			src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 		<script	src="${pageContext.request.contextPath}/resources/js/jquery.ui.datepicker-ko.js"></script>
 		
@@ -461,11 +460,11 @@ a {
 	<script id="CONTENT_DETAIL" type="text/x-jquery-tmpl">
     	<tr>  
 			<td>{{= order}}</td>
-			<td ><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
-			<td style="text-align:right;">{{= purchase_date}} </td>
-			<td style="text-align:right;">{{= purchase_by}} ​</td>
-			<td style="text-align:right;">{{= purchase_type}} ​</td>
-			<td style="text-align:right;">{{= purchase_total_amount}} </td>
+			<td><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
+			<td>{{= purchase_date}} </td>
+			<td>{{= purchase_by}} ​</td>
+			<td>{{= purchase_type}} ​</td>
+			<td class="content-right">{{= purchase_total_amount}} </td>
 		</tr>
     </script>
  
@@ -473,13 +472,13 @@ a {
 	<script id="CONTENT_DAILY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= supplier_name}}</span></td>
-			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= product_name}}</span></td>
+			<td class="content-left"><span class="ellipsis">{{= supplier_name}}</span></td>
+			<td class="content-left"><span class="ellipsis">{{= product_name}}</span></td>
 			<td>{{= product_qty}}</td>
 			<td>{{= pro_unit_price}}</td>
 			<td>{{= purchase_by}}​</td>
 			<td>{{= purchase_type}}</td>
-			<td style="text-align:right !important;padding-right:4px;">{{= purchase_total_amount}}</td>
+			<td class="content-right">{{= purchase_total_amount}}</td>
 		</tr>
     </script>
  
@@ -487,8 +486,8 @@ a {
 	<script id="CONTENT_WEEKLY" type="text/x-jquery-tmpl">
     	<tr>
 			<td>{{= order}}</td>
-			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= customer}}</span></td>
-			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= pro_name}}</span></td>
+			<td class="content-left"><span class="ellipsis">{{= customer}}</span></td>
+			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= day1_qty}}</td>
 			<td>{{= day1_amount}}</td>
 			<td>{{= day2_qty}}</td>
@@ -503,8 +502,8 @@ a {
 			<td>{{= day6_amount}}</td>
 			<td>{{= day7_qty}}</td>
 			<td>{{= day7_amount}}</td>
-			<td style="text-align:right !important;padding-right: 4px;">{{= total_qty}}</td>
-			<td style="text-align:right !important;padding-right: 4px;">{{= total_amount}}</td>
+			<td class="content-right">{{= total_qty}}</td>
+			<td class="content-right">{{= total_amount}}</td>
 		</tr>
     </script>
  <!-- ============================  tbodymonthly  ================================== -->		
@@ -514,8 +513,8 @@ a {
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
 			<tr>
 			<td>{{= order}}</td>
-			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= customer}}</span></td>
-			<td style="text-align:left !important;padding-left: 4px;"><span class="ellipsis">{{= pro_name}}</span></td>
+			<td class="content-left"><span class="ellipsis">{{= customer}}</span></td>
+			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= jan_qty}}</td>
 			<td>{{= jan_amount}}</td>
 			<td>{{= feb_qty}}</td>
@@ -540,8 +539,8 @@ a {
 			<td>{{= nov_amount}}</td>
 			<td>{{= dec_qty}}</td>
 			<td>{{= dec_amount}}</td>
-			<td style="text-align:right !important;padding-right: 4px;">{{= total_qty}}</td>
-			<td style="text-align:right !important;padding-right: 4px;">{{= total_amount}}</td>
+			<td class="content-right">{{= total_qty}}</td>
+			<td class="content-right">{{= total_amount}}</td>
 		</tr>
     </script>
    <!-- ============================================================== -->   
@@ -555,23 +554,6 @@ a {
 	var b = true;
 	 setCalendar();
 	 searchByDate();
-	 
-	 
-	 
-	 
-	  // print pursurse daily 
-     $("#btn_print").click(function(){
-  	   var divContents = $("#print_data").html(); 
-         loadPrintPage(divContents,getPortrait());
-         return false;
-     });
-	 
-     // print pursurse weekly 
-     $("#btn_print_weekly").click(function(){
-  	   var divContents = $("#print_data_weekly").html(); 
-         loadPrintPage(divContents,getPortrait());
-         return false;
-     });
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
@@ -584,7 +566,7 @@ a {
      $("#btn_print_yearly").click(function(){
     	$("#row_break").show();
   	   var divContents = $("#print_data_yearly").html(); 
-         loadPrintPage(divContents,getLangScape());
+         loadPrintPage(divContents,getPortrait());
          return false;
      });
 	 
@@ -653,7 +635,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	console.log(data);
+			 
 			    	b =true;
 					v=data;
 					 if(data.reportdetail.length>0){
@@ -689,7 +671,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	console.log(data);
+			 
 			    	b =true;
 					v=data;
 					var total_amount = 0;
@@ -732,7 +714,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
+			 
 			    	b =true;
 					v=data;
 			    	if(data.reportweekly.length>0){
@@ -778,7 +760,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
+			 
 			    	b=true;
 			    	var total_all = 0;
 			    	    if(data.reportmonthly){ 
@@ -797,8 +779,8 @@ a {
 					 			orderlist = orderlist + 1;
 					 			st += "<td>"+ (orderlist) +"</td>"; 
 					 		} 
-				    		st +="<td>" + data.reportmonthly[i].customer + "</td>";
-				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
+				    		st +="<td class='content-left'><span class='ellipsis'>" + data.reportmonthly[i].customer + "</span></td>";
+				    		st += "<td class='content-left'><span class='ellipsis'>" + data.reportmonthly[i].pro_name + "</span></td>";
 				    		
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) { 
 				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
@@ -806,8 +788,8 @@ a {
 				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty'];
 				    				total_amount += data.reportmonthly[i]['day' + (j+1) + '_amount'];
 				    		}
-				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
-				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
+				    		st += "<td class='content-right'>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td class='content-right'>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>"; 
 						}  
 					     	for(i =0; i<data.get_total_amount.length; i++)
@@ -848,7 +830,7 @@ a {
 			    	b= true;
 			    	v=data;
 			    	var total_amount = 0;
-			    	console.log(data);
+			 
 			    	if(data.reportyear){
 				    	$("tbody#tbodyyearly").html('');
 				    	for(var i=0;i<data.reportyear.length;i++){
@@ -1287,7 +1269,7 @@ a {
                   xhr.setRequestHeader("Content-Type", "application/json");
               },
 			    success: function(data) { 
-			    	console.log(data);
+			 
 			    	var st= "";
 			    	var amount = 0;
 			       for(i=0; i<data.length; i++){
@@ -1320,7 +1302,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) {
-			    	console.log(data);
+			 
 			    	//b =true; 
 			    	//v = data;
 					var total_amount = 0;
@@ -1343,6 +1325,9 @@ a {
 			    		products.setPagination(data.pagination.totalPages,1);
 			    		check=false;
 			    	}  
+			    	
+			    	 var divContents = $("#print_data").html(); 
+			         loadPrintPage(divContents,getPortrait());
 			    },
 			    error:function(data,status,er) { 
 			        console.log("error: ",data," status: ",status," er:",er);
@@ -1362,7 +1347,6 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
 			    	//b =true;
 					//v=data;
 			    	if(data.reportweekly_print.length>0){
@@ -1383,6 +1367,9 @@ a {
 						$("tbody#PRINT_CONTENTS_WEEKLY").html("");
 						$("#allTotalAmount_print_weekly").html('');
 					} 
+			    	
+			    	  var divContents = $("#print_data_weekly").html(); 
+				         loadPrintPage(divContents,getPortrait());
 			    },	
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -1403,7 +1390,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data); 
+			  
 			    	var total_all = 0;
 			    	    if(data.reportmonthly_print){
 				    	$("#PRINT_CONTENTS_MONTHLY").html('');
@@ -1461,7 +1448,7 @@ a {
 			    //	b= true;
 			    //	v=data;
 			    	var total_amount = 0;
-			    	console.log(data);
+			 
 			    	if(data.reportyear_print){
 				    	$("tbody#PRINT_CONTENTS_YEARLY").html('');
 				    	for(var i=0;i<data.reportyear_print.length;i++){
@@ -1502,10 +1489,7 @@ a {
 			 break;
 		 case '1':
 			 $("#report_start_daily").html(" Date : " + $("#REGS_DATE_S").val());
-			 print_daily();
-			 $('#daily_list').modal({
-					"backdrop":"static"
-				}) ;
+			 print_daily();		
 			 break;
 		 case '2':
 			 $("#report_start_weekly").html(" Date : " + $("#REGS_DATE_S").val());
@@ -1518,9 +1502,7 @@ a {
 						$(dayID).html(dd);
 					};
 			print_weekly();
-			 $('#weekly_list').modal({
-					"backdrop":"static"
-				}) ; 
+				
 			 break;
 		 case '3':  
 			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());

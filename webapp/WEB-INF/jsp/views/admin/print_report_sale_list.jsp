@@ -152,7 +152,10 @@
 <div class="modal fade" id="yearly_list" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
-		
+		<select id="select_month">
+				<option value="1">January - June</option>
+				<option value="2">July - December</option>
+			</select>
 		<div id="print_data_yearly">
 				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
 				<a href="javascrpt:;"
@@ -169,48 +172,48 @@
 						<thead class="style2" id="tbl_header_month">
 							<tr>
 								<th rowspan="2">#</th>
-								<th rowspan="2">Item</th>
-								<th colspan="2" id="mon1">Jan</th>
-								<th colspan="2" id="mon2">Feb</th>
-								<th colspan="2" id="mon3">Mar</th>
-								<th colspan="2" id="mon4">Air</th>
-								<th colspan="2" id="mon5">May</th>
-								<th colspan="2" id="mon6">Jun</th>
-								<th colspan="2" id="mon7">Jul</th>
-								<th colspan="2" id="mon7">Aug</th>
-								<th colspan="2" id="mon7">Sep</th>
-								<th colspan="2" id="mon7">Oct</th>
-								<th colspan="2" id="mon7">Nov</th>
-								<th colspan="2" id="mon7">Dec</th>
-								<th colspan="2">Total</th>
+								<th rowspan="2">Item</th>								
+								<th class="show1" colspan="2" id="mon1">Jan</th>
+								<th class="show1" colspan="2" id="mon2">Feb</th>
+								<th class="show1" colspan="2" id="mon3">Mar</th>
+								<th class="show1" colspan="2" id="mon4">Air</th>
+								<th class="show1" colspan="2" id="mon5">May</th>
+								<th class="show1" colspan="2" id="mon6">Jun</th>
+								<th class="hide"  colspan="2" id="mon7">Jul</th>
+								<th class="hide"  colspan="2" id="mon7">Aug</th>
+								<th class="hide"  colspan="2" id="mon7">Sep</th>
+								<th class="hide"  colspan="2" id="mon7">Oct</th>
+								<th class="hide"  colspan="2" id="mon7">Nov</th>
+								<th class="hide"  colspan="2" id="mon7">Dec</th>
+								<th class="hide"  colspan="2">Total</th>
 							</tr>
 							<tr>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
-								<th>Qty</th>
-								<th>Amt</th>
+								<th class="show1">Qty</th>
+								<th class="show1">Amt</th>
+								<th class="show1">Qty</th>
+								<th class="show1">Amt</th>
+								<th class="show1">Qty</th>
+								<th class="show1">Amt</th>
+								<th class="show1">Qty</th>
+								<th class="show1">Amt</th>
+								<th class="show1">Qty</th>
+								<th class="show1">Amt</th>
+								<th class="show1">Qty</th>
+								<th class="show1">Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
+								<th class="hide" >Qty</th>
+								<th class="hide" >Amt</th>
 							</tr>
 						</thead>
 						<tbody id="PRINT_CONTENTS_YEARLY" style="width: 100%;">
@@ -274,7 +277,7 @@
     </script>
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
-			{{if order==24}} 
+			{{if order==44}} 
 				<tr>
 					<td colspan="8" style="border: none;padding:10px;"></td>
 				</tr>	
@@ -282,31 +285,31 @@
 			<tr> 
 			<td>{{= order}}</td>
 			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
-			<td>{{= jan_qty}}</td>
-			<td>{{= jan_amount}}</td>
-			<td>{{= feb_qty}}</td>
-			<td>{{= feb_amount}}</td>
-			<td>{{= mar_qty}}</td>
-			<td>{{= mar_amount}}</td>
-			<td>{{= apr_qty}}</td>
-			<td>{{= apr_amount}}</td>
-			<td>{{= may_qty}}</td>
-			<td>{{= may_amount}}</td>
-			<td>{{= jun_qty}}</td>
-			<td>{{= jun_amount}}</td>
-			<td>{{= jul_qty}}</td>
-			<td>{{= jul_amount}}</td>
-			<td>{{= aug_qty}}</td>
-			<td>{{= aug_amount}}</td>
-			<td>{{= sep_qty}}</td>
-			<td>{{= sep_amount}}</td>
-			<td>{{= oct_qty}}</td>
-			<td>{{= oct_amount}}</td>
-			<td>{{= nov_qty}}</td>
-			<td>{{= nov_amount}}</td>
-			<td>{{= dec_qty}}</td>
-			<td>{{= dec_amount}}</td>
-			<td class="content-right">{{= total_qty}}</td>
-			<td class="content-right">{{= total_amount}}</td>
+			<td class="show1">{{= jan_qty}}</td>
+			<td class="show1">{{= jan_amount}}</td>
+			<td class="show1">{{= feb_qty}}</td>
+			<td class="show1">{{= feb_amount}}</td>
+			<td class="show1">{{= mar_qty}}</td>
+			<td class="show1">{{= mar_amount}}</td>
+			<td class="show1">{{= apr_qty}}</td>
+			<td class="show1">{{= apr_amount}}</td>
+			<td class="show1">{{= may_qty}}</td>
+			<td class="show1">{{= may_amount}}</td>
+			<td class="show1">{{= jun_qty}}</td>
+			<td class="show1">{{= jun_amount}}</td>
+			<td class="hide" >{{= jul_qty}}</td>
+			<td class="hide" >{{= jul_amount}}</td>
+			<td class="hide" >{{= aug_qty}}</td>
+			<td class="hide" >{{= aug_amount}}</td>
+			<td class="hide" >{{= sep_qty}}</td>
+			<td class="hide" >{{= sep_amount}}</td>
+			<td class="hide" >{{= oct_qty}}</td>
+			<td class="hide" >{{= oct_amount}}</td>
+			<td class="hide" >{{= nov_qty}}</td>
+			<td class="hide" >{{= nov_amount}}</td>
+			<td class="hide" >{{= dec_qty}}</td>
+			<td class="hide" >{{= dec_amount}}</td>
+			<td class="content-right hide">{{= total_qty}}</td>
+			<td class="content-right hide">{{= total_amount}}</td>
 		</tr>
     </script>

@@ -457,9 +457,9 @@ a {
     	<tr>  
 			<td>{{= order}}</td>
 			<td ><a herf="javascript:;" id="saleid" class="ng-binding">{{= sale_id}}</a></td> 
-			<td style="text-align:right;">{{= sale_date}} </td>
-			<td style="text-align:right;">{{= username}} ​</td> 
-			<td style="text-align:right;">{{= total_amount}} </td>
+			<td>{{= sale_date}} </td>
+			<td >{{= username}} ​</td> 
+			<td class="content-right">{{= total_amount}} </td>
 		</tr>
     </script>
  
@@ -545,20 +545,6 @@ a {
 	 setCalendar();  
 	 
 	
-	 
-	  // print pursurse daily 
-     $("#btn_print").click(function(){
-  	   var divContents = $("#print_data").html(); 
-         loadPrintPage(divContents,getPortrait());
-         return false;
-     });
-	 
-     // print pursurse weekly 
-     $("#btn_print_weekly").click(function(){
-  	   var divContents = $("#print_data_weekly").html(); 
-         loadPrintPage(divContents,getPortrait());
-         return false;
-     });
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
@@ -571,7 +557,7 @@ a {
      $("#btn_print_yearly").click(function(){
     	$("#row_break").show();
   	   var divContents = $("#print_data_yearly").html(); 
-         loadPrintPage(divContents,getLangScape());
+         loadPrintPage(divContents,getPortrait());
          return false;
      });
 	 
@@ -661,7 +647,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) {
-			    	console.log(data);
+			    	
 			    	b =true;
 					v=data;
 					  if(data.reportdetail.length>0){
@@ -699,7 +685,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	console.log(data);
+			    	
 			    	b =true;
 					v=data;
 			    	//var alltotal = 0;
@@ -741,7 +727,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
+			    	
 			    	b =true;
 					v=data; 
 			    	if(data.reportweekly.length>0){
@@ -780,7 +766,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log(data);
+			    	
 			    	b =true; 
 			    	    if(data.reportmonthly){
 				    	$("#monthlytable tbody").html('');
@@ -799,15 +785,15 @@ a {
 						 			k += 1;
 						 			st += "<td>"+ k +"</td>"; 
 						 			}
-				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>"; 
+				    		st += "<td class='content-left'><span class='ellipsis'>" + data.reportmonthly[i].pro_name + "</span></td>"; 
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
 				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
 				    				st += "<td>" + numeral(data.reportmonthly[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
 				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty'];
 				    				total_amount += data.reportmonthly[i]['day' + (j+1) + '_amount'];
 				    		}
-				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
-				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
+				    		st += "<td class='content-right'>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td class='content-right'>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>";
 				    		//total_all += total_amount;
 						}
@@ -843,7 +829,7 @@ a {
 			    	var total_amount = 0;
 			    	b =true; 
 			    	v = data;
-			    	console.log(data);
+			    
 			    	if(data.reportyear){
 				    	$("tbody#tbodyyearly").html('');
 				    	for(var i=0;i<data.reportyear.length;i++){
@@ -1281,7 +1267,7 @@ a {
                   xhr.setRequestHeader("Content-Type", "application/json");
               },
 			    success: function(data) {
-			    	console.log(data);  
+			    
 			     	var st= "";
 			    	var amount = 0;
 			       for(i=0; i<data.saleDetail.length; i++){
@@ -1313,7 +1299,7 @@ a {
              xhr.setRequestHeader("Content-Type", "application/json");
          },
 		    success: function(data) { 
-		    	console.log(data);
+		    	
 		    	b =true; 
 			 	 if(data.reportdaily_print.length>0){
 					$("tbody#PRINT_CONTENTS_DAILY").html('');
@@ -1326,6 +1312,9 @@ a {
 					$("tbody#PRINT_CONTENTS_DAILY").html("");
 					$("#allTotalAmount_print_daily").html('');
 				} 
+			 	 var divContents = $("#print_data").html(); 
+			     loadPrintPage(divContents,getPortrait());
+			     			    
 		    },
 		    error:function(data,status,er) { 
 		        console.log("error: ",data," status: ",status," er:",er);
@@ -1346,7 +1335,7 @@ a {
               xhr.setRequestHeader("Content-Type", "application/json");
           },
 		    success: function(data) {
-		    	console.log(data);
+		
 		    	b =true; 
 		    	if(data.reportweekly_print.length>0){
 					$("tbody#PRINT_CONTENTS_WEEKLY").html('');
@@ -1359,6 +1348,8 @@ a {
 					$("tbody#PRINT_CONTENTS_WEEKLY").html("");
 					$("#allTotalAmount_print_weekly").html('');
 				} 
+		    	 var divContents = $("#print_data_weekly").html(); 
+			     loadPrintPage(divContents,getPortrait());
 		    },	
 		    error:function(data,status,er) { 
 		        console.log("error: "+data+" status: "+status+" er:"+er);
@@ -1378,7 +1369,7 @@ a {
                  xhr.setRequestHeader("Content-Type", "application/json");
              },
 			    success: function(data) {
-			    	console.log(data);
+			    	
 			    	b =true; 
 			    	    if(data.reportmonthly_print){
 				    	$("#PRINT_CONTENTS_MONTHLY tbody").html('');
@@ -1436,7 +1427,7 @@ a {
              },
 			    success: function(data) {
 			    	var total_amount = 0; 
-			    	console.log(data);
+			
 			    	if(data.reportyear_print){
 				    	$("tbody#PRINT_CONTENTS_YEARLY").html('');
 				    	for(var i=0;i<data.reportyear_print.length;i++){
@@ -1464,9 +1455,6 @@ a {
 		 case '1':
 			 $("#report_start_daily").html(" Date : " + $("#REGS_DATE_S").val());
 			 print_daily();
-			 $('#daily_list').modal({
-					"backdrop":"static"
-				}) ;
 			 break;
 		 case '2':
 			 $("#report_start_weekly").html(" Date : " + $("#REGS_DATE_S").val());
@@ -1479,9 +1467,6 @@ a {
 						$(dayID).html(dd);
 					};
 			print_weekly();
-			 $('#weekly_list').modal({
-					"backdrop":"static"
-				}) ;
 			 break;
 		 case '3':
 			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
