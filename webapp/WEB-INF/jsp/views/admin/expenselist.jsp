@@ -218,13 +218,13 @@ thead tr th {
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>#</th>
-							<th>Produce Name</th>
-							<th>Qty</th>
-							<th>Unit Price</th>
-							<th>Amount</th>
-							<th>Supplier Name</th>
-							<th>Remark</th>
+							<th style="text-align: left;">#</th>
+							<th style="text-align: left;">Produce Name</th>
+							<th style="text-align: left;">Qty</th>
+							<th style="text-align: left;">Unit Price</th>
+							<th style="text-align: left;">Amount</th>
+							<th style="text-align: left;">Supplier Name</th>
+							<th style="text-align: left;">Remark</th>
 						</tr>
 					</thead>
 					<tbody id="impProDetail">

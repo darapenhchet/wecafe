@@ -169,17 +169,16 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
         + " COALESCE(day6[2], 0) AS day6_AMOUNT, "
         + " COALESCE(day7[1], 0) AS day7_QTY, "
         + " COALESCE(day7[2], 0) AS day7_AMOUNT " 
-    + " FROM crosstab (  'SELECT B.pro_name::text As row_name " 		   
-    + " ,to_char(C.sale_datetime, ''DD'')::text As sale_date 	 "	   
-    + " ,ARRAY[SUM(A.pro_qty) "
-    + " ,sum(A.pro_qty*A.pro_unit_price)] AS row " 	 
-    + " from sale C INNER JOIN wecafe_order D on C.ord_id = D.order_id "
-		+ "LEFT JOIN order_detail A ON C.ord_id = A.order_id "
-		+ "LEFT JOIN product B on B.pro_id = A.pro_id "
-		+ "LEFT JOIN users E on E.id = C.user_id "
-+ "WHERE D.status = 2 and to_char(C.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" 	 
+    + " FROM crosstab ('SELECT  P.pro_name::text As row_name " 		   
+    + " ,to_char(ord.order_date, ''DD'')::text As sale_date 	 "	   
+    + " ,ARRAY[SUM(od.pro_qty) "
+    + " ,sum(od.pro_qty* od.pro_unit_price)] AS row " 	 
+    + " from product P INNER JOIN order_detail od ON od.pro_id = P.pro_id "
+		+ "INNER JOIN wecafe_order ord ON ord.order_id = od.order_id "
+		+ "INNER JOIN sale sa ON sa.ord_id = ord.order_id  " 
++ "WHERE ord.status = 2 and to_char(sa.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" 	 
 + "GROUP BY 1,2   "
-+ "ORDER BY 2', "
++ "ORDER BY 1', "
 + "        'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname  FROM generate_series(0,6) n;' ) AS mthreport " 
 + "( row_name TEXT , " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")"); 	
 		if(isPagination){
@@ -237,17 +236,16 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 					session.createSQLQuery("SELECT mthreport.row_name  AS pro_name, " 
 							+ sbSelect.toString().substring(0, sbSelect.toString().lastIndexOf(",")) 
 							+ " FROM crosstab ( " 
-							+ " 'SELECT B.pro_name::text As row_name " 		   
-							+ " ,to_char(C.sale_datetime, ''DD'')::text As sale_date 	 "	   
-							+ " ,ARRAY[SUM(A.pro_qty) "
-							+ " ,sum(A.pro_qty*A.pro_unit_price)] AS row " 	 
-						    + " from sale C INNER JOIN wecafe_order D on C.ord_id = D.order_id "
-							+ "LEFT JOIN order_detail A ON C.ord_id = A.order_id "
-							+ "LEFT JOIN product B on B.pro_id = A.pro_id "
-							+ "LEFT JOIN users E on E.id = C.user_id "
-							+ "WHERE D.status = 2 and to_char(C.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" 	 
+							+ " 'SELECT P.pro_name::text As row_name " 		   
+							+ " ,to_char(ord.order_date, ''DD'')::text As sale_date 	 "	   
+							+ " ,ARRAY[SUM(od.pro_qty) "
+							+ " ,sum(od.pro_qty* od.pro_unit_price)] AS row " 	 
+						    + " from product P  INNER JOIN order_detail od ON od.pro_id = P.pro_id "
+							+ "INNER JOIN wecafe_order ord ON ord.order_id = od.order_id "
+							+ "INNER JOIN sale sa ON sa.ord_id = ord.order_id " 
+							+ "WHERE ord.status = 2 and to_char(sa.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" 	 
 							+ "GROUP BY 1,2   "
-							+ "ORDER BY 2', " +
+							+ "ORDER BY 1', " +
 						   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
 						   " FROM generate_series(0,"+ (calEndDate.get(Calendar.DAY_OF_MONTH) -1) +") n;' " +
 						   ") AS mthreport ( " +
@@ -330,17 +328,16 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 										   "COALESCE(DEC[2],0) AS DEC_AMOUNT " +  
 										   "FROM " +
 										   "	crosstab ( " 
-										   	+ " 'SELECT B.pro_name::text As row_name " 		   
-											+ " ,to_char(C.sale_datetime, ''mon'')::text As sale_date 	 "	   
-											+ " ,ARRAY[SUM(A.pro_qty) "
-											+ " ,sum(A.pro_qty*A.pro_unit_price)] AS row " 	 
-										    + " from sale C INNER JOIN wecafe_order D on C.ord_id = D.order_id "
-											+ "LEFT JOIN order_detail A ON C.ord_id = A.order_id "
-											+ "LEFT JOIN product B on B.pro_id = A.pro_id "
-											+ "LEFT JOIN users E on E.id = C.user_id "
-											+ "WHERE D.status = 2 and to_char(C.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startDate)+"'' And ''"+sdf.format(endDate)+"''" 	 
+										   	+ " 'SELECT P.pro_name::text As row_name " 		   
+											+ " ,to_char(ord.order_date, ''DD'')::text As sale_date 	 "	   
+											+ " ,ARRAY[SUM(od.pro_qty) "
+											+ " ,sum(od.pro_qty* od.pro_unit_price)] AS row " 	 
+										    + " from product P  INNER JOIN order_detail od ON od.pro_id = P.pro_id   "
+											+ "INNER JOIN wecafe_order ord ON ord.order_id = od.order_id "
+											+ "INNER JOIN sale sa ON sa.ord_id = ord.order_id " 
+											+ "WHERE ord.status = 2 and to_char(sa.sale_datetime,''YYYY-mm-dd'') BETWEEN ''"+sdf.format(startDate)+"'' And ''"+sdf.format(endDate)+"''" 	 
 											+ "GROUP BY 1,2   "
-											+ "ORDER BY 2', " +
+											+ "ORDER BY 1', " +
 										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +										   
 										   " FROM generate_series(0,11) n' " +
 										   ") AS mthreport ( " +

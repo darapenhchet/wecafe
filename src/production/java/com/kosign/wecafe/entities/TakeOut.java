@@ -13,6 +13,7 @@ public class TakeOut {
 	
 	@Column(name="qty")
 	private long qty;
-//	private 
+ 
+ 
 }
 */

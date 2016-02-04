@@ -477,12 +477,13 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "COALESCE(DEC[2],0) AS DEC_AMOUNT " +  
 										   "FROM " +
 										   "	crosstab ( " +
-										   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
-										   "		   ,to_char(A.imp_date, ''mon'')::text As imp_date " +
-										   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price*B.pro_qty)] AS row " +
-										   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
-										   "	 LEFT JOIN users C ON C.id = A.user_id LEFT JOIN supplier D ON D.sup_id = B.sup_id" +
-										   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE A.imp_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' " +
+										   "	'SELECT ARRAY[sup.sup_name::text, P.pro_name::text] As row_name " +
+										   "		   ,to_char(imp.imp_date, ''DD'')::text As imp_date 	 " +
+										   "		   ,ARRAY[SUM(impde.pro_qty), SUM(impde.unit_price*impde.pro_qty)] AS row  " +
+										   "	 FROM product P INNER JOIN import_detail impde on impde.pro_id = P.pro_id " +
+										   "	 INNER JOIN import imp on imp.imp_id = impde.imp_id" +
+										   "	 INNER JOIN supplier sup on sup.sup_id = impde.sup_id "
+										   + "	 WHERE to_char(imp.imp_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' " +
 										   "	 GROUP BY 1,2 " +
 										   " UNION ALL "+
 										   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name "+
@@ -490,7 +491,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row "+
 										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "+
 										   " LEFT JOIN users C ON A.exp_user_id = C.id "+
-										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
+										   " WHERE to_char(A.expense_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
 										   " GROUP BY 1,2 "+
 										   "	 ORDER BY 2', " +
 										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +   
@@ -680,13 +681,13 @@ public class AdminReportServiceImp implements AdminReportService {
 									   "COALESCE(day7[2],0) AS day7_AMOUNT" +									    
 									   " FROM " +
 									   "	crosstab ( " +
-									   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
-									   "		   ,to_char(A.imp_date, ''DD'')::text As imp_date " +
-									   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price*B.pro_qty)] AS row " +
-									   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
-									   "	 LEFT JOIN users C ON C.id = A.user_id " +
-									   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   
-									   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE to_char(A.imp_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+									   "	'SELECT ARRAY[sup.sup_name::text, P.pro_name::text] As row_name " +
+									   "		   ,to_char(imp.imp_date, ''DD'')::text As imp_date " +
+									   "		   ,ARRAY[SUM(impde.pro_qty), SUM(impde.unit_price*impde.pro_qty)] AS row " +
+									   "	 FROM product P INNER JOIN import_detail impde on impde.pro_id = P.pro_id " +
+									   "	 INNER JOIN import imp on imp.imp_id = impde.imp_id " +
+									   "	 INNER JOIN supplier sup on sup.sup_id = impde.sup_id " +   
+									   "	 WHERE to_char(imp.imp_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 									   "	 GROUP BY 1,2 " +
 									   " UNION ALL " +
 									   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
@@ -768,13 +769,13 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "mthreport.row_name [ 2 ] AS pro_name, " + sbSelect.toString().substring(0, sbSelect.toString().lastIndexOf(",")) +									    
 										   " FROM " +
 										   "	crosstab ( " +
-										   "	'SELECT ARRAY[D.sup_name::text, E.pro_name::text] As row_name " +
-										   "		   ,to_char(A.imp_date, ''DD'')::text As imp_date " +
-										   "		   ,ARRAY[SUM(B.pro_qty), SUM(B.unit_price*B.pro_qty)] AS row " +
-										   "	 FROM import A INNER JOIN import_detail B ON A.imp_id = B.imp_id " +
-										   "	 LEFT JOIN users C ON C.id = A.user_id " +
-										   "	 LEFT JOIN supplier D ON D.sup_id = B.sup_id " +   
-										   "	 LEFT JOIN product E on E.pro_id = B.pro_id WHERE A.imp_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+										   "	'SELECT ARRAY[sup.sup_name::text, P.pro_name::text] As row_name " +
+										   "		   ,to_char(imp.imp_date, ''DD'')::text As imp_date " +
+										   "		   ,ARRAY[SUM(impde.pro_qty), SUM(impde.unit_price*impde.pro_qty)] AS row " +
+										   "	 FROM product P INNER JOIN import_detail impde on impde.pro_id = P.pro_id " +
+										   "	 INNER JOIN import imp on imp.imp_id = impde.imp_id " +
+										   "	 INNER JOIN supplier sup on sup.sup_id = impde.sup_id " +   
+										   "	 WHERE to_char(imp.imp_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 										   "	 GROUP BY 1,2 " +
 										   " UNION ALL " +
 										   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
@@ -782,7 +783,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
 										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
 										   " LEFT JOIN users C ON A.exp_user_id = C.id " +
-										   " WHERE A.expense_date BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
+										   " WHERE to_char(A.expense_date,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 										   " GROUP BY 1,2 " +
 										   "	 ORDER BY 1,2', " +
 										   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
