@@ -24,7 +24,7 @@ $(function(){
 	    });
 	};
 	
-	$("#select_month").change(function(){
+	$("#select_month,#select_yearly").change(function(){
 		if($(this).val()==2){
 			$(".hide").removeClass("hide").addClass("show2");
 			$(".show1").addClass("hide");
@@ -147,7 +147,7 @@ function pagePrintLanscape(){
 		+"html,body ,page[size=\"landscape\"] {"
 		+"h1 { page-break-before : right } "
 		+"h2 { page-break-after : avoid }"
-		+"width:auto !important;"
+		+"width:800px !important;"
 		+"position:absolute;"
 		+"margin :0 auto;"
 		+"padding: 0;"
@@ -160,10 +160,10 @@ function getLangScape(){
 	var land="@page { "
 			+"size: landscape; "
 			+"background: white;"
+			+"width:auto;"
+			+"height:auto;"
 			+"margin:0 auto;"
 			+"padding:0;"
-			+"width:100%;"
-			+"height:100%;"
 			+"display: block !important;"
 			+"orphans:4; widows:2;"
 			+"margin-top:0.21in;"

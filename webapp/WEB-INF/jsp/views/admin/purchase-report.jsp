@@ -554,6 +554,9 @@ a {
 	var b = true;
 	 setCalendar();
 	 searchByDate();
+
+	 
+	
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
@@ -1018,72 +1021,59 @@ a {
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
 			 $("#tblyearly").addClass("hidetable");
-			// setCalendar();
 			 $("#printAble").addClass("hidetable");
-			// $("#startfrom").html(" in " +  new Date().getFullYear());
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").addClass("hidetable");
 			 check = true;
-			 products.listDetail(1);
-			 
+			 products.listDetail(1);			 
 		 }			 
 		 else if($(this).val()==1){ 
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tbldaily").removeClass("hidetable");
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
-			 $("#tblyearly").addClass("hidetable");
-			 
+			 $("#tblyearly").addClass("hidetable");			 
 			 $("#yearcombo").addClass("hidetable");
 			 $("#monthcombo").addClass("hidetable");
 			 $("#datelable").removeClass("hidetable");
-			 $("#EDate").addClass("hidetable");
-			 
+			 $("#EDate").addClass("hidetable");			 
 			 $("#printAble").removeClass("hidetable");
 			 setCalendar();
 			 check = true;
-			 products.listDaily(1);
-			 
-		 }else if($(this).val()==2){ 
-			 
+			 products.listDaily(1);			 
+		 }else if($(this).val()==2){ 			 
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tblweekly").removeClass("hidetable");
 			 $("#tblmonthly").addClass("hidetable");
-			 $("#tblyearly").addClass("hidetable");
-			 
+			 $("#tblyearly").addClass("hidetable");			 
 			 $("#yearcombo").addClass("hidetable");
 			 $("#datelable").removeClass("hidetable");
 			 $("#EDate").removeClass("hidetable");	
-			 $("#monthcombo").addClass("hidetable");
-			 
+			 $("#monthcombo").addClass("hidetable");			 
 			 $("#printAble").removeClass("hidetable");
 			 setCalendar();
 			 settableheader();
 			 check = true;
-			 products.listWeekly(1);
-			 /* $("#REGS_DATE_S").datepicker('setDate', new Date(startdate));
-			 $("#REGS_DATE_E").datepicker('setDate', new Date(stopdate)); */
-			 
+			 products.listWeekly(1);		
 		 }else if($(this).val()==3){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
 			 $("#tblweekly").addClass("hidetable");
 			 $("#tblmonthly").removeClass("hidetable");
-			 $("#tblyearly").addClass("hidetable");	
-			 
+			 $("#tblyearly").addClass("hidetable");				 
 			 $('select#selectyear option[value="'+new Date().getFullYear()+'"]').attr("selected",true);
 			 $('select#selectmonth option[value="'+new Date().getMonth()+'"]').attr("selected",true);			 
 			 $("#yearcombo").removeClass("hidetable");
 			 $("#selectmonth").removeClass("hidetable");
 			 $("#datelable").addClass("hidetable");
-			 $("#monthcombo").removeClass("hidetable");
-			 
+			 $("#monthcombo").removeClass("hidetable");			 
 			 $("#printAble").removeClass("hidetable");
 			 check = true;
 			 setheadermonthly();
 			 products.listMonthly(1);
+	
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
@@ -1113,9 +1103,9 @@ a {
 			st += "<th colspan='2'>Total</th></tr><tr>";		
 			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
 			{			
-			st += "<th>qty</th><th>Amount</th>";
+			st += "<th>Qty</th><th>Amt</th>";
 			}	
-			st += "<th>Total Qty</th><th>Total Amount</th></tr>";	
+			st += "<th>Qty</th><th>Amt</th></tr>";	
 			$("#tbl_header_month").html(st);
 			
 	}
@@ -1392,6 +1382,7 @@ a {
 			    success: function(data) {
 			  
 			    	var total_all = 0;
+			    	var d="";
 			    	    if(data.reportmonthly_print){
 				    	$("#PRINT_CONTENTS_MONTHLY").html('');
 				    	var st = ""; 
@@ -1399,16 +1390,17 @@ a {
 					    	var total_qty = 0, total_amount = 0;
 				    		st += "<tr>"; 
 						    st += "<td>"+ (i+1) +"</td>";  
-				    		//st +="<td>" + data.reportmonthly_print[i].customer + "</td>";
-				    		st += "<td>" + data.reportmonthly_print[i].pro_name + "</td>"; 
+				    		st +="<td class='content-left'><span class='ellipsis'>" + data.reportmonthly_print[i].customer + "</span></td>";
+				    		st += "<td class='content-left'><span class='ellipsis'>" + data.reportmonthly_print[i].pro_name + "</span></td>"; 
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) { 
-				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
-				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
+				    			 d=(j<=14)?"show1":"hide";
+				    			st += "<td class='"+d+"'>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
+				    				st += "<td class='"+d+"' >" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
 				    				total_qty += data.reportmonthly_print[i]['day' + (j+1) + '_qty'];
 				    				total_amount += data.reportmonthly_print[i]['day' + (j+1) + '_amount'];
 				    		}
-				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
-				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
+				    		st += "<td  class='content-right "+d+"'>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td class='content-right "+d+"'>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>"; 
 						}  
 					     	for(i =0; i<data.get_total_amount_print.length; i++)
@@ -1505,21 +1497,28 @@ a {
 				
 			 break;
 		 case '3':  
+			 var d="";
+			 var end=new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate();
+			 $("#end").html('16 -'+ end);
+			 $("#select_yearly option[value='1']").attr("selected","selected");
 			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
 			   var st = "";
 				st += "<tr>";
 				st += "<th rowspan='2'>#</th>";
+				st += "<th rowspan='2'>Supplier</th>";
 				st += "<th rowspan='2'>Item</th>";
 			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
-				{			
-				st += "<th colspan='2'>" + (1+i) + "</th>";
+				{		
+				 d=(i<=14)?"show1":"hide";
+				st += "<th colspan='2' class='"+d+"'>" + (1+i) + "</th>";
 				}
-				st += "<th colspan='2'>Total</th></tr><tr>";		
+				st += "<th colspan='2' class='"+d+"'>Total</th></tr><tr>";		
 				for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
 				{			
-				st += "<th>qty</th><th>Amt</th>";
+					 var d=(i<=14)?"show1":"hide";
+				st += "<th class='"+d+"' style='padding-left:12px !important; padding-right:12px !important'>qty</th><th style='padding-left: 22px !important; padding-right: 22px !important;' class='"+d+"'>Amt</th>";
 				}	
-				st += "<th>Total Qty</th><th>Total Amt</th></tr>";	
+				st += "<th class='"+d+"'> Qty</th><th class='"+d+"'> Amt</th></tr>";	
 				$("#tbl_header_month_print").html(st);  
 				print_monthly();
 			 $('#monthly_list').modal({

@@ -29,7 +29,7 @@
 								<th>Total</th>
 							</tr>
 						</thead>
-						<tbody id="PRINT_CONTENTS_DAILY" style="width: 100%;">
+						<tbody id="PRINT_CONTENTS_DAILY">
 						</tbody>
 					</table>
 				</div>
@@ -96,7 +96,7 @@
 								<th>Amt</th>
 							</tr>
 						</thead>
-						<tbody id="PRINT_CONTENTS_WEEKLY" style="width: 100%;">
+						<tbody id="PRINT_CONTENTS_WEEKLY">
 						</tbody>
 					</table>
 				</div>
@@ -116,6 +116,10 @@
 <div class="modal fade" id="monthly_list" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
+			<select id="select_yearly">
+				<option value="1">01-15</option>
+				<option value="2" id="end"></option>
+			</select>
 			<div id="print_data_monthly">
 				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
 				<a href="javascrpt:;"
@@ -131,7 +135,7 @@
 					<table>
 						<thead class="style2" id="tbl_header_month_print">
 						</thead>
-						<tbody id="PRINT_CONTENTS_MONTHLY" style="width: 100%;">
+						<tbody id="PRINT_CONTENTS_MONTHLY">
 						</tbody>
 					</table>
 				</div>
@@ -216,7 +220,7 @@
 								<th class="hide">Amt</th>
 							</tr>
 						</thead>
-						<tbody id="PRINT_CONTENTS_YEARLY" style="width: 100%;">
+						<tbody id="PRINT_CONTENTS_YEARLY">
 						</tbody>
 					</table>
 				</div>
@@ -236,7 +240,7 @@
 
 <!-- ============================  tbodydaily  ================================== -->
 <script id="CONTENT_DAILY_PRINT" type="text/x-jquery-tmpl">
-			{{if order==44}} 
+			{{if order==45}} 
 				<tr >
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
@@ -254,7 +258,7 @@
     </script>
 <!-- ============================  tbodyweekly  ================================== -->
 <script id="CONTENT_WEEKLY_PRINT" type="text/x-jquery-tmpl">
-			{{if order==44}} 
+			{{if order==45}} 
 				<tr >
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
@@ -284,8 +288,8 @@
 
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
-			{{if order==44}} 
-				<tr >
+			{{if order==45}} 
+				<tr>
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
 			{{/if}}	

@@ -542,9 +542,13 @@ a {
 	var order = 1;
 	var v=[];
 	var b = true;
-	 setCalendar();  
-	 
 	
+	 setCalendar();  
+	
+	
+	 $('#monthly_list').on('hidden.bs.modal', function (event) {
+ 		$("#select_yearly option[value='1']").attr("selected","selected");
+	  })
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
@@ -1085,6 +1089,8 @@ a {
 			 check = true;
 			 setheadermonthly();
 			 sales.listMonthly();
+			 var end=new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate();
+			 $("#end").html('16 -'+ end);
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
@@ -1112,9 +1118,9 @@ a {
 			st += "<th colspan='2'>Total</th></tr><tr>";		
 			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
 			{			
-			st += "<th>qty</th><th>Amount</th>";
+			st += "<th>Qty</th><th>Amt</th>";
 			}	
-			st += "<th>Total Qty</th><th>Total Amount</th></tr>";	
+			st += "<th>Qty</th><th>Amt</th></tr>";	
 			$("#tbl_header_month").html(st);
 			
 	}
@@ -1374,6 +1380,7 @@ a {
 			    	    if(data.reportmonthly_print){
 				    	$("#PRINT_CONTENTS_MONTHLY tbody").html('');
 				    	var st = "" ; 
+				    	var d="";
 				    		st += "<tr>";
 					    	for(var i=0;i<data.reportmonthly_print.length;i++){
 					    	var total_qty = 0, total_amount = 0;
@@ -1388,15 +1395,16 @@ a {
 						 			k += 1;
 						 			st += "<td>"+ k +"</td>"; 
 						 			}
-				    		st += "<td>" + data.reportmonthly_print[i].pro_name + "</td>"; 
+				    		st += "<td class='content-left'><span class='ellipsis'>" + data.reportmonthly_print[i].pro_name + "</span></td>"; 
 				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
-				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
-				    				st += "<td>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
+				    			 d=(j<=14)?"show1":"hide";
+				    				st += "<td class='"+d+"'>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_qty']).format('0,0') + "</td>";
+				    				st += "<td class='"+d+"'>" + numeral(data.reportmonthly_print[i]['day' + (j+1) + '_amount']).format('0,0') + "</td>";
 				    				total_qty += data.reportmonthly_print[i]['day' + (j+1) + '_qty'];
 				    				total_amount += data.reportmonthly_print[i]['day' + (j+1) + '_amount'];
 				    		}
-				    		st += "<td>" + numeral(total_qty).format('0,0') + "</td>";
-				    		st += "<td>" + numeral(total_amount).format('0,0') + "</td>";
+				    		st += "<td class='content-right "+d+"'>" + numeral(total_qty).format('0,0') + "</td>";
+				    		st += "<td class='content-right "+d+"'>" + numeral(total_amount).format('0,0') + "</td>";
 				    		st += "</tr>";
 				    		//total_all += total_amount;
 						}
@@ -1469,21 +1477,24 @@ a {
 			print_weekly();
 			 break;
 		 case '3':
+			 var d="";
 			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
 			   var st = "";
 				st += "<tr>";
 				st += "<th rowspan='2'>#</th>";
 				st += "<th rowspan='2'>Item</th>";
 			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
-				{			
-				st += "<th colspan='2'>" + (1+i) + "</th>";
+				{	
+				 d=(i<=14)?"show1":"hide";
+				st += "<th colspan='2' class='"+d+"' >" + (1+i) + "</th>";
 				}
-				st += "<th colspan='2'>Total</th></tr><tr>";		
+				st += "<th colspan='2' class='"+d+"'>Total</th></tr><tr>";		
 				for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
-				{			
-				st += "<th>qty</th><th>Amount</th>";
+				{		
+					var d= d=(i<=14)?"show1":"hide";
+				st += "<th class='"+d+"' style='padding-left:12px !important; padding-right:12px !important'>qty</th><th class='"+d+"' style='padding-left:22px !important; padding-right:22px !important'>Amount</th>";
 				}	
-				st += "<th>Total Qty</th><th>Total Amount</th></tr>";	
+				st += "<th class='"+d+"'>Qty</th><th class='"+d+"'>Amt</th></tr>";	
 				$("#tbl_header_month_print").html(st);  
 				listMonthly_print();
 			 $('#monthly_list').modal({

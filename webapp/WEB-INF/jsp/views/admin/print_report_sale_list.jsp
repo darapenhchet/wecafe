@@ -114,7 +114,10 @@
 <div class="modal fade" id="monthly_list" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
-		
+			<select id="select_yearly">
+				<option value="1">01-15</option>
+				<option value="2" id='end'></option>
+			</select>
 			<div id="print_data_monthly">
 				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
 				<a href="javascrpt:;"
