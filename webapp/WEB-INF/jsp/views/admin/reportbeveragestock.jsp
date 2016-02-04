@@ -100,14 +100,15 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel panel-default">
-								<!-- <div class="panel-heading">
-                                    <h4>Invoice</h4>
-                                </div> -->
+								<div class="panel-heading">
+                                    <h4>Beverage Stock</h4>
+                                    Date : <span id="labelDate"></span>
+                                </div>  
 								<div class="panel-body">
-									<div class="clearfix">
+									<%-- <div class="clearfix">
 										<div class="pull-left">
 											<h4 class="text-right">
-												<%-- <img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic"> --%>
+												<img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic">
 												<strong>KOSIGN WECAFE</strong>
 											</h4>
 
@@ -118,8 +119,8 @@
 											</h4>
 										</div>
 									</div>
-									<hr>
-									<div class="row">
+									<hr> --%>
+								<!-- 	<div class="row">
 										<div class="col-md-12">
 
 											<div class="pull-left m-t-120">
@@ -143,8 +144,8 @@
 												</p>
 											</div>
 										</div>
-									</div>
-									<div class="m-h-50 form-group hidden-print ">
+									</div> -->
+									<%-- <div class="m-h-50 form-group hidden-print ">
 										<div>
 											<label class="col-sm-1 control-label">Date : </label> <input
 												type="hidden" id="SEND_DT" data-id="SEND_DT" />
@@ -163,7 +164,7 @@
 													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
 											</div>
 										</div>
-									</div>
+									</div> --%>
 
 									<div class="row">
 										<div class="col-md-12">
@@ -189,15 +190,16 @@
 											</div>
 										</div>
 									</div>
-									<div class="row" style="border-radius: 0px;">
+									<%-- <div class="row" style="border-radius: 0px;">
 										<div class="col-md-3 col-md-offset-9">
-											<%--<p class="text-right"><b>Sub-total:</b>${total}</p>
+											<p class="text-right"><b>Sub-total:</b>${total}</p>
                                             <p class="text-right">Discount: 12.9%</p>
-                                            <p class="text-right">VAT: 12.9%</p> --%>
+                                            <p class="text-right">VAT: 12.9%</p>
 											<hr>
 											<h3 class="text-right" id="totalPrice">${total}Riels</h3>
 										</div>
-									</div>
+									</div> --%>
+									<hr>
 									<div class="row">
 										<div class="col-md-2">
 											<select id="PER_PAGE" class="form-control">
@@ -246,12 +248,12 @@
 
 <script id="CONTENT_TEMPLATE" type="text/x-jquery-tmpl">
 	<tr>
-	     <td>{{ =order}}</td>
-	     <td>{{ =proName}}</td>
-	     <td>{{ =carriedOver}}</td>
-	     <td>{{ =purchase}}</td>
-	     <td>{{ =sale}}</td>
-	     <td>{{ =balance}}</td>
+	     <td>{{= order}}</td>
+	     <td>{{= pro_name}}</td>
+	     <td>{{= carried_over}}</td>
+	     <td>{{= pro_qty}}</td>
+	     <td>{{= sale}}</td>
+	     <td>{{= balance}}</td>
 	</tr> 
 </script>
 	<script>
@@ -297,25 +299,27 @@
 	<script>
  var st = "";
  $(document).ready(function(){
-	 setCalendar();
-	 searchByDate();
+	 
+	// setCalendar();
+	$("#labelDate").html(moment().format('YYYY-MM-DD'));
+	 searchByDate(1);
 	 var check = true;
 		var order = 1;
 		var v=[];
 		var b = true;
 	 
 	 function searchByDate(currentPage){
-      	var startDate 		= moment().format('YYYY-MM-DD');   
-		  json = {
-					"startdate"   : startDate , 
+      	var startDate 		= moment().format('YYYY-MM-DD');  
+		  json = { 
 					"currentPage" : currentPage,
-		    		"perPage"     : $("#PER_PAGE").val() 
+		    		"perPage"     : $("#PER_PAGE").val() ,
+		    		"start_date"   : startDate 
 		};
 		$.ajax({
-			url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate", 
-	    	type: 'POST',
-			dataType: 'JSON',
-			data: JSON.stringify(json), 
+			url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate/", 
+	    	type: 'GET',
+			//dataType: 'JSON',
+			data: json, 
 			beforeSend: function(xhr) {
 	            xhr.setRequestHeader("Accept", "application/json");
 	            xhr.setRequestHeader("Content-Type", "application/json");
@@ -325,13 +329,13 @@
 				b = true;
 				v = data;	
 				if(data.beverage.length>0){
-				$("tbody#CONTENTS").html('');
+				$("tbody#searchDetail").html('');
 				for(var i=0;i<data.beverage.length;i++){ 
 					format(data.beverage[i]);
 				}
-				$("#CONTENT_TEMPLATE").tmpl(data.beverage).appendTo("tbody#CONTENTS");
+				$("#CONTENT_TEMPLATE").tmpl(data.beverage).appendTo("tbody#searchDetail");
 			}else{
-				$("tbody#CONTENTS").html('');
+				$("tbody#searchDetail").html('');
 				
 			}
 	    	 if(check){
@@ -419,14 +423,11 @@
 			check = true;
 			searchByDate(1);
 	    });
-	  	format = function(value){
-	  		//console.log(value[1]);
-			/* value["proName"] = value[1];
-			value["carriedOver"] = numeral(value[2]).format('0,0');
-			value["purchase"] = numeral(value[3]).format('0,0');
-			value["sale"] = numeral(value[4]).format('0,0'); 
-			value["balance"] = numeral(value[5]).format('0,0'); 
-	 
+	  	format = function(value){ 
+			value["carried_over"] = numeral(value["carried_over"]).format('0,0');
+			value["pro_qty"] = numeral(value["pro_qty"]).format('0,0');
+			value["sale"] = numeral(value["sale"]).format('0,0'); 
+			value["balance"] = numeral(value["balance"]).format('0,0');  
 			if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
@@ -434,7 +435,7 @@
 	 			b = false;
 	 		}
 	 		else  
-	 		value["order"] = ++j;     */
+	 		value["order"] = ++j;
 		}  
 	 });
  </script>

@@ -79,12 +79,12 @@ public class ReportAdminController {
 		return "admin/reportbeveragestock";
 	}
 	
-	@RequestMapping(value="/admin/getsearchBeveragebydate", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Object>> getsearchBeveragebydate(@RequestBody DateForm dateForm, Pagination pagination){
-		 
+	@RequestMapping(value="/admin/getsearchBeveragebydate", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getsearchBeveragebydate(Pagination pagination, @RequestParam(value="start_date") String strStartDate) throws ParseException{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Map<String, Object> map = new HashMap<String, Object>(); 
-		map.put("beverage", adminReportService.getReportListAllBeverageStock(dateForm, pagination, true));
-		List<Map> recorde = adminReportService.getReportListAllBeverageStock(dateForm, pagination, false);
+		map.put("beverage", adminReportService.getReportListAllBeverageStock(simpleDateFormat.parse(strStartDate), pagination, true));
+		List<Map> recorde = adminReportService.getReportListAllBeverageStock(simpleDateFormat.parse(strStartDate), pagination, false);
 		pagination.setTotalCount(Long.parseLong(recorde.size()+ ""));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination",pagination); 

@@ -325,7 +325,9 @@ public class AdminReportServiceImp implements AdminReportService {
 	@Override
 	
 	
-	public List<Map> getReportListAllBeverageStock(DateForm dateForm, Pagination pagination, boolean ispagination) {
+	public List<Map> getReportListAllBeverageStock(Date dateForm, Pagination pagination, boolean ispagination) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
@@ -338,7 +340,7 @@ public class AdminReportServiceImp implements AdminReportService {
 	+ " 			FROM import_detail impde  "
 	+ " 			INNER JOIN import imp ON impde.imp_id = imp.imp_id  " 
 	+ " 			INNER JOIN unit un on un.unit_id = A.unit_id "
-	+ " 			WHERE to_char(imp.imp_date,'yyyy-MM-dd')= '" + dateForm.getStartdate() + "' AND impde.pro_id = A.pro_id "
+	+ " 			WHERE to_char(imp.imp_date,'yyyy-MM-dd')= '" + simpleDateFormat.format(dateForm) + "' AND impde.pro_id = A.pro_id "
 	+ " 			),'0')) as pro_qty, "
 + " (COALESCE((select "
     + "             sum(od.pro_qty) as pro_qty  "
@@ -348,8 +350,8 @@ public class AdminReportServiceImp implements AdminReportService {
     + "             wecafe_order wo  "
     + "                 on od.order_id = wo.order_id  "
     + "         where "
-    + "             wo.status =2 and A.pro_id=od.pro_id and  to_char(wo.order_date,'yyyy-MM-dd') = '" + dateForm.getStartdate() 
-	+ "' 				),'0')) as salse, " 
+    + "             wo.status =2 and A.pro_id=od.pro_id and  to_char(wo.order_date,'yyyy-MM-dd') = '" + simpleDateFormat.format(dateForm) 
+	+ "' 				),'0')) as sale, " 
 + " (A.qty + (COALESCE((select "
     + "             sum(od.pro_qty) as pro_qty "
     + "         from "
@@ -358,24 +360,25 @@ public class AdminReportServiceImp implements AdminReportService {
     + "             wecafe_order wo  "
     + "                 on od.order_id = wo.order_id  "
     + "         where "
-    + "             wo.status =2 and A.pro_id=od.pro_id and  to_char(wo.order_date,'yyyy-MM-dd') = '" + dateForm.getStartdate() 
+    + "             wo.status =2 and A.pro_id=od.pro_id and  to_char(wo.order_date,'yyyy-MM-dd') = '" + simpleDateFormat.format(dateForm) 
 	+ "' 				),'0'))- COALESCE((SELECT sum(impde.pro_qty*un.qty) as pro_qty "
 	+ " 			FROM import_detail impde  "
 	+ " 			INNER JOIN import imp ON impde.imp_id = imp.imp_id   "
 	+ " 			INNER JOIN unit un on un.unit_id = A.unit_id "
-	+ " 			WHERE to_char(imp.imp_date,'yyyy-MM-dd') = '" + dateForm.getStartdate() +  "' AND impde.pro_id = A.pro_id "
+	+ " 			WHERE to_char(imp.imp_date,'yyyy-MM-dd') = '" + simpleDateFormat.format(dateForm) +  "' AND impde.pro_id = A.pro_id "
 	+ " 			),'0')) as carried_over "
-+ " from product A ";
++ " from product A order by A.pro_name";
 			
 			Query query = session.createSQLQuery(sql);
+			
 			if(ispagination){ 
 				query.setFirstResult(pagination.offset());
 				query.setMaxResults(pagination.getPerPage());
 			}
 			//query.setString(0, dateForm.getStartdate());
 			//query.setString(1, dateForm.getEnddate());
-	//	System.out.println("getStartdate = " + dateForm.getStartdate());
-		
+		System.out.println("getStartdate = " + simpleDateFormat.format(dateForm));
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 		
 			List<Map> result = (ArrayList<Map>)query.list();
 			for (Object object : result) {
