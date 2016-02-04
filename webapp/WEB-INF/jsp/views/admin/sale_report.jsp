@@ -1089,8 +1089,7 @@ a {
 			 check = true;
 			 setheadermonthly();
 			 sales.listMonthly();
-			 var end=new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate();
-			 $("#end").html('16 -'+ end);
+			
 		 }else if($(this).val()==4){
 			 $("#tbldaily").addClass("hidetable");
 			 $("#tbldetail").addClass("hidetable");
@@ -1478,6 +1477,9 @@ a {
 			 break;
 		 case '3':
 			 var d="";
+			 var end=new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate();
+			 $("#end").html('16 -'+ end);
+			 $("#select_yearly option[value='1']").attr("selected","selected");
 			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
 			   var st = "";
 				st += "<tr>";
