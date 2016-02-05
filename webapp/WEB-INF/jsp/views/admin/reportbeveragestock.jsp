@@ -48,8 +48,9 @@
 <!-- Custom Files -->
 <link href="${pageContext.request.contextPath}/resources/css/helper.css"
 	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -105,76 +106,14 @@
                                     Date : <span id="labelDate"></span>
                                 </div>  
 								<div class="panel-body">
-									<%-- <div class="clearfix">
-										<div class="pull-left">
-											<h4 class="text-right">
-												<img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic">
-												<strong>KOSIGN WECAFE</strong>
-											</h4>
-
-										</div>
-										<div class="pull-right">
-											<h4>
-												Invoice # <br> <strong>2015-04-23654789</strong>
-											</h4>
-										</div>
-									</div>
-									<hr> --%>
-								<!-- 	<div class="row">
-										<div class="col-md-12">
-
-											<div class="pull-left m-t-120">
-												<address>
-													<strong>KOSIGN, Inc.</strong><br> #12, St 323,
-													Boeungkak II Commune,<br> Toul Kork District, Phnom
-													Penh. Cambodia<br> <abbr title="Phone">P:</abbr> (855)
-													23- 99-13-14
-												</address>
-											</div>
-											<div class="pull-right m-t-30">
-												<p>
-													<strong>Order Date: </strong> Jun 15, 2015
-												</p>
-												<p class="m-t-10">
-													<strong>Order Status: </strong> <span
-														class="label label-pink">Pending</span>
-												</p>
-												<p class="m-t-10">
-													<strong>Order ID: </strong> #123456
-												</p>
-											</div>
-										</div>
-									</div> -->
-									<%-- <div class="m-h-50 form-group hidden-print ">
-										<div>
-											<label class="col-sm-1 control-label">Date : </label> <input
-												type="hidden" id="SEND_DT" data-id="SEND_DT" />
-											<div id="sendFrdt" class="date-range col-sm-5">
-												<input type="text" readonly="readonly" id="REGS_DATE_S"
-													name="startdate" class="range-start"
-													style="width: 100px; text-align: center;">&nbsp; <a
-													href="#none" id="btnREGS_DATE_S"><img
-													style="width: 20px; height: 20px;"
-													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>&nbsp;~&nbsp;
-												<input type="text" readonly="readonly" id="REGS_DATE_E"
-													name="stopdate" class="range-end"
-													style="width: 100px; text-align: center;">&nbsp; <a
-													href="#none" id="btnREGS_DATE_E"><img
-													style="width: 20px; height: 20px;"
-													src="${pageContext.request.contextPath}/resources/images/img/ico_calendar.png"></a>
-											</div>
-										</div>
-									</div> --%>
-
+									
 									<div class="row">
-										<div class="col-md-12">
-											<div class="table-responsive">
-
-												<table class="table m-t-30">
+										<div class="col-md-12 ">
+											<div class="overflow-x">
+												<table>
 													<thead>
 														<tr>
-															<th>#</th>
-															<!-- <th>Customer</th> -->
+															<th>#</th>															
 															<th>Item</th>
 															<th>Carried Over</th>
 															<th>Purchase</th>
@@ -190,15 +129,7 @@
 											</div>
 										</div>
 									</div>
-									<%-- <div class="row" style="border-radius: 0px;">
-										<div class="col-md-3 col-md-offset-9">
-											<p class="text-right"><b>Sub-total:</b>${total}</p>
-                                            <p class="text-right">Discount: 12.9%</p>
-                                            <p class="text-right">VAT: 12.9%</p>
-											<hr>
-											<h3 class="text-right" id="totalPrice">${total}Riels</h3>
-										</div>
-									</div> --%>
+								
 									<hr>
 									<div class="row">
 										<div class="col-md-2">
@@ -292,7 +223,8 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.bootpag.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/resources/js/numeral.min.js"></script>
-
+	
+<script	src="${pageContext.request.contextPath}/resources/js/print.js"></script>
 	<!-- CUSTOM JS -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
