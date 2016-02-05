@@ -41,7 +41,7 @@
 	</div>
 </div>
 <script id="CONTENT_Print_Import" type="text/x-jquery-tmpl">
-	{{if importDetail==34}} 
+	{{if importDetail==28}} 
 				<tr>
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	

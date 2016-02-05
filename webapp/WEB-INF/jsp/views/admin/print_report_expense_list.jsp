@@ -9,7 +9,7 @@
 				<a href="javascrpt:;" class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 				 id="btn_print"><i class="fa fa-print"></i></a>
 				 
-				<h2 style="text-align: center;">Import List </h2>
+				<h2 style="text-align: center;">Expense List </h2>
 				<h5><span id="report_start_date"></span> - <span id="report_end_date"></span> </h5>								
 					
 				<div class=".overflow-x"> 
@@ -38,7 +38,7 @@
 		</div>
 	</div>
 <script id="CONTENT_Print_Import" type="text/x-jquery-tmpl">
-	{{if importDetail==34}} 
+	{{if importDetail==28}} 
 				<tr>
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
