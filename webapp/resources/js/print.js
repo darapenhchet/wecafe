@@ -33,35 +33,14 @@ $(function(){
 			$(".show2").addClass("hide");
 		}
 	});
-
+	
 
 	$("#print_report").click(function(){
-		
-		 var beforePrint = function() {	    	
-		    	alert("before");
-		    };
-		    var afterPrint = function() {
-		    	alert("after");
-		    	
-		    };
-		
-		
-		if (window.matchMedia) {
-	        var mediaQueryList = window.matchMedia('print');
-	        mediaQueryList.addListener(function(mql) {
-	            if (mql.matches) {
-	                beforePrint();
-	            } else {
-	                afterPrint();
-	                window.close();
-	                alert();
-	            }
-	        });
-	    }
-
-	    window.onbeforeprint = beforePrint;
-	    window.onafterprint = afterPrint;
-	  
+		 $("#select_yearly option[value='1']").attr("selected","selected");
+		 $("#select_month option[value='1']").attr("selected","selected");
+		 
+		 $('table th.show1').removeClass("hide");
+		 $('table th.show2').addClass("hide");
 		
 	});
 	

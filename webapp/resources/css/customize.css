@@ -44,3 +44,7 @@ table td{
 .hide{
 	display: none;
 }
+
+.hide_purchase{
+	display: none;
+}

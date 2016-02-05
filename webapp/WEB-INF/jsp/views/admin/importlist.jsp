@@ -16,19 +16,7 @@
 .hidetable {
 	display: none;
 }
-table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
-}
 
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
-
-tbody tr td {
-	text-align: center;
-}
 </style>
 <link rel="shortcut icon" href="images/favicon_1.ico">
 
@@ -68,8 +56,9 @@ tbody tr td {
 <!-- Custom Files -->
 <link href="${pageContext.request.contextPath}/resources/css/helper.css"
 	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -171,9 +160,8 @@ tbody tr td {
 								<!-- End Panel Head -->
 								<div class="panel-body">
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12">
-											<table id="datatable"
-												class="table table-striped table-bordered">
+										<div class="col-md-12 col-sm-12 col-xs-12 overflow-x">
+											<table id="datatable">
 												<thead>
 													<tr>
 														<th>#</th>
@@ -252,8 +240,8 @@ tbody tr td {
 				<h4 class="modal-title">Import Detail</h4>
 
 			</div>
-			<div class="modal-body" style="width: 100%;">
-				<table class="table table-hover">
+			<div class="modal-body overflow-x">
+				<table>
 					<thead>
 						<tr>
 							<th>#</th>
@@ -402,6 +390,8 @@ tbody tr td {
 	<!-- Todo -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery.todo.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/print.js"></script>
 	
 		<script id="CONTENT_Importlist" type="text/x-jquery-tmpl">
 
@@ -960,9 +950,7 @@ tbody tr td {
                 	$("#report_start_date").html(" Date " + $("#REGS_DATE_S").val());
                 	$("#report_end_date").html($("#REGS_DATE_E").val());
                 	list_print_report();
-    				 $('#request_stock_list').modal({
-    					"backdrop":"static"
-    				}) ;
+    				
     			
     			});
                 function list_print_report(){
@@ -980,7 +968,7 @@ tbody tr td {
 					 success: function(data){ 
 						b =true;
 						v=data;				
-						console.log(data);
+					
 						 if(data.imports_print.length>0){
 							 
 								$("tbody#PRINT_CONTENTS").html('');					
@@ -995,6 +983,8 @@ tbody tr td {
 								$("tbody#PRINT_CONTENTS").html('');
 								$("#allTotalAmount_print").html("");
 							} 
+						  var divContents = $("#print_data").html(); 
+		                   loadPrintPage(divContents);
 					 },
 					 error:function(data,status,er){
 						 console.log("error: "+data+" status: "+status+" er: "+ er);
@@ -1002,11 +992,11 @@ tbody tr td {
 				 });
                 }
                // print import 
-               $("#btn_print").click(function(){
+               /* $("#btn_print").click(function(){
             	   var divContents = $("#print_data").html(); 
                    loadPrintPage(divContents);
                    return false;
-               });
+               }); */
               
             });
 		

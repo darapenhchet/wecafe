@@ -13,11 +13,9 @@
 				 
 				<h2 style="text-align: center;">Import List </h2>
 				<h5><span id="report_start_date"></span> - <span id="report_end_date"></span> </h5>
-				
-				
-					
-				<div id="tbl_import_data" > 
-					<table border="1" cellpadding="0" cellspacing="0" border="1" style="text-align:center;width: 100%;line-height: 24px;" >
+										
+				<div id="tbl_import_data" class="overflow-x" > 
+					<table  style="border: none;" >
 						<thead class="style2">
 							<tr class="active">
 								<th>#</th>
@@ -35,7 +33,6 @@
 				<br/>
 				<div style="    border: 1px solid;margin: 0 auto; padding: 3px;width: 28%;margin-right: -2px; color: blue; text-align: left;padding-left: 8px;">
 					<span>Total Amount : </span><span id="allTotalAmount_print"></span>
-					<!-- <input  readonly="readonly" value="0"  id="allTotalAmount_print" type="text"> -->
 				</div>
 				
 			</div>
@@ -44,6 +41,11 @@
 	</div>
 </div>
 <script id="CONTENT_Print_Import" type="text/x-jquery-tmpl">
+	{{if importDetail==34}} 
+				<tr>
+					<td colspan="8" style="border: none;padding:22px;"></td>
+				</tr>	
+	{{/if}}	
 	<tr>
 		<td>{{= importDetail}} </td>
 		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
@@ -53,6 +55,3 @@
 	</tr>
 
 </script>
-
-
-

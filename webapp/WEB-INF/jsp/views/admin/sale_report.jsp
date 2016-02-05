@@ -546,9 +546,10 @@ a {
 	 setCalendar();  
 	
 	
-	 $('#monthly_list').on('hidden.bs.modal', function (event) {
+	 /* $('#monthly_list').on('hidden.bs.modal', function (event) {
  		$("#select_yearly option[value='1']").attr("selected","selected");
-	  })
+ 		$("#select_yearly option[value='1']").attr("selected","selected");
+	  }) */
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
@@ -1456,6 +1457,7 @@ a {
 			}); 
 	 } 
 	 $("#print_report").click(function() {
+		
 		 switch($("#selectreport").val()){
 		 case '0':  
 			 break;

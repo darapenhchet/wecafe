@@ -555,8 +555,6 @@ a {
 	 setCalendar();
 	 searchByDate();
 
-	 
-	
      
      // print pursurse monthly 
      $("#btn_print_monthly").click(function(){
@@ -567,7 +565,6 @@ a {
      
      // print pursurse yearly 
      $("#btn_print_yearly").click(function(){
-    	$("#row_break").show();
   	   var divContents = $("#print_data_yearly").html(); 
          loadPrintPage(divContents,getPortrait());
          return false;
@@ -1112,16 +1109,7 @@ a {
 	 
 	function settableheader(){
 		var monthOfyear = ['January', 'February', 'Match', 'April', 'May', 'June', 'July','Augest','Septemper', 'October', 'November', 'December'];
-		//var mm = moment().isoWeekday(1);
-		//var mm= moment($("#REGS_DATE_S").val());
-		//mm = moment().weekday(6);
-		//console.log(mm.weekday(0).get('date'));
-		/* 	$("#startfrom").html(" in " +  mm.get('year'));
-		$("#purchasemonth").html(monthOfyear[mm.get('month')]);	
-		$("#startfrom").html("on" + monthOfyear[mm.get('month')] +" "+ mm.weekday(1).get('date') +", "+ mm.get('year'));
-	*/
-	//	var dd = moment(mm.weekday(0).get('date')).isoWeekday(1);
-	 
+		
 		var dd = 0;
 		var dayID ="";
 		
@@ -1204,7 +1192,7 @@ a {
 	 		      dateFormat: "yy-mm-dd",
 	 		      onClose: function( selectedDate ) {			    	  
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
-	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 				
 	 						$("#REGS_DATE_E").datepicker("option", "minDate", selectedDate);
 	 						if($("#EDate").hasClass("hidetable"))
 	 							{
@@ -1233,7 +1221,7 @@ a {
 
 	 			    	  $("#REGS_DATE_S").datepicker("option", "maxDate", selectedDate);
 	 			    	    calculateDay($("#REGS_DATE_S").datepicker("getDate"),$("#REGS_DATE_E").datepicker("getDate"));
-	 						//moneyPerDay($("#totalAmount").val(), $("#totalday").val());
+	 						
 	 						$("#REGS_DATE_S").datepicker('setDate', moment($("#REGS_DATE_E").val()).subtract(6, 'days').format('YYYY-MM-DD'));
 	 						settableheader();
 	 						searchByDate();
@@ -1245,7 +1233,7 @@ a {
 	 			$("#REGS_DATE_S").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 		else
 	 			$("#REGS_DATE_S").datepicker('setDate', moment().subtract(6, 'days').format('YYYY-MM-DD'));
-	 		//$("#REGS_DATE_E").datepicker('setDate', moment().add(30, 'days').format('YYYY-MM-DD'));
+	 		
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
 	 $(document).on("click","#impid", function(){
@@ -1293,8 +1281,7 @@ a {
 	           },
 			    success: function(data) {
 			 
-			    	//b =true; 
-			    	//v = data;
+			    
 					var total_amount = 0;
 				 	 if(data.reportdaily_print.length>0){
 						$("tbody#PRINT_CONTENTS_DAILY").html('');
@@ -1527,9 +1514,8 @@ a {
 			 break;
 			 
 		 case '4': 
-			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());
-			
-			
+			 $("#select_month option[value='1']").attr("selected","selected");
+			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());			
 			 print_yearly();
 			 $('#yearly_list').modal({
 					"backdrop":"static"

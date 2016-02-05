@@ -48,8 +48,9 @@
 <!-- Custom Files -->
 <link href="${pageContext.request.contextPath}/resources/css/helper.css"
 	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,15 +71,7 @@
 .borderRed {
 	border-color: red;
 }
-	table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
-}
-
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
+	
 </style>
 </head>
 <body class="fixed-left" ng-app="wecafe"> 
@@ -137,8 +130,8 @@ thead tr th {
 								<!--End Panel Head -->
 								<div class="panel-body">
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12">
-											<table id="datatable" class="table table-striped table-bordered">
+										<div class="col-md-12 col-sm-12 col-xs-12 overflow-x">
+											<table id="datatable">
 												<thead>
 													<tr>
 														<th>#</th>
@@ -214,8 +207,8 @@ thead tr th {
 				<h4 class="modal-title">Expense</h4>
 
 			</div>
-			<div class="modal-body" style="width: 100%;">
-				<table class="table table-hover">
+			<div class="modal-body overflow-x">
+				<table >
 					<thead>
 						<tr>
 							<th style="text-align: left;">#</th>
@@ -784,10 +777,6 @@ thead tr th {
                 	$("#report_start_date").html(" Date " + $("#REGS_DATE_S").val());
                 	$("#report_end_date").html($("#REGS_DATE_E").val());
                 	list_print_report();
-    				$('#request_stock_list').modal({
-    					"backdrop":"static"
-    				}) ;
-    				
     			});
                 function list_print_report(){
                 	var json = { 
@@ -812,11 +801,13 @@ thead tr th {
 									  format_print(data.expense_print[i]); 
 									}  
 								$("#CONTENT_Print_Import").tmpl(data.expense_print).appendTo("tbody#PRINT_CONTENTS");
-								$("#allTotalAmount_print").val(numeral(data.total_amount_print[0].total_amount).format('0,0'));
+								$("#allTotalAmount_print").html(numeral(data.total_amount_print[0].total_amount).format('0,0'));
 							}else{
 								$("tbody#PRINT_CONTENTS").html('<tr>NO CONTENTS</tr>');
-								$("#allTotalAmount_print").val("");
+								$("#allTotalAmount_print").html("");
 							} 
+						 var divContents = $("#print_data").html(); 
+					     loadPrintPage(divContents,getPortrait());
 					 },
 					 error:function(data,status,er){
 						 console.log("error: "+data+" status: "+status+" er: "+ er);
@@ -850,6 +841,9 @@ thead tr th {
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.scroll.min.js"></script>
+	
+<script
+	src="${pageContext.request.contextPath}/resources/js/print.js"></script>
 
 </body>
 </html>

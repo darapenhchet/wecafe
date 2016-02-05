@@ -10,7 +10,7 @@
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 					id="btn_print"><i class="fa fa-print"></i></a>
 
-				<h2 style="text-align: center;">Daily Sale List</h2>
+				<h2 style="text-align: center;">Daily Purchase List</h2>
 				<h5>
 					<span id="report_start_daily"></span>
 				</h5>
@@ -56,7 +56,7 @@
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 					id="btn_print_weekly"><i class="fa fa-print"></i></a>
 
-				<h2 style="text-align: center;">Weekly Sale List</h2>
+				<h2 style="text-align: center;">Weekly Purchase List</h2>
 				<h5>
 					<span id="report_start_weekly"></span> - <span
 						id="report_end_weekly"></span>
@@ -126,7 +126,7 @@
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 					id="btn_print_monthly"><i class="fa fa-print"></i></a>
 
-				<h2 style="text-align: center;">Monthly Sale List</h2>
+				<h2 style="text-align: center;">Monthly Purchase List</h2>
 				<h5>
 					<span id="report_start_monthly"></span> 
 				</h5>
@@ -165,7 +165,7 @@
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 					id="btn_print_yearly"><i class="fa fa-print"></i></a>
 
-				<h2 style="text-align: center;">Yearly Sale List</h2>
+				<h2 style="text-align: center;">Yearly Purchase List</h2>
 				<h5>
 					<span id="report_start_yearly"></span> 
 				</h5>
