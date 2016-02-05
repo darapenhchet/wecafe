@@ -82,7 +82,8 @@ function pagePrintPortrait(){
 	var page_Print="@media print { "
 
 		+"table { page-break-before: always;page-break-after: always; !important;line-height:22px; } "
-		+"tr    {  page-break-inside: avoid; !important; page-break-after:auto  !important;}"
+		+"tr    {  page-break-inside: avoid; !important; page-break-after:auto  !important;}" 
+		+"table th{background:none;}"
 		+"html,body {"
 		+"width: 900px !important;"
 		+"box-shadow: 0;"
@@ -121,8 +122,9 @@ function getPortrait(){
 	
 function pagePrintLanscape(){
 	var page_Print="@media print { "
-		+" table {page-break-inside : auto;border:none !important;line-height:22px;} "
+		+"table {page-break-inside : auto;border:none !important;line-height:22px;} "
 		+"table tr    { page-break-inside:avoid; page-break-after:auto; } "
+		+"table th{background:none;}"
 		+"html,body ,page[size=\"landscape\"] {"
 		+"h1 { page-break-before : right } "
 		+"h2 { page-break-after : avoid }"
