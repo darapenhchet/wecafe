@@ -329,7 +329,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 										   "FROM " +
 										   "	crosstab ( " 
 										   	+ " 'SELECT P.pro_name::text As row_name " 		   
-											+ " ,to_char(ord.order_date, ''DD'')::text As sale_date 	 "	   
+											+ " ,to_char(ord.order_date, ''mon'')::text As sale_date 	 "	   
 											+ " ,ARRAY[SUM(od.pro_qty) "
 											+ " ,sum(od.pro_qty* od.pro_unit_price)] AS row " 	 
 										    + " from product P  INNER JOIN order_detail od ON od.pro_id = P.pro_id   "
