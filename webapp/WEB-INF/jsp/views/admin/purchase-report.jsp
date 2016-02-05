@@ -621,7 +621,7 @@ a {
 		 check = true;
 		 checkFilter(1);
 	 });
-	 products.listDetail = function(currentPage){ 		
+	 products.listDetail = function(currentPage){
 		var byyear = $("#selectyear").val(); 
 		 $.ajax({ 
 			    url: "${pageContext.request.contextPath}/api/admin/reports/purchasereportdetail/" , 
@@ -672,6 +672,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) {
+			    	console.log(data);
 			    	b =true;
 					v=data;
 					var total_amount = 0;
@@ -680,7 +681,7 @@ a {
 						   for(var i=0;i<data.reportdaily.length;i++){
 							products.formatDaily(data.reportdaily[i]); 
 						}   
-					 for(var i=0; i<data.get_total_amount.length; i++){ 
+					 for(var i=0; i<data.get_total_amount.length; i++){
 							   total_amount += data.get_total_amount[i].purchase_total_amount;
 						   }
 						$("#CONTENT_DAILY").tmpl(data.reportdaily).appendTo("tbody#tbodydaily"); 
@@ -714,7 +715,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			 
+			    	console.log(data);
 			    	b =true;
 					v=data;
 			    	if(data.reportweekly.length>0){
@@ -760,7 +761,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			 
+			    	console.log(data);
 			    	b=true;
 			    	var total_all = 0;
 			    	    if(data.reportmonthly){ 
@@ -830,7 +831,7 @@ a {
 			    	b= true;
 			    	v=data;
 			    	var total_amount = 0;
-			 
+			    	console.log(data);
 			    	if(data.reportyear){
 				    	$("tbody#tbodyyearly").html('');
 				    	for(var i=0;i<data.reportyear.length;i++){

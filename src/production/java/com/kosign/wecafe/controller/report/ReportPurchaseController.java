@@ -49,8 +49,7 @@ public class ReportPurchaseController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("Date = " + startDate);
-		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,true)); 
-		//pagination.setTotalCount(adminReportService.countDaily(startDate));
+		map.put("reportdaily", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,true));  
 		map.put("get_total_amount", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false));
 		List<Map> totalRecord=adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false); 
 		pagination.setTotalCount(Long.parseLong(totalRecord.size()+""));
@@ -64,7 +63,7 @@ public class ReportPurchaseController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("Date = " + startDate);
-		map.put("reportdaily_print", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false));  
+		map.put("reportdaily_print", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,true));  
 		map.put("get_total_amount_print", adminReportService.getListReportDailyPurchaseRest(pagination, startDate,false)); 
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
 	}

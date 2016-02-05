@@ -478,7 +478,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   "FROM " +
 										   "	crosstab ( " +
 										   "	'SELECT ARRAY[sup.sup_name::text, P.pro_name::text] As row_name " +
-										   "		   ,to_char(imp.imp_date, ''DD'')::text As imp_date 	 " +
+										   "		   ,to_char(imp.imp_date, ''mon'')::text As imp_date 	 " +
 										   "		   ,ARRAY[SUM(impde.pro_qty), SUM(impde.unit_price*impde.pro_qty)] AS row  " +
 										   "	 FROM product P INNER JOIN import_detail impde on impde.pro_id = P.pro_id " +
 										   "	 INNER JOIN import imp on imp.imp_id = impde.imp_id" +
@@ -488,7 +488,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " UNION ALL "+
 										   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name "+
 										   " ,to_char(A.expense_date, ''mon'')::text As imp_date "+
-										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row "+
+										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice*B.expense_qty)] AS row "+
 										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id "+
 										   " LEFT JOIN users C ON A.exp_user_id = C.id "+
 										   " WHERE to_char(A.expense_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
@@ -692,7 +692,7 @@ public class AdminReportServiceImp implements AdminReportService {
 									   " UNION ALL " +
 									   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
 									   " ,to_char(A.expense_date, ''DD'')::text As imp_date " +
-									   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
+									   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice*B.expense_qty)] AS row " +
 									   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
 									   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 									   " WHERE to_char(A.expense_date,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
@@ -780,7 +780,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " UNION ALL " +
 										   " SELECT ARRAY[B.customer::text, B.expense_description::text] As row_name " +
 										   " ,to_char(A.expense_date, ''DD'')::text As imp_date " +
-										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice)] AS row " +
+										   " ,ARRAY[SUM(B.expense_qty), SUM(B.expense_unitprice*B.expense_qty)] AS row " +
 										   " FROM tbl_expense A INNER JOIN tbl_expense_detail B ON A.expense_id = B.expense_id " +
 										   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 										   " WHERE to_char(A.expense_date,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
