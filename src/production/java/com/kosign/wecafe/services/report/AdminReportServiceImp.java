@@ -493,7 +493,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " LEFT JOIN users C ON A.exp_user_id = C.id "+
 										   " WHERE to_char(A.expense_date ,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startDate)+"'' AND ''"+sdf.format(endDate)+"'' "+
 										   " GROUP BY 1,2 "+
-										   "	 ORDER BY 2', " +
+										   "	 ORDER BY 1', " +
 										   "'SELECT to_char(date ''"+sdf.format(startDate)+"'' + (n || '' month'')::interval, ''mon'') As short_mname " +   
 										   " FROM generate_series(0,11) n' " +
 										   ") AS mthreport ( " +
@@ -697,7 +697,7 @@ public class AdminReportServiceImp implements AdminReportService {
 									   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 									   " WHERE to_char(A.expense_date,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 									   " GROUP BY 1,2 " +
-									   "	 ORDER BY 2', " +
+									   "	 ORDER BY 1', " +
 									   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
 									   " FROM generate_series(0,6) n;' " +
 									   ") AS mthreport ( " +
@@ -785,7 +785,7 @@ public class AdminReportServiceImp implements AdminReportService {
 										   " LEFT JOIN users C ON A.exp_user_id = C.id " +
 										   " WHERE to_char(A.expense_date,''yyyy-MM-dd'') BETWEEN ''"+sdf.format(startdate)+"'' And ''"+sdf.format(enddate)+"''" +
 										   " GROUP BY 1,2 " +
-										   "	 ORDER BY 1,2', " +
+										   "	 ORDER BY 1', " +
 										   "'SELECT to_char(date ''"+sdf.format(startdate)+"'' + (n || '' day'')::interval, ''DD'') As short_mname " +									   
 										   " FROM generate_series(0,"+ (calEndDate.get(Calendar.DAY_OF_MONTH) -1) +") n;' " +
 										   ") AS mthreport ( " +

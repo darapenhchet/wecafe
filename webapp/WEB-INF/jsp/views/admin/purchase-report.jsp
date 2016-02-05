@@ -390,6 +390,7 @@ a {
 								<th>Produce Name</th>
 								<th>Qty</th>
 								<th>Unit Price</th>
+								<th>Amount</th>
 								<th>Supplier Name</th>
 							</tr>
 						</thead>
@@ -461,10 +462,10 @@ a {
     	<tr>  
 			<td>{{= order}}</td>
 			<td><a herf="javascript:;" id="impid" class="ng-binding">{{= purchase_id}}</a></td>
-			<td>{{= purchase_date}} </td>
-			<td>{{= purchase_by}} ​</td>
-			<td>{{= purchase_type}} ​</td>
-			<td class="content-right">{{= purchase_total_amount}} </td>
+			<td>{{= purchase_date}}</td>
+			<td>{{= purchase_by}}</td>
+			<td>{{= purchase_type}}</td>
+			<td class="content-right">{{= purchase_total_amount}}</td>
 		</tr>
     </script>
  
@@ -635,7 +636,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			 
+			 		$("#allTotalAmount").val("");
 			    	b =true;
 					v=data;
 					 if(data.reportdetail.length>0){
@@ -670,8 +671,7 @@ a {
 	               xhr.setRequestHeader("Accept", "application/json");
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
-			    success: function(data) { 
-			 
+			    success: function(data) {
 			    	b =true;
 					v=data;
 					var total_amount = 0;
@@ -1237,30 +1237,49 @@ a {
 	 		$("#REGS_DATE_E").datepicker('setDate', moment().format('YYYY-MM-DD'));
 	 }
 	 $(document).on("click","#impid", function(){
-		 
+		 _this = $(this);
+		   	if(_this.parents("tr").children().eq(4).html() == 'Import')
+		   		url = "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html();
+		   	else
+		   		url = "${pageContext.request.contextPath}/admin/getexpensedetail/" + $(this).html(); 
 		   $.ajax({ 
-			    url: "${pageContext.request.contextPath}/admin/getimportdetail/" + $(this).html() , 
-			    type: 'POST', 
+			    url: url , 
+			    type: 'GET', 
 			    dataType: 'JSON', 
 			    beforeSend: function(xhr) {
                   xhr.setRequestHeader("Accept", "application/json");
                   xhr.setRequestHeader("Content-Type", "application/json");
               },
-			    success: function(data) { 
-			 
-			    	var st= "";
-			    	var amount = 0;
-			       for(i=0; i<data.length; i++){
-			    	   st += "<tr><td>" + (i + 1) + "</td>";
-			    	   st += "<td>" + data[i].proname +"</td>";
-			    	   st += "<td>" + data[i].proqty +"</td>";
-			    	   st += "<td>" + data[i].prounitprice +"</td>";
-			    	   st += "<td>" + data[i].supname +"</td></tr>"
-			    	   amount += data[i].proqty * data[i].prounitprice;
-			       }
-			       $("#impProDetail").html(st);
-			       $("#btotalamount").val(amount);
-			    },
+			    success: function(data) {  
+			    	console.log(data);
+		    	var st= "";
+		    	var amount = 0;
+		    	if(_this.parents("tr").children().eq(4).html() == 'Import'){
+				       for(i=0; i<data.length; i++){
+				    	   st += "<tr><td>" + (i + 1) + "</td>";
+				    	   st += "<td>" + data[i].proname +"</td>";
+				    	   st += "<td>" + data[i].proqty +"</td>";
+				    	   st += "<td>" + data[i].prounitprice +"</td>";
+				    	   st += "<td>" + data[i].proqty * data[i].prounitprice +"</td>";
+				    	   st += "<td>" + data[i].supname +"</td></tr>"
+				    	   amount += data[i].proqty * data[i].prounitprice;
+				       }
+		    	}else
+		    		{
+		    		for(i=0; i<data.length; i++){
+				    	   st += "<tr><td>" + (i + 1) + "</td>";
+				    	   st += "<td>" + data[i].exp_description +"</td>";
+				    	   st += "<td>" + numeral(data[i].exp_qty).format('0,0') +"</td>";
+				    	   st += "<td>" + numeral(data[i].exp_unitprice).format('0,0') +"</td>";
+				    	   st += "<td>" + numeral((data[i].exp_unitprice * data[i].exp_qty)).format('0,0') +"</td>";
+				    	   st += "<td>" + data[i].customer +"</td>"; 
+				    	   amount += (data[i].exp_unitprice * data[i].exp_qty);
+				       }
+		    		}
+					       $("#impProDetail").html(st);
+					       $("#btotalamount").val(amount);
+					    
+			    	},
 			    error:function(data,status,er) { 
 			        console.log("error: "+data+" status: "+status+" er:"+er);
 			    }

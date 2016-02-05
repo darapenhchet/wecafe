@@ -72,7 +72,10 @@ public class Pagination implements Serializable{
 	}
 
 	public void setTotalCount(Long totalCount) {
-		this.totalCount = totalCount;
+		if(totalCount == 0)
+			this.totalCount = 1L;
+		else
+			this.totalCount = totalCount;
 	}
 
 	public int getTotalPages() {

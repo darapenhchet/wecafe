@@ -393,7 +393,7 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 	@Override
 	@Transactional
 	public Long countDaily(Date dateTime) throws HibernateException, ParseException {  
-	 	String startDate = new SimpleDateFormat("YYYY-MM-DD").format(dateTime); 
+	 	String startDate = new SimpleDateFormat("yyyy-MM-dd").format(dateTime); 
 		Session session = null;
 		try{
 			session = sessionFactory.getCurrentSession();
@@ -403,13 +403,13 @@ public class AdminReportSaleServiceIml implements AdminReportSaleService {
 							+ " 		LEFT JOIN sale C on C.ord_id = B.order_id "
 							+ " 		WHERE to_char(C.sale_datetime,'yyyy-MM-dd') = '" + startDate + "'");  
 			query.addScalar("count", LongType.INSTANCE);
+			System.out.println("totalCount = " + query.uniqueResult());
 			return (Long) query.uniqueResult();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
 			
-		}  
-		
+		}
 		return null;
 	}
 /*	@Override
