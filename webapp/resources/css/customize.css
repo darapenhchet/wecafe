@@ -12,6 +12,7 @@ table, td, th {
 	 border: 1px solid black;
 	 font-size: 12px !important;
 	 text-align: center !important;
+	 padding: 4px;
 	
 }
 table th{

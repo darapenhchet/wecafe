@@ -53,6 +53,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -62,18 +63,6 @@
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-<style>
-
-table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
-}
-
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
-</style>
 
 </head>
 
@@ -133,17 +122,15 @@ thead tr th {
 						</div>
 						<div class="panel-body">
 							
-							<table class="table table-bordered table-striped" id="datatable">
+							<table  id="datatable">
 								<thead>
 									<tr>
 										<th>#</th>
 										<th>Name</th>									
 										<th>Email</th>
 										<th>Username</th>
-										<th>Type</th>
-										<!-- <th>Created By</th> -->
-										<th>Created Date</th>
-										<!-- <th>Updated By</th> -->
+										<th>Type</th>									
+										<th>Created Date</th>									
 										<th>Updated Date</th>
 										<th>Status</th>
 										<th>Actions</th>
@@ -291,7 +278,7 @@ thead tr th {
 		<td>{{= lastUpdatedDate}}</td>
 		<td style="text-align: center;">
 			{{if status=="ACTIVE" }} 
-				<a href="javascript:;" class="btn btn-success waves-effect" type="button" id="btnStatus">Active</a>
+				<a href="javascript:;" class="btn btn-success waves-effect btn-sm" type="button" id="btnStatus">Active</a>
 			{{else status=="INACTIVE" }} 
 				<a href="javascript:;" class="btn btn-warning waves-effect" type="button" id="btnStatus">Inactive</a> 
 			{{else status=="DELETED" }} 

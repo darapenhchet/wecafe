@@ -237,7 +237,7 @@
 	</div>
 
 <script id="CONTENT_DAILY_PRINT" type="text/x-jquery-tmpl">
-			{{if order==44}} 
+			{{if order==37}} 
 				<tr>
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
@@ -252,7 +252,7 @@
  </script>
 <!-- ============================  tbodyweekly  ================================== -->
 <script id="CONTENT_WEEKLY_PRINT" type="text/x-jquery-tmpl">
-		{{if order==44}} 
+		{{if order==37}} 
 				<tr>
 					<td colspan="8" style="border: none;padding:22px;"></td>
 				</tr>	
@@ -280,7 +280,7 @@
     </script>
 <!-- ============================  tbodyyearly  ================================== -->
 <script id="CONTENT_YEARLY_PRINT" type="text/x-jquery-tmpl">    
-			{{if order==44}} 
+			{{if order==37}} 
 				<tr>
 					<td colspan="8" style="border: none;padding:10px;"></td>
 				</tr>	

@@ -50,6 +50,8 @@
 	rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,17 +62,7 @@
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-<style type="text/css">
-	table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
-}
 
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
-</style>
 </head>
 
 
@@ -132,7 +124,7 @@ thead tr th {
 								</div>
 						</div>
 						<div class="panel-body">
-							<table class="table table-bordered table-striped"
+							<table class="overflow-x"
 								id="datatable-editable">
 								<thead>
 									<tr>
@@ -144,38 +136,7 @@ thead tr th {
 									</tr>
 								</thead>
 								<tbody id="CONTENTS">
-									<%-- <c:forEach items="${units}" var="unit" varStatus="theCount">
-                                        <tr class="gradeX">
-                                            <td id="unitId" style="display : none;">${unit.unitId}</td>
-                                            <td >${theCount.count }</td>
-                                            <td>${unit.unitName }</td> 
-                                            <td>${unit.qty}</td>
-                                            <td>${unit.to}</td>
-                                            <td style="text-align:center;" class="actions">
-                                                <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                                                <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                                <a href="${pageContext.request.contextPath}/admin/updateunit/${unit.unitId}" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                                <!-- <a class="on-default remove-row" href="javascript:;" id="btnRemove"><i class="fa fa-trash-o"></i></a> -->
-                                            </td>
-                                        </tr> 
-                                    </c:forEach>  --%>
-                                    <%-- <tr	dir-paginate="(key,unit) in units|filter:search|itemsPerPage:perPage|orderBy : unit.unitName"
-										class="gradeX">
-										<td id="unitId" style="display: none;">{{unit.unitId}}</td>
-										<td>{{key+1 }}</td>  
-										<td>{{unit.unitName }}</td> 
-										<td>{{unit.qty }}</td>
-										<td>{{unit.to }}</td>
-										<td style="text-align: center;" class="actions"><a
-											href="#" class="hidden on-editing save-row"><i
-												class="fa fa-save"></i></a> <a href="#"
-											class="hidden on-editing cancel-row"><i
-												class="fa fa-times"></i></a> <a
-											href="${pageContext.request.contextPath}/admin/updateunit/{{unit.unitId}}"
-											class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-											<a class="on-default remove-row" href="javascript:;"
-											id="btnRemove"><i class="fa fa-trash-o"></i></a></td> 
-									</tr>--%>
+									
 								</tbody>
 							</table>
 						</div>

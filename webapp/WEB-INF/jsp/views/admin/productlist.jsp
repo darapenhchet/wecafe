@@ -46,20 +46,14 @@
 
 <!-- Custom Files -->
 <link href="${pageContext.request.contextPath}/resources/css/helper.css"	rel="stylesheet" type="text/css" />
+
 <link href="${pageContext.request.contextPath}/resources/css/style.css"	rel="stylesheet" type="text/css" />
+
+<link href="${pageContext.request.contextPath}/resources/css/customize.css"	rel="stylesheet" type="text/css" />
+
 <script	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
 
-<style type="text/css">
-	table{
-	font-family: 'Khmer OS', 'Khmer OS System'; font-size: 10pt;
-}
 
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
-</style>
 </head>
 <body class="fixed-left-void" ng-app="wecafe">
 	<!-- Begin page -->
@@ -111,22 +105,21 @@ thead tr th {
 								</div>
 								<div class="panel-body">
 									<div class="row">
-										<div class="col-md-12 col-sm-12 col-xs-12" >
-											<table id="datatable"
-												class="table table-striped table-bordered">
+										<div class="col-md-12 col-sm-12 col-xs-12 ellipsis" >
+											<table id="datatable" >
 												<thead>
 													<tr>
-														<th width="5%">#</th>
-														<th width="20%">Name</th>
-														<th style="text-align: right;" width="10%">Quantity</th>
-														<th style="text-align: right;" width="10%">Unit Price</th>
-														<th style="text-align: right;" width="10%">Cost Price</th>
-														<th style="text-align: right;" width="10%">Sale Price</th>
-														<th width="15%">Category</th>
-														<th style="text-align: center;" width="10%">Unit</th>
-														<th style="text-align: center;" width="7%">Image</th>
-														<th style="text-align: center;" width="10%">Status</th>
-														<th style="text-align: center;" width="10%">Action</th>
+														<th>#</th>
+														<th>Name</th>
+														<th>Quantity</th>
+														<th>Unit Price</th>
+														<th>Cost Price</th>
+														<th>Sale Price</th>
+														<th>Category</th>
+														<th>Unit</th>
+														<th>Image</th>
+														<th>Status</th>
+														<th>Action</th>
 													</tr>
 												</thead>
 												<tbody id="CONTENTS">
@@ -218,13 +211,13 @@ thead tr th {
 	    	<tr>
 				<td style="display: none;">{{= productId}}</td>
 				<td>{{= importDetail}}</td>
-				<td>{{= productName}}</td>
-				<td>{{= quantity + " " + unit.to}}</td>
-				<td>1 {{= unit.unitName}} = {{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
+				<td class="content-left"><span class="ellipsis">{{= productName}}</span></td>
+				<td class="content-left" >{{= quantity + " " + unit.to}}</td>
+				<td class="content-left">1 {{= unit.unitName}} = {{= unitPrice}} <span style="font-weight:bold;">Riel</span></td>
 				<td style="text-align:right;">{{= costPrice}} <span style="font-weight:bold;">Riel</span>​</td>
 				<td style="text-align:right;">{{= salePrice}} <span style="font-weight:bold;">Riel</span></td>
-				<td>{{= category.catName}}</td>
-				<td>{{= unit.unitName +" (" + unit.qty + " " + unit.to +")"}}</td>
+				<td class="content-left">{{= category.catName}}</td>
+				<td class="content-left">{{= unit.unitName +" (" + unit.qty + " " + unit.to +")"}}</td>
 				<td style="text-align:center;"><img style="text-align:center;" src="${pageContext.request.contextPath}/resources/images/products/{{= image}}" class="img-thumbnail" alt="" width="30px" height="30px"/></td>
 				<td style="text-align:center;">
 					<span>

@@ -50,6 +50,8 @@
 	rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+<link href="${pageContext.request.contextPath}/resources/css/customize.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,18 +62,7 @@
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/modernizr.min.js"></script>
-<style type="text/css">
-table {
-	font-family: 'Khmer OS', 'Khmer OS System';
-	font-size: 10pt;
-}
 
-thead tr th {
-	text-align: center !important;
-	font-size: 14px !important;
-	font-weight: bold;
-}
-</style>
 </head>
 
 
@@ -132,7 +123,7 @@ thead tr th {
 							</div>
 						</div>
 						<div class="panel-body">
-							<table class="table table-bordered table-striped"
+							<table class="overflow-x"
 								id="datatable-editable">
 								<thead>
 									<tr>
