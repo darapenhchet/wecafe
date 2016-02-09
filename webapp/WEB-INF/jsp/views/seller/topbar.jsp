@@ -25,6 +25,7 @@
 					<div class="form-group">
 						<input type="text" class="form-control search-bar"
 							placeholder="Type here for search..." id="txtMessage">
+						<button id="btnSearch" class="btn btn-primary">Search</button>
 					</div>
 					<button type="submit" class="btn btn-search">
 						<i class="fa fa-search"></i>

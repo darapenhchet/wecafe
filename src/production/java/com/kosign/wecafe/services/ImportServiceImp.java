@@ -334,5 +334,21 @@ public class ImportServiceImp implements ImportService {
 			ex.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	@Transactional
+	public List<Product> searchByName(String str) { 
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				Query query = session.createQuery("FROM Product where status='t' and lower(productName) like '" + str.toLowerCase() + "%'");
+				 
+				List<Product> products = query.list(); 
+				 return products; 
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+			return null; 
 	} 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosign.wecafe.entities.ImportDetail;
@@ -63,6 +64,11 @@ public class SellController {
 	@RequestMapping(value="/seller/searchproduct", method=RequestMethod.POST)
 	public @ResponseBody List<Product> searchProductName(){
 		return importService.listAllProduct();
+	}
+	
+	@RequestMapping(value="/seller/searchbyname/{proName}", method=RequestMethod.POST)
+	public @ResponseBody List<Product> searchByName(@PathVariable ("proName") String proname){
+		return importService.searchByName(proname);
 	}
 	
 	@RequestMapping(value = "/seller/request_products", method = RequestMethod.GET)

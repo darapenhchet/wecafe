@@ -17,6 +17,7 @@ public interface ImportService {
 	//public List<Map> listAllImportProduct();
 	public Boolean saveImportPro(List<ImportForm> importForm);
 	public List<Product> listAllProduct();
+	public List<Product> searchByName(String str);
 	public List<Supplier> listAllSupplier();
 	public Boolean updateImportPro(List<ImportForm> importform, Long id);
 	 

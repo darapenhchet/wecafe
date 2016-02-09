@@ -111,7 +111,7 @@
 		<!-- Top Bar End -->
 		<div>
 			<button id="btnSendMessage">SEND MESSAGE</button>
-			<input type="text" id="txtMessage" />
+			<input type="text" id="txtMessage" /> 
 			<div style="width: 50%; float: left; margin-left: 3%;">
 				<img
 					src="${pageContext.request.contextPath}/resources/images/img/user.png"
@@ -652,8 +652,7 @@
 	/* ==============================================
 	Counter Up
 	=============================================== */
-	jQuery(document).ready(
-					function($) {
+	jQuery(document).ready(function($) {
 						var _thisRow;
 						
 						//Check qty for input only number
@@ -688,9 +687,33 @@
 							//$("#form_request_stock").bPopup();
 
 						});
-						
-						
-						
+						$("#btnSearch").click(function(e){
+							e.preventDefault();  
+							if ($("#txtMessage").val() != "")
+								url = "${pageContext.request.contextPath}/seller/searchbyname/" + $("#txtMessage").val();
+							else
+								url = "${pageContext.request.contextPath}/seller/searchproduct/";
+							$.ajax({
+								url :  url,
+								type : 'POST',
+								datatype : 'JSON', 
+								beforeSend : function(xhr) {
+									xhr.setRequestHeader("Accept", "application/json");
+									xhr.setRequestHeader("Content-Type", "application/json");
+								},
+								success : function(data) {
+									 console.log(data);
+									 $("#myCarousel1").html('');
+									 if(data.length != 0){
+										 
+									 }
+								},
+								error : function(data, status, er) {
+									console.log("error: " + data + "status: " + status + "er: ");
+								} 
+							});
+							 
+						});
 						$(document).on("blur", "#product_name ,#product_qty,#remain_qty",
 								function() {
 									if ($(this).val() == "") {
@@ -700,11 +723,7 @@
 										$(this).removeClass("borderRed");
 						});
 						
-						$(document)
-								.on(
-										"click",
-										"#btn_add",
-										function() {
+						$(document).on("click", "#btn_add", function() {
 											if ($("#product_name").val() == "") {
 												$("#product_name").addClass("borderRed");
 												return;
@@ -760,75 +779,42 @@
 							time : 1200
 						});
 
-						$("#btn_save")
-								.click(
-										function() {
+						$("#btn_save").click(function() {
 											var requestDetail = [];
 											if ($('#tbllistimport tr').length == 0) {
 												alert("There is no data was added");
 												return;
 											}
-											$('#tbllistimport tr')
-											
-													.each(
-															function() {
-																json = {
-																	"proId" : ($(
-																			this)
-																			.find(
-																					"td")
-																			.eq(
-																					0)
-																			.html()),
-																	"proQty" : ($(
-																			this)
-																			.find(
-																					"td")
-																			.eq(
-																					4)
-																			.html()),
-																	"remainQty" : ($(this).find("td").eq(5).html()),
-																	
-																};
-																console.log(json);
-																requestDetail.push(json);
-															});
-
-											$
-													.ajax({
-														url : "${pageContext.request.contextPath}/seller/request_product",
-														type : 'POST',
-														datatype : 'JSON',
-														data : JSON.stringify(requestDetail),
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			"Accept",
-																			"application/json");
-															xhr
-																	.setRequestHeader(
-																			"Content-Type",
-																			"application/json");
-														},
-														success : function(data) {
-															alert("Successfully requested");
-															$('#form_request_stock').modal('hide');
-															clear();
-															$("#tbllistimport tr").remove();
-															//location.href = "${pageContext.request.contextPath}/admin/importlist";
-														},
-														error : function(data,
-																status, er) {
-															console
-																	.log("error: "
-																			+ data
-																			+ "status: "
-																			+ status
-																			+ "er: ");
-														}
-													});
+							$('#tbllistimport tr').each(function() {
+								json = { 
+									"proId" : ($(this).find("td").eq(0).html()),
+									"proQty" : ($(this).find("td").eq(4).html()),
+									"remainQty" : ($(this).find("td").eq(5).html()) 
+								};
+								console.log(json);
+								requestDetail.push(json);
+							}); 
+							$.ajax({
+											url : "${pageContext.request.contextPath}/seller/request_product",
+											type : 'POST',
+											datatype : 'JSON',
+											data : JSON.stringify(requestDetail),
+											beforeSend : function(xhr) {
+												xhr.setRequestHeader("Accept", "application/json");
+												xhr.setRequestHeader("Content-Type", "application/json");
+											},
+											success : function(data) {
+												alert("Successfully requested");
+												$('#form_request_stock').modal('hide');
+												clear();
+												$("#tbllistimport tr").remove();
+												//location.href = "${pageContext.request.contextPath}/admin/importlist";
+											},
+											error : function(data, status, er) {
+												console.log("error: " + data + "status: " + status + "er: ");
+											}
 										});
+									});
 
 						function clear() {
 							$("#product_name").val("");
@@ -837,20 +823,15 @@
 							$("#product_qty").val("");
 							$("#product_qty").removeClass("borderRed");
 							$("#remain_qty").val("");
-							$("#remain_qty").removeClass("borderRed");
-
-						}
-
+							$("#remain_qty").removeClass("borderRed"); 
+						} 
 						function searchProduct() {
 							$.ajax({	url : "${pageContext.request.contextPath}/seller/searchproduct",
 										type : 'POST',
 										dataType : 'JSON',
 										beforeSend : function(xhr) {
-											xhr.setRequestHeader("Accept",
-													"application/json");
-											xhr.setRequestHeader(
-													"Content-Type",
-													"application/json");
+											xhr.setRequestHeader("Accept", "application/json");
+											xhr.setRequestHeader("Content-Type", "application/json");
 										},
 										success : function(data) {
 											console.log(data);  
@@ -861,53 +842,29 @@
 													"dataid" : data[i].productId
 												};
 											}
-											$("#product_name").autocomplete(
-															{select : function(
-																		event,
-																		ui) {
-
-																	$("#product_id")
-																			.val(
-																					ui.item.dataid);
-																},
-																//maxShowItems : 8,
-																source : availableTags
-															});  $(".ui-autocomplete").css("position", "absolute");
-															$(".ui-autocomplete").css("z-index", "2147483647");
+										$("#product_name").autocomplete({select : function(event, ui) {
+										$("#product_id").val(ui.item.dataid);},
+											//maxShowItems : 8,
+											source : availableTags
+										});  $(".ui-autocomplete").css("position", "absolute");
+										$(".ui-autocomplete").css("z-index", "2147483647");
 										}, 
 										error : function(data, status, er) {
-											console.log("error: " + data
-													+ " status: " + status
-													+ " er:" + er);
+											console.log("error: " + data + " status: " + status + " er:" + er);
 										}
-									});
-
+									}); 
 						}
 						
 						//Edit list
-						$(document).on(
-								"click",
-								"#btn_edit",
-								function() {
-
-									_thisRow = $(this).parents("tr");
-
-									$("#product_name").val(
-											$(this).parents("tr").children()
-													.eq(3).html());
-									$("#product_qty").val(
-											$(this).parents("tr").children()
-													.eq(4).html());	
-									$("#remain_qty").val(
-											$(this).parents("tr").children()
-													.eq(5).html());	
+						$(document).on("click", "#btn_edit", function() { 
+									_thisRow = $(this).parents("tr"); 
+									$("#product_name").val($(this).parents("tr").children().eq(3).html());
+									$("#product_qty").val($(this).parents("tr").children().eq(4).html());	
+									$("#remain_qty").val($(this).parents("tr").children().eq(5).html());	
 									$("#btn_add").html("Update");
 									$("#btn_add").attr("id", "btn_update");
 								});
-						$(document).on(
-								"click",
-								"#btn_update",
-								function() {
+						$(document).on("click", "#btn_update", function() {
 									_thisRow.children().eq(0).html(
 											$("#product_id").val());
 									
@@ -945,20 +902,13 @@
 		}
 	}
 	
-</script>
-
-
-
-
-
+</script> 
 <script type="text/javascript">
 	var _orderid = 0;
 	var _productid = 0;
 	var _qty = 0;
 	var _thisRow;
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 						getsizeSession();
 						getordered();
 						$(document)
@@ -1270,12 +1220,9 @@
 											}
 										});
 
-						$("#btnUpdate")
-								.click(
-										function() {
+						$("#btnUpdate").click(function() {
 											_qty = $("#qtytxt").val();
-											$
-													.ajax({
+											$.ajax({
 														url : "${pageContext.request.contextPath}/seller/updateOrderProduct/"
 																+ _orderid
 																+ "/"
@@ -1425,8 +1372,7 @@
 										});
 
 						function getsizeSession() {
-							$
-									.ajax({
+							$.ajax({
 										url : "${pageContext.request.contextPath}/order/listcart",
 										type : 'POST',
 										dataType : 'JSON',
@@ -1451,8 +1397,7 @@
 						}
 
 						function clearallsession() {
-							$
-									.ajax({
+							$.ajax({
 										url : "${pageContext.request.contextPath}/order/removeAllFromCart/",
 										type : 'POST',
 										dataType : 'JSON',
@@ -1477,8 +1422,7 @@
 						}
 
 						function getordered() {
-							$
-									.ajax({
+							$.ajax({
 										url : "${pageContext.request.contextPath}/seller/getordered",
 										type : 'POST',
 										dataType : 'JSON',
