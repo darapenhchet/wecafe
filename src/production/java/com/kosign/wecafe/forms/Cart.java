@@ -5,6 +5,11 @@ import java.math.BigDecimal;
 
 public class Cart implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long productId;
 	
 	private String productName;
@@ -72,6 +77,12 @@ public class Cart implements Serializable{
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	@Override
+	public String toString() {
+		return "Cart [productId=" + productId + ", productName=" + productName + ", price=" + price + ", quantity="
+				+ quantity + ", totalAmount=" + totalAmount + ", comment=" + comment + ", time=" + time + "]";
 	}
 	
 }

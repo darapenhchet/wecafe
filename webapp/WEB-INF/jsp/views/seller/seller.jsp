@@ -200,6 +200,7 @@
 												<input name="orderqty" id='txtqty' type="text"
 													readonly="readonly" style="width: 10%; text-align: center;"
 													value="<%=cart.getQuantity()%>">
+													
 												<%
 													}
 															}
@@ -703,10 +704,86 @@
 								},
 								success : function(data) {
 									 console.log(data);
-									 $("#myCarousel1").html('');
+									 $("#myCarousel1").html(''); 
 									 if(data.length != 0){
-										 
+										 var str = "", b = true, A = data.length;
+									do{
+										if (b){
+											str += "<div class='carousel-inner' role='listbox' style='height: 888px;'>";
+											str += "<div class='item active' style='width: 70%; margin: 0 auto;'>";
+											b =false
+										}else{
+											str += "<div class='item' style='width: 70%; margin: 0 auto;'>";
+										}
+										 	str += "<div style='margin-top: 17%'>";
+										 	
+										var carts = [], count = 0; 	
+										<% 
+									 	List<Cart> carts = (List<Cart>) request.getAttribute("carts");
+									 	for(Cart cart : carts) { %>
+									 		carts[count] = {
+									 			'productId':  <%= cart.getProductId() %>,
+									 			'qty': <%= cart.getQuantity() %>
+									 		};
+									 		count ++;
+									 	<% } %>
+									 	
+									 	console.log(carts);
+									 	
+										for (i = A - 1; i >= A - 6 && i >= 0; i--) {
+										 	str += "<div class='col-sm-6'>";
+										 	str += "<div class='panel panel-default form-group'>";
+										 	str += "<div class='panel-body'>";
+										 	str += "<div style='float: left;'>"
+										 	str += "<div id='idpro' style='display: none;'>" + data[i].productId + "</div>";
+										 	str += "<div style='width: 300px;'> <img id='imgpro' src='${pageContext.request.contextPath}/resources/images/products/'";
+										 	str += data[i].image + "> <span id='Proname'>" + data[i].productName + "</span></div>";
+										 	str += "<input type='text' class='form-control' value='" + data[i].productId + "'";
+										 	str += " id='pro_id' style='display: none;'>";
+										 	str += "<input type='text' class='form-control' value='" +data[i].productName + "'";
+										 	str += " id='pro_nm' + style='display: none;'></div>";
+										 	str += "<div style='text-align: right;'>";
+										 	str += "<span id='PRICE'>"+ data[i].salePrice + "</span><span>&nbsp; Riels</span>";
+										 	str += "<div><br><a href='#'><span id='btnminus' class='glyphicon glyphicon-minus'> </span></a>"; 
+										 	
+											var exist = false;
+										 	
+										 	for(j = 0; j < carts.length; j++) {
+										 		if (carts[j].productId == data[i].productId) {
+										 			exist = true;
+										 			str += "<input name='orderqty' id='txtqty' type='text' readonly='readonly' style='width: 10%; text-align: center;' value='" + carts[j].qty + "'>";
+										 		}
+										 	}
+										 	
+										 	if (!exist) {
+												str += " <input id='txtqty' name='orderqty' type='text' readonly='readonly' style='width: 10%; text-align: center;' value='0'>";													
+											} 
+											
+											str += "<a href='#'> <span id='btnplus' class='glyphicon glyphicon-plus'></span></a>"
+											str += "</div></div></div></div></div>";										
+										}
+										
+										
+																				
+									 	
+									 	
+									 	console.log(carts);
+									 	
+										str += "</div></div>";
+										if (A / 6 >= 1) {
+											A = A - 6;
+										} else
+											A = 0;
+										} while (A >= 1);
+										str += "</div>";
+										str += "<a class='left carousel-control' href='#myCarousel1' role='button' data-slide='prev'>";
+									 	str += "<span class='glyphicon glyphicon-chevron-left'></span>";
+									 	str += "<span class='sr-only'>Previous</span></a>";
+									 	str += "<a class='right carousel-control' href='#myCarousel1' role='button' data-slide='next'>";
+									 	str += "<span class='glyphicon glyphicon-chevron-right'></span>";
+									 	str += "<span class='sr-only'>Next</span></a></div>";
 									 }
+									 $("#myCarousel1").html(str);
 								},
 								error : function(data, status, er) {
 									console.log("error: " + data + "status: " + status + "er: ");
@@ -937,8 +1014,7 @@
 												var updatestatus = 'cancelOrder/';
 											else
 												var updatestatus = 'confirmOrder/';
-											$
-													.ajax({
+											$.ajax({
 														url : "${pageContext.request.contextPath}/seller/"
 																+ updatestatus
 																+ _orderid,
@@ -1442,10 +1518,10 @@
 														+ data[i].customer.username
 														+ "</span> (<span id='cusorderqty'>"
 														+ data[i].orderQuantity
-														+ "</span>)</div></div>"
+														+ "</span>)</div></div>";
 												st += "<div style='display: none;' id='orderedId'>"
 														+ data[i].orderId
-														+ "</div></a>"
+														+ "</div></a>";
 											}
 											$("#listorder").html(st);
 										},
