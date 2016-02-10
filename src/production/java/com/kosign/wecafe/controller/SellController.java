@@ -110,7 +110,7 @@ public class SellController {
 				if(carts.get(i).getProductId().equals(cart.getProductId())){
 					carts.get(i).setQuantity(carts.get(i).getQuantity()+ cart.getQuantity());
 					carts.get(i).setTotalAmount(cart.getPrice().multiply(new BigDecimal(carts.get(i).getQuantity())));
-					session.setAttribute("Carts", carts);
+					session.setAttribute("CARTS", carts);
 					return carts;
 				}
 			}

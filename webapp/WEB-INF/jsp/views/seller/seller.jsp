@@ -748,7 +748,10 @@
 										 	
 											var exist = false;
 										 	
-										 	for(j = 0; j < carts.length; j++) {
+											console.log(data);
+											
+										 	for(j = 0; j < data.length; j++) {
+										 		alert(carts[j].productId == data[i].productId);
 										 		if (carts[j].productId == data[i].productId) {
 										 			exist = true;
 										 			str += "<input name='orderqty' id='txtqty' type='text' readonly='readonly' style='width: 10%; text-align: center;' value='" + carts[j].qty + "'>";
@@ -1397,6 +1400,7 @@
 															xhr.setRequestHeader("Content-Type", "application/json");
 														},
 														success : function(data) {
+															alert(data.length);
 															getsizeSession();
 															for (i = 0; i < data.length; i++) {
 																if (data[i].productId == proId) {
