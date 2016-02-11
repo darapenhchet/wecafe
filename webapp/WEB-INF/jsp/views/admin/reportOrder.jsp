@@ -540,8 +540,8 @@ a {
 			 }) ;  
 			 break;
 		 case '2':
-			 $("#report_start_weekly").html(" Date : " + $("#REGS_DATE_S").val());
-			 $("#report_end_weekly").html(" Date : " + $("#REGS_DATE_E").val()); 
+			 $("#report_start_weekly_print").html(" Date : " + $("#REGS_DATE_S").val());
+			 $("#report_end_weekly_print").html(" Date : " + $("#REGS_DATE_E").val()); 
 				var dd = 0;
 				var dayID =""; 
 					for (var i=0; i <7; i++) {
@@ -550,7 +550,9 @@ a {
 						$(dayID).html(dd);
 					};
 			print_weekly();
-				
+			$('#weekly_list_print').modal({
+				"backdrop":"static"
+		 	}) ; 	
 			 break;
 		 case '3':  
 			 var d="";
@@ -560,8 +562,7 @@ a {
 			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
 			   var st = "";
 				st += "<tr>";
-				st += "<th rowspan='2'>#</th>";
-				st += "<th rowspan='2'>Supplier</th>";
+				st += "<th rowspan='2'>#</th>"; 
 				st += "<th rowspan='2'>Item</th>";
 			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
 				{		
@@ -577,7 +578,7 @@ a {
 				st += "<th class='"+d+"'> Qty</th><th class='"+d+"'> Amt</th></tr>";	
 				$("#tbl_header_month_print").html(st);  
 				print_monthly();
-			 $('#monthly_list').modal({
+			 $('#monthly_list_print').modal({
 					"backdrop":"static"
 				}) ;  
 			 break;
@@ -586,19 +587,17 @@ a {
 			 $("#select_month option[value='1']").attr("selected","selected");
 			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());			
 			 print_yearly();
-			 $('#yearly_list').modal({
+			 $('#yearly_list_print').modal({
 					"backdrop":"static"
 				}) ; 
 			 break;
 	 }  	
 		});
  	 
-	  function print_daily(){ 
-			
+	  function print_daily(){
 		 var input={
 		    	 "day"   : $.trim($("#REGS_DATE_S").val())			 
-		 };
-		
+		 }; 
 			 $.ajax({ 
 				    url: "${pageContext.request.contextPath}/admin/reports/get_request_dailly_print/", 
 				    type: 'GET', 
@@ -632,9 +631,131 @@ a {
 				    }
 				}); 
 		 }
-	 
-	 
-	 
+	  function print_weekly(){
+			 var json = {
+		   				"startdate" : $("#REGS_DATE_S").val(),
+		   				"enddate"   : $("#REGS_DATE_E").val()
+				};$.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/reports/get_request_weekly_print/", 
+				    type: 'GET',  
+				    data: json, 
+				    beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Accept", "application/json");
+	                    xhr.setRequestHeader("Content-Type", "application/json");
+	                },
+				    success: function(data) {
+				    	console.log(data);
+				    	//console.log("weeekly==="+data.total_qty);
+				    	b=true;
+				    	//v=data; 
+					//	$("#PAGINATION").html(""); 
+					//	$("#PAGINATION").pagination('updateItems',data.pagination.totalCount); 
+						if(data.reportweekly.length>0){
+							$("tbody#tbodyweekly_print").html('');
+							   for(var i=0;i<data.reportweekly.length;i++){
+								products.formatWeekly_print(data.reportweekly[i]);
+							}   
+							$("#CONTENT_WEEKLY_PRINT").tmpl(data.reportweekly).appendTo("tbody#tbodyweekly_print");  
+							$("#allTotalAmount_print_weekly").html(data.total_qty); 
+						}else{
+							$("tbody#tbodyweekly_print").html("");
+							$("#allTotalAmount_print_weekly").html('');
+						} 	    
+				    },	
+				    error:function(data,status,er) { 
+				        console.log("error: "+data+" status: "+status+" er:"+er);
+				    }
+				}); 
+			 }
+	 function print_monthly(){
+		 var json = { 
+	   				"start_date" : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-01",
+	   				"end_date"   : $("#selectyear").val() + "-" + (parseInt($("#selectmonth").val()) + 1) + "-" + (new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate())
+			};
+		 $.ajax({
+			    url: "${pageContext.request.contextPath}/admin/reports/get_request_monthly_print/", 
+			    type: 'GET',  
+			    data: json, 
+			    beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                },
+			    success: function(data) { 
+			    	console.log(data); 
+			    	b=true;
+			    	var total_qty1=0; 
+			    	    total_qty1=data.total_qty;
+			    	    	
+				    	$("#tbodymonthly_print").html('');
+				    	var st = "";
+				    	
+					    	for(var i=0;i<data.reportmonthly.length;i++){
+					    	var total_qty = 0;
+				    		st += "<tr>";
+				    		if(b){
+					 			order = 0; 
+					 			orderlist = order + 1;
+					 			st += "<td>"+ orderlist +"</td>";
+					 			b = false; 
+					 		}
+					 		else  {
+					 			orderlist = orderlist + 1;
+					 			st += "<td>"+ (orderlist) +"</td>"; 
+					 		} 
+				    		st += "<td>" + data.reportmonthly[i].pro_name + "</td>";
+				    		
+				    		for(var j=0; j<(new Date($("#selectyear").val(),parseInt($("#selectmonth").val()) + 1, 0).getDate());j++) {
+				    			var d= data.reportmonthly[i]['day' + (j+1) + '_qty'];			    				
+				    				st += "<td>" +(d = d ? d : 0)+ "</td>";
+				    				total_qty += data.reportmonthly[i]['day' + (j+1) + '_qty']; 
+				    		}
+				    		st += "<td>" + total_qty + "</td>";				 
+				    		st += "</tr>";				    		
+						}
+					    	$("#tbodymonthly_print").html(st);
+					    	$("#allTotalAmount_print_monthly").html(total_qty1);
+				   
+			    },	
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			}); 
+	 }
+	 function print_yearly(){
+		 var json = { 
+	   				"start_date" : $("#selectyear").val() + "-01-01",
+	   				"end_date"   : $("#selectyear").val() + "-12-31"
+			};$.ajax({ 
+			    url: "${pageContext.request.contextPath}/admin/reports/get_request_yearly_print/", 
+			    type: 'GET',  
+			    data: json, 
+			    beforeSend: function(xhr) {
+                 xhr.setRequestHeader("Accept", "application/json");
+                 xhr.setRequestHeader("Content-Type", "application/json");
+             },
+			    success: function(data) { 
+			    	//console.log("yearly==="+data.total_qty);
+			     	console.log(data);
+			    	b=true;
+			    /* 	
+					$("#PAGINATION").html("");
+			    	
+					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);		    	
+			    	 */
+			    	if(data.reportyear){
+				    	$("tbody#tbodyyearly_print").html('');
+				    	for(var i=0;i<data.reportyear.length;i++){
+				    	formatMonthlySaleReport_print(data.reportyear[i]);
+				    	}
+			    		 $("#CONTENT_YEARLY_PRINT").tmpl(data.reportyear).appendTo("tbody#tbodyyearly_print");			    	  
+			    	}
+			    	$("#allTotalAmount_print_yearly").html((data.total_qty>0)?data.total_qty:0);
+			    },	
+			    error:function(data,status,er) { 
+			        console.log("error: "+data+" status: "+status+" er:"+er);
+			    }
+			}); 
+	 }
 	 
 	 
 	 
@@ -855,7 +976,7 @@ a {
 			}); 
 		 
 	 }
-	 products.listMonthly = function(currentPage){ 
+	 products.listMonthly = function(currentPage){
 		
 		 var json = {
 				 	"currentPage" : currentPage,
@@ -1001,8 +1122,7 @@ a {
 	 		value["order"] = ++j; 
 	 }
 	 
-	 products.formatWeekly = function(value){
-		
+	 products.formatWeekly = function(value){ 
 		value["total_qty"] =value["day1_qty"] + 
 				 value["day2_qty"] + 
 				 value["day3_qty"] +
@@ -1011,8 +1131,7 @@ a {
 				 value["day6_qty"] +
 				 value["day7_qty"]  ;
  		for(j =1 ;j<=7; j++){
-		value['day' +(j) + '_qty'] = value['day' +(j) + '_qty']; 
-	
+		value['day' +(j) + '_qty'] = value['day' +(j) + '_qty'];  
 		}  
 		if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1); 
@@ -1023,10 +1142,28 @@ a {
 	 		else  
 	 		value["order"] = ++k;  
 	 } 
-	 
-	 function formatMonthlySaleReport(value){
-			
-	    	value["total_qty"] = value["jan_qty"] + 
+	 products.formatWeekly_print = function(value){ 
+			value["total_qty"] =value["day1_qty"] + 
+					 value["day2_qty"] + 
+					 value["day3_qty"] +
+					 value["day4_qty"] +
+					 value["day5_qty"] +
+					 value["day6_qty"] +
+					 value["day7_qty"]  ;
+	 		for(j =1 ;j<=7; j++){
+			value['day' +(j) + '_qty'] = value['day' +(j) + '_qty'];  
+			}  
+			if(b){
+		 			order = 0; 
+		 			k = order + 1;
+		 			value["order"] =k;
+		 			b = false; 
+		 		}
+		 		else  
+		 		value["order"] = ++k;  
+		 }
+	 function formatMonthlySaleReport(value){ 
+		 value["total_qty"] = value["jan_qty"] + 
 								 value["feb_qty"] + 
 								 value["mar_qty"] +
 								 value["apr_qty"] +
@@ -1048,7 +1185,29 @@ a {
 		 		value["order"] = ++j; 
 	    	
 	    }
-		
+	 function formatMonthlySaleReport_print(value){ 
+		 value["total_qty"] = value["jan_qty"] + 
+								 value["feb_qty"] + 
+								 value["mar_qty"] +
+								 value["apr_qty"] +
+								 value["may_qty"] +
+								 value["jun_qty"] +
+								 value["jul_qty"] +
+								 value["aug_qty"] +
+								 value["sep_qty"] +
+								 value["oct_qty"] +
+								 value["nov_qty"] +
+								 value["dec_qty"]  ;
+	    	 if(b){
+		 			order = 0;
+		 			j = order + 1;
+		 			value["order"] =j;
+		 			b = false;
+		 		}
+		 		else  
+		 		value["order"] = ++j; 
+	    	
+	    }
 		products.listDetail(1);
 
 	 

@@ -703,9 +703,9 @@
 									xhr.setRequestHeader("Content-Type", "application/json");
 								},
 								success : function(data) {
-									 console.log(data);
+									
 									 $("#myCarousel1").html(''); 
-									 if(data.length != 0){
+									if(data.searchpro.length != 0){
 										 var str = "", b = true, A = data.length;
 									do{
 										if (b){
@@ -717,9 +717,9 @@
 										}
 										 	str += "<div style='margin-top: 17%'>";
 										 	
-										var carts = [], count = 0; 	
-										<% 
-									 	List<Cart> carts = (List<Cart>) request.getAttribute("carts");
+										/* var carts = [], count = 0;  */	
+									<%-- 	 <% 
+									 	List<Cart> carts = (List<Cart>) session.getAttribute("CARTS");
 									 	for(Cart cart : carts) { %>
 									 		carts[count] = {
 									 			'productId':  <%= cart.getProductId() %>,
@@ -727,8 +727,8 @@
 									 		};
 									 		count ++;
 									 	<% } %>
-									 	
-									 	console.log(carts);
+									 	   --%>	
+									 	  console.log(data);
 									 	
 										for (i = A - 1; i >= A - 6 && i >= 0; i--) {
 										 	str += "<div class='col-sm-6'>";
@@ -746,15 +746,12 @@
 										 	str += "<span id='PRICE'>"+ data[i].salePrice + "</span><span>&nbsp; Riels</span>";
 										 	str += "<div><br><a href='#'><span id='btnminus' class='glyphicon glyphicon-minus'> </span></a>"; 
 										 	
-											var exist = false;
-										 	
-											console.log(data);
-											
-										 	for(j = 0; j < data.length; j++) {
-										 		alert(carts[j].productId == data[i].productId);
-										 		if (carts[j].productId == data[i].productId) {
+											var exist = false;  
+										 	for(j = 0; j < data.carts.length; j++) {
+										 		
+										 		if (data.carts[j].productId == data[i].searchpro.productId) {
 										 			exist = true;
-										 			str += "<input name='orderqty' id='txtqty' type='text' readonly='readonly' style='width: 10%; text-align: center;' value='" + carts[j].qty + "'>";
+										 			str += "<input name='orderqty' id='txtqty' type='text' readonly='readonly' style='width: 10%; text-align: center;' value='" + data.carts[j].quantity + "'>";
 										 		}
 										 	}
 										 	
@@ -764,14 +761,7 @@
 											
 											str += "<a href='#'> <span id='btnplus' class='glyphicon glyphicon-plus'></span></a>"
 											str += "</div></div></div></div></div>";										
-										}
-										
-										
-																				
-									 	
-									 	
-									 	console.log(carts);
-									 	
+										}  
 										str += "</div></div>";
 										if (A / 6 >= 1) {
 											A = A - 6;

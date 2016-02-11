@@ -90,7 +90,7 @@ public class ReportRequestController {
 			Pagination pagination) throws ParseException{
 	
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportweekly", report.getListReportWeeklyRequest(pagination,date));
+		map.put("reportweekly", report.getListReportWeeklyRequest(pagination,date,true));
 		pagination.setTotalCount(report.countWeekly(date));
 	
 		pagination.setTotalPages(pagination.totalPages());
@@ -98,6 +98,17 @@ public class ReportRequestController {
 		map.put("total_qty",report.getTotalQtyWeeklyRequest(date));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
 	}
+	
+	@RequestMapping(value="/get_request_weekly_print", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportweekly_print(DateForm date, 
+			Pagination pagination) throws ParseException{
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reportweekly", report.getListReportWeeklyRequest(pagination,date,false)); 
+		map.put("total_qty",report.getTotalQtyWeeklyRequest(date));
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);		
+	}
+	
   @RequestMapping(value="/get_request_monthly", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportmonthly(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 
 			Pagination pagination) throws ParseException{
@@ -107,11 +118,24 @@ public class ReportRequestController {
 		Date endDate = simpleDateFormat.parse(strEndDate);
 	  
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("reportmonthly",report.getListReportMonthlyRequest(startDate,endDate, pagination));
+		map.put("reportmonthly",report.getListReportMonthlyRequest(startDate,endDate, pagination,true));
 		map.put("total_qty",report.getTotalQtyMonthlyRequest(startDate, endDate));
 		pagination.setTotalCount(report.countMonthly(startDate,endDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
+	}
+  @RequestMapping(value="/get_request_monthly_print", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportmonthly_print(@RequestParam(value="start_date") String strStartDate, @RequestParam(value="end_date") String strEndDate, 
+			Pagination pagination) throws ParseException{
+	  
+	  	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = simpleDateFormat.parse(strStartDate);
+		Date endDate = simpleDateFormat.parse(strEndDate); 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reportmonthly",report.getListReportMonthlyRequest(startDate,endDate, pagination,false));
+		map.put("total_qty",report.getTotalQtyMonthlyRequest(startDate, endDate)); 
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
@@ -123,12 +147,23 @@ public class ReportRequestController {
 		Date startDate = simpleDateFormat.parse(strStartDate);
 		Date endDate = simpleDateFormat.parse(strEndDate);
 		Map<String, Object> map = new HashMap<String, Object>(); 		
-		map.put("reportyear", report.getListReportYearlyRequest(pagination, startDate, endDate));	
+		map.put("reportyear", report.getListReportYearlyRequest(pagination, startDate, endDate,true));	
 		map.put("total_qty", report.getTotalQtyYearlyRequest(startDate, endDate));
 		pagination.setTotalCount(report.countYearly(startDate,endDate));
 		pagination.setTotalPages(pagination.totalPages());
 		map.put("pagination", pagination);
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK); 
-		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);  
+	}
+  @RequestMapping(value="/get_request_yearly_print", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportyearly_print(Pagination pagination,
+			   @RequestParam(value="start_date") String strStartDate, 
+			   @RequestParam(value="end_date") String strEndDate) throws ParseException{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = simpleDateFormat.parse(strStartDate);
+		Date endDate = simpleDateFormat.parse(strEndDate);
+		Map<String, Object> map = new HashMap<String, Object>(); 		
+		map.put("reportyear", report.getListReportYearlyRequest(pagination, startDate, endDate,false));	
+		map.put("total_qty", report.getTotalQtyYearlyRequest(startDate, endDate)); 
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);  
 	}
 }

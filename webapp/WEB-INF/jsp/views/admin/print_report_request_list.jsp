@@ -49,11 +49,11 @@
 </div>
 
 <!-- Modal Weekly-->
-<div class="modal fade" id="weekly_list" role="dialog ">
+<div class="modal fade" id="weekly_list_print" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
 
-			<div id="print_data_weekly">
+			<div id="print_data_weekly_print">
 				<!-- <button type="button" class="close hidden-print" data-dismiss="modal">&times;</button> -->
 				<a href="javascrpt:;"
 					class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
@@ -61,23 +61,23 @@
 
 				<h2 style="text-align: center;">Weekly Purchase List</h2>
 				<h5>
-					<span id="report_start_weekly"></span> - <span
-						id="report_end_weekly"></span>
+					<span id="report_start_weekly_print"></span> - <span
+						id="report_end_weekly_print"></span>
 				</h5>
 
 				<div style="overflow-x: auto">
-					<table id="weeklytable">
+					<table id="weeklytable_print">
 														<thead>
 															<tr>
 																<th rowspan="2" id="order">#</th>
 																<th rowspan="2">Item</th>
-																<th id="week1"></th>
-																<th id="week2"></th>
-																<th id="week3"></th>
-																<th id="week4"></th>
-																<th id="week5"></th>
-																<th id="week6"></th>
-																<th id="week7"></th>
+																<th id="week_print1"></th>
+																<th id="week_print2"></th>
+																<th id="week_print3"></th>
+																<th id="week_print4"></th>
+																<th id="week_print5"></th>
+																<th id="week_print6"></th>
+																<th id="week_print7"></th>
 																<th rowspan="2">Total Qty</th>
 															</tr>
 															<tr>
@@ -87,12 +87,10 @@
 																<th>qty</th>																
 																<th>qty</th>									
 																<th>qty</th>																
-																<th>qty</th>	
-																													
-																
+																<th>qty</th> 
 															</tr>
 														</thead>
-														<tbody id="tbodyweekly"> 
+														<tbody id="tbodyweekly_print"> 
 														</tbody>
 													</table>
 				</div>
@@ -109,7 +107,7 @@
 	</div>
 </div>
 <!-- Modal Weekly-->
-<div class="modal fade" id="monthly_list" role="dialog ">
+<div class="modal fade" id="monthly_list_print" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
 			<select id="select_yearly">
@@ -148,7 +146,7 @@
 		</div>
 	</div>
 <!-- Modal Yearly-->
-<div class="modal fade" id="yearly_list" role="dialog ">
+<div class="modal fade" id="yearly_list_print" role="dialog ">
 	<div class="modal-dialog modal-lg" style="width: 80%">
 		<div class="modal-content">
 			<select id="select_month">

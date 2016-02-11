@@ -4,6 +4,7 @@ package com.kosign.wecafe.controller;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,8 +70,15 @@ public class SellController {
 	}
 	
 	@RequestMapping(value="/seller/searchbyname/{proName}", method=RequestMethod.POST)
-	public @ResponseBody List<Product> searchByName(@PathVariable ("proName") String proname){
-		return importService.searchByName(proname);
+	public ResponseEntity<Map<String, Object>> searchByName(@PathVariable ("proName") String proname, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Cart> carts = new ArrayList<Cart>();
+		if(session.getAttribute("CARTS")!=null){
+			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
+		}
+		map.put("carts",carts);
+		map.put("searchpro", importService.searchByName(proname));
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/seller/request_products", method = RequestMethod.GET)

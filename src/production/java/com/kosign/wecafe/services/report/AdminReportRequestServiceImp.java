@@ -112,7 +112,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 
 	@Override
 	@Transactional
-	public List<Map> getListReportWeeklyRequest(Pagination pagination,DateForm date) {
+	public List<Map> getListReportWeeklyRequest(Pagination pagination,DateForm date,boolean ispagination) {
 		Session session = null;
 		
 		String[] days = new String[]{"day1","day2", "day3", "day4", "day5", "day6", "day7"};
@@ -156,10 +156,14 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 								+"'SELECT to_char(date ''"+startDate+"'' + (n || '' day'')::interval, ''DD'') As short_mname "  
 								+"FROM "
 									+"generate_series(0,6) n;' "
-									+") as ct(product_name text ," + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ") "); 	
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+									+") as ct(product_name text ," + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ") "); 
+			if(ispagination){
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
+			}
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			
+			
 			List<Map> sales= (List<Map>)query.list();
 			return sales;
 		} catch (Exception e) {
@@ -176,7 +180,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 	
 	@Override
 	@Transactional
-	public List<Map> getListReportMonthlyRequest(Date startdate, Date enddate,Pagination pagination) {
+	public List<Map> getListReportMonthlyRequest(Date startdate, Date enddate,Pagination pagination, boolean ispagination) {
 	
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -226,10 +230,11 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 										   +") AS mthreport ( "
 										   		+"row_name TEXT, " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 										   ); 	
-			
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			if(ispagination){
 			query.setFirstResult(pagination.offset());
-			query.setMaxResults(pagination.getPerPage());		
+			query.setMaxResults(pagination.getPerPage());}
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+					
 			List<Map> sales= (List<Map>)query.list();
 			return sales;
 		} catch (Exception e) {
@@ -245,7 +250,7 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 
 	@Transactional
 	@Override
-	public List<Map<String, Object>> getListReportYearlyRequest(Pagination pagination,Date startDate, Date endDate ) {
+	public List<Map<String, Object>> getListReportYearlyRequest(Pagination pagination,Date startDate, Date endDate, boolean ispagination ) {
 		// TODO Auto-generated method stub
 		Session session = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -297,10 +302,12 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 												   +") AS mthreport ( " 
 												   +"row_name TEXT, " + sb.toString().substring(0, sb.toString().lastIndexOf(",")) + ")" 
 												); 	
-			
-			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			if(ispagination){
 			query.setFirstResult(pagination.offset());
 			query.setMaxResults(pagination.getPerPage());
+			}
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			
 			List<Map<String, Object>> sales= (List<Map<String, Object>>)query.list();
 			return sales;
 		} catch (Exception e) {
