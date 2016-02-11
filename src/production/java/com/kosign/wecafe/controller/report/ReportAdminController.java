@@ -91,6 +91,18 @@ public class ReportAdminController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	} 
 	
+	@RequestMapping(value="/admin/getsearchBeveragebydate_print", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getsearchBeveragebydate_print(Pagination pagination, @RequestParam(value="start_date") String strStartDate) throws ParseException{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		map.put("beverage", adminReportService.getReportListAllBeverageStock(simpleDateFormat.parse(strStartDate), pagination, true));
+		//List<Map> recorde = adminReportService.getReportListAllBeverageStock(simpleDateFormat.parse(strStartDate), pagination, false);
+		//pagination.setTotalCount(Long.parseLong(recorde.size()+ ""));
+		//pagination.setTotalPages(pagination.totalPages());
+		//map.put("pagination",pagination); 
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	} 
+	
 	@RequestMapping(value="/admin/cupstock")
 	public String ListAllCupStock(){
 		return "admin/reportcupstock";

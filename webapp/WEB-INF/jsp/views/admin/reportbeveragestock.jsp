@@ -108,7 +108,7 @@
 								<div class="panel-body">
 									
 									<div class="row">
-										<div class="col-md-12 ">
+										<div class="col-md-12" id="print_data">
 											<div class="overflow-x">
 												<table>
 													<thead>
@@ -146,10 +146,8 @@
 									<hr>
 									<div class="hidden-print">
 										<div class="pull-right">
-											<a href="javascrpt:"
-												class="btn btn-inverse waves-effect waves-light"
-												onclick="window.print();"><i class="fa fa-print"></i></a> <a
-												href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
+											<a href="javascrpt:" class="btn btn-inverse waves-effect waves-light" id="btn_print" ><i class="fa fa-print"></i></a> <!-- <a
+												href="#" class="btn btn-primary waves-effect waves-light">Submit</a> -->
 										</div>
 									</div>
 								</div>
@@ -169,6 +167,8 @@
 
 			<footer class="footer text-center hidden-print"> KOSIGN
 				WECAFE © 2015. </footer>
+			
+			<%@ include file="print_report_beverage_stock.jsp"%>
 
 		</div>
 		<!-- ============================================================== -->
@@ -232,6 +232,13 @@
  var st = "";
  $(document).ready(function(){
 	 
+	  // print pursurse monthly 
+     $("#btn_print").click(function(){
+  	   var divContents = $("#print_data").html(); 
+      loadPrintPage(divContents,getLangScape());
+        //return false;
+     });
+	 
 	// setCalendar();
 	$("#labelDate").html(moment().format('YYYY-MM-DD'));
 	 searchByDate(1);
@@ -240,6 +247,7 @@
 		var v=[];
 		var b = true;
 	 
+		print_berverage();
 	 function searchByDate(currentPage){
       	var startDate 		= moment().format('YYYY-MM-DD');  
 		  json = { 
@@ -257,7 +265,6 @@
 	            xhr.setRequestHeader("Content-Type", "application/json");
 	        },
 			success: function(data){
-				console.log(data);
 				b = true;
 				v = data;	
 				if(data.beverage.length>0){
@@ -280,6 +287,40 @@
 			}
 		});  
 	 }
+	 
+	 function print_berverage(){
+	      	var startDate 		= moment().format('YYYY-MM-DD');  
+			  json = { 
+			    		"start_date"   : startDate 
+				};
+			$.ajax({
+				url: "${pageContext.request.contextPath}/admin/getsearchBeveragebydate_print/", 
+		    	type: 'GET',
+				data: json, 
+				beforeSend: function(xhr) {
+		            xhr.setRequestHeader("Accept", "application/json");
+		            xhr.setRequestHeader("Content-Type", "application/json");
+		        },
+				success: function(data){
+					console.log(data.beverage.length);
+					b = true;
+					v = data;	
+					if(data.beverage.length>0){
+					$("tbody#searchDetail").html('');
+					for(var i=0;i<data.beverage.length;i++){ 
+						format(data.beverage[i]);
+					}
+					$("#CONTENT_TEMPLATE").tmpl(data.beverage).appendTo("tbody#searchDetail");
+				}else{
+					$("tbody#searchDetail").html('');				
+				}
+				},
+				error:function(data, status,er){
+					console.log("error: " + data + "status: " + status + "er: ");
+				}
+			});  
+		 }
+		  
 	  
 	 
 	 

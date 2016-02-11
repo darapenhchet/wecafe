@@ -119,7 +119,7 @@ a {
 											<h2 class="text-right">
 												<%-- <img src="${pageContext.request.contextPath}/resources/images/logo_dark.png" alt="velonic"> --%>
 
-												<strong>Purchase Information</strong> 
+												<strong>Take Out Report</strong> 
 												<small id="startfrom"></small>
 												<!-- <small>start from</small> <small id="purchasemonth"></small> -->
 											</h2>
