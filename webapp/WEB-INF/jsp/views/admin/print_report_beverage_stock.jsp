@@ -11,18 +11,19 @@
 				<a href="javascrpt:;" class="btn btn-inverse waves-effect waves-light pull-right hidden-print"
 				 id="btn_print"><i class="fa fa-print"></i></a>
 				 
-				<h2 style="text-align: center;">Import List </h2>
-				<h5><span id="report_start_date"></span> - <span id="report_end_date"></span> </h5>
+				<h2 style="text-align: left;">Beverage Stock</h2>
+				<h5><span id="report_start_date"></span></h5>
 										
 				<div id="tbl_import_data" class="overflow-x" > 
 					<table  style="border: none;" >
 						<thead class="style2">
 							<tr class="active">
 								<th>#</th>
-								<th>Invoice ID</th>
-								<th style="text-align: center;">Date</th>
-								<th>Name</th>
-								<th style="text-align:center;">Total Amount</th> 
+								<th>Item</th>
+								<th style="text-align: center;">Carried Over</th>
+								<th style="text-align: center;">Purchase</th>
+								<th style="text-align:center;">Sale</th> 
+								<th style="text-align:center;">Balance</th>
 						 	</tr>
 						</thead>
 						<tbody id="PRINT_CONTENTS" style="width:100%;">
@@ -30,28 +31,21 @@
 					</table>
 				</div> 
 						
-				<br/>
-				<div style="    border: 1px solid;margin: 0 auto; padding: 3px;width: 28%;margin-right: -2px; color: blue; text-align: left;padding-left: 8px;">
-					<span>Total Amount : </span><span id="allTotalAmount_print"></span>
-				</div>
-				
+				<br/> 
 			</div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>		
 		</div>
 	</div>
 </div>
-<script id="CONTENT_Print_Import" type="text/x-jquery-tmpl">
-	{{if importDetail==34}} 
-				<tr>
-					<td colspan="8" style="border: none;padding:22px;"></td>
-				</tr>	
-	{{/if}}	
+<script id="CONTENT_Print_beverage" type="text/x-jquery-tmpl"> 
 	<tr>
-		<td>{{= importDetail}} </td>
-		<td><a herf="javascript:" style="cursor:pointer" id="impid">{{= impId}}</a></td>
-		<td>{{= impDate}}</td>
-		<td>{{= user.firstName +' '+ user.lastName}} </td>
-		<td>{{= totalAmount}}</td> 
-	</tr>
-
+	     <td>{{= order}}</td>
+	     <td>{{= pro_name}}</td>
+	     <td>{{= carried_over}}</td>
+	     <td>{{= pro_qty}}</td>
+	     <td>{{= sale}}</td>
+	     <td>{{= balance}}</td>
+	</tr> 
 </script>
+
+ 

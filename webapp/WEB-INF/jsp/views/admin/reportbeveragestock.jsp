@@ -230,15 +230,7 @@
 		src="${pageContext.request.contextPath}/resources/js/jquery.app.js"></script>
 	<script>
  var st = "";
- $(document).ready(function(){
-	 
-	  // print pursurse monthly 
-     $("#btn_print").click(function(){
-  	   var divContents = $("#print_data").html(); 
-      loadPrintPage(divContents,getLangScape());
-        //return false;
-     });
-	 
+ $(document).ready(function(){ 
 	// setCalendar();
 	$("#labelDate").html(moment().format('YYYY-MM-DD'));
 	 searchByDate(1);
@@ -246,8 +238,7 @@
 		var order = 1;
 		var v=[];
 		var b = true;
-	 
-		print_berverage();
+	  
 	 function searchByDate(currentPage){
       	var startDate 		= moment().format('YYYY-MM-DD');  
 		  json = { 
@@ -265,6 +256,7 @@
 	            xhr.setRequestHeader("Content-Type", "application/json");
 	        },
 			success: function(data){
+				console.log(data);
 				b = true;
 				v = data;	
 				if(data.beverage.length>0){
@@ -287,7 +279,17 @@
 			}
 		});  
 	 }
-	 
+
+	  // print pursurse monthly 
+    $("#btn_print").click(function(){ 
+    	$("#report_start_date").html("Date : " + (moment().format('YYYY-MM-DD')));
+    	
+    	$('#request_stock_list').modal({
+			"backdrop":"static"
+		}) ;
+		print_berverage();
+    });
+	  
 	 function print_berverage(){
 	      	var startDate 		= moment().format('YYYY-MM-DD');  
 			  json = { 
@@ -302,18 +304,18 @@
 		            xhr.setRequestHeader("Content-Type", "application/json");
 		        },
 				success: function(data){
-					console.log(data.beverage.length);
+					console.log(data);
 					b = true;
-					v = data;	
+					 
 					if(data.beverage.length>0){
-					$("tbody#searchDetail").html('');
+					$("tbody#PRINT_CONTENTS").html('');
 					for(var i=0;i<data.beverage.length;i++){ 
 						format(data.beverage[i]);
 					}
-					$("#CONTENT_TEMPLATE").tmpl(data.beverage).appendTo("tbody#searchDetail");
+					$("#CONTENT_Print_beverage").tmpl(data.beverage).appendTo("tbody#PRINT_CONTENTS");
 				}else{
-					$("tbody#searchDetail").html('');				
-				}
+					$("tbody#PRINT_CONTENTS").html('');				
+				}  
 				},
 				error:function(data, status,er){
 					console.log("error: " + data + "status: " + status + "er: ");

@@ -1399,8 +1399,7 @@
 															xhr.setRequestHeader("Accept", "application/json");
 															xhr.setRequestHeader("Content-Type", "application/json");
 														},
-														success : function(data) {
-															alert(data.length);
+														success : function(data) { 
 															getsizeSession();
 															for (i = 0; i < data.length; i++) {
 																if (data[i].productId == proId) {
