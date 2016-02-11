@@ -689,11 +689,15 @@
 
 						});
 						$("#btnSearch").click(function(e){
-							e.preventDefault();  
-							if ($("#txtMessage").val() != "")
+							e.preventDefault(); 
+							
+							/* if ($("#txtMessage").val() != "")
 								url = "${pageContext.request.contextPath}/seller/searchbyname/" + $("#txtMessage").val();
 							else
-								url = "${pageContext.request.contextPath}/seller/searchproduct/";
+								url = "${pageContext.request.contextPath}/seller/searchbyname/"; */
+							
+							var url = "${pageContext.request.contextPath}/seller/searchbyname/" + $("#txtMessage").val()
+															
 							$.ajax({
 								url :  url,
 								type : 'POST',
@@ -703,10 +707,11 @@
 									xhr.setRequestHeader("Content-Type", "application/json");
 								},
 								success : function(data) {
-									
+									console.log(data);
 									 $("#myCarousel1").html(''); 
 									if(data.searchpro.length != 0){
-										 var str = "", b = true, A = data.length;
+										 var str = "", b = true, A = data.searchpro.length;
+										 
 									do{
 										if (b){
 											str += "<div class='carousel-inner' role='listbox' style='height: 888px;'>";
@@ -717,39 +722,30 @@
 										}
 										 	str += "<div style='margin-top: 17%'>";
 										 	
-										/* var carts = [], count = 0;  */	
-									<%-- 	 <% 
-									 	List<Cart> carts = (List<Cart>) session.getAttribute("CARTS");
-									 	for(Cart cart : carts) { %>
-									 		carts[count] = {
-									 			'productId':  <%= cart.getProductId() %>,
-									 			'qty': <%= cart.getQuantity() %>
-									 		};
-									 		count ++;
-									 	<% } %>
-									 	   --%>	
-									 	  console.log(data);
+										// alert(	data[0].searchpro.productId);	
+										/* var carts = [], count = 0;  */	 
 									 	
 										for (i = A - 1; i >= A - 6 && i >= 0; i--) {
+											
 										 	str += "<div class='col-sm-6'>";
 										 	str += "<div class='panel panel-default form-group'>";
 										 	str += "<div class='panel-body'>";
 										 	str += "<div style='float: left;'>"
-										 	str += "<div id='idpro' style='display: none;'>" + data[i].productId + "</div>";
-										 	str += "<div style='width: 300px;'> <img id='imgpro' src='${pageContext.request.contextPath}/resources/images/products/'";
-										 	str += data[i].image + "> <span id='Proname'>" + data[i].productName + "</span></div>";
-										 	str += "<input type='text' class='form-control' value='" + data[i].productId + "'";
+										 	str += "<div id='idpro' style='display: none;'>" + data.searchpro[i].productId + "</div>";
+										 	str += "<div style='width: 300px;'> <img id='imgpro' src='${pageContext.request.contextPath}/resources/images/products/"+  data.searchpro[i].image + "'/>";
+										 	str += "<span id='Proname'>" + data.searchpro[i].productName + "</span></div>";
+										 	str += "<input type='text' class='form-control' value='" + data.searchpro[i].productId + "'";
 										 	str += " id='pro_id' style='display: none;'>";
-										 	str += "<input type='text' class='form-control' value='" +data[i].productName + "'";
+										 	str += "<input type='text' class='form-control' value='" +data.searchpro[i].productName + "'";
 										 	str += " id='pro_nm' + style='display: none;'></div>";
 										 	str += "<div style='text-align: right;'>";
-										 	str += "<span id='PRICE'>"+ data[i].salePrice + "</span><span>&nbsp; Riels</span>";
+										 	str += "<span id='PRICE'>"+ data.searchpro[i].salePrice + "</span><span>&nbsp; Riels</span>";
 										 	str += "<div><br><a href='#'><span id='btnminus' class='glyphicon glyphicon-minus'> </span></a>"; 
 										 	
 											var exist = false;  
 										 	for(j = 0; j < data.carts.length; j++) {
 										 		
-										 		if (data.carts[j].productId == data[i].searchpro.productId) {
+										 		if (data.carts[j].productId == data.searchpro[i].productId) {
 										 			exist = true;
 										 			str += "<input name='orderqty' id='txtqty' type='text' readonly='readonly' style='width: 10%; text-align: center;' value='" + data.carts[j].quantity + "'>";
 										 		}

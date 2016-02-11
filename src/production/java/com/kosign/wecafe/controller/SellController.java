@@ -69,16 +69,26 @@ public class SellController {
 		return importService.listAllProduct();
 	}
 	
-	@RequestMapping(value="/seller/searchbyname/{proName}", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> searchByName(@PathVariable ("proName") String proname, HttpSession session){
+	@SuppressWarnings({ "unchecked" })
+	private ResponseEntity<Map<String, Object>> listData(String q, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (ArrayList<Cart>)session.getAttribute("CARTS");
 		}
 		map.put("carts",carts);
-		map.put("searchpro", importService.searchByName(proname));
+		map.put("searchpro", importService.searchByName(q));
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/seller/searchbyname/{proName}", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> searchByName(@PathVariable ("proName") String proname, HttpSession session){
+		return listData(proname, session);
+	}
+	
+	@RequestMapping(value="/seller/searchbyname/", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> searchByName(HttpSession session){
+		return listData("", session);
 	}
 	
 	@RequestMapping(value = "/seller/request_products", method = RequestMethod.GET)
@@ -86,9 +96,9 @@ public class SellController {
 		return "seller/request_stock";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/seller")
 	public String listAllProducts(HttpSession session, Map<String, Object> model, Principal principal){
-		
 		List<Cart> carts = new ArrayList<Cart>();
 		if(session.getAttribute("CARTS")!=null){
 			carts = (List<Cart>)session.getAttribute("CARTS");
