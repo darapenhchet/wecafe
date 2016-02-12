@@ -70,6 +70,21 @@ public class ReportRequestController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		
 	}
+	
+	@RequestMapping(value="/get_request_dailly_print", method=RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getpurchasereportdaily_print(DateForm date, Pagination pagination) throws ParseException{
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reportdaily", report.getListReportDailyRequest(pagination, date)); 
+		map.put("total_qty_pro",report.getTotalProQty(date));
+		//pagination.setTotalCount(report.getTotalDailyRequest(date));	
+		//pagination.setTotalPages(pagination.totalPages());
+		//map.put("pagination", pagination);
+		
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
+	}
+	
 	@RequestMapping(value="/get_request_weekly", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getpurchasereportweekly(DateForm date, 
 			Pagination pagination) throws ParseException{

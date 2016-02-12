@@ -328,8 +328,7 @@ a {
 											 <div class="hidden-print">
 											<div class="pull-right">
 												<a href="javascrpt:"
-													class="btn btn-inverse waves-effect waves-light"
-													onclick="window.print();"><i class="fa fa-print"></i></a> <a
+													class="btn btn-inverse waves-effect waves-light" id="print_report" ><i class="fa fa-print"></i></a> <a
 													href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
 											</div>
 										</div>
@@ -352,6 +351,8 @@ a {
 				<!-- content -->
 
 				<%@ include file="footer.jsp"%>
+				
+				<%@ include file="print_report_request_list.jsp"%>
 
 			</div>
 			<!-- ============================================================== -->
@@ -495,7 +496,7 @@ a {
 
  <!-- ============================  tbodyyearly  ================================== -->		
 	<script id="CONTENT_YEARLY" type="text/x-jquery-tmpl">    
-			<tr>
+		<tr>
 			<td>{{= order}}</td>
 			<td class="content-left"><span class="ellipsis">{{= pro_name}}</span></td>
 			<td>{{= (jan_qty=jan_qty)?jan_qty:0}}</td>
@@ -526,6 +527,119 @@ a {
 	var currentPage=1;
 	 setCalendar();
 	 searchByDate();
+	 
+ 	 $("#print_report").click(function() {
+		 switch($("#selectreport").val()){
+		 case '0':  
+			 break;
+		 case '1':
+			// $("#report_start_daily").html(" Date : " + $("#REGS_DATE_S").val());
+			 print_daily();		
+			 $('#daily_list').modal({
+					"backdrop":"static"
+			 }) ;  
+			 break;
+		 case '2':
+			 $("#report_start_weekly").html(" Date : " + $("#REGS_DATE_S").val());
+			 $("#report_end_weekly").html(" Date : " + $("#REGS_DATE_E").val()); 
+				var dd = 0;
+				var dayID =""; 
+					for (var i=0; i <7; i++) {
+						dayID = "#week_print" + (i+1);
+						dd=	moment($("#REGS_DATE_S").val()).add(i, 'days').get('date');
+						$(dayID).html(dd);
+					};
+			print_weekly();
+				
+			 break;
+		 case '3':  
+			 var d="";
+			 var end=new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate();
+			 $("#end").html('16 -'+ end);
+			 $("#select_yearly option[value='1']").attr("selected","selected");
+			 $("#report_start_monthly").html(" Date : " + $("#selectmonth option:selected").text() + ", " + $("#selectyear").val());
+			   var st = "";
+				st += "<tr>";
+				st += "<th rowspan='2'>#</th>";
+				st += "<th rowspan='2'>Supplier</th>";
+				st += "<th rowspan='2'>Item</th>";
+			for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
+				{		
+				 d=(i<=14)?"show1":"hide";
+				st += "<th colspan='2' class='"+d+"'>" + (1+i) + "</th>";
+				}
+				st += "<th colspan='2' class='"+d+"'>Total</th></tr><tr>";		
+				for (i =0; i<(new Date($("#selectyear").val(), parseInt($("#selectmonth").val()) + 1, 0).getDate()) ;i++)
+				{			
+					 var d=(i<=14)?"show1":"hide";
+				st += "<th class='"+d+"' style='padding-left:12px !important; padding-right:12px !important'>qty</th><th style='padding-left: 22px !important; padding-right: 22px !important;' class='"+d+"'>Amt</th>";
+				}	
+				st += "<th class='"+d+"'> Qty</th><th class='"+d+"'> Amt</th></tr>";	
+				$("#tbl_header_month_print").html(st);  
+				print_monthly();
+			 $('#monthly_list').modal({
+					"backdrop":"static"
+				}) ;  
+			 break;
+			 
+		 case '4': 
+			 $("#select_month option[value='1']").attr("selected","selected");
+			 $("#report_start_yearly").html(" Date : " + $("#selectyear").val());			
+			 print_yearly();
+			 $('#yearly_list').modal({
+					"backdrop":"static"
+				}) ; 
+			 break;
+	 }  	
+		});
+ 	 
+	  function print_daily(){ 
+			
+		 var input={
+		    	 "day"   : $.trim($("#REGS_DATE_S").val())			 
+		 };
+		
+			 $.ajax({ 
+				    url: "${pageContext.request.contextPath}/admin/reports/get_request_dailly_print/", 
+				    type: 'GET', 
+				    data:input,
+					    beforeSend: function(xhr) {
+		               xhr.setRequestHeader("Accept", "application/json");
+		               xhr.setRequestHeader("Content-Type", "application/json");
+		           },
+				    success: function(data) { 		
+				    	index = 0;
+				    	  b =true;
+					//	v=data;
+						var total_qty=0;
+					 	 if(data.reportdaily.length>0){
+							$("tbody#tbodydaily_print").html('');
+							   for(var i=0;i<data.reportdaily.length;i++){		
+								   total_qty=data.reportdaily[0].total_req_qty;  
+								   products.formatDaily(data.reportdaily[i]);
+								   
+							}   
+							$("#CONTENT_DAILY_PRINT").tmpl(data.reportdaily).appendTo("tbody#tbodydaily_print"); 
+							$("#allTotalAmount_print_daily").html(total_qty);
+						}else{
+							$("tbody#tbodydaily_print").html("");
+							$("#allTotalAmount_print_daily").html('');
+						}  
+				    	 
+				    },
+				    error:function(data,status,er) { 
+				        console.log("error: ",data," status: ",status," er:",er);
+				    }
+				}); 
+		 }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	  
 	 $("#PAGINATION").pagination({
 			items:10,
@@ -620,7 +734,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	console.log("detail==="+data.total_qty);
+			    	//console.log("detail==="+data.total_qty);
 					$("#PAGINATION").html("");
 			    	
 					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);
@@ -667,7 +781,7 @@ a {
 	               xhr.setRequestHeader("Content-Type", "application/json");
 	           },
 			    success: function(data) { 
-			    	console.log("daily==="+data.total_qty);
+			    	//console.log("daily==="+data.total_qty);
 					$("#PAGINATION").html("");
 			    	
 					$("#PAGINATION").pagination('updateItems',data.pagination.totalCount);
@@ -712,7 +826,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) {
-			    	console.log("weeekly==="+data.total_qty);
+			    	//console.log("weeekly==="+data.total_qty);
 			    	b=true;
 			    	v=data;
 			    	
@@ -758,7 +872,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) { 
-			    	console.log("monthly==="+data.total_qty);
+			    	//console.log("monthly==="+data.total_qty);
 			    	
 			    	$("#PAGINATION").html("");
 			    	
@@ -820,7 +934,7 @@ a {
                     xhr.setRequestHeader("Content-Type", "application/json");
                 },
 			    success: function(data) { 
-			    	console.log("yearly==="+data.total_qty);
+			    	//console.log("yearly==="+data.total_qty);
 			    	v=data;
 			    	b=true;
 			    	
@@ -850,6 +964,22 @@ a {
 		 }	
 	
 		 if(b){
+	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
+	 			j = order + 1;
+	 			value["order"] =j;
+	 			b = false;
+	 		}
+	 		else  
+	 		value["order"] = ++j; 
+	 }
+	 
+	 products.formatDaily_print = function(value){
+		 if(index < v["total_qty_pro"].length){
+			 value["total_pro_qty"] =v["total_qty_pro"][index]["total_pro_qty"];
+			 index++;
+		 }	
+	
+			 if(b){
 	 			order = v.pagination.perPage * (v.pagination.currentPage-1);
 	 			j = order + 1;
 	 			value["order"] =j;
@@ -1161,7 +1291,7 @@ a {
                   xhr.setRequestHeader("Content-Type", "application/json");
               },
 			    success: function(data) { 
-			    	console.log(data);
+			    	//console.log(data);
 			    	var st= "";
 			    	var total_qty = 0,req_qty=0;
 			    	

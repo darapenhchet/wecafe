@@ -535,13 +535,13 @@ public class AdminReportRequestServiceImp implements AdminReportRequestService  
 	
 	public String getQueryDailyRequest(DateForm date){
 		String sql="";
-		 sql="SELECT " 
+		 sql="SELECT DISTINCT " 
 				+"pro.pro_name req_pro, "
 				+"rsd.pro_qty req_qty,"
 				+"(SELECT firstname ||' '|| lastname As approve_by FROM users WHERE id=rs.app_id ),"
 				+"(SELECT firstname ||' '|| lastname As request_by FROM users WHERE id=rs.use_id ),"
-				+"to_char(rs.req_date, 'DD/MM/YYYY HH24:MI:SS') req_date,"
-		        +"to_char(rs.app_date, 'DD/MM/YYYY HH24:MI:SS') app_date ,"
+				+"to_char(rs.req_date, 'DD/MM/YYYY') req_date,"
+		        +"to_char(rs.app_date, 'DD/MM/YYYY') app_date ,"
 		        + "(SELECT SUM(rsd1.pro_qty) total_req_qty from request_stock_detail rsd1, request_stock rs1 WHERE rs1.req_id=rsd1.req_id and rs1.status='f' and to_char(rs1.app_date,'yyyy-mm-dd')='"+date.getDay()+"') "
 		  +"FROM "
 			    +"request_stock rs,"
