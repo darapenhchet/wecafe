@@ -40,6 +40,7 @@
 </head>
 <body>  	 
 	<div>
+	 
   		<div id="mySlideShow" class="carousel slide" data-ride="carousel">  	
 		    <ol class="carousel-indicators">
 		      <li data-target="#mySlideShow" data-slide-to="0" class="active"></li>
@@ -249,7 +250,7 @@
  
 <!-- ################################################################## -->
 <div style="width: 100%; height: 30px; background-color: #E0E0E0;" align="center">
-	Copyright&#64; 2015 kosign
+	Copyright&#64; 2015 kosign 
 </div>
 
 </body>
@@ -583,7 +584,8 @@
     				clear();
     			});
     		});
-
+    		 
+    		
 		}); 
     	</script>
 </html>
