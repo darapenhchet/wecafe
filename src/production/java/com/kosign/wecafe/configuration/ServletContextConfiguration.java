@@ -119,10 +119,18 @@ public class ServletContextConfiguration extends WebMvcConfigurerAdapter {
 		return marshaller;
 	}
 
-	@Bean(name = "multipartResolver")
+/*	@Bean(name = "multipartResolver")
 	public MultipartResolver resolver() {
 		return new StandardServletMultipartResolver();
-	}
+	}*/
+	
+	/*@Bean(name = "multipartResolver")
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        //multipartResolver.setMaxUploadSize(2097152);
+        multipartResolver.setMaxUploadSize(5242880);
+        return multipartResolver;
+    }*/
 
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
