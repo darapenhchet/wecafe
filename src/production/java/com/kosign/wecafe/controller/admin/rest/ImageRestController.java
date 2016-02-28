@@ -34,7 +34,7 @@ public class ImageRestController {
                 UUID uuid = UUID.randomUUID();
                 String randomUUIDFileName = uuid.toString();
                 String extension = filename.substring(filename.lastIndexOf(".")+1);
-                String savePath = request.getServletContext().getRealPath("/resources/images/products/");
+                String savePath = request.getSession().getServletContext().getRealPath("/resources/images/products/");
 				System.out.println(savePath);
 				File path = new File(savePath);
 				if(!path.exists()){
@@ -45,6 +45,7 @@ public class ImageRestController {
                         new BufferedOutputStream(new FileOutputStream(new File(savePath + File.separator  + filename)));
                 stream.write(bytes);
                 stream.close();
+                
                 System.out.println( "You successfully uploaded " + savePath + File.separator + filename + "!");
         		map.put("MESSAGE", "SUCCESSFULLY");
         		map.put("ERROR", HttpStatus.OK.value());
